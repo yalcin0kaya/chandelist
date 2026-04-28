@@ -2506,7 +2506,6 @@
                                 <button id="lang-tr" class="lang-btn${currentLanguage === 'tr' ? ' active' : ''}" aria-label="Turkish">TR</button>
                                 <button id="lang-en" class="lang-btn${currentLanguage === 'en' ? ' active' : ''}" aria-label="English">EN</button>
                             </div>
-                            <a href="#/admin">${t().admin}</a>
                         </div>
                     </div>
                 </header>
@@ -3258,6 +3257,29 @@
 
         // ============= ADMIN PANEL =============
         async function renderAdminPanel() {
+            // Şifre koruması
+            if (sessionStorage.getItem('adminAuth') !== 'ok') {
+                return `
+                    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f5f0eb;">
+                        <div style="background:#fff;padding:50px 40px;max-width:380px;width:90%;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,0.08);">
+                            <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;letter-spacing:3px;margin-bottom:8px;">ADMIN</h2>
+                            <p style="font-size:0.8rem;letter-spacing:2px;color:#8a7d6b;margin-bottom:30px;">CHANDELIST</p>
+                            <input type="password" id="adminPassInput" placeholder="Şifre" style="width:100%;padding:12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center;letter-spacing:4px;">
+                            <button onclick="
+                                if(document.getElementById('adminPassInput').value==='323932'){
+                                    sessionStorage.setItem('adminAuth','ok');
+                                    render();
+                                } else {
+                                    document.getElementById('adminPassError').style.display='block';
+                                    document.getElementById('adminPassInput').value='';
+                                }
+                            " style="width:100%;padding:12px;background:#000;color:#fff;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;">GİRİŞ</button>
+                            <p id="adminPassError" style="display:none;color:#c0392b;font-size:0.8rem;margin-top:10px;letter-spacing:1px;">Hatalı şifre</p>
+                        </div>
+                    </div>
+                `;
+            }
+
             updateSEO('Admin Panel - CHANDELIST', 'Admin dashboard');
 
             const products = await getProducts();

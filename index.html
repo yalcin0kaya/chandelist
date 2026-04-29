@@ -525,7 +525,7 @@
         }
 
         .grid-4 {
-            grid-template-columns: repeat(auto-fill, minmax(240px, 280px));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         }
 
         /* Cards */
@@ -545,7 +545,7 @@
 
         .card-image {
             width: 100%;
-            height: 280px;
+            height: 360px;
             overflow: hidden;
             background: #f5f0eb;
             display: flex;
@@ -1299,6 +1299,39 @@
 
         .main-display:hover {
             background: #ebe6de;
+        }
+
+        .gallery-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.85);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            font-size: 1.2rem;
+            color: #333;
+            transition: background 0.2s, opacity 0.2s;
+            opacity: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .main-display:hover .gallery-nav-btn {
+            opacity: 1;
+        }
+        .gallery-nav-btn:hover {
+            background: rgba(255,255,255,1);
+        }
+        .gallery-nav-btn.prev { left: 12px; }
+        .gallery-nav-btn.next { right: 12px; }
+        .gallery-nav-btn:disabled {
+            opacity: 0 !important;
+            pointer-events: none;
         }
 
         .thumbnails {
@@ -2776,20 +2809,9 @@
                             <a href="#/lighting/chandelier">${t().chandelier}</a> /
                             <span>${col.title[currentLanguage]}</span>
                         </div>
-                        ${products.length > 3 ? `
-                        <div class="product-slider-wrap" id="productSlider" style="margin-top:30px; padding:0 30px;">
-                            <button class="slider-btn prev" id="sliderPrev" aria-label="Önceki">&#8249;</button>
-                            <div class="product-slider-track" id="sliderTrack">
-                                ${productsHTML}
-                            </div>
-                            <button class="slider-btn next" id="sliderNext" aria-label="Sonraki">&#8250;</button>
-                            <div class="slider-dots" id="sliderDots"></div>
-                        </div>
-                        ` : `
                         <div class="grid grid-4" style="margin-top:30px;">
                             ${productsHTML}
                         </div>
-                        `}
                     </div>
                 </section>
             `;
@@ -2959,8 +2981,12 @@
 
                         <div class="product-detail">
                             <div class="product-gallery">
-                                <div class="main-display">
+                                <div class="main-display" id="mainDisplayWrapper">
                                     ${mainDisplayHTML}
+                                    ${allMedia.length > 1 ? `
+                                    <button class="gallery-nav-btn prev" id="galleryPrev" aria-label="Previous image">&#8249;</button>
+                                    <button class="gallery-nav-btn next" id="galleryNext" aria-label="Next image">&#8250;</button>
+                                    ` : ''}
                                 </div>
                                 <div class="thumbnails">
                                     ${thumbnailsHTML}
@@ -3061,8 +3087,6 @@
                                     </div>
                                     <div class="card-content">
                                         <h3>${p.name[currentLanguage]}</h3>
-                                        <p>${p.description[currentLanguage]}</p>
-                                        <a href="#/product/${p.id}" class="btn">${currentLanguage === 'tr' ? 'İncele' : 'View'}</a>
                                     </div>
                                 </div>
                             `).join('')}
@@ -4520,46 +4544,78 @@
 
             // Product gallery click handlers
             if (currentPage.startsWith('/product/')) {
-                const mainDisplay = document.getElementById('mainDisplay');
                 const thumbnails = document.querySelectorAll('.thumbnail');
                 const productId = currentPage.split('/')[2];
                 const product = (await getProducts()).find(p => p.id === parseInt(productId));
                 const allMedia = [
-                    ...(product?.images || []).map(img => ({ type: 'image', url: img })),
-                    ...(product?.videos || []).map(vid => ({ type: 'video', url: vid }))
+                    ...(product?.images || []).filter(img => img && img.trim()).map(img => ({ type: 'image', url: img })),
+                    ...(product?.videos || []).filter(vid => vid && vid.trim()).map(vid => ({ type: 'video', url: vid }))
                 ];
+                let currentMediaIdx = 0;
 
-                thumbnails.forEach((thumb, idx) => {
-                    thumb.addEventListener('click', () => {
-                        thumbnails.forEach(t => t.classList.remove('active'));
-                        thumb.classList.add('active');
+                const wrapper = document.getElementById('mainDisplayWrapper');
 
-                        const media = allMedia[idx];
-                        const mainDisplayEl = document.getElementById('mainDisplay');
-                        const wrapper = mainDisplayEl ? mainDisplayEl.parentElement : null;
-                        if (!wrapper) return;
-                        if (media.type === 'video') {
-                            wrapper.innerHTML = `<video class="main-display" id="mainDisplay" controls autoplay muted loop playsinline webkit-playsinline><source src="${media.url}" type="video/mp4"></video>`;
+                function showMedia(idx) {
+                    if (!wrapper || allMedia.length === 0) return;
+                    idx = Math.max(0, Math.min(idx, allMedia.length - 1));
+                    currentMediaIdx = idx;
+                    const media = allMedia[idx];
+
+                    // Update image/video (keep arrow buttons)
+                    const prevBtn = document.getElementById('galleryPrev');
+                    const nextBtn = document.getElementById('galleryNext');
+
+                    if (media.type === 'video') {
+                        const existing = wrapper.querySelector('video#mainDisplay,img#mainDisplay');
+                        if (existing) existing.remove();
+                        const vid = document.createElement('video');
+                        vid.className = 'main-display'; vid.id = 'mainDisplay';
+                        vid.controls = true; vid.autoplay = true; vid.muted = true; vid.loop = true;
+                        vid.setAttribute('playsinline',''); vid.setAttribute('webkit-playsinline','');
+                        const src = document.createElement('source');
+                        src.src = media.url; src.type = 'video/mp4';
+                        vid.appendChild(src);
+                        wrapper.insertBefore(vid, prevBtn || null);
+                    } else {
+                        const existingImg = wrapper.querySelector('img#mainDisplay');
+                        const existingVid = wrapper.querySelector('video#mainDisplay');
+                        if (existingImg) {
+                            existingImg.src = media.url;
                         } else {
-                            const img = document.getElementById('mainDisplay');
-                            if (img && img.tagName === 'IMG') {
-                                img.src = media.url;
-                            } else {
-                                wrapper.innerHTML = `<img class="main-display" id="mainDisplay" src="${media.url}" alt="Product image" loading="lazy" width="600" height="600">`;
-                            }
+                            if (existingVid) existingVid.remove();
+                            const img = document.createElement('img');
+                            img.className = 'main-display'; img.id = 'mainDisplay';
+                            img.src = media.url; img.alt = 'Product image';
+                            img.loading = 'lazy'; img.width = 600; img.height = 600;
+                            wrapper.insertBefore(img, prevBtn || null);
                         }
-                    });
+                    }
 
-                    thumb.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') {
-                            thumb.click();
-                        }
-                    });
+                    // Update thumbnails
+                    thumbnails.forEach((t, i) => t.classList.toggle('active', i === idx));
+
+                    // Update arrow states
+                    if (prevBtn) prevBtn.disabled = (idx === 0);
+                    if (nextBtn) nextBtn.disabled = (idx === allMedia.length - 1);
+                }
+
+                // Thumbnail click handlers
+                thumbnails.forEach((thumb, idx) => {
+                    thumb.addEventListener('click', () => showMedia(idx));
+                    thumb.addEventListener('keypress', (e) => { if (e.key === 'Enter') showMedia(idx); });
                 });
 
+                // Arrow click handlers
+                const prevBtn = document.getElementById('galleryPrev');
+                const nextBtn = document.getElementById('galleryNext');
+                if (prevBtn) { prevBtn.disabled = true; prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showMedia(currentMediaIdx - 1); }); }
+                if (nextBtn) { if (allMedia.length <= 1) nextBtn.disabled = true; nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showMedia(currentMediaIdx + 1); }); }
+
                 // Lightbox
-                mainDisplay?.addEventListener('click', () => {
-                    const media = allMedia[Array.from(thumbnails).findIndex(t => t.classList.contains('active'))];
+                wrapper?.addEventListener('click', (e) => {
+                    if (e.target.closest('.gallery-nav-btn')) return;
+                    const media = allMedia[currentMediaIdx];
+                    if (!media) return;
                     let lightboxHTML = '';
                     if (media.type === 'video') {
                         lightboxHTML = `<video class="lightbox-image" controls autoplay muted><source src="${media.url}" type="video/mp4"></video>`;

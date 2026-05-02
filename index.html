@@ -3328,6 +3328,7 @@
                             <a href="#" class="admin-nav" data-section="banners">${t().banners}</a>
                             <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
+                            <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
                         </nav>
                     </div>
 
@@ -3408,6 +3409,40 @@
                                     <button class="btn btn-primary" onclick="saveCollection(${idx})">Kaydet</button>
                                 </div>
                             `).join('')}
+                        </div>
+
+                        <div id="settings-section" class="admin-section" style="display: none;">
+                            <h2>Ayarlar</h2>
+                            <div class="collection-admin-card">
+                                <h3>Claude API Key</h3>
+                                <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">
+                                    Excel Import sırasında otomatik açıklama ve SEO üretimi için Anthropic API key gerekli.<br>
+                                    Key sadece bu tarayıcıda saklanır, hiçbir yere gönderilmez.
+                                </p>
+                                <div style="display:flex;gap:10px;align-items:center;">
+                                    <input type="password" id="anthropicKeyInput" placeholder="sk-ant-api03-..."
+                                        value="${localStorage.getItem('anthropic_api_key') ? '••••••••••••••••••••' : ''}"
+                                        style="flex:1;padding:10px;border:1px solid #ddd;font-family:monospace;font-size:0.9rem;">
+                                    <button class="btn btn-primary" onclick="
+                                        const val = document.getElementById('anthropicKeyInput').value;
+                                        if (val && !val.startsWith('•')) {
+                                            localStorage.setItem('anthropic_api_key', val);
+                                            document.getElementById('anthropicKeyInput').value = '••••••••••••••••••••';
+                                            document.getElementById('apiKeyStatus').textContent = '✓ Kaydedildi';
+                                            document.getElementById('apiKeyStatus').style.color = '#2e7d32';
+                                        }
+                                    ">Kaydet</button>
+                                    <button class="btn" onclick="
+                                        localStorage.removeItem('anthropic_api_key');
+                                        document.getElementById('anthropicKeyInput').value = '';
+                                        document.getElementById('apiKeyStatus').textContent = 'Silindi';
+                                        document.getElementById('apiKeyStatus').style.color = '#c62828';
+                                    ">Sil</button>
+                                </div>
+                                <p id="apiKeyStatus" style="font-size:0.82rem;margin-top:8px;color:${localStorage.getItem('anthropic_api_key') ? '#2e7d32' : '#999'};">
+                                    ${localStorage.getItem('anthropic_api_key') ? '✓ API key kayıtlı' : 'Henüz key girilmemiş'}
+                                </p>
+                            </div>
                         </div>
 
                         <div id="import-section" class="admin-section" style="display: none;">
@@ -4146,29 +4181,64 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const wb = XLSX.read(e.target.result, { type: 'array' });
+                    const wb = XLSX.read(e.target.result, { type: 'array', cellStyles: true, raw: true });
                     const ws = wb.Sheets[wb.SheetNames[0]];
                     const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
 
                     if (rows.length === 0) { alert('Dosya boş veya okunamadı.'); return; }
 
-                    // Build preview table
-                    const previewEl = document.getElementById('importPreview');
                     const validRows = rows.filter(r => r.urun_adi_tr || r.urun_adi_en);
 
+                    // Extract embedded images from sheet — match to rows by position
+                    const sheetImages = ws['!images'] || [];
+                    // Build map: dataRowIndex (0-based in validRows) → base64 image data
+                    const imageMap = {};
+                    // Find where header row ends (skip header + description rows)
+                    // sheet_to_json skips header; row index in sheet = validRows index + offset
+                    // We find the actual start row by checking the ref
+                    const ref = ws['!ref'] || 'A1:A1';
+                    const startRow = parseInt(ref.split(':')[0].replace(/[A-Z]/g,'')) || 1;
+                    // Header is at startRow, data starts at startRow+1
+                    const dataStartSheetRow = startRow; // 0-based
+
+                    sheetImages.forEach(img => {
+                        if (!img || !img.data) return;
+                        // img.l.r = top-left row (0-based in sheet)
+                        const sheetRow = img.l ? img.l.r : 0;
+                        // Map to validRows index: subtract header rows
+                        // sheet_to_json first row is header, so data row index = sheetRow - 1 (if 1 header row)
+                        // But our template has 4 header rows before data
+                        // We'll use a heuristic: find closest validRow index
+                        const dataIdx = sheetRow - 4; // 4 header rows in our template
+                        if (dataIdx >= 0 && dataIdx < validRows.length) {
+                            imageMap[dataIdx] = { data: img.data, type: img.type || 'image/png' };
+                        } else if (sheetRow >= 1 && sheetRow - 1 < validRows.length) {
+                            // Fallback: 1 header row
+                            imageMap[sheetRow - 1] = { data: img.data, type: img.type || 'image/png' };
+                        }
+                    });
+
+                    window._pendingImportRows = validRows;
+                    window._pendingImportImages = imageMap;
+
+                    const imgCount = Object.keys(imageMap).length;
+                    const previewEl = document.getElementById('importPreview');
                     previewEl.innerHTML = `
-                        <p style="margin-bottom:12px;font-size:0.88rem;color:#333;">
-                            <strong>${validRows.length} ürün</strong> bulundu. Aşağıdaki önizlemeyi kontrol et, ardından "İçe Aktar" butonuna bas.
+                        <p style="margin-bottom:8px;font-size:0.88rem;color:#333;">
+                            <strong>${validRows.length} ürün</strong> bulundu${imgCount > 0 ? `, <strong>${imgCount} resim</strong> algılandı` : ''}.
                         </p>
+                        <div style="background:#f5f0eb;padding:10px 14px;border-radius:4px;font-size:0.82rem;color:#666;margin-bottom:14px;line-height:1.9;">
+                            🤖 Claude otomatik üretecek: İngilizce ad &nbsp;·&nbsp; TR+EN açıklama &nbsp;·&nbsp; Meta başlık &nbsp;·&nbsp; SEO kelimeleri<br>
+                            📷 Resimler Cloudinary'a yüklenecek (${imgCount > 0 ? imgCount + ' resim hazır' : 'resim bulunamadı — admin panelinden eklenebilir'})
+                        </div>
                         <div style="overflow-x:auto;margin-bottom:16px;">
                             <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
                                 <thead>
                                     <tr style="background:#f5f2ed;">
                                         <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">#</th>
                                         <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Ürün Adı TR</th>
-                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Kategori</th>
                                         <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Alt Kategori</th>
-                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Fiyat</th>
+                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Koleksiyon</th>
                                         <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Resim</th>
                                     </tr>
                                 </thead>
@@ -4177,10 +4247,9 @@
                                         <tr style="${i % 2 === 0 ? '' : 'background:#fafaf9;'}">
                                             <td style="padding:7px 8px;border:1px solid #e8e0d5;color:#999;">${i+1}</td>
                                             <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.urun_adi_tr || r.urun_adi_en}</td>
-                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.kategori || 'lighting'}</td>
                                             <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.alt_kategori || '-'}</td>
-                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.fiyat || '-'}</td>
-                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.resim_1 ? '✓' : '✗'}</td>
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.koleksiyon || '-'}</td>
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${imageMap[i] ? '📷 ✓' : '—'}</td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -4191,8 +4260,6 @@
                             <button class="btn" onclick="document.getElementById('importPreview').innerHTML='';document.getElementById('excelFileInput').value=''">İptal</button>
                         </div>
                     `;
-                    // Store parsed rows for import
-                    window._pendingImportRows = validRows;
                 } catch(err) {
                     alert('Dosya okunamadı: ' + err.message);
                 }
@@ -4200,25 +4267,118 @@
             reader.readAsArrayBuffer(file);
         }
 
+        async function generateProductSEO(nameTr, subcategory, materials, dimensions) {
+            const ANTHROPIC_KEY = localStorage.getItem('anthropic_api_key') || '';
+            if (!ANTHROPIC_KEY) throw new Error('API key girilmemiş — Admin → Ayarlar bölümünden girin');
+            const subcatLabel = { chandelier:'avize', sconce:'aplik', table_lamp:'masa lambası', floor_lamp:'lambader', outdoor:'dış mekan aydınlatma', decorative:'dekoratif eşya' }[subcategory] || subcategory;
+            const prompt = `Sen CHANDELIST adlı lüks aydınlatma markası için ürün içerikleri yazıyorsun. Dil zarif, kısa ve lüks olmalı.
+
+Ürün: ${nameTr}
+Tür: ${subcatLabel}
+Malzeme: ${materials || '-'}
+Boyut: ${dimensions || '-'}
+
+Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
+{"name_en":"...","description_tr":"2-3 cümle TR açıklama","description_en":"2-3 sentence EN description","meta_title_tr":"...| CHANDELIST","meta_title_en":"...| CHANDELIST","keywords_tr":"kelime1, kelime2, kelime3, kelime4, kelime5","keywords_en":"word1, word2, word3, word4, word5"}`;
+
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': ANTHROPIC_KEY,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify({
+                    model: 'claude-haiku-4-5-20251001',
+                    max_tokens: 800,
+                    messages: [{ role: 'user', content: prompt }]
+                })
+            });
+            if (!res.ok) throw new Error('API ' + res.status);
+            const data = await res.json();
+            return JSON.parse(data.content[0].text.trim());
+        }
+
         async function executeExcelImport() {
             const rows = window._pendingImportRows;
             if (!rows || rows.length === 0) return;
 
+            if (!localStorage.getItem('anthropic_api_key')) {
+                alert('⚠️ Claude API key girilmemiş!\n\nAdmin → ⚙ Ayarlar bölümünden API key\'i girin.\nAçıklama ve SEO olmadan da yükleyebilirsiniz.');
+                const proceed = confirm('API key olmadan devam edilsin mi? (Açıklamalar boş kalır)');
+                if (!proceed) return;
+            }
+
             const btn = document.querySelector('#importPreview .btn-primary');
-            if (btn) { btn.disabled = true; btn.textContent = 'Yükleniyor...'; }
+            const previewEl = document.getElementById('importPreview');
+
+            // Add progress indicator
+            let progressHTML = `
+                <div id="importProgress" style="margin-top:16px;">
+                    <div style="background:#f5f0eb;border-radius:4px;height:8px;overflow:hidden;margin-bottom:8px;">
+                        <div id="importProgressBar" style="height:100%;background:#8a7d6b;width:0%;transition:width 0.3s;"></div>
+                    </div>
+                    <p id="importProgressText" style="font-size:0.85rem;color:#8a7d6b;">Hazırlanıyor...</p>
+                </div>`;
+            previewEl.insertAdjacentHTML('beforeend', progressHTML);
+            if (btn) { btn.disabled = true; btn.textContent = 'İşleniyor...'; }
+
+            const progressBar = document.getElementById('importProgressBar');
+            const progressText = document.getElementById('importProgressText');
 
             let success = 0, fail = 0;
-            for (const r of rows) {
-                const images = [r.resim_1, r.resim_2, r.resim_3].filter(Boolean);
+            for (let i = 0; i < rows.length; i++) {
+                const r = rows[i];
+                const pct = Math.round((i / rows.length) * 100);
+                if (progressBar) progressBar.style.width = pct + '%';
+                if (progressText) progressText.textContent = `${i+1}/${rows.length} — Claude SEO üretiyor: "${r.urun_adi_tr}"...`;
+
+                // Claude API ile SEO üret
+                let seo = {};
+                try {
+                    seo = await generateProductSEO(
+                        r.urun_adi_tr,
+                        r.alt_kategori || 'chandelier',
+                        r.malzeme || '',
+                        r.boyut || ''
+                    );
+                } catch(e) {
+                    console.warn('SEO üretilemedi:', e.message);
+                }
+
+                // Excel'deki resmi Cloudinary'a yükle
+                let images = [];
+                const imgData = (window._pendingImportImages || {})[i];
+                if (imgData && imgData.data) {
+                    try {
+                        if (progressText) progressText.textContent = `${i+1}/${rows.length} — Resim yükleniyor: "${r.urun_adi_tr}"...`;
+                        const mimeType = imgData.type || 'image/jpeg';
+                        const dataUrl = `data:${mimeType};base64,${imgData.data}`;
+                        const fd = new FormData();
+                        fd.append('file', dataUrl);
+                        fd.append('upload_preset', 'chandelist_upload');
+                        const cldRes = await fetch('https://api.cloudinary.com/v1_1/dcvkzpvmy/image/upload', { method:'POST', body: fd });
+                        const cldData = await cldRes.json();
+                        if (cldData.secure_url) images = [cldData.secure_url];
+                    } catch(e) {
+                        console.warn('Resim yüklenemedi:', e.message);
+                    }
+                }
+                // Fallback: Excel'de URL varsa onu kullan
+                if (images.length === 0) {
+                    images = [r.resim_1, r.resim_2, r.resim_3].filter(v => v && v.toString().trim());
+                }
                 const videos = r.video_url ? [r.video_url] : [];
                 const subcatRaw = (r.alt_kategori || 'chandelier').split(',').map(s => s.trim()).filter(Boolean);
+
                 const p = {
                     id: null, _dbId: null,
-                    name: { tr: r.urun_adi_tr || '', en: r.urun_adi_en || '' },
-                    description: { tr: r.aciklama_tr || '', en: r.aciklama_en || '' },
-                    metaTitle: { tr: r.urun_adi_tr || '', en: r.urun_adi_en || '' },
-                    metaDescription: { tr: r.aciklama_tr || '', en: r.aciklama_en || '' },
-                    keywords: { tr: '', en: '' },
+                    name: { tr: r.urun_adi_tr || '', en: seo.name_en || r.urun_adi_tr || '' },
+                    description: { tr: seo.description_tr || r.aciklama_tr || '', en: seo.description_en || r.aciklama_en || '' },
+                    metaTitle: { tr: seo.meta_title_tr || (r.urun_adi_tr + ' | CHANDELIST'), en: seo.meta_title_en || '' },
+                    metaDescription: { tr: seo.description_tr || '', en: seo.description_en || '' },
+                    keywords: { tr: seo.keywords_tr || '', en: seo.keywords_en || '' },
                     category: r.kategori || 'lighting',
                     subcategory: subcatRaw,
                     style: r.koleksiyon || null,
@@ -4231,14 +4391,19 @@
                     variants: [],
                 };
                 try { await saveProductToDB(p); success++; }
-                catch(e) { fail++; }
+                catch(e) { fail++; console.error('Kayıt hatası:', e); }
             }
+
+            if (progressBar) progressBar.style.width = '100%';
+            if (progressText) progressText.textContent = `Tamamlandı!`;
 
             window._pendingImportRows = null;
             document.getElementById('excelFileInput').value = '';
-            document.getElementById('importPreview').innerHTML = '';
-            alert(`✓ ${success} ürün eklendi${fail > 0 ? `, ${fail} başarısız` : ''}!`);
-            render();
+            setTimeout(() => {
+                document.getElementById('importPreview').innerHTML = '';
+                alert(`✓ ${success} ürün eklendi (SEO otomatik üretildi)${fail > 0 ? `\n✗ ${fail} ürün başarısız` : ''}!`);
+                render();
+            }, 800);
         }
 
         // ===== COLLECTION ADMIN FUNCTIONS =====

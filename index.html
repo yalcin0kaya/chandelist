@@ -4184,14 +4184,30 @@
                     const wb = XLSX.read(e.target.result, { type: 'array', cellStyles: true, raw: true });
                     const ws = wb.Sheets[wb.SheetNames[0]];
 
-                    // Find header row — look for the row containing 'urun_adi_tr'
+                    // Find header row — look for row containing cell that starts with 'urun_adi_tr'
                     const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
                     let headerRowIdx = 0;
+                    let rawHeaders = [];
                     for (let ri = 0; ri < rawRows.length; ri++) {
-                        if (rawRows[ri].includes('urun_adi_tr')) { headerRowIdx = ri; break; }
+                        const found = rawRows[ri].some(c => typeof c === 'string' && c.replace(/\s*\*/g,'').trim() === 'urun_adi_tr');
+                        if (found) { headerRowIdx = ri; rawHeaders = rawRows[ri]; break; }
                     }
-                    // Re-parse with correct header row
-                    const rows = XLSX.utils.sheet_to_json(ws, { defval: '', range: headerRowIdx });
+                    // Clean headers: remove ' *', emoji, newlines → get plain keys
+                    const cleanHeaders = rawHeaders.map(h => {
+                        if (typeof h !== 'string') return '';
+                        return h.replace(/\s*\*\s*/g,'').replace(/📷.*/,'resim').split('\n')[0].trim();
+                    });
+                    // Parse data rows (skip header + description row below it)
+                    const allDataRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', range: headerRowIdx + 1 });
+                    // Skip rows where first cell looks like a guide/example (contains \n or is a known placeholder)
+                    const rows = allDataRows
+                        .filter(rowArr => rowArr.some(c => c !== ''))
+                        .map(rowArr => {
+                            const obj = {};
+                            cleanHeaders.forEach((h, i) => { if (h) obj[h] = rowArr[i] !== undefined ? rowArr[i] : ''; });
+                            return obj;
+                        })
+                        .filter(r => r.urun_adi_tr && !String(r.urun_adi_tr).includes('\n') && r.urun_adi_tr !== 'Türkçe ürün adı');
 
                     if (rows.length === 0) { alert('Dosya boş veya okunamadı.'); return; }
 

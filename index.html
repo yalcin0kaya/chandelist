@@ -4183,7 +4183,15 @@
                 try {
                     const wb = XLSX.read(e.target.result, { type: 'array', cellStyles: true, raw: true });
                     const ws = wb.Sheets[wb.SheetNames[0]];
-                    const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+
+                    // Find header row — look for the row containing 'urun_adi_tr'
+                    const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+                    let headerRowIdx = 0;
+                    for (let ri = 0; ri < rawRows.length; ri++) {
+                        if (rawRows[ri].includes('urun_adi_tr')) { headerRowIdx = ri; break; }
+                    }
+                    // Re-parse with correct header row
+                    const rows = XLSX.utils.sheet_to_json(ws, { defval: '', range: headerRowIdx });
 
                     if (rows.length === 0) { alert('Dosya boş veya okunamadı.'); return; }
 

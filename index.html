@@ -2334,7 +2334,7 @@
                     subcategory: parseSubcat(p.subcategory),
                     style: p.style || ex.style || null,
                     price: p.price || ex.price || '',
-                    sku: p.sku || '',
+                    sku: p.sku || ex.sku || '',
                     materials: p.materials || '',
                     dimensions: p.dimensions || '',
                     images,
@@ -2700,6 +2700,7 @@
                         </div>
                         <div class="card-content">
                             <h3>${product.name[currentLanguage]}</h3>
+                            ${product.sku ? `<p style="font-size:0.72rem;color:#a09080;font-family:monospace;margin:3px 0 0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
                         </div>
                     </a>
                 `;
@@ -2843,6 +2844,7 @@
                         </div>
                         <div class="card-content">
                             <h3>${product.name && product.name[currentLanguage] || ''}</h3>
+                            ${product.sku ? `<p style="font-size:0.72rem;color:#a09080;font-family:monospace;margin:3px 0 0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
                         </div>
                     </a>
                 `;
@@ -2897,6 +2899,7 @@
                         </div>
                         <div class="card-content">
                             <h3>${product.name && product.name[currentLanguage] || ''}</h3>
+                            ${product.sku ? `<p style="font-size:0.72rem;color:#a09080;font-family:monospace;margin:3px 0 0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
                         </div>
                     </a>
                 `;
@@ -2942,6 +2945,7 @@
                         </div>
                         <div class="card-content">
                             <h3>${product.name[currentLanguage]}</h3>
+                            ${product.sku ? `<p style="font-size:0.72rem;color:#a09080;font-family:monospace;margin:3px 0 0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
                         </div>
                     </a>
                 `;

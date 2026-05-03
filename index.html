@@ -570,19 +570,19 @@
 
         .video-badge {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
             color: #fff;
-            width: 60px;
-            height: 60px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 0.7rem;
             z-index: 5;
+            transform: none;
         }
 
         /* Kart resim navigasyon okları */
@@ -2407,7 +2407,7 @@
                 <a href="#/product/${product.id}" class="card" id="pcard-${product.id}">
                     <div class="card-image">
                         <img src="${firstImg}" alt="${product.sku || ''}" loading="lazy" decoding="async" width="600" height="600">
-                        ${hasVideo ? '<div class="video-badge" style="width:36px;height:36px;font-size:1rem;opacity:0.85;">▶</div>' : ''}
+                        ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
                         ${hasMany ? `
                             <button class="card-nav-btn card-nav-prev" onclick="cardNavImg(event,${product.id},-1,'${imgsJson}')">&#8249;</button>
                             <button class="card-nav-btn card-nav-next" onclick="cardNavImg(event,${product.id},1,'${imgsJson}')">&#8250;</button>

@@ -3307,16 +3307,25 @@
             const products = await getProducts();
             const banners = await getBanners();
 
-            let productsListHTML = products.map(product => `
-                <div class="admin-card">
-                    <h4>${product.name.en}</h4>
-                    <p>${product.category} - ${parseSubcat(product.subcategory).join(', ')}</p>
-                    <div style="margin-top: 15px; display: flex; gap: 10px;">
-                        <button class="btn" style="flex: 1;" onclick="editProduct(${product.id})">${t().edit}</button>
-                        <button class="btn" style="flex: 1;" onclick="deleteProduct(${product.id})">${t().deleteProduct}</button>
+            let productsListHTML = products.map((product, idx) => {
+                const thumb = (product.images && product.images[0]) ? product.images[0] : '';
+                const subcatLabel = parseSubcat(product.subcategory).join(', ') || '-';
+                const styleBadge = product.style ? `<span style="font-size:0.72rem;background:#f0ece6;border:1px solid #ddd;border-radius:3px;padding:1px 6px;margin-left:6px;color:#8a7d6b;">${product.style}</span>` : '';
+                return `
+                <div style="display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid #ede8e1;background:${idx%2===0?'#fff':'#faf8f5'};transition:background 0.15s;" onmouseover="this.style.background='#f5f0eb'" onmouseout="this.style.background='${idx%2===0?'#fff':'#faf8f5'}'">
+                    <div style="width:56px;height:56px;flex-shrink:0;border-radius:4px;overflow:hidden;background:#f0ece6;border:1px solid #e8e0d5;">
+                        ${thumb ? `<img src="${thumb}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none'">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:1.2rem;">📷</div>`}
                     </div>
-                </div>
-            `).join('');
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-weight:500;font-size:0.92rem;color:#2c2c2c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name.tr || product.name.en}${styleBadge}</div>
+                        <div style="font-size:0.78rem;color:#999;margin-top:2px;">${subcatLabel} &nbsp;·&nbsp; ID: ${product.id}</div>
+                    </div>
+                    <div style="display:flex;gap:7px;flex-shrink:0;">
+                        <button style="padding:5px 14px;background:#fff;border:1px solid #c9b99a;border-radius:3px;font-size:0.82rem;cursor:pointer;color:#5a4a3a;" onclick="editProduct(${product.id})">${t().edit}</button>
+                        <button style="padding:5px 12px;background:#fff;border:1px solid #e0c0c0;border-radius:3px;font-size:0.82rem;cursor:pointer;color:#c0392b;" onclick="deleteProduct(${product.id})">✕</button>
+                    </div>
+                </div>`;
+            }).join('');
 
             return `
                 <div class="admin-container">
@@ -3348,9 +3357,11 @@
                         </div>
 
                         <div id="products-section" class="admin-section" style="display: none;">
-                            <h2>${t().products}</h2>
-                            <button class="btn btn-primary" style="margin-bottom: 30px;" onclick="(async () => { await addNewProduct(); })()">${t().addProduct}</button>
-                            <div class="admin-grid">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                                <h2 style="margin:0;">${t().products} <span style="font-size:0.85rem;font-weight:400;color:#999;">(${products.length})</span></h2>
+                                <button class="btn btn-primary" onclick="(async () => { await addNewProduct(); })()">${t().addProduct}</button>
+                            </div>
+                            <div style="border:1px solid #ede8e1;border-radius:6px;overflow:hidden;">
                                 ${productsListHTML}
                             </div>
                         </div>

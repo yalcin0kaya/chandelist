@@ -4179,9 +4179,10 @@
 
             const file = input.files[0];
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = async function(e) {
                 try {
-                    const wb = XLSX.read(e.target.result, { type: 'array', cellStyles: true, raw: true });
+                    const arrayBuffer = e.target.result;
+                    const wb = XLSX.read(arrayBuffer, { type: 'array', cellStyles: true, raw: true });
                     const ws = wb.Sheets[wb.SheetNames[0]];
 
                     // Find header row — look for row containing cell that starts with 'urun_adi_tr'
@@ -4213,34 +4214,54 @@
 
                     const validRows = rows.filter(r => r.urun_adi_tr || r.urun_adi_en);
 
-                    // Extract embedded images from sheet — match to rows by position
-                    const sheetImages = ws['!images'] || [];
-                    // Build map: dataRowIndex (0-based in validRows) → base64 image data
+                    // Extract images — supports new Excel "Rich Data" format (Insert Picture in Cell)
                     const imageMap = {};
-                    // Find where header row ends (skip header + description rows)
-                    // sheet_to_json skips header; row index in sheet = validRows index + offset
-                    // We find the actual start row by checking the ref
-                    const ref = ws['!ref'] || 'A1:A1';
-                    const startRow = parseInt(ref.split(':')[0].replace(/[A-Z]/g,'')) || 1;
-                    // Header is at startRow, data starts at startRow+1
-                    const dataStartSheetRow = startRow; // 0-based
-
-                    sheetImages.forEach(img => {
-                        if (!img || !img.data) return;
-                        // img.l.r = top-left row (0-based in sheet)
-                        const sheetRow = img.l ? img.l.r : 0;
-                        // Map to validRows index: subtract header rows
-                        // sheet_to_json first row is header, so data row index = sheetRow - 1 (if 1 header row)
-                        // But our template has 4 header rows before data
-                        // We'll use a heuristic: find closest validRow index
-                        const dataIdx = sheetRow - 4; // 4 header rows in our template
-                        if (dataIdx >= 0 && dataIdx < validRows.length) {
-                            imageMap[dataIdx] = { data: img.data, type: img.type || 'image/png' };
-                        } else if (sheetRow >= 1 && sheetRow - 1 < validRows.length) {
-                            // Fallback: 1 header row
-                            imageMap[sheetRow - 1] = { data: img.data, type: img.type || 'image/png' };
+                    try {
+                        if (!window.JSZip) {
+                            await new Promise((resolve, reject) => {
+                                const s = document.createElement('script');
+                                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                                s.onload = resolve; s.onerror = reject;
+                                document.head.appendChild(s);
+                            });
                         }
-                    });
+                        const zip = await window.JSZip.loadAsync(arrayBuffer);
+                        const relsFile = zip.file('xl/richData/_rels/richValueRel.xml.rels');
+                        if (relsFile) {
+                            const relsXml = await relsFile.async('text');
+                            const relsDoc = new DOMParser().parseFromString(relsXml, 'text/xml');
+                            const idToFile = {};
+                            relsDoc.querySelectorAll('Relationship').forEach(rel => {
+                                const num = parseInt(rel.getAttribute('Id').replace('rId',''));
+                                idToFile[num - 1] = rel.getAttribute('Target').replace('../media/','');
+                            });
+                            const sheetFile = zip.file('xl/worksheets/sheet1.xml');
+                            if (sheetFile) {
+                                const sheetXml = await sheetFile.async('text');
+                                const vmMatches = [...sheetXml.matchAll(/<c r="([^"]+)"[^>]*vm="(\d+)"/g)];
+                                // dataStartRow: headerRowIdx (0-based) + 1 description row + 1 for Excel 1-indexing
+                                const dataStartRow1 = headerRowIdx + 3; // 1-indexed Excel row of first data row
+                                for (const m of vmMatches) {
+                                    const cellRef = m[1]; // e.g. G5
+                                    const vmIdx = parseInt(m[2]) - 1; // 0-indexed
+                                    const rowNum = parseInt(cellRef.replace(/[A-Z]/g, '')); // 1-indexed
+                                    const dataIdx = rowNum - dataStartRow1; // 0-indexed data row
+                                    if (dataIdx >= 0 && dataIdx < validRows.length) {
+                                        const imgFile = idToFile[vmIdx];
+                                        if (imgFile) {
+                                            const imgZip = zip.file('xl/media/' + imgFile);
+                                            if (imgZip) {
+                                                const imgData = await imgZip.async('base64');
+                                                const ext = imgFile.split('.').pop().toLowerCase();
+                                                const mime = {jpeg:'image/jpeg',jpg:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp'}[ext]||'image/jpeg';
+                                                imageMap[dataIdx] = { data: imgData, type: mime };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } catch(imgErr) { console.warn('Resim okuma hatası:', imgErr); }
 
                     window._pendingImportRows = validRows;
                     window._pendingImportImages = imageMap;

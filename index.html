@@ -4017,31 +4017,49 @@
             status.style.display = 'block';
             status.textContent = '🔍 Görsel analiz ediliyor, tüm alanlar dolduruluyor...';
 
-            const prompt = `Sen bir e-ticaret SEO uzmanısın. Bu ürün görselini analiz et ve aşağıdaki JSON formatında Türkçe ve İngilizce içerik üret.
+            const prompt = `Sen bir e-ticaret SEO uzmanısın. CHANDELIST markası için bu ürün görselini analiz et ve aşağıdaki JSON formatında Türkçe ve İngilizce içerik üret.
 
-Görseli dikkatlice incele:
-- Ürünün ne olduğunu (avize, aplik, masa lambası, lambader, dekoratif nesne vb.)
-- Stilini (modern, klasik/geleneksel, endüstriyel, antika vb.)
-- Malzemesini (pirinç, kristal, cam, metal, kumaş vb.)
-- Rengini ve yüzeyini (eskitme, parlak, mat, altın, gümüş vb.)
-- Nerede kullanılabileceğini (salon, yemek odası, yatak odası, otel lobisi, restoran, koridor vb.)
+MARKA HAKKINDA ÖNEMLİ BİLGİLER:
+- Chandelist, Türk el yapımı aydınlatma markasıdır
+- Ürünlerin %95'i ANTİK PİRİNÇ ESKİTME yüzeylidir (patinalı, antika görünümlü pirinç). Görselde başka bir renk/yüzey açıkça görünmüyorsa "antik pirinç eskitme" yüzey kullan.
+- Siyah metal, krom, gümüş gibi renkler sadece görselde kesinlikle o renk görünüyorsa kullan
+- Yaygın stiller: Osmanlı motifli, Fas tarzı (Moroccan), Türk-İslam sanatı, Geleneksel Anadolu, Modern Bohem
+
+TERMİNOLOJİ KURALLARI (ÇOK ÖNEMLİ):
+- Türkçe'de: "Fas Tarzı" veya "Fas Desenli" (Marokkain, Marokko, Marokkan KULLANMA — bunlar Türkçe değil)
+- İngilizce'de: "Moroccan" (doğru)
+- Türkçe'de: "Osmanlı Motifli", "Osmanlı Tarzı"
+- İngilizce'de: "Ottoman", "Ottoman-inspired"
+- Türkçe'de: "Türk-İslam", "Geleneksel Türk"
+
+AÇIKLAMA KURALLARI:
+- Her ürün için FARKLI ve ÖZGÜN açıklama yaz — kalıplaşmış ifadeler kullanma
+- Ürünün gerçek özelliklerine odaklan (şekli, motifi, formu, boyutu)
+- "Lüks" kelimesini her açıklamaya koyma — sadece gerçekten lüks görünüyorsa
+- Açıklamada el işçiliği, özgün tasarım, mekan uyumu vurgula
+
+SEO ANAHTAR KELİME KURALLARI:
+- İnsanların Google'da gerçekten aradığı terimler kullan
+- Türkçe örnekler: "antik pirinç avize fiyatı", "osmanlı tarzı avize satın al", "el yapımı pirinç aplik", "salon için sarkıt avize", "otel lobisi aydınlatma"
+- İngilizce örnekler: "moroccan chandelier for sale", "antique brass pendant light", "handmade ottoman lamp", "turkish style ceiling light"
+- Genel ve soyut değil, SPESİFİK ve UZUN KUYRUKLU kelimeler seç
 
 JSON formatında yanıt ver (başka hiçbir şey yazma):
 {
-  "name_tr": "Kısa ve açıklayıcı ürün adı Türkçe (maks 80 karakter)",
-  "name_en": "Short descriptive product name English (max 80 chars)",
-  "description_tr": "2-3 cümle Türkçe açıklama. Malzeme, stil ve nerede sergileneceğini belirt. Örnek mekanlar: salon, yemek odası, otel lobisi, restoran. Lüks ve kalite vurgula.",
-  "description_en": "2-3 sentences English description. Mention material, style and display locations. Example: living room, dining room, hotel lobby, restaurant. Emphasize luxury and quality.",
+  "name_tr": "Kısa ve açıklayıcı ürün adı Türkçe (maks 80 karakter) — ürünün gerçek özelliğini yansıt",
+  "name_en": "Short descriptive product name English (max 80 chars) — reflect real product features",
+  "description_tr": "2-3 cümle Türkçe açıklama. Bu ürüne özgü detayları (form, motif, malzeme, boyut ipuçları) belirt. Kullanım mekanı ve atmosfer vurgula. Her seferinde farklı yaz.",
+  "description_en": "2-3 sentences English description. Highlight unique features of THIS product (form, pattern, material). Mention ambiance and placement. Write differently each time.",
   "meta_title_tr": "SEO başlık Türkçe, maks 60 karakter, CHANDELIST markasını içermeli",
   "meta_title_en": "SEO title English, max 60 chars, include CHANDELIST brand",
-  "meta_description_tr": "SEO açıklama Türkçe, maks 155 karakter, ücretsiz kargo ve lüks vurgula, CTA içermeli",
-  "meta_description_en": "SEO description English, max 155 chars, mention free shipping and luxury, include CTA",
-  "keywords_tr": "10 anahtar kelime öbeği virgülle, spesifik ve uzun kuyruklu (örn: 'modern sarkıt avize, eskitme pirinç avize fiyatları')",
-  "keywords_en": "10 keyword phrases comma-separated, specific and long-tail",
+  "meta_description_tr": "SEO açıklama Türkçe, maks 155 karakter, ürünün öne çıkan özelliğini vurgula, CTA içermeli (örn: 'Şimdi inceleyin', 'Sipariş verin')",
+  "meta_description_en": "SEO description English, max 155 chars, highlight key product feature, include CTA",
+  "keywords_tr": "10 anahtar kelime öbeği virgülle — Google'da gerçekten aranan, spesifik, uzun kuyruklu terimler",
+  "keywords_en": "10 keyword phrases comma-separated — real Google search terms, specific and long-tail",
   "category": "lighting veya decorative",
   "subcategory": "chandelier veya sconce veya table_lamp veya floor_lamp veya outdoor veya decorative",
   "style": "modern veya traditional (sadece avize için, diğerleri için boş bırak)",
-  "materials": "Tespit ettiğin malzemeler virgülle",
+  "materials": "Tespit ettiğin malzemeler virgülle — varsayılan: antik pirinç eskitme",
   "dimensions_hint": "Görsel ipucu ile boyut tahmini (emin değilsen boş bırak)"
 }`;
 

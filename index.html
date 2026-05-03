@@ -564,8 +564,7 @@
             backface-visibility: hidden;
         }
 
-        .card:hover .card-image img,
-        .card:hover .card-image video {
+        .card:hover .card-image img {
             transform: scale(1.05);
         }
 
@@ -585,6 +584,50 @@
             font-size: 2rem;
             z-index: 5;
         }
+
+        /* Kart resim navigasyon okları */
+        .card-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.85);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1rem;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s, background 0.2s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c2c2c;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .card:hover .card-nav-btn { opacity: 1; }
+        .card-nav-btn:hover { background: rgba(255,255,255,1); }
+        .card-nav-prev { left: 8px; }
+        .card-nav-next { right: 8px; }
+        .card-dots {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 10;
+        }
+        .card-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.55);
+            transition: background 0.2s;
+        }
+        .card-dot.active { background: #fff; }
 
         .card-content {
             padding: 14px 0 10px;
@@ -2334,6 +2377,50 @@
             try { const p = JSON.parse(val); return Array.isArray(p) ? p : [val]; } catch { return [val]; }
         }
 
+        // ---- Kart resim navigasyonu ----
+        const _cardIdx = {};
+        function cardNavImg(e, productId, dir, imagesJson) {
+            e.preventDefault();
+            e.stopPropagation();
+            const images = JSON.parse(imagesJson);
+            if (!images || images.length < 2) return;
+            _cardIdx[productId] = ((_cardIdx[productId] || 0) + dir + images.length) % images.length;
+            const card = document.getElementById('pcard-' + productId);
+            if (!card) return;
+            const img = card.querySelector('.card-image img');
+            if (img) img.src = images[_cardIdx[productId]];
+            card.querySelectorAll('.card-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === _cardIdx[productId]);
+            });
+        }
+
+        function renderProductCard(product) {
+            const imgs = product.images && product.images.filter(i => i && i.trim()).length > 0
+                ? product.images.filter(i => i && i.trim())
+                : ['https://picsum.photos/600/600?random=' + product.id];
+            const firstImg = imgs[0];
+            const hasMany = imgs.length > 1;
+            const imgsJson = JSON.stringify(imgs).replace(/"/g, '&quot;');
+            const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
+
+            return `
+                <a href="#/product/${product.id}" class="card" id="pcard-${product.id}">
+                    <div class="card-image">
+                        <img src="${firstImg}" alt="${product.sku || ''}" loading="lazy" decoding="async" width="600" height="600">
+                        ${hasVideo ? '<div class="video-badge" style="width:36px;height:36px;font-size:1rem;opacity:0.85;">▶</div>' : ''}
+                        ${hasMany ? `
+                            <button class="card-nav-btn card-nav-prev" onclick="cardNavImg(event,${product.id},-1,'${imgsJson}')">&#8249;</button>
+                            <button class="card-nav-btn card-nav-next" onclick="cardNavImg(event,${product.id},1,'${imgsJson}')">&#8250;</button>
+                            <div class="card-dots">${imgs.map((_,i) => `<div class="card-dot${i===0?' active':''}"></div>`).join('')}</div>
+                        ` : ''}
+                    </div>
+                    <div class="card-content">
+                        ${product.sku ? `<p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
+                    </div>
+                </a>
+            `;
+        }
+
         async function getProducts() {
             const data = await sbFetch('/products?select=*&order=sort_order.asc.nullslast,created_at.desc');
             if (!data || data.length === 0) return demoProducts;
@@ -2709,20 +2796,7 @@
             const homeBanner = banners.find(b => b.position === 'home') || banners[0];
             const homeVideoBanner = banners.find(b => b.position === 'home_video');
 
-            let productsHTML = products.slice(0, 8).map(product => {
-                const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
-                return `
-                    <a href="#/product/${product.id}" class="card">
-                        <div class="card-image">
-                            ${hasVideo ? `<video src="${product.videos[0]}" muted loop playsinline webkit-playsinline></video>` : `<img src="${product.images[0] || 'https://picsum.photos/600/600?random=1'}" alt="${product.name[currentLanguage]}" loading="lazy" decoding="async" width="600" height="600">`}
-                            ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
-                        </div>
-                        <div class="card-content">
-                            ${product.sku ? `<p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
-                        </div>
-                    </a>
-                `;
-            }).join('');
+            let productsHTML = products.slice(0, 8).map(product => renderProductCard(product)).join('');
 
             return `
                 ${renderHero(homeBanner)}
@@ -2852,20 +2926,9 @@
             const hasSubcat = (p, key) => parseSubcat(p.subcategory).includes(key);
             const products = allProducts.filter(p => hasSubcat(p, 'chandelier') && (p.style === style || (!p.style && style === 'modern')));
 
-            const productsHTML = products.length > 0 ? products.map(product => {
-                const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
-                return `
-                    <a href="#/product/${product.id}" class="card">
-                        <div class="card-image">
-                            ${hasVideo ? `<video src="${product.videos[0]}" muted loop loading="lazy"></video>` : `<img src="${product.images[0] || 'https://picsum.photos/600/600?random=' + product.id}" alt="${product.name[currentLanguage]}" loading="lazy">`}
-                            ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
-                        </div>
-                        <div class="card-content">
-                            ${product.sku ? `<p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
-                        </div>
-                    </a>
-                `;
-            }).join('') : `<p style="color:#999; grid-column:1/-1; text-align:center; padding:60px 0;">${currentLanguage === 'tr' ? 'Bu koleksiyonda henüz ürün yok.' : 'No products in this collection yet.'}</p>`;
+            const productsHTML = products.length > 0
+                ? products.map(product => renderProductCard(product)).join('')
+                : `<p style="color:#999; grid-column:1/-1; text-align:center; padding:60px 0;">${currentLanguage === 'tr' ? 'Bu koleksiyonda henüz ürün yok.' : 'No products in this collection yet.'}</p>`;
 
             return `
                 ${col.image ? `
@@ -2906,20 +2969,7 @@
 
             const products = (await getProducts()).filter(p => parseSubcat(p.subcategory).includes(subcategory));
 
-            let productsHTML = products.map(product => {
-                const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
-                return `
-                    <a href="#/product/${product.id}" class="card">
-                        <div class="card-image">
-                            ${hasVideo ? `<video src="${product.videos[0]}" muted loop loading="lazy"></video>` : `<img src="${product.images[0] || 'https://picsum.photos/600/600?random=' + product.id}" alt="${product.name[currentLanguage]}" loading="lazy">`}
-                            ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
-                        </div>
-                        <div class="card-content">
-                            ${product.sku ? `<p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
-                        </div>
-                    </a>
-                `;
-            }).join('');
+            let productsHTML = products.map(product => renderProductCard(product)).join('');
 
             return `
                 <section class="hero" style="margin-top: 80px;">
@@ -2951,20 +3001,7 @@
 
             const products = (await getProducts()).filter(p => p.category === 'decorative');
 
-            let productsHTML = products.map(product => {
-                const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
-                return `
-                    <a href="#/product/${product.id}" class="card">
-                        <div class="card-image">
-                            ${hasVideo ? `<video src="${product.videos[0]}" alt="${product.name[currentLanguage]}" loading="lazy" muted loop></video>` : `<img src="${product.images[0]}" alt="${product.name[currentLanguage]}" loading="lazy">`}
-                            ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
-                        </div>
-                        <div class="card-content">
-                            ${product.sku ? `<p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
-                        </div>
-                    </a>
-                `;
-            }).join('');
+            let productsHTML = products.map(product => renderProductCard(product)).join('');
 
             return `
                 <section class="hero" style="margin-top: 80px;">

@@ -1583,6 +1583,24 @@
         .admin-tab-panel.active {
             display: block;
         }
+        /* ===== SORTING UI ===== */
+        .sort-cat-btn {
+            padding: 7px 16px; background: #fff; border: 1px solid #ddd;
+            border-radius: 20px; font-size: 0.82rem; cursor: pointer;
+            color: #5a4a3a; transition: all 0.2s; font-family: 'Jost', sans-serif;
+        }
+        .sort-cat-btn:hover { border-color: #c9b99a; background: #faf8f5; }
+        .sort-cat-btn.active { background: #2c2c2c; color: #fff; border-color: #2c2c2c; }
+        .sort-item {
+            background: #fff; border: 1px solid #e8e0d5; border-radius: 6px;
+            overflow: hidden; cursor: grab; user-select: none;
+            transition: box-shadow 0.15s, transform 0.15s;
+        }
+        .sort-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateY(-2px); }
+        .sort-item.sortable-ghost { opacity: 0.4; }
+        .sort-item.sortable-chosen { box-shadow: 0 8px 24px rgba(0,0,0,0.2); transform: scale(1.04); cursor: grabbing; }
+        .sort-item img { width:100%; aspect-ratio:1; object-fit:cover; display:block; }
+        .sort-item .sort-code { font-family:monospace; font-size:0.72rem; color:#8a7d6b; text-align:center; padding:5px 4px; background:#faf8f5; border-top:1px solid #eee; }
         /* ===== CHANDELIER COLLECTIONS ===== */
         .collections-grid {
             display: grid;
@@ -2317,7 +2335,7 @@
         }
 
         async function getProducts() {
-            const data = await sbFetch('/products?select=*&order=created_at.desc');
+            const data = await sbFetch('/products?select=*&order=sort_order.asc.nullslast,created_at.desc');
             if (!data || data.length === 0) return demoProducts;
             const extras = getProductExtras();
             return data.map(p => {
@@ -2335,6 +2353,7 @@
                     style: p.style || ex.style || null,
                     price: p.price || ex.price || '',
                     sku: p.sku || ex.sku || '',
+                    sort_order: p.sort_order || null,
                     materials: p.materials || '',
                     dimensions: p.dimensions || '',
                     images,
@@ -3477,6 +3496,7 @@
                             <a href="#" class="admin-nav" data-section="products">${t().products}</a>
                             <a href="#" class="admin-nav" data-section="banners">${t().banners}</a>
                             <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
+                            <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
                             <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
                         </nav>
@@ -3561,6 +3581,29 @@
                                     <button class="btn btn-primary" onclick="saveCollection(${idx})">Kaydet</button>
                                 </div>
                             `).join('')}
+                        </div>
+
+                        <div id="sorting-section" class="admin-section" style="display: none;">
+                            <h2 style="margin-bottom:6px;">Sayfa Sıralaması</h2>
+                            <p style="color:#8a7d6b;font-size:0.85rem;margin-bottom:24px;">Ürünleri sürükleyip bırakarak sırayı değiştir, ardından Kaydet butonuna bas.</p>
+
+                            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;" id="sortCatTabs">
+                                <button class="sort-cat-btn active" data-cat="chandelier" onclick="loadSortGrid('chandelier')">Avizeler</button>
+                                <button class="sort-cat-btn" data-cat="sconce" onclick="loadSortGrid('sconce')">Aplikler</button>
+                                <button class="sort-cat-btn" data-cat="table_lamp" onclick="loadSortGrid('table_lamp')">Masa Lambaları</button>
+                                <button class="sort-cat-btn" data-cat="floor_lamp" onclick="loadSortGrid('floor_lamp')">Lambaderler</button>
+                                <button class="sort-cat-btn" data-cat="outdoor" onclick="loadSortGrid('outdoor')">Dış Mekan</button>
+                                <button class="sort-cat-btn" data-cat="decorative" onclick="loadSortGrid('decorative')">Dekoratif</button>
+                            </div>
+
+                            <div id="sortGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;min-height:200px;padding:16px;background:#faf8f5;border-radius:8px;border:2px dashed #e8e0d5;">
+                                <p style="color:#aaa;font-size:0.85rem;grid-column:1/-1;text-align:center;padding:40px 0;">Yükleniyor...</p>
+                            </div>
+
+                            <div style="margin-top:20px;display:flex;gap:12px;align-items:center;">
+                                <button onclick="saveSortOrder()" style="padding:10px 28px;background:#2c2c2c;color:#fff;border:none;border-radius:4px;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">💾 Kaydet</button>
+                                <span id="sortSaveMsg" style="display:none;color:#27ae60;font-size:0.85rem;"></span>
+                            </div>
                         </div>
 
                         <div id="settings-section" class="admin-section" style="display: none;">
@@ -3677,10 +3720,11 @@
                 </div>
             `).join('') : '';
 
-            let videosHTML = product && product.videos ? product.videos.map((vid, idx) => `
-                <div style="margin-bottom: 10px;">
-                    <input type="text" value="${vid}" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ddd;">
-                    <button type="button" class="btn" style="font-size: 0.75rem; margin-top: 5px;" onclick="this.parentElement.remove()">Remove</button>
+            let videosHTML = product && product.videos ? product.videos.filter(v => v && v.trim()).map((vid, idx) => `
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                    <video src="${vid}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;background:#000;flex-shrink:0;" muted></video>
+                    <input type="text" value="${vid}" class="form-control" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;color:#555;" readonly>
+                    <button type="button" style="padding:6px 10px;background:#fff;border:1px solid #e0c0c0;border-radius:4px;color:#c0392b;cursor:pointer;font-size:0.85rem;" onclick="this.parentElement.remove()">✕</button>
                 </div>
             `).join('') : '';
 
@@ -3843,11 +3887,21 @@
                                 <!-- VIDEO SECTION -->
                                 <div style="margin-top: 30px;">
                                     <label style="font-weight:600; margin-bottom:8px; display:block;">🎥 Ürün Videosu</label>
-                                    <small style="color: #999; font-size: 0.85rem; display: block; margin-bottom: 10px;">Video URL'si (MP4 / YouTube embed). Opsiyonel.</small>
-                                    <div id="videosContainer" style="margin-bottom: 10px;">
+                                    <small style="color:#999; font-size:0.85rem; display:block; margin-bottom:12px;">Video yükle veya URL gir (MP4). Opsiyonel.</small>
+
+                                    <!-- Video Önizleme -->
+                                    <div id="videosContainer" style="margin-bottom:12px;">
                                         ${videosHTML}
                                     </div>
-                                    <button type="button" class="btn" onclick="addVideoInput()">+ Video URL Ekle</button>
+
+                                    <!-- Yükleme Butonları -->
+                                    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                                        <button type="button" onclick="uploadVideoCloudinary()" style="padding:9px 18px;background:#2c2c2c;color:#fff;border:none;border-radius:4px;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;gap:6px;">
+                                            ☁️ Video Yükle
+                                        </button>
+                                        <button type="button" class="btn" onclick="addVideoInput()" style="font-size:0.85rem;">+ URL ile Ekle</button>
+                                    </div>
+                                    <div id="videoUploadStatus" style="display:none;margin-top:8px;font-size:0.82rem;color:#8a7d6b;"></div>
                                 </div>
 
                                 <!-- RELATED PRODUCTS SECTION -->
@@ -4237,11 +4291,54 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
         function addVideoInput() {
             const container = document.getElementById('videosContainer');
             container.insertAdjacentHTML('beforeend', `
-                <div style="margin-bottom: 10px;">
-                    <input type="text" placeholder="${t().videoUrl}" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ddd;">
-                    <button type="button" class="btn" style="font-size: 0.75rem; margin-top: 5px;" onclick="this.parentElement.remove()">Remove</button>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                    <input type="text" placeholder="https://res.cloudinary.com/..." class="form-control" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.85rem;">
+                    <button type="button" style="padding:6px 10px;background:#fff;border:1px solid #e0c0c0;border-radius:4px;color:#c0392b;cursor:pointer;font-size:0.85rem;" onclick="this.parentElement.remove()">✕</button>
                 </div>
             `);
+        }
+
+        function uploadVideoCloudinary() {
+            const status = document.getElementById('videoUploadStatus');
+            const container = document.getElementById('videosContainer');
+
+            if (typeof cloudinary === 'undefined') {
+                if (status) { status.style.display='block'; status.textContent='Cloudinary yükleniyor...'; }
+                return;
+            }
+
+            const widget = cloudinary.createUploadWidget({
+                cloudName: CLOUDINARY_CLOUD,
+                uploadPreset: CLOUDINARY_PRESET,
+                multiple: false,
+                sources: ['local', 'url'],
+                clientAllowedFormats: ['mp4', 'mov', 'avi', 'webm', 'mkv'],
+                maxFileSize: 200000000, // 200MB
+                resourceType: 'video',
+                language: 'tr',
+                text: { tr: { or: 'veya', menu: { files: 'Dosyalarım', url: 'URL' }, queue: { title: 'Yükleme', done: 'Bitti' }, upload: { label: 'Videoyu buraya sürükleyin' } } }
+            }, (error, result) => {
+                if (error) {
+                    if (status) { status.style.display='block'; status.style.color='#e74c3c'; status.textContent='Hata: '+error.message; }
+                    return;
+                }
+                if (result.event === 'upload-added') {
+                    if (status) { status.style.display='block'; status.style.color='#8a7d6b'; status.textContent='⏳ Yükleniyor...'; }
+                }
+                if (result.event === 'success') {
+                    const url = result.info.secure_url;
+                    // Input olarak ekle
+                    container.insertAdjacentHTML('beforeend', `
+                        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                            <video src="${url}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;background:#000;flex-shrink:0;" muted></video>
+                            <input type="text" value="${url}" class="form-control" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;color:#555;" readonly>
+                            <button type="button" style="padding:6px 10px;background:#fff;border:1px solid #e0c0c0;border-radius:4px;color:#c0392b;cursor:pointer;font-size:0.85rem;" onclick="this.parentElement.remove()">✕</button>
+                        </div>
+                    `);
+                    if (status) { status.style.display='block'; status.style.color='#27ae60'; status.textContent='✓ Video yüklendi!'; setTimeout(()=>{ status.style.display='none'; }, 3000); }
+                }
+            });
+            widget.open();
         }
 
         function attachTabListeners() {
@@ -4993,6 +5090,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     const section = link.dataset.section;
                     document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
                     document.getElementById(`${section}-section`).style.display = 'block';
+                    // Sıralama sekmesi açılınca avizeyi otomatik yükle
+                    if (section === 'sorting') loadSortGrid('chandelier');
                 });
             });
 
@@ -5304,6 +5403,78 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                 window.open(`https://wa.me/?text=${text}`, '_blank');
                 closeModal();
             }
+        }
+
+        // ============= SORTING UI =============
+        let _sortable = null;
+        let _sortProducts = [];
+
+        async function loadSortGrid(subcat) {
+            // Tab aktif
+            document.querySelectorAll('.sort-cat-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.cat === subcat);
+            });
+            const grid = document.getElementById('sortGrid');
+            if (!grid) return;
+            grid.innerHTML = '<p style="color:#aaa;font-size:0.85rem;grid-column:1/-1;text-align:center;padding:40px 0;">Yükleniyor...</p>';
+
+            const all = await getProducts();
+            if (subcat === 'decorative') {
+                _sortProducts = all.filter(p => p.category === 'decorative');
+            } else {
+                _sortProducts = all.filter(p => parseSubcat(p.subcategory).includes(subcat));
+            }
+            _sortProducts.sort((a, b) => (a.sort_order || 999) - (b.sort_order || 999));
+
+            grid.innerHTML = _sortProducts.map(p => `
+                <div class="sort-item" data-id="${p.id}">
+                    <img src="${p.images && p.images[0] ? p.images[0] : ''}" alt="${p.sku}" loading="lazy"
+                         onerror="this.style.background='#f0ece6';this.removeAttribute('src')">
+                    <div class="sort-code">${p.sku || '#'+p.id}</div>
+                </div>
+            `).join('');
+
+            // SortableJS yükle (CDN)
+            if (!window.Sortable) {
+                await new Promise(res => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js';
+                    s.onload = res; document.head.appendChild(s);
+                });
+            }
+            if (_sortable) _sortable.destroy();
+            _sortable = new Sortable(grid, {
+                animation: 180, ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen'
+            });
+        }
+
+        async function saveSortOrder() {
+            const grid = document.getElementById('sortGrid');
+            const msg = document.getElementById('sortSaveMsg');
+            if (!grid) return;
+            const items = grid.querySelectorAll('.sort-item');
+            const updates = Array.from(items).map((el, i) => ({ id: parseInt(el.dataset.id), sort_order: i + 1 }));
+
+            msg.style.display = 'inline';
+            msg.style.color = '#8a7d6b';
+            msg.textContent = 'Kaydediliyor...';
+
+            let ok = true;
+            for (const u of updates) {
+                const r = await fetch(`${SB_URL}/products?id=eq.${u.id}`, {
+                    method: 'PATCH',
+                    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+                    body: JSON.stringify({ sort_order: u.sort_order })
+                });
+                if (!r.ok) { ok = false; break; }
+            }
+
+            msg.style.color = ok ? '#27ae60' : '#e74c3c';
+            msg.textContent = ok ? '✓ Kaydedildi!' : '✗ Hata oluştu';
+            setTimeout(() => { msg.style.display = 'none'; }, 3000);
+
+            // Cache'i temizle ki yeni sıra yüklensin
+            window._productsCache = null;
         }
 
         // ============= INITIALIZATION =============

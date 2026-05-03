@@ -2481,7 +2481,7 @@
         }
 
         // Update SEO metadata dynamically
-        function updateSEO(title, description, imageUrl = '', productSchema = null, keywords = '') {
+        function updateSEO(title, description, imageUrl = '', productSchema = null, keywords = '', canonicalPath = '') {
             document.title = title;
 
             const metaDescription = document.querySelector('meta[name="description"]');
@@ -2498,8 +2498,19 @@
                 metaKeywords.setAttribute('content', keywords);
             }
 
+            // Update canonical URL
+            const canonicalUrl = 'https://chandelist.com' + (canonicalPath || '');
+            let canonicalTag = document.querySelector('link[rel="canonical"]');
+            if (!canonicalTag) {
+                canonicalTag = document.createElement('link');
+                canonicalTag.setAttribute('rel', 'canonical');
+                document.head.appendChild(canonicalTag);
+            }
+            canonicalTag.setAttribute('href', canonicalUrl);
+
             document.querySelector('meta[property="og:title"]').setAttribute('content', title);
             document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+            document.querySelector('meta[property="og:url"]').setAttribute('content', canonicalUrl);
 
             // Update Twitter meta tags
             let twitterTitle = document.querySelector('meta[name="twitter:title"]');
@@ -2648,10 +2659,26 @@
 
         // ============= HOME PAGE =============
         async function renderHomePage() {
+            const orgSchema = {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "CHANDELIST",
+                "url": "https://chandelist.com",
+                "logo": "https://chandelist.com/logo.png",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "customer service",
+                    "availableLanguage": ["Turkish", "English"]
+                },
+                "sameAs": []
+            };
             updateSEO(
                 'CHANDELIST — Luxury Chandeliers & Decorative Lighting',
                 'Handcrafted luxury chandeliers and decorative lighting that unite contemporary design with traditional craftsmanship.',
-                'https://picsum.photos/1200/630?random=og'
+                'https://picsum.photos/1200/630?random=og',
+                orgSchema,
+                'lüks avize, dekoratif aydınlatma, kristal avize, modern avize, chandelist',
+                '/'
             );
 
             const products = await getProducts();
@@ -2943,24 +2970,37 @@
             const metaDesc = product.metaDescription ? product.metaDescription[currentLanguage] : (product.description && product.description[currentLanguage] || '');
             const metaKeywords = product.keywords ? product.keywords[currentLanguage] : '';
 
+            const productImages = (product.images || []).filter(Boolean);
             updateSEO(
                 metaTitle,
                 metaDesc,
-                product.images[0],
+                productImages[0] || '',
                 {
                     "@context": "https://schema.org",
                     "@type": "Product",
                     "name": product.name && product.name[currentLanguage] || '',
                     "description": product.description && product.description[currentLanguage] || '',
-                    "image": product.images[0],
-                    "brand": "CHANDELIST",
+                    "image": productImages,
+                    "brand": {
+                        "@type": "Brand",
+                        "name": "CHANDELIST"
+                    },
+                    "url": `https://chandelist.com/#/product/${product.id}`,
+                    "sku": product.sku || String(product.id),
                     "offers": {
                         "@type": "Offer",
-                        "price": product.price,
-                        "priceCurrency": "USD"
+                        "url": `https://chandelist.com/#/product/${product.id}`,
+                        "priceCurrency": "TRY",
+                        "price": product.price || "0",
+                        "availability": "https://schema.org/InStock",
+                        "seller": {
+                            "@type": "Organization",
+                            "name": "CHANDELIST"
+                        }
                     }
                 },
-                metaKeywords
+                metaKeywords,
+                `/#/product/${product.id}`
             );
 
             // Combine images and videos for gallery

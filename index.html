@@ -3185,10 +3185,19 @@
                                         <span class="detail-label">${t().materials}</span>
                                         <span>${product.materials}</span>
                                     </div>
-                                    <div class="detail-row">
-                                        <span class="detail-label">${t().dimensions}</span>
-                                        <span>${product.dimensions}</span>
-                                    </div>
+                                    ${(() => {
+                                        if (!product.dimensions) return '';
+                                        let dim = {h:'',dia:'',w:'',d:''};
+                                        try { dim = JSON.parse(product.dimensions); } catch(e) {
+                                            return `<div class="detail-row"><span class="detail-label">${t().dimensions}</span><span>${product.dimensions}</span></div>`;
+                                        }
+                                        const parts = [];
+                                        if (dim.h)   parts.push(`<div class="detail-row"><span class="detail-label">Height / Yükseklik</span><span>${dim.h} cm</span></div>`);
+                                        if (dim.dia) parts.push(`<div class="detail-row"><span class="detail-label">Diameter / Çap</span><span>${dim.dia} cm</span></div>`);
+                                        if (dim.w)   parts.push(`<div class="detail-row"><span class="detail-label">Width / Genişlik</span><span>${dim.w} cm</span></div>`);
+                                        if (dim.d)   parts.push(`<div class="detail-row"><span class="detail-label">Depth / Derinlik</span><span>${dim.d} cm</span></div>`);
+                                        return parts.join('');
+                                    })()}
                                 </div>
 
                                 <button class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1rem; margin: 30px 0;" id="askPriceBtn">${t().askForPrice}</button>
@@ -3883,7 +3892,31 @@
                                 </div>
                                 <div class="form-group">
                                     <label>${t().dimensions}</label>
-                                    <input type="text" id="formDimensions" value="${product ? product.dimensions : ''}" required>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px;">
+                                        ${(() => {
+                                            let dim = {h:'',dia:'',w:'',d:''};
+                                            if (product && product.dimensions) {
+                                                try { dim = JSON.parse(product.dimensions); } catch(e) {}
+                                            }
+                                            return `
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Height / Yükseklik (cm)</label>
+                                                <input type="number" id="formDimH" min="0" step="0.1" placeholder="örn: 120" value="${dim.h||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Diameter / Çap (cm)</label>
+                                                <input type="number" id="formDimDia" min="0" step="0.1" placeholder="örn: 60" value="${dim.dia||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Width / Genişlik (cm)</label>
+                                                <input type="number" id="formDimW" min="0" step="0.1" placeholder="örn: 40" value="${dim.w||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Depth / Derinlik (cm)</label>
+                                                <input type="number" id="formDimD" min="0" step="0.1" placeholder="örn: 40" value="${dim.d||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>`;
+                                        })()}
+                                    </div>
                                 </div>
 
                                 <!-- IMAGE UPLOAD SECTION -->
@@ -4060,7 +4093,7 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
   "subcategory": "chandelier veya sconce veya table_lamp veya floor_lamp veya outdoor veya decorative",
   "style": "modern veya traditional (sadece avize için, diğerleri için boş bırak)",
   "materials": "Tespit ettiğin malzemeler virgülle — varsayılan: antik pirinç eskitme",
-  "dimensions_hint": "Görsel ipucu ile boyut tahmini (emin değilsen boş bırak)"
+  "dimensions_hint": "Görsel ipucu ile boyut tahmini — JSON formatında: {\"h\":\"yükseklik\",\"dia\":\"çap\",\"w\":\"genişlik\",\"d\":\"derinlik\"} — sadece görselde net görünen değerleri doldur, emin olmadıklarını boş bırak. Emin değilsen tamamen boş string döndür."
 }`;
 
             try {
@@ -4106,7 +4139,17 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                 if (ai.keywords_tr)          document.getElementById('formKeywordsTr').value = ai.keywords_tr;
                 if (ai.keywords_en)          document.getElementById('formKeywordsEn').value = ai.keywords_en;
                 if (ai.materials)            document.getElementById('formMaterials').value = ai.materials;
-                if (ai.dimensions_hint)      document.getElementById('formDimensions').value = ai.dimensions_hint;
+                if (ai.dimensions_hint) {
+                    try {
+                        const dim = JSON.parse(ai.dimensions_hint);
+                        if (dim.h)   { const el = document.getElementById('formDimH');   if(el) el.value = dim.h; }
+                        if (dim.dia) { const el = document.getElementById('formDimDia'); if(el) el.value = dim.dia; }
+                        if (dim.w)   { const el = document.getElementById('formDimW');   if(el) el.value = dim.w; }
+                        if (dim.d)   { const el = document.getElementById('formDimD');   if(el) el.value = dim.d; }
+                    } catch(e) {
+                        // AI returned plain text, ignore
+                    }
+                }
 
                 // Kategori
                 if (ai.category) {
@@ -4463,7 +4506,14 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                 style: document.querySelector('input[name="subcategoryCheck"][value="chandelier"]:checked') ? document.getElementById('formStyle').value : null,
                 price: document.getElementById('formPrice').value,
                 materials: document.getElementById('formMaterials').value,
-                dimensions: document.getElementById('formDimensions').value,
+                dimensions: (() => {
+                                const h = document.getElementById('formDimH')?.value?.trim() || '';
+                                const dia = document.getElementById('formDimDia')?.value?.trim() || '';
+                                const w = document.getElementById('formDimW')?.value?.trim() || '';
+                                const d = document.getElementById('formDimD')?.value?.trim() || '';
+                                if (!h && !dia && !w && !d) return '';
+                                return JSON.stringify({h, dia, w, d});
+                            })(),
                 images: images.length ? images : ['https://picsum.photos/600/600?random=99'],
                 videos: videos,
                 relatedProducts: relatedProducts,

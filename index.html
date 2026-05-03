@@ -2211,20 +2211,23 @@
 
         const t = () => translations[currentLanguage];
 
-        // Auto language detection
-        function initializeLanguage() {
+        // Auto language detection (IP-based)
+        async function initializeLanguage() {
             const savedLang = localStorage.getItem('language');
             if (savedLang) {
                 currentLanguage = savedLang;
-            } else {
-                const browserLang = navigator.language || navigator.userLanguage;
-                if (browserLang.startsWith('tr')) {
-                    currentLanguage = 'tr';
-                } else {
-                    currentLanguage = 'en';
-                }
-                localStorage.setItem('language', currentLanguage);
+                return;
             }
+            try {
+                const resp = await fetch('https://api.country.is/');
+                const data = await resp.json();
+                currentLanguage = (data.country === 'TR') ? 'tr' : 'en';
+            } catch(e) {
+                // Fallback: tarayıcı diline göre
+                const browserLang = navigator.language || navigator.userLanguage || '';
+                currentLanguage = browserLang.startsWith('tr') ? 'tr' : 'en';
+            }
+            localStorage.setItem('language', currentLanguage);
         }
 
         function setLanguage(lang) {
@@ -5304,10 +5307,11 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         }
 
         // ============= INITIALIZATION =============
-        initializeLanguage();
-        initializeLocalStorage();
-        window.addEventListener('hashchange', render);
-        render();
+        initializeLanguage().then(() => {
+            initializeLocalStorage();
+            window.addEventListener('hashchange', render);
+            render();
+        });
     </script>
 </body>
 </html>

@@ -889,38 +889,70 @@
         /* Lightbox */
         .lightbox-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.88);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2500;
+            cursor: zoom-out;
         }
-
         .lightbox-content {
             position: relative;
-            max-width: 90vw;
-            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: min(88vw, 900px);
+            max-height: 85vh;
+            cursor: default;
         }
-
         .lightbox-image {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 82vh;
             object-fit: contain;
+            border-radius: 2px;
+            display: block;
         }
-
         .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            background: none;
+            position: fixed;
+            top: 18px; right: 24px;
+            background: rgba(0,0,0,0.5);
             border: none;
-            font-size: 3rem;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            font-size: 1.4rem;
             cursor: pointer;
             color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2600;
+            line-height: 1;
+        }
+        .lightbox-close:hover { background: rgba(0,0,0,0.8); }
+        .lightbox-nav {
+            position: fixed;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            border: none;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2600;
+            transition: background 0.2s;
+        }
+        .lightbox-nav:hover { background: rgba(255,255,255,0.3); }
+        .lightbox-nav.lb-prev { left: 16px; }
+        .lightbox-nav.lb-next { right: 16px; }
+        .lightbox-nav:disabled { opacity: 0.2; pointer-events: none; }
+        .lightbox-counter {
+            position: fixed;
+            bottom: 20px; left: 50%; transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            z-index: 2600;
         }
 
         /* ===== IMAGE UPLOAD (DRAG & DROP) ===== */
@@ -4831,25 +4863,55 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                 if (nextBtn) { if (allMedia.length <= 1) nextBtn.disabled = true; nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showMedia(currentMediaIdx + 1); }); }
 
                 // Lightbox
+                function openLightbox(startIdx) {
+                    document.getElementById('lightbox')?.remove();
+                    window._lbMedia = allMedia;
+                    window._lbIdx = startIdx;
+
+                    function lbRender() {
+                        const lb = document.getElementById('lightbox');
+                        if (!lb) return;
+                        const m = window._lbMedia[window._lbIdx];
+                        const total = window._lbMedia.length;
+                        const mediaHTML = m.type === 'video'
+                            ? `<video class="lightbox-image" controls autoplay muted><source src="${m.url}" type="video/mp4"></video>`
+                            : `<img class="lightbox-image" src="${m.url}" alt="">`;
+                        lb.querySelector('.lightbox-content').innerHTML = mediaHTML;
+                        lb.querySelector('.lb-prev').disabled = window._lbIdx === 0;
+                        lb.querySelector('.lb-next').disabled = window._lbIdx === total - 1;
+                        lb.querySelector('.lightbox-counter').textContent = total > 1 ? `${window._lbIdx + 1} / ${total}` : '';
+                    }
+
+                    const total = allMedia.length;
+                    const lb = document.createElement('div');
+                    lb.className = 'lightbox-overlay'; lb.id = 'lightbox';
+                    lb.innerHTML = `
+                        <div class="lightbox-content"></div>
+                        <button class="lightbox-close" title="Kapat">&times;</button>
+                        <button class="lightbox-nav lb-prev">&#8249;</button>
+                        <button class="lightbox-nav lb-next">&#8250;</button>
+                        <div class="lightbox-counter"></div>
+                    `;
+                    document.body.appendChild(lb);
+                    lbRender();
+
+                    lb.querySelector('.lightbox-close').onclick = () => lb.remove();
+                    lb.onclick = (e) => { if (e.target === lb) lb.remove(); };
+                    lb.querySelector('.lb-prev').onclick = (e) => { e.stopPropagation(); window._lbIdx = Math.max(0, window._lbIdx-1); lbRender(); };
+                    lb.querySelector('.lb-next').onclick = (e) => { e.stopPropagation(); window._lbIdx = Math.min(window._lbMedia.length-1, window._lbIdx+1); lbRender(); };
+
+                    function lbKey(e) {
+                        if (e.key === 'Escape') { lb.remove(); document.removeEventListener('keydown', lbKey); }
+                        if (e.key === 'ArrowLeft') { window._lbIdx = Math.max(0, window._lbIdx-1); lbRender(); }
+                        if (e.key === 'ArrowRight') { window._lbIdx = Math.min(window._lbMedia.length-1, window._lbIdx+1); lbRender(); }
+                    }
+                    document.addEventListener('keydown', lbKey);
+                    lb.addEventListener('remove', () => document.removeEventListener('keydown', lbKey));
+                }
+
                 wrapper?.addEventListener('click', (e) => {
                     if (e.target.closest('.gallery-nav-btn')) return;
-                    const media = allMedia[currentMediaIdx];
-                    if (!media) return;
-                    let lightboxHTML = '';
-                    if (media.type === 'video') {
-                        lightboxHTML = `<video class="lightbox-image" controls autoplay muted><source src="${media.url}" type="video/mp4"></video>`;
-                    } else {
-                        lightboxHTML = `<img class="lightbox-image" src="${media.url}" alt="Product fullscreen">`;
-                    }
-                    const lightbox = `
-                        <div class="lightbox-overlay" id="lightbox" onclick="document.getElementById('lightbox')?.remove()">
-                            <div class="lightbox-content" onclick="event.stopPropagation()">
-                                ${lightboxHTML}
-                                <button class="lightbox-close" onclick="document.getElementById('lightbox')?.remove()">&times;</button>
-                            </div>
-                        </div>
-                    `;
-                    document.body.insertAdjacentHTML('beforeend', lightbox);
+                    openLightbox(currentMediaIdx);
                 });
             }
 

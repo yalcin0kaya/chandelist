@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Ana Sayfalar -->
+  <url>
+    <loc>https://chandelist.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://chandelist.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://chandelist.com/"/>
+  </url>
+  <url><loc>https://chandelist.com/#/lighting</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/chandelier</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/chandelier/modern</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/chandelier/traditional</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/sconce</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/table_lamp</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/floor_lamp</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/lighting/outdoor</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/decorative</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://chandelist.com/#/about</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://chandelist.com/#/contact</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+
+  <!-- Ürün Sayfaları -->
+  <url><loc>https://chandelist.com/#/product/91</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/92</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/93</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/94</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/95</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/96</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/97</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/98</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/99</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/100</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/101</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/102</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/103</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/104</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/105</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/106</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/107</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/108</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/109</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/110</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/111</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/112</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/113</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/114</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/115</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/116</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/117</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/118</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/119</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/120</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/121</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/122</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/123</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/124</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/125</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/126</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/127</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/128</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/129</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/130</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/131</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/132</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/133</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/134</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/135</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/137</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/138</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/139</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/141</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/143</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/144</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/145</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/147</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/149</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/153</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/155</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://chandelist.com/#/product/159</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+</urlset>

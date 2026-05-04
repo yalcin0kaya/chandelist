@@ -2598,7 +2598,7 @@
         }
 
         function productUrl(product) {
-            const name = product.name_tr || product.name_en || '';
+            const name = product.name_en || product.name_tr || '';
             return '/products/' + product.id + '-' + slugify(name);
         }
 
@@ -3067,7 +3067,7 @@
                     "offers": {
                         "@type": "Offer",
                         "url": `https://chandelist.com${productUrl(product)}`,
-                        "priceCurrency": "TRY",
+                        "priceCurrency": currentLanguage === 'tr' ? "TRY" : "USD",
                         "price": product.price || "0",
                         "availability": "https://schema.org/InStock",
                         "seller": {
@@ -3237,7 +3237,7 @@
                         <h2>${currentLanguage === 'tr' ? 'Benzer Ürünler' : 'Related Products'}</h2>
                         <div class="products-grid">
                             ${related.slice(0, 5).map(p => `
-                                <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.tr||p.name?.en||'')}')" style="cursor:pointer;">
+                                <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.en||p.name?.tr||'')}')" style="cursor:pointer;">
                                     <div class="card-image">
                                         <img src="${p.images[0] || 'https://picsum.photos/600/600?random=' + p.id}" alt="${p.name[currentLanguage]}" loading="lazy" width="400" height="400">
                                     </div>
@@ -3287,7 +3287,7 @@
                 ? `<p style="color:#999; margin-top:20px;">${currentLanguage === 'tr' ? '"' + query + '" için sonuç bulunamadı.' : 'No results found for "' + query + '".'}</p>`
                 : `<div class="grid grid-4" style="margin-top:30px;">
                     ${results.map(p => `
-                        <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.tr||p.name?.en||'')}')" style="cursor:pointer;">
+                        <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.en||p.name?.tr||'')}')" style="cursor:pointer;">
                             <div class="card-image">
                                 <img src="${p.images[0] || 'https://picsum.photos/600/600?random=' + p.id}" alt="${p.name[currentLanguage]}" loading="lazy" width="400" height="400">
                             </div>

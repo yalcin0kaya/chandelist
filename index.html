@@ -2404,7 +2404,7 @@
             const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
 
             return `
-                <a href="#/product/${product.id}" class="card" id="pcard-${product.id}">
+                <a href="${productUrl(product)}" class="card" id="pcard-${product.id}">
                     <div class="card-image">
                         <img src="${firstImg}" alt="${product.sku || ''}" loading="lazy" decoding="async" width="600" height="600">
                         ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
@@ -2586,8 +2586,25 @@
             return div;
         }
 
+        function slugify(str) {
+            return (str || '')
+                .toLowerCase()
+                .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+                .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function productUrl(product) {
+            const name = product.name_tr || product.name_en || '';
+            return '/products/' + product.id + '-' + slugify(name);
+        }
+
         function navigateTo(path) {
-            window.location.hash = path;
+            history.pushState(null, '', path);
+            render();
         }
 
         // Update SEO metadata dynamically
@@ -2661,20 +2678,20 @@
                         </div>
                         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
                         <nav id="mainNav">
-                            <a href="#/" data-page="home">${t().logo}</a>
+                            <a href="/" data-page="home">${t().logo}</a>
                             <div class="nav-dropdown">
-                                <a href="#/lighting" data-page="lighting">${t().lighting}</a>
+                                <a href="/lighting" data-page="lighting">${t().lighting}</a>
                                 <div class="dropdown-menu">
-                                    <a href="#/lighting/chandelier">${t().chandelier}</a>
-                                    <a href="#/lighting/sconce">${t().sconce}</a>
-                                    <a href="#/lighting/table_lamp">${t().tableLamp}</a>
-                                    <a href="#/lighting/floor_lamp">${t().floorLamp}</a>
-                                    <a href="#/lighting/outdoor">${t().outdoor}</a>
+                                    <a href="/lighting/chandelier">${t().chandelier}</a>
+                                    <a href="/lighting/sconce">${t().sconce}</a>
+                                    <a href="/lighting/table_lamp">${t().tableLamp}</a>
+                                    <a href="/lighting/floor_lamp">${t().floorLamp}</a>
+                                    <a href="/lighting/outdoor">${t().outdoor}</a>
                                 </div>
                             </div>
-                            <a href="#/decorative" data-page="decorative">${t().decorative}</a>
-                            <a href="#/about" data-page="about">${t().about}</a>
-                            <a href="#/contact" data-page="contact">${t().contact}</a>
+                            <a href="/decorative" data-page="decorative">${t().decorative}</a>
+                            <a href="/about" data-page="about">${t().about}</a>
+                            <a href="/contact" data-page="contact">${t().contact}</a>
                         </nav>
                         <div class="header-right">
                             <div class="search-bar-wrap" id="searchBarWrap" style="display:none; align-items:center; gap:6px;">
@@ -2703,10 +2720,10 @@
                         <div class="footer-content">
                             <div class="footer-col">
                                 <h4>${t().company}</h4>
-                                <a href="#/about">${t().about_link}</a>
-                                <a href="#/contact">${t().contact_link}</a>
-                                <a href="#/">${t().shipping}</a>
-                                <a href="#/">${t().returns}</a>
+                                <a href="/about">${t().about_link}</a>
+                                <a href="/contact">${t().contact_link}</a>
+                                <a href="/">${t().shipping}</a>
+                                <a href="/">${t().returns}</a>
                             </div>
                             <div class="footer-col">
                                 <h4>${t().follow}</h4>
@@ -2830,7 +2847,7 @@
                         <div style="text-align: center; max-width: 600px; margin: 0 auto;">
                             <h2>${t().ourStory}</h2>
                             <p>${t().about_text}</p>
-                            <a href="#/about" class="btn btn-primary" style="margin-top: 30px;">${t().about}</a>
+                            <a href="/about" class="btn btn-primary" style="margin-top: 30px;">${t().about}</a>
                         </div>
                     </div>
                 </section>
@@ -2866,7 +2883,7 @@
             `;
             subcategories.forEach(sub => {
                 html += `
-                    <a href="#/lighting/${sub.key}" class="card">
+                    <a href="/lighting/${sub.key}" class="card">
                         <div class="card-image">
                             <img src="${sub.image}" alt="${sub.name}" loading="lazy">
                         </div>
@@ -2889,7 +2906,7 @@
             updateSEO('Avize - CHANDELIST', 'Lüks avize koleksiyonlarımızı keşfedin.');
 
             const collectionsHTML = collections.map(col => `
-                <a href="#/lighting/chandelier/${col.key}" class="collection-banner-link">
+                <a href="/lighting/chandelier/${col.key}" class="collection-banner-link">
                     <div class="collection-banner">
                         ${col.image
                             ? `<img src="${col.image}" alt="${col.title[currentLanguage]}" loading="lazy">`
@@ -2907,7 +2924,7 @@
             return `
                 <div style="margin-top: 80px;">
                     <div class="breadcrumb" style="padding: 20px 40px;">
-                        <a href="#/lighting">${t().lighting}</a> / <span>${t().chandelier}</span>
+                        <a href="/lighting">${t().lighting}</a> / <span>${t().chandelier}</span>
                     </div>
                     <div class="collections-grid">
                         ${collectionsHTML}
@@ -2946,8 +2963,8 @@
                 <section class="py-80">
                     <div class="container">
                         <div class="breadcrumb">
-                            <a href="#/lighting">${t().lighting}</a> /
-                            <a href="#/lighting/chandelier">${t().chandelier}</a> /
+                            <a href="/lighting">${t().lighting}</a> /
+                            <a href="/lighting/chandelier">${t().chandelier}</a> /
                             <span>${col.title[currentLanguage]}</span>
                         </div>
                         <div class="grid grid-4" style="margin-top:30px;">
@@ -2981,7 +2998,7 @@
                 <section class="py-80">
                     <div class="container">
                         <div class="breadcrumb">
-                            <a href="#/lighting">${t().lighting}</a> / <span>${subcatName}</span>
+                            <a href="/lighting">${t().lighting}</a> / <span>${subcatName}</span>
                         </div>
                         <div class="grid grid-4">
                             ${productsHTML}
@@ -3045,11 +3062,11 @@
                         "@type": "Brand",
                         "name": "CHANDELIST"
                     },
-                    "url": `https://chandelist.com/#/product/${product.id}`,
+                    "url": `https://chandelist.com${productUrl(product)}`,
                     "sku": product.sku || String(product.id),
                     "offers": {
                         "@type": "Offer",
-                        "url": `https://chandelist.com/#/product/${product.id}`,
+                        "url": `https://chandelist.com${productUrl(product)}`,
                         "priceCurrency": "TRY",
                         "price": product.price || "0",
                         "availability": "https://schema.org/InStock",
@@ -3060,7 +3077,7 @@
                     }
                 },
                 metaKeywords,
-                `/#/product/${product.id}`
+                productUrl(product)
             );
 
             // Combine images and videos for gallery
@@ -3102,8 +3119,8 @@
                 <section class="py-80">
                     <div class="container">
                         <div class="breadcrumb">
-                            <a href="#/">${t().logo}</a> /
-                            <a href="#/${product.category}">${product.category === 'lighting' ? t().lighting : t().decorative}</a> /
+                            <a href="/">${t().logo}</a> /
+                            <a href="/${product.category}">${product.category === 'lighting' ? t().lighting : t().decorative}</a> /
                             <span>${product.name[currentLanguage]}</span>
                         </div>
 
@@ -3220,7 +3237,7 @@
                         <h2>${currentLanguage === 'tr' ? 'Benzer Ürünler' : 'Related Products'}</h2>
                         <div class="products-grid">
                             ${related.slice(0, 5).map(p => `
-                                <div class="card" onclick="window.location.hash='/product/${p.id}'" style="cursor:pointer;">
+                                <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.tr||p.name?.en||'')}')" style="cursor:pointer;">
                                     <div class="card-image">
                                         <img src="${p.images[0] || 'https://picsum.photos/600/600?random=' + p.id}" alt="${p.name[currentLanguage]}" loading="lazy" width="400" height="400">
                                     </div>
@@ -3247,7 +3264,7 @@
                 input.onkeydown = function(e) {
                     if (e.key === 'Enter') {
                         const q = input.value.trim();
-                        if (q) { window.location.hash = '/search?q=' + encodeURIComponent(q); }
+                        if (q) { navigateTo('/search?q=' + encodeURIComponent(q)); }
                     }
                 };
             }
@@ -3270,14 +3287,14 @@
                 ? `<p style="color:#999; margin-top:20px;">${currentLanguage === 'tr' ? '"' + query + '" için sonuç bulunamadı.' : 'No results found for "' + query + '".'}</p>`
                 : `<div class="grid grid-4" style="margin-top:30px;">
                     ${results.map(p => `
-                        <div class="card" onclick="window.location.hash='/product/${p.id}'" style="cursor:pointer;">
+                        <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.tr||p.name?.en||'')}')" style="cursor:pointer;">
                             <div class="card-image">
                                 <img src="${p.images[0] || 'https://picsum.photos/600/600?random=' + p.id}" alt="${p.name[currentLanguage]}" loading="lazy" width="400" height="400">
                             </div>
                             <div class="card-content">
                                 <h3>${p.name[currentLanguage]}</h3>
                                 ${p.sku ? `<p style="font-size:0.75rem;color:#aaa;font-family:monospace;margin:4px 0 0;">${p.sku}</p>` : ''}
-                                <a href="#/product/${p.id}" class="btn" style="margin-top:10px;">${currentLanguage === 'tr' ? 'İncele' : 'View'}</a>
+                                <a href="/products/${p.id}-${slugify(p.name?.tr || p.name?.en || '')}" class="btn" style="margin-top:10px;">${currentLanguage === 'tr' ? 'İncele' : 'View'}</a>
                             </div>
                         </div>
                     `).join('')}
@@ -3290,7 +3307,7 @@
                         <p style="color:#999;">${currentLanguage === 'tr' ? '"' + query + '" için ' + results.length + ' sonuç bulundu.' : results.length + ' result(s) found for "' + query + '".'}</p>
                         <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
                             <input type="text" id="searchPageInput" value="${query.replace(/"/g,'&quot;')}" placeholder="${currentLanguage === 'tr' ? 'Yeni arama...' : 'New search...'}" style="border:1px solid #ddd; padding:10px 16px; font-size:0.95rem; outline:none; background:#fafaf9; width:300px;">
-                            <button onclick="const q=document.getElementById('searchPageInput').value.trim();if(q)window.location.hash='/search?q='+encodeURIComponent(q);" class="btn btn-primary">${currentLanguage === 'tr' ? 'Ara' : 'Search'}</button>
+                            <button onclick="const q=document.getElementById('searchPageInput').value.trim();if(q)navigateTo('/search?q='+encodeURIComponent(q));" class="btn btn-primary">${currentLanguage === 'tr' ? 'Ara' : 'Search'}</button>
                         </div>
                         ${resultsHTML}
                     </div>
@@ -3313,7 +3330,7 @@
                 isTr
                     ? 'chandelist hakkında, avize imalatçısı, özel tasarım avize istanbul, 1984 avize fabrika, lüks avize üretimi'
                     : 'about chandelist, chandelier manufacturer, custom lighting istanbul, bespoke chandelier factory',
-                '/#/about'
+                '/about'
             );
 
             return `
@@ -3411,7 +3428,7 @@
                                     ? 'Hayalinizdeki avize veya aydınlatma projesini gerçeğe dönüştürmek için bizimle iletişime geçin. Tarz, mekan, ölçek — hiçbir sınır yok.'
                                     : 'Contact us to bring your dream chandelier or lighting project to life. Style, space, scale — no limits.'}
                             </p>
-                            <a href="#/contact" style="display:inline-block; background:#fff; color:#2c2c2c; padding:14px 36px; text-decoration:none; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase;">
+                            <a href="/contact" style="display:inline-block; background:#fff; color:#2c2c2c; padding:14px 36px; text-decoration:none; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase;">
                                 ${isTr ? 'İletişime Geç' : 'Get In Touch'}
                             </a>
                         </div>
@@ -5114,7 +5131,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
 
         // ============= MAIN RENDER =============
         async function render() {
-            const path = window.location.hash.slice(1) || '/';
+            const path = window.location.pathname || '/';
             currentPage = path;
 
             const app = document.getElementById('app');
@@ -5138,8 +5155,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     content = await renderLightingSubcategoryPage(subcategory);
                 } else if (path === '/decorative') {
                     content = await renderDecorativePage();
-                } else if (path.startsWith('/product/')) {
-                    const productId = path.split('/')[2];
+                } else if (path.startsWith('/products/')) {
+                    const productId = path.split('/')[2].split('-')[0];
                     content = await renderProductDetailPage(productId);
                 } else if (path.startsWith('/search')) {
                     const params = new URLSearchParams(path.includes('?') ? path.split('?')[1] : '');
@@ -5585,7 +5602,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         // ============= INITIALIZATION =============
         initializeLanguage().then(() => {
             initializeLocalStorage();
-            window.addEventListener('hashchange', render);
+            window.addEventListener('popstate', render);
             render();
         });
     </script>

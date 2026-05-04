@@ -2461,7 +2461,7 @@
                         ` : ''}
                     </div>
                     <div class="card-content">
-                        ${product.sku ? `<p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${product.sku}</p>` : ''}
+                        <p style="font-size:0.78rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${getProductCode(product)}</p>
                     </div>
                 </a>
             `;
@@ -2646,6 +2646,24 @@
         function productUrl(product) {
             const name = product.name_en || product.name_tr || '';
             return '/products/' + product.id + '-' + slugify(name);
+        }
+
+        function getProductCode(product) {
+            if (product.sku && product.sku.trim()) return product.sku.trim();
+            // Auto-generate from subcategory + ID
+            const sub = (Array.isArray(product.subcategory) ? product.subcategory[0] : product.subcategory) || '';
+            const subStr = typeof sub === 'string' ? sub.replace(/[\[\]"]/g,'').split(',')[0].trim() : '';
+            const cat = product.category || 'lighting';
+            const prefixMap = {
+                'chandelier':  'CHD',
+                'sconce':      'APL',
+                'table_lamp':  'MSL',
+                'floor_lamp':  'LBD',
+                'outdoor':     'DIS',
+                'decorative':  'DKR',
+            };
+            const prefix = prefixMap[subStr] || prefixMap[cat] || 'PRD';
+            return prefix + '-' + String(product.id).padStart(3, '0');
         }
 
         function navigateTo(path) {
@@ -3283,11 +3301,10 @@
                                 })()}
 
                                 <div class="product-details">
-                                    ${product.sku ? `
                                     <div class="detail-row">
                                         <span class="detail-label">${currentLanguage === 'tr' ? 'Ürün Kodu' : 'Product Code'}</span>
-                                        <span style="font-family:monospace; font-size:0.9rem; color:#666;">${product.sku}</span>
-                                    </div>` : ''}
+                                        <span style="font-family:monospace; font-size:0.9rem; color:#333; font-weight:600;">${getProductCode(product)}</span>
+                                    </div>
                                     <div class="detail-row">
                                         <span class="detail-label">${t().materials}</span>
                                         <span>${product.materials}</span>
@@ -3369,7 +3386,7 @@
                 (p.name.tr && p.name.tr.toLowerCase().includes(q)) ||
                 (p.name.en && p.name.en.toLowerCase().includes(q)) ||
                 (p.description && p.description.tr && p.description.tr.toLowerCase().includes(q)) ||
-                (p.sku && p.sku.toLowerCase().includes(q)) ||
+                getProductCode(p).toLowerCase().includes(q) ||
                 (p.materials && p.materials.toLowerCase().includes(q))
             );
 
@@ -3383,7 +3400,7 @@
                             </div>
                             <div class="card-content">
                                 <h3>${p.name[currentLanguage]}</h3>
-                                ${p.sku ? `<p style="font-size:0.75rem;color:#aaa;font-family:monospace;margin:4px 0 0;">${p.sku}</p>` : ''}
+                                <p style="font-size:0.75rem;color:#aaa;font-family:monospace;margin:4px 0 0;">${getProductCode(p)}</p>
                                 <a href="/products/${p.id}-${slugify(p.name?.tr || p.name?.en || '')}" class="btn" style="margin-top:10px;">${currentLanguage === 'tr' ? 'İncele' : 'View'}</a>
                             </div>
                         </div>
@@ -5647,7 +5664,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                 <div class="sort-item" data-id="${p.id}">
                     <img src="${p.images && p.images[0] ? p.images[0] : ''}" alt="${p.sku}" loading="lazy"
                          onerror="this.style.background='#f0ece6';this.removeAttribute('src')">
-                    <div class="sort-code">${p.sku || '#'+p.id}</div>
+                    <div class="sort-code">${getProductCode(p)}</div>
                 </div>
             `).join('');
 

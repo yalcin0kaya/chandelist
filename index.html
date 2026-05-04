@@ -250,6 +250,53 @@
             margin-top: 0;
         }
 
+        /* Two-column dropdown */
+        .dropdown-menu.dropdown-two-col {
+            min-width: 480px;
+            display: none;
+            padding: 0;
+        }
+        .nav-dropdown:hover .dropdown-menu.dropdown-two-col {
+            display: flex;
+        }
+        .dropdown-col {
+            flex: 1;
+            padding: 20px 0 16px 0;
+        }
+        .dropdown-col:first-child {
+            border-right: 1px solid #f0ece6;
+        }
+        .dropdown-col-title {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: #8a7d6b;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 0 24px 12px 24px;
+            border-bottom: 1px solid #f0ece6;
+            margin-bottom: 8px;
+        }
+        .dropdown-col a {
+            display: block;
+            padding: 10px 24px;
+            font-size: 0.82rem;
+            letter-spacing: 1.5px;
+            color: #222;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .dropdown-col a::after { display: none; }
+        .dropdown-col a:hover {
+            background: #f5f0eb;
+            color: #8a7d6b;
+            padding-left: 30px;
+        }
+        .dropdown-col a.lantern-link {
+            color: #8a7d6b;
+            font-style: italic;
+        }
+
         /* Görünmez köprü — link ile menü arasındaki boşluğu kapatır */
         .nav-dropdown::after {
             content: '';
@@ -1986,6 +2033,11 @@
                 tableLamp: 'Masa Lambası',
                 floorLamp: 'Lambader',
                 outdoor: 'Dış Mekan Aydınlatma',
+                lantern: 'Tekli Fener',
+                modernChandelier: 'Modern Avize',
+                traditionalChandelier: 'Türk · Fas · Rustik Avize',
+                colModern: 'Modern',
+                colTraditional: 'Türk · Fas · Rustik',
                 explore: 'Keşfet',
                 details: 'Detay',
                 material: 'Malzeme',
@@ -2085,6 +2137,11 @@
                 tableLamp: 'Table Lamp',
                 floorLamp: 'Floor Lamp',
                 outdoor: 'Outdoor Lighting',
+                lantern: 'Lantern',
+                modernChandelier: 'Modern Chandelier',
+                traditionalChandelier: 'Turkish · Moroccan · Rustic',
+                colModern: 'Modern',
+                colTraditional: 'Turkish · Moroccan · Rustic',
                 explore: 'Explore',
                 details: 'Details',
                 material: 'Material',
@@ -2661,6 +2718,7 @@
                 'floor_lamp':  'LBD',
                 'outdoor':     'DIS',
                 'decorative':  'DKR',
+                'lantern':     'LNT',
             };
             const prefix = prefixMap[subStr] || prefixMap[cat] || 'PRD';
             return prefix + '-' + String(product.id).padStart(3, '0');
@@ -2745,12 +2803,24 @@
                             <a href="/" data-page="home">${t().logo}</a>
                             <div class="nav-dropdown">
                                 <a href="/lighting" data-page="lighting">${t().lighting}</a>
-                                <div class="dropdown-menu">
-                                    <a href="/lighting/chandelier">${t().chandelier}</a>
-                                    <a href="/lighting/sconce">${t().sconce}</a>
-                                    <a href="/lighting/table_lamp">${t().tableLamp}</a>
-                                    <a href="/lighting/floor_lamp">${t().floorLamp}</a>
-                                    <a href="/lighting/outdoor">${t().outdoor}</a>
+                                <div class="dropdown-menu dropdown-two-col">
+                                    <div class="dropdown-col">
+                                        <div class="dropdown-col-title">${t().colModern}</div>
+                                        <a href="/lighting/chandelier/modern">${t().modernChandelier}</a>
+                                        <a href="/lighting/sconce">${t().sconce}</a>
+                                        <a href="/lighting/table_lamp">${t().tableLamp}</a>
+                                        <a href="/lighting/floor_lamp">${t().floorLamp}</a>
+                                        <a href="/lighting/outdoor">${t().outdoor}</a>
+                                    </div>
+                                    <div class="dropdown-col">
+                                        <div class="dropdown-col-title">${t().colTraditional}</div>
+                                        <a href="/lighting/chandelier/traditional">${t().traditionalChandelier}</a>
+                                        <a href="/lighting/sconce">${t().sconce}</a>
+                                        <a href="/lighting/table_lamp">${t().tableLamp}</a>
+                                        <a href="/lighting/floor_lamp">${t().floorLamp}</a>
+                                        <a href="/lighting/outdoor">${t().outdoor}</a>
+                                        <a href="/lighting/lantern" class="lantern-link">${t().lantern}</a>
+                                    </div>
                                 </div>
                             </div>
                             <a href="/decorative" data-page="decorative">${t().decorative}</a>
@@ -2976,6 +3046,7 @@
                 { key: 'table_lamp', name: t().tableLamp, image: 'https://picsum.photos/600/600?random=14' },
                 { key: 'floor_lamp', name: t().floorLamp, image: 'https://picsum.photos/600/600?random=12' },
                 { key: 'outdoor', name: t().outdoor, image: 'https://picsum.photos/600/600?random=13' },
+                { key: 'lantern', name: t().lantern, image: 'https://picsum.photos/600/600?random=15' },
             ];
 
             let html = `
@@ -3049,7 +3120,7 @@
 
             const allProducts = await getProducts();
             const hasSubcat = (p, key) => parseSubcat(p.subcategory).includes(key);
-            const products = allProducts.filter(p => hasSubcat(p, 'chandelier') && (p.style === style || (!p.style && style === 'modern')));
+            const products = allProducts.filter(p => hasSubcat(p, 'chandelier') && (!p.style || p.style === style || p.style === 'both'));
 
             const productsHTML = products.length > 0
                 ? products.map(product => renderProductCard(product)).join('')
@@ -3087,7 +3158,8 @@
         async function renderLightingSubcategoryPage(subcategory) {
             const subcatNames = {
                 chandelier: t().chandelier, sconce: t().sconce,
-                table_lamp: t().tableLamp, floor_lamp: t().floorLamp, outdoor: t().outdoor
+                table_lamp: t().tableLamp, floor_lamp: t().floorLamp,
+                outdoor: t().outdoor, lantern: t().lantern
             };
             const subcatName = subcatNames[subcategory] || subcategory;
             updateSEO(`${subcatName} - CHANDELIST ${t().lighting}`, `Browse our premium ${subcatName} collection.`);
@@ -3763,6 +3835,7 @@
                                 <button class="sort-cat-btn" data-cat="table_lamp" onclick="loadSortGrid('table_lamp')">Masa Lambaları</button>
                                 <button class="sort-cat-btn" data-cat="floor_lamp" onclick="loadSortGrid('floor_lamp')">Lambaderler</button>
                                 <button class="sort-cat-btn" data-cat="outdoor" onclick="loadSortGrid('outdoor')">Dış Mekan</button>
+                                <button class="sort-cat-btn" data-cat="lantern" onclick="loadSortGrid('lantern')">Tekli Fener</button>
                                 <button class="sort-cat-btn" data-cat="decorative" onclick="loadSortGrid('decorative')">Dekoratif</button>
                             </div>
 
@@ -3881,6 +3954,7 @@
                 { value: 'table_lamp', label: 'Masa Lambası' },
                 { value: 'floor_lamp', label: 'Lambader' },
                 { value: 'outdoor', label: 'Dış Mekan Aydınlatma' },
+                { value: 'lantern', label: 'Tekli Fener' },
             ];
 
             let imagesHTML = product && product.images ? product.images.map((img, idx) => `
@@ -4000,11 +4074,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="styleFieldGroup" style="display:${product && parseSubcat(product.subcategory).includes('chandelier') ? 'block' : 'none'};">
-                                    <label>Koleksiyon (Avize Stili)</label>
-                                    <select id="formStyle">
-                                        <option value="modern" ${product && product.style === 'modern' ? 'selected' : ''}>Modern Avize</option>
-                                        <option value="traditional" ${product && product.style === 'traditional' ? 'selected' : ''}>Türk · Fas · Rustik</option>
-                                    </select>
+                                    <label>Görünüm Bölümü <small style="color:#999;font-weight:400;">(birden fazla seçebilirsiniz)</small></label>
+                                    <div style="display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid #ddd;background:#fafaf9;">
+                                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:400;">
+                                            <input type="checkbox" name="styleCheck" value="modern" ${!product || !product.style || product.style === 'modern' || product.style === 'both' ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
+                                            Modern Avize
+                                        </label>
+                                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:400;">
+                                            <input type="checkbox" name="styleCheck" value="traditional" ${product && (product.style === 'traditional' || product.style === 'both') ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
+                                            Türk · Fas · Rustik
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>${t().price}</label>
@@ -4287,8 +4367,9 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                     if (subSel) subSel.value = ai.subcategory;
                 }
                 if (ai.style) {
-                    const styleSel = document.getElementById('formStyle');
-                    if (styleSel) styleSel.value = ai.style;
+                    document.querySelectorAll('input[name="styleCheck"]').forEach(cb => {
+                        cb.checked = (ai.style === 'both') || (cb.value === ai.style);
+                    });
                 }
 
                 status.style.display = 'block';
@@ -4627,7 +4708,13 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                 sku: document.getElementById('formSku').value,
                 category: document.getElementById('formCategory').value,
                 subcategory: Array.from(document.querySelectorAll('input[name="subcategoryCheck"]:checked')).map(cb => cb.value),
-                style: document.querySelector('input[name="subcategoryCheck"][value="chandelier"]:checked') ? document.getElementById('formStyle').value : null,
+                style: (() => {
+                    const chandelierChecked = !!document.querySelector('input[name="subcategoryCheck"][value="chandelier"]:checked');
+                    if (!chandelierChecked) return null;
+                    const styleChecks = Array.from(document.querySelectorAll('input[name="styleCheck"]:checked')).map(cb => cb.value);
+                    if (styleChecks.length >= 2) return 'both';
+                    return styleChecks[0] || 'modern';
+                })(),
                 price: document.getElementById('formPrice').value,
                 materials: document.getElementById('formMaterials').value,
                 dimensions: (() => {

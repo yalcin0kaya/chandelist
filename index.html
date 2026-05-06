@@ -5218,52 +5218,76 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const banners = await getBanners();
             const banner = bannerId ? banners.find(b => b.id === parseInt(bannerId)) : null;
 
+            const desktopUrl = banner ? (banner.url || '') : '';
+            const mobileUrl  = banner ? (banner.mobileUrl || '') : '';
+
             const modal = `
                 <div class="modal-overlay" id="bannerModal">
-                    <div class="modal">
+                    <div class="modal" style="max-width:620px;">
                         <button class="modal-close" onclick="closeModal()">&times;</button>
                         <h2>${banner ? t().editBanner : t().addBanner}</h2>
                         <form id="bannerForm">
+
+                            <!-- DESKTOP IMAGE -->
                             <div class="form-group">
-                                <label>${t().bannerType}</label>
-                                <select id="formBannerType" required>
-                                    <option value="image" ${banner && banner.type === 'image' ? 'selected' : ''}>Image</option>
-                                    <option value="video" ${banner && banner.type === 'video' ? 'selected' : ''}>Video</option>
-                                </select>
+                                <label>Masaüstü Görseli <small style="color:#999;font-weight:400;">1920 × 800 px önerilen</small></label>
+                                <!-- Drop zone -->
+                                <div id="bannerDropDesktop"
+                                     ondragover="event.preventDefault();this.style.borderColor='#8a7d6b';"
+                                     ondragleave="this.style.borderColor='#ddd';"
+                                     ondrop="handleBannerDrop(event,'desktop')"
+                                     style="border:2px dashed #ddd;border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:border-color 0.2s;background:#fafaf9;margin-bottom:8px;"
+                                     onclick="uploadBannerImage('desktop')">
+                                    ${desktopUrl
+                                        ? `<img src="${desktopUrl}" id="bannerPreviewDesktop" style="max-height:140px;max-width:100%;border-radius:4px;object-fit:cover;" onerror="this.style.display='none'"><br><span style="font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:inline-block;">Değiştirmek için tıkla veya sürükle-bırak</span>`
+                                        : `<div id="bannerPreviewDesktop" style="display:none;"></div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5" style="margin-bottom:8px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><br><span style="font-size:0.85rem;color:#aaa;">Tıkla veya resmi buraya sürükle-bırak</span>`}
+                                </div>
+                                <input type="text" id="formBannerUrl" value="${desktopUrl}" placeholder="ya da URL yapıştır..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;margin-top:2px;" oninput="updateBannerPreview('desktop',this.value)">
+                                <div id="bannerUploadStatusDesktop" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
+                            </div>
+
+                            <!-- MOBILE IMAGE -->
+                            <div class="form-group">
+                                <label>Mobil Görseli <small style="color:#999;font-weight:400;">750 × 1000 px önerilen · isteğe bağlı</small></label>
+                                <div id="bannerDropMobile"
+                                     ondragover="event.preventDefault();this.style.borderColor='#8a7d6b';"
+                                     ondragleave="this.style.borderColor='#ddd';"
+                                     ondrop="handleBannerDrop(event,'mobile')"
+                                     style="border:2px dashed #ddd;border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:border-color 0.2s;background:#fafaf9;margin-bottom:8px;"
+                                     onclick="uploadBannerImage('mobile')">
+                                    ${mobileUrl
+                                        ? `<img src="${mobileUrl}" id="bannerPreviewMobile" style="max-height:140px;max-width:100%;border-radius:4px;object-fit:cover;" onerror="this.style.display='none'"><br><span style="font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:inline-block;">Değiştirmek için tıkla veya sürükle-bırak</span>`
+                                        : `<div id="bannerPreviewMobile" style="display:none;"></div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5" style="margin-bottom:8px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><br><span style="font-size:0.82rem;color:#aaa;">Tıkla veya resmi buraya sürükle-bırak</span><br><span style="font-size:0.75rem;color:#bbb;">Yoksa masaüstü görseli kullanılır</span>`}
+                                </div>
+                                <input type="text" id="formBannerMobileUrl" value="${mobileUrl}" placeholder="ya da URL yapıştır..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;margin-top:2px;" oninput="updateBannerPreview('mobile',this.value)">
+                                <div id="bannerUploadStatusMobile" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
+                            </div>
+
+                            <!-- TYPE & POSITION -->
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                <div class="form-group">
+                                    <label>Medya Tipi</label>
+                                    <select id="formBannerType" required>
+                                        <option value="image" ${banner && banner.type === 'image' ? 'selected' : ''}>Resim (Image)</option>
+                                        <option value="video" ${banner && banner.type === 'video' ? 'selected' : ''}>Video</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobil Medya Tipi</label>
+                                    <select id="formBannerMobileType">
+                                        <option value="image" ${!banner || !banner.mobileType || banner.mobileType === 'image' ? 'selected' : ''}>Resim</option>
+                                        <option value="video" ${banner && banner.mobileType === 'video' ? 'selected' : ''}>Video</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label id="bannerUrlLabel">${t().bannerImage}</label>
-                                <input type="text" id="formBannerUrl" value="${banner ? banner.url : ''}" required>
-                                <small style="color: #999; font-size: 0.85rem; margin-top: 5px; display: block;">Önerilen boyut: 1920×800px (yatay)</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Masaüstü Resim/Video URL</label>
-                                <input type="text" id="formBannerUrl" value="${banner ? banner.url : ''}" required>
-                                <small style="color: #999; font-size: 0.85rem; margin-top: 5px; display: block;">Önerilen boyut: 1920×800px (yatay)</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Mobil Resim/Video URL (dikey, 750x1000px önerilen)</label>
-                                <input type="text" id="formBannerMobileUrl" value="${banner && banner.mobileUrl ? banner.mobileUrl : ''}">
-                                <small style="color: #999; font-size: 0.85rem; margin-top: 5px; display: block;">Önerilen boyut: 750×1000px (dikey) - İsteğe bağlı</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Mobil Medya Tipi</label>
-                                <select id="formBannerMobileType">
-                                    <option value="image" ${banner && banner.mobileType === 'image' ? 'selected' : ''}>Image</option>
-                                    <option value="video" ${banner && banner.mobileType === 'video' ? 'selected' : ''}>Video</option>
-                                </select>
-                                <small style="color: #999; font-size: 0.85rem; margin-top: 5px; display: block;">Masaüstü tipi varsayılan olarak kullanılır</small>
-                            </div>
-                            <div class="form-group">
-                                <label>Position</label>
+                                <label>Konum (Position)</label>
                                 <select id="formBannerPosition" required>
-                                    <option value="home" ${banner && banner.position === 'home' ? 'selected' : ''}>Home</option>
-                                    <option value="home_video" ${banner && banner.position === 'home_video' ? 'selected' : ''}>Anasayfa Video</option>
+                                    <option value="home" ${!banner || banner.position === 'home' ? 'selected' : ''}>Ana Sayfa Slideshow</option>
+                                    <option value="home_video" ${banner && banner.position === 'home_video' ? 'selected' : ''}>Ana Sayfa Video Arka Plan</option>
                                 </select>
                             </div>
-                            <div class="form-group" id="videoHelperText" style="display: none;">
-                                <small style="color: #999; font-size: 0.85rem; margin-top: 5px; display: block;">Anasayfa video için önerilen: 1920×1080px, MP4 format, max 50MB</small>
-                            </div>
+
                             <div class="modal-buttons">
                                 <button type="button" class="btn" onclick="closeModal()">${t().cancel}</button>
                                 <button type="button" class="btn btn-primary" onclick="saveBanner(${banner ? banner.id : 'null'})">${t().save}</button>
@@ -5274,16 +5298,87 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             `;
 
             document.getElementById('app').insertAdjacentHTML('beforeend', modal);
+        }
 
-            document.getElementById('formBannerType').addEventListener('change', (e) => {
-                const label = document.getElementById('bannerUrlLabel');
-                label.textContent = e.target.value === 'video' ? t().bannerVideo : t().bannerImage;
+        // Banner image upload via Cloudinary widget
+        function uploadBannerImage(slot) {
+            if (typeof cloudinary === 'undefined') { alert('Cloudinary yükleniyor, lütfen bekleyin.'); return; }
+            const statusEl = document.getElementById(`bannerUploadStatus${slot === 'desktop' ? 'Desktop' : 'Mobile'}`);
+            if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '⏳ Yükleniyor...'; }
+            const widget = cloudinary.createUploadWidget({
+                cloudName: CLOUDINARY_CLOUD,
+                uploadPreset: CLOUDINARY_PRESET,
+                multiple: false,
+                resourceType: 'image',
+                sources: ['local','url','camera'],
+                cropping: false,
+            }, (error, result) => {
+                if (error) { if (statusEl) { statusEl.textContent = '❌ Hata: ' + error.message; } return; }
+                if (result.event === 'success') {
+                    const url = result.info.secure_url;
+                    const inputId = slot === 'desktop' ? 'formBannerUrl' : 'formBannerMobileUrl';
+                    const input = document.getElementById(inputId);
+                    if (input) input.value = url;
+                    updateBannerPreview(slot, url);
+                    if (statusEl) { statusEl.textContent = '✅ Yüklendi!'; setTimeout(() => { statusEl.style.display = 'none'; }, 2000); }
+                }
             });
+            widget.open();
+        }
 
-            document.getElementById('formBannerPosition').addEventListener('change', (e) => {
-                const helperText = document.getElementById('videoHelperText');
-                helperText.style.display = e.target.value === 'home_video' ? 'block' : 'none';
-            });
+        // Handle drag & drop onto banner drop zone
+        async function handleBannerDrop(event, slot) {
+            event.preventDefault();
+            const dropEl = event.currentTarget;
+            dropEl.style.borderColor = '#ddd';
+            const statusEl = document.getElementById(`bannerUploadStatus${slot === 'desktop' ? 'Desktop' : 'Mobile'}`);
+            const file = event.dataTransfer.files[0];
+            if (!file || !file.type.startsWith('image/')) { alert('Lütfen bir resim dosyası sürükleyin.'); return; }
+            if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '⏳ Yükleniyor...'; }
+            try {
+                const fd = new FormData();
+                fd.append('file', file);
+                fd.append('upload_preset', CLOUDINARY_PRESET);
+                const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method: 'POST', body: fd });
+                const data = await res.json();
+                if (data.secure_url) {
+                    const inputId = slot === 'desktop' ? 'formBannerUrl' : 'formBannerMobileUrl';
+                    const input = document.getElementById(inputId);
+                    if (input) input.value = data.secure_url;
+                    updateBannerPreview(slot, data.secure_url);
+                    if (statusEl) { statusEl.textContent = '✅ Yüklendi!'; setTimeout(() => { statusEl.style.display = 'none'; }, 2000); }
+                } else {
+                    throw new Error(data.error?.message || 'Yükleme başarısız');
+                }
+            } catch (e) {
+                if (statusEl) { statusEl.textContent = '❌ ' + e.message; }
+            }
+        }
+
+        // Update preview image when URL is typed/pasted
+        function updateBannerPreview(slot, url) {
+            const previewId = slot === 'desktop' ? 'bannerPreviewDesktop' : 'bannerPreviewMobile';
+            const dropId    = slot === 'desktop' ? 'bannerDropDesktop' : 'bannerDropMobile';
+            const preview   = document.getElementById(previewId);
+            const dropZone  = document.getElementById(dropId);
+            if (!preview || !url.trim()) return;
+            if (preview.tagName === 'IMG') {
+                preview.src = url;
+                preview.style.display = 'block';
+            } else {
+                // Replace placeholder div with img
+                const img = document.createElement('img');
+                img.id = previewId;
+                img.src = url;
+                img.style.cssText = 'max-height:140px;max-width:100%;border-radius:4px;object-fit:cover;';
+                img.onerror = () => { img.style.display = 'none'; };
+                dropZone.innerHTML = '';
+                dropZone.appendChild(img);
+                const hint = document.createElement('span');
+                hint.style.cssText = 'font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:block;';
+                hint.textContent = 'Değiştirmek için tıkla veya sürükle-bırak';
+                dropZone.appendChild(hint);
+            }
         }
 
         async function saveBanner(bannerId) {

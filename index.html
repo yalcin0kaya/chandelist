@@ -2440,17 +2440,100 @@
 
         // ============= SUPABASE REST API =============
         const SB_URL = 'https://sqvwgghdksxmstmucxdm.supabase.co/rest/v1';
+        const SB_AUTH_URL = 'https://sqvwgghdksxmstmucxdm.supabase.co/auth/v1';
         const SB_KEY = 'sb_publishable_JNL2rwjFyL4F7C5iK2xmfQ_fIaWla5h';
-        const SB_HEADERS = {
-            'apikey': SB_KEY,
-            'Authorization': 'Bearer ' + SB_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
-        };
+
+        // ----- Supabase Auth (admin oturumu) -----
+        // Giris yapildiginda donen access_token localStorage'da tutulur.
+        // Yazma islemleri (POST/PATCH/DELETE) bu token ile yapilir; RLS sadece
+        // giris yapmis kullaniciya izin verir. Okuma anon anahtarla herkese acik.
+        function sbGetSession() {
+            try { return JSON.parse(localStorage.getItem('sb_session') || 'null'); }
+            catch { return null; }
+        }
+        function sbSetSession(sess) {
+            if (sess) localStorage.setItem('sb_session', JSON.stringify(sess));
+            else localStorage.removeItem('sb_session');
+        }
+        function sbAccessToken() {
+            const s = sbGetSession();
+            return (s && s.access_token) ? s.access_token : null;
+        }
+        // Token gecerlilik suresi dolmussa refresh_token ile yeniler.
+        async function sbEnsureToken() {
+            const s = sbGetSession();
+            if (!s) return null;
+            // expires_at saniye cinsinden; 60sn pay birak
+            if (s.expires_at && (s.expires_at * 1000) > (Date.now() + 60000)) {
+                return s.access_token;
+            }
+            // Suresi dolmus -> yenile
+            if (s.refresh_token) {
+                try {
+                    const r = await fetch(SB_AUTH_URL + '/token?grant_type=refresh_token', {
+                        method: 'POST',
+                        headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ refresh_token: s.refresh_token })
+                    });
+                    if (r.ok) {
+                        const data = await r.json();
+                        const newSess = { ...data, expires_at: Math.floor(Date.now()/1000) + (data.expires_in || 3600) };
+                        sbSetSession(newSess);
+                        return newSess.access_token;
+                    }
+                } catch (e) { console.error('Token yenileme hatasi', e); }
+            }
+            // Yenilenemedi -> oturumu temizle
+            sbSetSession(null);
+            return null;
+        }
+        async function sbSignIn(email, password) {
+            const r = await fetch(SB_AUTH_URL + '/token?grant_type=password', {
+                method: 'POST',
+                headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await r.json().catch(() => ({}));
+            if (!r.ok) {
+                return { ok: false, error: data.error_description || data.msg || 'Giris basarisiz' };
+            }
+            const sess = { ...data, expires_at: Math.floor(Date.now()/1000) + (data.expires_in || 3600) };
+            sbSetSession(sess);
+            return { ok: true };
+        }
+        function sbSignOut() {
+            const token = sbAccessToken();
+            if (token) {
+                fetch(SB_AUTH_URL + '/logout', {
+                    method: 'POST',
+                    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token }
+                }).catch(() => {});
+            }
+            sbSetSession(null);
+        }
+        function sbIsLoggedIn() { return !!sbAccessToken(); }
+
+        // Header'lar dinamik: yazma icin oturum token'i varsa onu, yoksa anon anahtari kullan
+        function sbHeaders(token) {
+            const bearer = token || SB_KEY;
+            return {
+                'apikey': SB_KEY,
+                'Authorization': 'Bearer ' + bearer,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            };
+        }
+        // Geriye donuk uyumluluk icin sabit (okuma yollarinda kullanilir)
+        const SB_HEADERS = sbHeaders(null);
 
         async function sbFetch(endpoint, options = {}) {
             try {
-                const res = await fetch(SB_URL + endpoint, { headers: SB_HEADERS, ...options });
+                const method = (options.method || 'GET').toUpperCase();
+                const isWrite = method !== 'GET' && method !== 'HEAD';
+                // Yazma islemlerinde gecerli oturum token'i kullan
+                const token = isWrite ? await sbEnsureToken() : null;
+                const headers = sbHeaders(token);
+                const res = await fetch(SB_URL + endpoint, { headers, ...options });
                 if (!res.ok) {
                     const errText = await res.text().catch(() => '');
                     console.error('Supabase error', res.status, endpoint, errText);
@@ -3247,12 +3330,15 @@
                     "offers": {
                         "@type": "Offer",
                         "url": `https://chandelist.com${productUrl(product)}`,
-                        "priceCurrency": currentLanguage === 'tr' ? "TRY" : "USD",
-                        "price": product.price || "0",
                         "availability": "https://schema.org/InStock",
+                        "priceSpecification": {
+                            "@type": "PriceSpecification",
+                            "description": currentLanguage === 'tr' ? "Fiyat için iletişime geçin" : "Contact for price"
+                        },
                         "seller": {
                             "@type": "Organization",
-                            "name": "CHANDELIST"
+                            "name": "CHANDELIST",
+                            "url": "https://chandelist.com"
                         }
                     }
                 },
@@ -3680,25 +3766,40 @@
         }
 
         // ============= ADMIN PANEL =============
+        async function adminLogin() {
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const pass = document.getElementById('adminPassInput').value;
+            const errEl = document.getElementById('adminPassError');
+            const btn = document.getElementById('adminLoginBtn');
+            if (!email || !pass) {
+                errEl.textContent = 'E-posta ve şifre gerekli';
+                errEl.style.display = 'block';
+                return;
+            }
+            btn.disabled = true; btn.textContent = 'GİRİŞ YAPILIYOR...';
+            const res = await sbSignIn(email, pass);
+            if (res.ok) {
+                render();
+            } else {
+                errEl.textContent = 'Hatalı e-posta veya şifre';
+                errEl.style.display = 'block';
+                document.getElementById('adminPassInput').value = '';
+                btn.disabled = false; btn.textContent = 'GİRİŞ';
+            }
+        }
+
         async function renderAdminPanel() {
-            // Şifre koruması
-            if (sessionStorage.getItem('adminAuth') !== 'ok') {
+            // Gerçek kimlik doğrulama: Supabase Auth oturumu
+            if (!sbIsLoggedIn()) {
                 return `
                     <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f5f0eb;">
                         <div style="background:#fff;padding:50px 40px;max-width:380px;width:90%;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,0.08);">
                             <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;letter-spacing:3px;margin-bottom:8px;">ADMIN</h2>
                             <p style="font-size:0.8rem;letter-spacing:2px;color:#8a7d6b;margin-bottom:30px;">CHANDELIST</p>
-                            <input type="password" id="adminPassInput" placeholder="Şifre" style="width:100%;padding:12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center;letter-spacing:4px;">
-                            <button onclick="
-                                if(document.getElementById('adminPassInput').value==='323932'){
-                                    sessionStorage.setItem('adminAuth','ok');
-                                    render();
-                                } else {
-                                    document.getElementById('adminPassError').style.display='block';
-                                    document.getElementById('adminPassInput').value='';
-                                }
-                            " style="width:100%;padding:12px;background:#000;color:#fff;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;">GİRİŞ</button>
-                            <p id="adminPassError" style="display:none;color:#c0392b;font-size:0.8rem;margin-top:10px;letter-spacing:1px;">Hatalı şifre</p>
+                            <input type="email" id="adminEmailInput" placeholder="E-posta" autocomplete="username" style="width:100%;padding:12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center;">
+                            <input type="password" id="adminPassInput" placeholder="Şifre" autocomplete="current-password" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center;letter-spacing:4px;">
+                            <button id="adminLoginBtn" onclick="adminLogin()" style="width:100%;padding:12px;background:#000;color:#fff;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;">GİRİŞ</button>
+                            <p id="adminPassError" style="display:none;color:#c0392b;font-size:0.8rem;margin-top:10px;letter-spacing:1px;">Hatalı e-posta veya şifre</p>
                         </div>
                     </div>
                 `;
@@ -3741,6 +3842,7 @@
                             <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
                             <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
+                            <a href="#" onclick="event.preventDefault(); if(confirm('Çıkış yapmak istediğinize emin misiniz?')){ sbSignOut(); window.location.hash='#/'; render(); }" style="color:#c0392b;margin-top:8px;">⏻ ${t().logout}</a>
                         </nav>
                     </div>
 

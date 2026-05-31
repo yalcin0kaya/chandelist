@@ -603,6 +603,110 @@
             font-size: 0.9rem;
         }
 
+        /* ===== Shop the Look ===== */
+        .shop-look-section { width: 100%; }
+        .shop-look-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .shop-look-cell {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .shop-look-cell img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .shop-look-cell:hover img { transform: scale(1.04); }
+        .shop-look-cell-overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s ease;
+        }
+        .shop-look-cell-overlay span {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            color: #2c2c2c;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; font-weight: 300;
+            opacity: 0; transform: scale(0.7);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .shop-look-cell:hover .shop-look-cell-overlay { background: rgba(0,0,0,0.18); }
+        .shop-look-cell:hover .shop-look-cell-overlay span { opacity: 1; transform: scale(1); }
+        @media (max-width: 768px) {
+            .shop-look-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Shop the Look modal */
+        .sl-modal-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .sl-modal {
+            background: #fff;
+            max-width: 980px; width: 100%;
+            max-height: 90vh;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+        }
+        .sl-modal-close {
+            position: absolute; top: 16px; right: 16px; z-index: 5;
+            width: 36px; height: 36px; border: none; border-radius: 50%;
+            background: rgba(255,255,255,0.9); cursor: pointer;
+            font-size: 1.3rem; color: #2c2c2c;
+        }
+        .sl-image-side {
+            flex: 1.4; position: relative; background: #f5f0eb;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 300px;
+        }
+        .sl-image-side img { width: 100%; height: 100%; object-fit: cover; }
+        .sl-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 40px; height: 40px; border: none; border-radius: 50%;
+            background: rgba(255,255,255,0.92); cursor: pointer;
+            font-size: 1.2rem; color: #2c2c2c; z-index: 3;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .sl-nav.prev { left: 14px; }
+        .sl-nav.next { right: 14px; }
+        .sl-product-side {
+            flex: 1; padding: 40px 30px;
+            display: flex; flex-direction: column; justify-content: center;
+            min-width: 240px;
+        }
+        .sl-product-card { text-align: center; cursor: pointer; }
+        .sl-product-card img {
+            max-width: 180px; max-height: 220px; object-fit: contain;
+            margin: 0 auto 18px; display: block;
+        }
+        .sl-product-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem; margin-bottom: 6px; color: #2c2c2c;
+        }
+        .sl-product-card .sl-view-btn {
+            display: inline-block; margin-top: 14px;
+            padding: 10px 26px; background: #2c2c2c; color: #fff;
+            font-family: 'Jost', sans-serif; font-size: 0.78rem;
+            letter-spacing: 2px; text-transform: uppercase;
+        }
+        .sl-no-product { color: #999; font-size: 0.85rem; text-align: center; }
+        @media (max-width: 768px) {
+            .sl-modal { flex-direction: column; max-height: 92vh; overflow-y: auto; }
+            .sl-image-side { min-height: 260px; }
+        }
+
         /* Grid Layouts */
         .grid {
             display: grid;
@@ -2649,6 +2753,7 @@
                 url: b.url,
                 mobileUrl: b.mobile_url || '',
                 position: b.position,
+                linkedProductId: b.linked_product_id || null,
             }));
         }
 
@@ -2754,6 +2859,7 @@
                 url: banner.url,
                 mobile_url: banner.mobileUrl || '',
                 position: banner.position,
+                linked_product_id: banner.linkedProductId || null,
             };
             if (banner._dbId) {
                 await sbFetch('/banners?id=eq.' + banner._dbId, { method: 'PATCH', body: JSON.stringify(dbBanner) });
@@ -2810,6 +2916,75 @@
         function navigateTo(path) {
             history.pushState(null, '', path);
             render();
+        }
+
+        // ===== Shop the Look panel =====
+        let _shopLookItems = [];
+        let _shopLookIndex = 0;
+
+        async function openShopLook(index) {
+            const banners = await getBanners();
+            _shopLookItems = banners.filter(b => b.position === 'shop_look' && b.url);
+            if (!_shopLookItems.length) return;
+            _shopLookIndex = index || 0;
+            await renderShopLookModal();
+        }
+
+        async function renderShopLookModal() {
+            const item = _shopLookItems[_shopLookIndex];
+            if (!item) return;
+            const products = await getProducts();
+            const product = item.linkedProductId
+                ? products.find(p => String(p.id) === String(item.linkedProductId))
+                : null;
+
+            let productHTML;
+            if (product) {
+                const pName = product.name?.[currentLanguage] || product.name?.en || product.name?.tr || '';
+                const pImg = (product.images && product.images[0]) || '';
+                const slug = slugify(product.name?.en || product.name?.tr || '');
+                productHTML = `
+                    <div class="sl-product-card" onclick="closeShopLook(); navigateTo('/products/${product.id}-${slug}')">
+                        ${pImg ? `<img src="${pImg}" alt="${pName}">` : ''}
+                        <h3>${pName}</h3>
+                        <span class="sl-view-btn">${currentLanguage === 'tr' ? 'Ürünü Gör' : 'View Product'}</span>
+                    </div>`;
+            } else {
+                productHTML = `<p class="sl-no-product">${currentLanguage === 'tr' ? 'Bu görsele ürün bağlanmamış' : 'No product linked'}</p>`;
+            }
+
+            const multiple = _shopLookItems.length > 1;
+            let modal = document.getElementById('slModalOverlay');
+            const inner = `
+                <div class="sl-modal">
+                    <button class="sl-modal-close" onclick="closeShopLook()">&times;</button>
+                    <div class="sl-image-side">
+                        ${multiple ? `<button class="sl-nav prev" onclick="shopLookNav(-1)">‹</button>` : ''}
+                        <img src="${item.url}" alt="Shop the look">
+                        ${multiple ? `<button class="sl-nav next" onclick="shopLookNav(1)">›</button>` : ''}
+                    </div>
+                    <div class="sl-product-side">${productHTML}</div>
+                </div>`;
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'slModalOverlay';
+                modal.className = 'sl-modal-overlay';
+                modal.onclick = (e) => { if (e.target === modal) closeShopLook(); };
+                document.body.appendChild(modal);
+            }
+            modal.innerHTML = inner;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function shopLookNav(dir) {
+            _shopLookIndex = (_shopLookIndex + dir + _shopLookItems.length) % _shopLookItems.length;
+            renderShopLookModal();
+        }
+
+        function closeShopLook() {
+            const modal = document.getElementById('slModalOverlay');
+            if (modal) modal.remove();
+            document.body.style.overflow = '';
         }
 
         // Update SEO metadata dynamically
@@ -3073,6 +3248,7 @@
             const homeBanners = banners.filter(b => b.position === 'home');
             const homeSlides = homeBanners.length > 0 ? homeBanners : (banners.filter(b => b.type !== 'video').slice(0, 5));
             const homeVideoBanner = banners.find(b => b.position === 'home_video');
+            const shopLookItems = banners.filter(b => b.position === 'shop_look' && b.url);
 
             let productsHTML = products.slice(0, 8).map(product => renderProductCard(product)).join('');
 
@@ -3093,6 +3269,18 @@
                     Admin panelinden video ekleyebilirsiniz
                 </div>
                 `}
+                ${shopLookItems.length > 0 ? `
+                <section class="shop-look-section scroll-fade">
+                    <div class="shop-look-grid">
+                        ${shopLookItems.map((item, i) => `
+                            <div class="shop-look-cell" onclick="openShopLook(${i})">
+                                <img src="${item.url}" alt="Shop the look" loading="lazy">
+                                <div class="shop-look-cell-overlay"><span>＋</span></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+                ` : ''}
                 <section class="py-80 scroll-fade">
                     <div class="container">
                         <div class="section-title">
@@ -3838,6 +4026,7 @@
                             <a href="#" class="admin-nav active" data-section="dashboard">${t().dashboard}</a>
                             <a href="#" class="admin-nav" data-section="products">${t().products}</a>
                             <a href="#" class="admin-nav" data-section="banners">${t().banners}</a>
+                            <a href="#" class="admin-nav" data-section="shoplook">🛍 Shop the Look</a>
                             <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
                             <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
@@ -3885,6 +4074,27 @@
                                         </div>
                                     </div>
                                 `).join('')}
+                            </div>
+                        </div>
+
+                        <div id="shoplook-section" class="admin-section" style="display: none;">
+                            <h2>🛍 Shop the Look</h2>
+                            <p style="color:#888;font-size:0.88rem;margin-bottom:20px;">Ana sayfada yan yana gösterilen, tıklayınca ürüne yönlendiren lifestyle fotoğrafları.</p>
+                            <button class="btn btn-primary" style="margin-bottom: 30px;" onclick="(async () => { await addShopLook(); })()">+ Fotoğraf Ekle</button>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">
+                                ${banners.filter(b => b.position === 'shop_look').map(item => {
+                                    const lp = item.linkedProductId ? products.find(p => String(p.id) === String(item.linkedProductId)) : null;
+                                    const lpName = lp ? (lp.name?.tr || lp.name?.en || '') : '<span style="color:#c0392b;">Ürün bağlı değil</span>';
+                                    return `
+                                    <div class="admin-card">
+                                        <img src="${item.url}" style="width:100%;height:140px;object-fit:cover;border-radius:4px;margin-bottom:10px;" onerror="this.style.display='none'">
+                                        <p style="font-size:0.82rem;">Bağlı ürün: ${lpName}</p>
+                                        <div style="margin-top: 12px; display: flex; gap: 10px;">
+                                            <button class="btn" style="flex: 1;" onclick="editShopLook(${item.id})">${t().edit}</button>
+                                            <button class="btn" style="flex: 1;" onclick="deleteBanner(${item.id})">${t().deleteProduct}</button>
+                                        </div>
+                                    </div>`;
+                                }).join('') || '<p style="color:#aaa;">Henüz fotoğraf eklenmedi.</p>'}
                             </div>
                         </div>
 
@@ -5505,6 +5715,80 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
 
         async function addNewBanner() {
             showBannerModal();
+        }
+
+        // ===== Shop the Look admin =====
+        async function addShopLook() { await showShopLookModal(); }
+        async function editShopLook(id) { await showShopLookModal(id); }
+
+        async function showShopLookModal(itemId = null) {
+            const banners = await getBanners();
+            const products = await getProducts();
+            const item = itemId ? banners.find(b => b.id === parseInt(itemId)) : null;
+            const imgUrl = item ? (item.url || '') : '';
+            const linkedId = item ? (item.linkedProductId || '') : '';
+
+            const productOptions = products.map(p => {
+                const nm = p.name?.tr || p.name?.en || ('Ürün #' + p.id);
+                const sel = String(linkedId) === String(p.id) ? 'selected' : '';
+                return `<option value="${p.id}" ${sel}>${nm} (#${p.id})</option>`;
+            }).join('');
+
+            const modal = `
+                <div class="modal-overlay" id="bannerModal">
+                    <div class="modal" style="max-width:560px;">
+                        <button class="modal-close" onclick="closeModal()">&times;</button>
+                        <h2>${item ? 'Fotoğrafı Düzenle' : 'Shop the Look Fotoğrafı Ekle'}</h2>
+                        <form id="shopLookForm">
+                            <div class="form-group">
+                                <label>Fotoğraf <small style="color:#999;font-weight:400;">kare (1:1) önerilir</small></label>
+                                <div id="bannerDropDesktop"
+                                     ondragover="event.preventDefault();this.style.borderColor='#8a7d6b';"
+                                     ondragleave="this.style.borderColor='#ddd';"
+                                     ondrop="handleBannerDrop(event,'desktop')"
+                                     style="border:2px dashed #ddd;border-radius:6px;padding:20px;text-align:center;cursor:pointer;background:#fafaf9;margin-bottom:8px;"
+                                     onclick="uploadBannerImage('desktop')">
+                                    ${imgUrl
+                                        ? `<img src="${imgUrl}" id="bannerPreviewDesktop" style="max-height:160px;max-width:100%;border-radius:4px;object-fit:cover;"><br><span style="font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:inline-block;">Değiştirmek için tıkla veya sürükle-bırak</span>`
+                                        : `<div id="bannerPreviewDesktop" style="display:none;"></div><span style="font-size:0.85rem;color:#aaa;">Tıkla veya resmi buraya sürükle-bırak</span>`}
+                                </div>
+                                <input type="text" id="formBannerUrl" value="${imgUrl}" placeholder="ya da URL yapıştır..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;margin-top:2px;" oninput="updateBannerPreview('desktop',this.value)">
+                                <div id="bannerUploadStatusDesktop" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Bağlanacak Ürün</label>
+                                <select id="formShopLookProduct" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;">
+                                    <option value="">— Ürün seçin —</option>
+                                    ${productOptions}
+                                </select>
+                                <small style="color:#999;">Fotoğrafa tıklanınca bu ürünün sayfasına yönlendirir.</small>
+                            </div>
+                            <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="saveShopLook(${item ? item.id : 'null'})">${t().save || 'Kaydet'}</button>
+                        </form>
+                    </div>
+                </div>`;
+            const wrap = document.createElement('div');
+            wrap.innerHTML = modal;
+            document.body.appendChild(wrap.firstElementChild);
+        }
+
+        async function saveShopLook(itemId) {
+            const url = document.getElementById('formBannerUrl').value.trim();
+            const productId = document.getElementById('formShopLookProduct').value;
+            if (!url) { alert('Lütfen bir fotoğraf yükleyin veya URL girin.'); return; }
+            if (!productId) { alert('Lütfen bir ürün seçin.'); return; }
+            const banner = {
+                id: itemId ? parseInt(itemId) : null,
+                _dbId: itemId ? parseInt(itemId) : null,
+                type: 'image',
+                url: url,
+                mobileUrl: '',
+                position: 'shop_look',
+                linkedProductId: parseInt(productId),
+            };
+            await saveBannerToDB(banner);
+            closeModal();
+            await render();
         }
 
         async function deleteBanner(bannerId) {

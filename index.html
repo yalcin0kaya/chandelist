@@ -702,6 +702,9 @@
             letter-spacing: 2px; text-transform: uppercase;
         }
         .sl-no-product { color: #999; font-size: 0.85rem; text-align: center; }
+        @media (max-width: 600px) {
+            #slProductGrid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
         @media (max-width: 768px) {
             .sl-modal { flex-direction: column; max-height: 92vh; overflow-y: auto; }
             .sl-image-side { min-height: 260px; }
@@ -5727,16 +5730,24 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const item = itemId ? banners.find(b => b.id === parseInt(itemId)) : null;
             const imgUrl = item ? (item.url || '') : '';
             const linkedId = item ? (item.linkedProductId || '') : '';
+            window._shopLookProducts = products;
 
-            const productOptions = products.map(p => {
+            const productGrid = products.map(p => {
                 const nm = p.name?.tr || p.name?.en || ('Ürün #' + p.id);
-                const sel = String(linkedId) === String(p.id) ? 'selected' : '';
-                return `<option value="${p.id}" ${sel}>${nm} (#${p.id})</option>`;
+                const img = (p.images && p.images[0]) || '';
+                const sel = String(linkedId) === String(p.id);
+                return `
+                    <div class="sl-pick" data-id="${p.id}" data-name="${nm.toLowerCase()} ${(p.sku||'').toLowerCase()}" onclick="selectShopLookProduct(${p.id})"
+                         style="border:2px solid ${sel ? '#2c2c2c' : '#eee'};border-radius:6px;padding:6px;cursor:pointer;text-align:center;background:#fff;">
+                        ${img ? `<img src="${img}" style="width:100%;height:90px;object-fit:cover;border-radius:4px;" onerror="this.style.opacity=0.2">` : `<div style="height:90px;background:#f5f0eb;border-radius:4px;"></div>`}
+                        <div style="font-size:0.72rem;margin-top:5px;line-height:1.2;color:#444;max-height:2.4em;overflow:hidden;">${nm}</div>
+                        <div style="font-size:0.65rem;color:#aaa;">#${p.id}</div>
+                    </div>`;
             }).join('');
 
             const modal = `
                 <div class="modal-overlay" id="bannerModal">
-                    <div class="modal" style="max-width:560px;">
+                    <div class="modal" style="max-width:680px;">
                         <button class="modal-close" onclick="closeModal()">&times;</button>
                         <h2>${item ? 'Fotoğrafı Düzenle' : 'Shop the Look Fotoğrafı Ekle'}</h2>
                         <form id="shopLookForm">
@@ -5756,12 +5767,13 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                                 <div id="bannerUploadStatusDesktop" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
                             </div>
                             <div class="form-group">
-                                <label>Bağlanacak Ürün</label>
-                                <select id="formShopLookProduct" required style="width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;">
-                                    <option value="">— Ürün seçin —</option>
-                                    ${productOptions}
-                                </select>
-                                <small style="color:#999;">Fotoğrafa tıklanınca bu ürünün sayfasına yönlendirir.</small>
+                                <label>Bağlanacak Ürün <span id="slSelectedName" style="color:#8a7d6b;font-weight:400;">${linkedId ? '' : '— seçilmedi —'}</span></label>
+                                <input type="hidden" id="formShopLookProduct" value="${linkedId}">
+                                <input type="text" id="slProductSearch" placeholder="🔍 Ürün ara (isim veya SKU)..." oninput="filterShopLookProducts(this.value)" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;margin-bottom:10px;font-size:0.85rem;">
+                                <div id="slProductGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-height:280px;overflow-y:auto;padding:4px;border:1px solid #eee;border-radius:6px;">
+                                    ${productGrid}
+                                </div>
+                                <small style="color:#999;">Fotoğrafa tıklanınca seçtiğin ürünün sayfasına yönlendirir.</small>
                             </div>
                             <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="saveShopLook(${item ? item.id : 'null'})">${t().save || 'Kaydet'}</button>
                         </form>
@@ -5770,6 +5782,24 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const wrap = document.createElement('div');
             wrap.innerHTML = modal;
             document.body.appendChild(wrap.firstElementChild);
+            if (linkedId) selectShopLookProduct(linkedId);
+        }
+
+        function selectShopLookProduct(id) {
+            document.getElementById('formShopLookProduct').value = id;
+            document.querySelectorAll('.sl-pick').forEach(el => {
+                el.style.borderColor = String(el.dataset.id) === String(id) ? '#2c2c2c' : '#eee';
+            });
+            const p = (window._shopLookProducts || []).find(x => String(x.id) === String(id));
+            const nameEl = document.getElementById('slSelectedName');
+            if (nameEl && p) nameEl.textContent = '✓ ' + (p.name?.tr || p.name?.en || ('#' + id));
+        }
+
+        function filterShopLookProducts(q) {
+            q = (q || '').toLowerCase().trim();
+            document.querySelectorAll('#slProductGrid .sl-pick').forEach(el => {
+                el.style.display = (!q || el.dataset.name.includes(q)) ? '' : 'none';
+            });
         }
 
         async function saveShopLook(itemId) {

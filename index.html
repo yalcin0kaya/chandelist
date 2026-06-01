@@ -1548,6 +1548,26 @@
                 gap: 30px;
             }
 
+            /* Mobilde urun gorseli: sabit 600px yerine ekrana uyumlu */
+            .main-display {
+                height: auto;
+                aspect-ratio: 1 / 1;
+            }
+            .main-display img,
+            .main-display video {
+                object-fit: contain;
+                background: #f5f0eb;
+            }
+            .gallery-nav-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.2rem;
+            }
+            .product-info h1 {
+                font-size: 1.6rem;
+                line-height: 1.25;
+            }
+
             .back-to-top {
                 bottom: 20px;
                 right: 20px;
@@ -1603,7 +1623,7 @@
 
         .gallery-nav-btn {
             position: absolute;
-            top: 300px;
+            top: 50%;
             transform: translateY(-50%);
             background: rgba(255,255,255,0.9);
             border: none;
@@ -1711,6 +1731,27 @@
             border-top: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
         }
+
+        /* Accordion (RH tarzi acilir-kapanir bolumler) */
+        .pd-accordion { margin: 24px 0; }
+        .pd-acc-item { border-top: 1px solid #ddd; }
+        .pd-acc-item:last-child { border-bottom: 1px solid #ddd; }
+        .pd-acc-header {
+            width: 100%; background: none; border: none;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px 2px; cursor: pointer;
+            font-family: 'Jost', sans-serif; font-size: 0.85rem;
+            letter-spacing: 1.5px; text-transform: uppercase; color: #2c2c2c;
+            text-align: left;
+        }
+        .pd-acc-header .pd-acc-icon { font-size: 1.2rem; font-weight: 300; transition: transform 0.3s ease; line-height: 1; }
+        .pd-acc-item.open .pd-acc-icon { transform: rotate(45deg); }
+        .pd-acc-body {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .pd-acc-item.open .pd-acc-body { max-height: 500px; }
+        .pd-acc-body-inner { padding: 0 2px 22px; }
 
         .detail-row {
             display: grid;
@@ -2989,6 +3030,11 @@
             render();
         }
 
+        function togglePdAcc(btn) {
+            const item = btn.closest('.pd-acc-item');
+            if (item) item.classList.toggle('open');
+        }
+
         // ===== Shop the Look carousel (kaydirma + surukleme) =====
         let _slScrollPos = 0;
         function shopLookScroll(dir) {
@@ -3769,7 +3815,6 @@
 
                             <div class="product-info">
                                 <h1>${product.name && product.name[currentLanguage] || ''}</h1>
-                                <p style="font-size: 1.1rem; color: #666; margin-bottom: 20px;">${product.description && product.description[currentLanguage] || ''}</p>
 
                                 ${(() => {
                                     const variants = product.variants && product.variants.length > 0 ? product.variants : [];
@@ -3819,27 +3864,62 @@
                                     `;
                                 })()}
 
-                                <div class="product-details">
-                                    <div class="detail-row">
-                                        <span class="detail-label">${currentLanguage === 'tr' ? 'Ürün Kodu' : 'Product Code'}</span>
-                                        <span style="font-family:monospace; font-size:0.9rem; color:#333; font-weight:600;">${getProductCode(product)}</span>
+                                <div class="pd-accordion">
+                                    <div class="pd-acc-item open">
+                                        <button type="button" class="pd-acc-header" onclick="togglePdAcc(this)">
+                                            ${currentLanguage === 'tr' ? 'Açıklama' : 'Description'}
+                                            <span class="pd-acc-icon">+</span>
+                                        </button>
+                                        <div class="pd-acc-body">
+                                            <div class="pd-acc-body-inner" style="color:#555;line-height:1.7;">
+                                                ${product.description && product.description[currentLanguage] || ''}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="detail-row">
-                                        <span class="detail-label">${t().materials}</span>
-                                        <span>${product.materials}</span>
+                                    <div class="pd-acc-item">
+                                        <button type="button" class="pd-acc-header" onclick="togglePdAcc(this)">
+                                            ${currentLanguage === 'tr' ? 'Detaylar' : 'Details'}
+                                            <span class="pd-acc-icon">+</span>
+                                        </button>
+                                        <div class="pd-acc-body">
+                                            <div class="pd-acc-body-inner">
+                                                <div class="detail-row">
+                                                    <span class="detail-label">${currentLanguage === 'tr' ? 'Ürün Kodu' : 'Product Code'}</span>
+                                                    <span style="font-family:monospace; font-size:0.9rem; color:#333; font-weight:600;">${getProductCode(product)}</span>
+                                                </div>
+                                                <div class="detail-row">
+                                                    <span class="detail-label">${t().materials}</span>
+                                                    <span>${product.materials || '-'}</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     ${(() => {
                                         if (!product.dimensions) return '';
                                         let dim = {h:'',dia:'',w:'',d:''};
-                                        try { dim = JSON.parse(product.dimensions); } catch(e) {
-                                            return `<div class="detail-row"><span class="detail-label">${t().dimensions}</span><span>${product.dimensions}</span></div>`;
+                                        let dimRows = '';
+                                        try {
+                                            dim = JSON.parse(product.dimensions);
+                                            const parts = [];
+                                            if (dim.h)   parts.push(`<div class="detail-row"><span class="detail-label">Yükseklik / Height</span><span>${dim.h} cm</span></div>`);
+                                            if (dim.dia) parts.push(`<div class="detail-row"><span class="detail-label">Çap / Diameter</span><span>${dim.dia} cm</span></div>`);
+                                            if (dim.w)   parts.push(`<div class="detail-row"><span class="detail-label">Genişlik / Width</span><span>${dim.w} cm</span></div>`);
+                                            if (dim.d)   parts.push(`<div class="detail-row"><span class="detail-label">Derinlik / Depth</span><span>${dim.d} cm</span></div>`);
+                                            dimRows = parts.join('');
+                                        } catch(e) {
+                                            dimRows = `<div class="detail-row"><span class="detail-label">${t().dimensions}</span><span>${product.dimensions}</span></div>`;
                                         }
-                                        const parts = [];
-                                        if (dim.h)   parts.push(`<div class="detail-row"><span class="detail-label">Height / Yükseklik</span><span>${dim.h} cm</span></div>`);
-                                        if (dim.dia) parts.push(`<div class="detail-row"><span class="detail-label">Diameter / Çap</span><span>${dim.dia} cm</span></div>`);
-                                        if (dim.w)   parts.push(`<div class="detail-row"><span class="detail-label">Width / Genişlik</span><span>${dim.w} cm</span></div>`);
-                                        if (dim.d)   parts.push(`<div class="detail-row"><span class="detail-label">Depth / Derinlik</span><span>${dim.d} cm</span></div>`);
-                                        return parts.join('');
+                                        if (!dimRows) return '';
+                                        return `
+                                        <div class="pd-acc-item">
+                                            <button type="button" class="pd-acc-header" onclick="togglePdAcc(this)">
+                                                ${currentLanguage === 'tr' ? 'Boyutlar' : 'Dimensions'}
+                                                <span class="pd-acc-icon">+</span>
+                                            </button>
+                                            <div class="pd-acc-body">
+                                                <div class="pd-acc-body-inner">${dimRows}</div>
+                                            </div>
+                                        </div>`;
                                     })()}
                                 </div>
 

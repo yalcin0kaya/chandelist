@@ -2856,6 +2856,50 @@
             await sbFetch('/products?id=eq.' + id, { method: 'DELETE' });
         }
 
+        // ===== Site Settings (hero metni vb.) =====
+        let _siteSettingsCache = null;
+        async function getSiteSettings() {
+            if (_siteSettingsCache) return _siteSettingsCache;
+            try {
+                const data = await sbFetch('/site_settings?select=key,value');
+                const map = {};
+                (data || []).forEach(row => { map[row.key] = row.value; });
+                _siteSettingsCache = map;
+                return map;
+            } catch (e) { return {}; }
+        }
+        async function saveSiteSetting(key, value) {
+            _siteSettingsCache = null;
+            const existing = await sbFetch('/site_settings?key=eq.' + encodeURIComponent(key) + '&select=key');
+            if (existing && existing.length) {
+                await sbFetch('/site_settings?key=eq.' + encodeURIComponent(key), { method: 'PATCH', body: JSON.stringify({ value, updated_at: new Date().toISOString() }) });
+            } else {
+                await sbFetch('/site_settings', { method: 'POST', body: JSON.stringify({ key, value, updated_at: new Date().toISOString() }) });
+            }
+        }
+
+        async function saveHeroText() {
+            const v = {
+                title_tr: document.getElementById('heroTitleTr').value.trim(),
+                subtitle_tr: document.getElementById('heroSubtitleTr').value.trim(),
+                title_en: document.getElementById('heroTitleEn').value.trim(),
+                subtitle_en: document.getElementById('heroSubtitleEn').value.trim(),
+            };
+            const btn = event?.target;
+            if (btn) { btn.disabled = true; btn.textContent = 'Kaydediliyor...'; }
+            try {
+                await saveSiteSetting('hero_text', v);
+                window._heroText = v;
+                window._adminHeroText = v;
+                const msg = document.getElementById('heroSaveMsg');
+                if (msg) { msg.style.display = 'inline'; msg.textContent = '✓ Kaydedildi'; }
+            } catch (e) {
+                alert('Kaydedilemedi: ' + e.message);
+            } finally {
+                if (btn) { btn.disabled = false; btn.textContent = '💾 Başlığı Kaydet'; }
+            }
+        }
+
         async function saveBannerToDB(banner) {
             const dbBanner = {
                 type: banner.type,
@@ -3150,6 +3194,17 @@
         // ============= HERO SLIDESHOW =============
         let heroSlideTimer = null;
 
+        function heroTitle() {
+            const h = window._heroText;
+            if (h) return (currentLanguage === 'tr' ? h.title_tr : h.title_en) || h.title_tr || h.title_en || '';
+            return t()?.craftedWithPrecision || 'Crafted with Precision';
+        }
+        function heroSubtitle() {
+            const h = window._heroText;
+            if (h) return (currentLanguage === 'tr' ? h.subtitle_tr : h.subtitle_en) || h.subtitle_tr || h.subtitle_en || '';
+            return t()?.luxuryChandeliers || 'Luxury chandeliers, light designs that transform every space';
+        }
+
         function renderHero(banners) {
             // Accept single banner or array
             const slides = Array.isArray(banners) ? banners : (banners ? [banners] : []);
@@ -3158,8 +3213,8 @@
                 return `
                     <section class="hero">
                         <div class="hero-content fade-in">
-                            <h1>${t()?.craftedWithPrecision || 'Crafted with Precision'}</h1>
-                            <p>${t()?.luxuryChandeliers || 'Luxury chandeliers, light designs that transform every space'}</p>
+                            <h1>${heroTitle()}</h1>
+                            <p>${heroSubtitle()}</p>
                         </div>
                     </section>`;
             }
@@ -3185,8 +3240,8 @@
                 <section class="hero" id="heroSection">
                     ${slidesHTML}
                     <div class="hero-content fade-in" style="z-index:10;">
-                        <h1>${t()?.craftedWithPrecision || 'Crafted with Precision'}</h1>
-                        <p>${t()?.luxuryChandeliers || 'Luxury chandeliers, light designs that transform every space'}</p>
+                        <h1>${heroTitle()}</h1>
+                        <p>${heroSubtitle()}</p>
                     </div>
                     ${dotsHTML}
                 </section>`;
@@ -3252,6 +3307,8 @@
             const homeSlides = homeBanners.length > 0 ? homeBanners : (banners.filter(b => b.type !== 'video').slice(0, 5));
             const homeVideoBanner = banners.find(b => b.position === 'home_video');
             const shopLookItems = banners.filter(b => b.position === 'shop_look' && b.url);
+            const _settings = await getSiteSettings();
+            window._heroText = _settings.hero_text || null;
 
             let productsHTML = products.slice(0, 8).map(product => renderProductCard(product)).join('');
 
@@ -4000,6 +4057,8 @@
 
             const products = await getProducts();
             const banners = await getBanners();
+            const _adminSettings = await getSiteSettings();
+            window._adminHeroText = _adminSettings.hero_text || {};
 
             let productsListHTML = products.map((product, idx) => {
                 const thumb = (product.images && product.images[0]) ? product.images[0] : '';
@@ -4166,6 +4225,28 @@
 
                         <div id="settings-section" class="admin-section" style="display: none;">
                             <h2>Ayarlar</h2>
+                            <div class="collection-admin-card">
+                                <h3>🖼 Ana Sayfa Başlık Metni</h3>
+                                <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">Ana sayfadaki büyük görselin üzerinde görünen başlık ve alt yazı.</p>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                                    <div>
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇹🇷 Türkçe Başlık</label>
+                                        <input type="text" id="heroTitleTr" value="${(window._adminHeroText?.title_tr || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;margin-bottom:12px;">
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇹🇷 Türkçe Alt Yazı</label>
+                                        <input type="text" id="heroSubtitleTr" value="${(window._adminHeroText?.subtitle_tr || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;">
+                                    </div>
+                                    <div>
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇬🇧 İngilizce Başlık</label>
+                                        <input type="text" id="heroTitleEn" value="${(window._adminHeroText?.title_en || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;margin-bottom:12px;">
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇬🇧 İngilizce Alt Yazı</label>
+                                        <input type="text" id="heroSubtitleEn" value="${(window._adminHeroText?.subtitle_en || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;">
+                                    </div>
+                                </div>
+                                <div style="margin-top:16px;display:flex;gap:12px;align-items:center;">
+                                    <button class="btn btn-primary" onclick="saveHeroText()">💾 Başlığı Kaydet</button>
+                                    <span id="heroSaveMsg" style="display:none;color:#27ae60;font-size:0.85rem;"></span>
+                                </div>
+                            </div>
                             <div class="collection-admin-card">
                                 <h3>Claude API Key</h3>
                                 <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">

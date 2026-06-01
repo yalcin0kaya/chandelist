@@ -6245,9 +6245,9 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             }
 
             // Product gallery click handlers
-            if (currentPage.startsWith('/product/')) {
+            if (currentPage.startsWith('/products/')) {
                 const thumbnails = document.querySelectorAll('.thumbnail');
-                const productId = currentPage.split('/')[2];
+                const productId = currentPage.split('/')[2].split('-')[0];
                 const product = (await getProducts()).find(p => p.id === parseInt(productId));
                 const allMedia = [
                     ...(product?.images || []).filter(img => img && img.trim()).map(img => ({ type: 'image', url: img })),
@@ -6372,7 +6372,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             });
 
             // Initialize variant state on product detail page
-            if (currentPage.startsWith('/product/')) {
+            if (currentPage.startsWith('/products/')) {
                 _selectedColor = null;
                 _selectedSize = null;
                 const firstSwatch = document.querySelector('.color-swatch');
@@ -6463,7 +6463,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         }
 
         async function showPriceModal() {
-            const productId = currentPage.split('/')[2];
+            const productId = currentPage.split('/')[2].split('-')[0];
             const product = (await getProducts()).find(p => p.id === parseInt(productId));
             const modal = `
                 <div class="modal-overlay" id="priceModal" onclick="closeModal(event)">
@@ -6499,7 +6499,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         }
 
         async function sendPriceInquiry() {
-            const productId = currentPage.split('/')[2];
+            const productId = currentPage.split('/')[2].split('-')[0];
             const product = (await getProducts()).find(p => p.id === parseInt(productId));
             const name = document.getElementById('priceFormName').value;
             const email = document.getElementById('priceFormEmail').value;

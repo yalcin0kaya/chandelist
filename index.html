@@ -603,24 +603,35 @@
             font-size: 0.9rem;
         }
 
-        /* ===== Shop the Look ===== */
-        .shop-look-section { width: 100%; }
-        .shop-look-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+        /* ===== Shop the Look (carousel) ===== */
+        .shop-look-section { width: 100%; position: relative; padding: 0 0 10px; }
+        .shop-look-viewport {
+            overflow: hidden;
+            cursor: grab;
+            -webkit-overflow-scrolling: touch;
+        }
+        .shop-look-viewport.dragging { cursor: grabbing; }
+        .shop-look-track {
+            display: flex;
             gap: 0;
+            transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+            will-change: transform;
         }
         .shop-look-cell {
             position: relative;
+            flex: 0 0 25%;       /* bilgisayarda 4 kart */
+            max-width: 25%;
             aspect-ratio: 1 / 1;
             overflow: hidden;
             cursor: pointer;
+            user-select: none;
         }
         .shop-look-cell img {
             width: 100%; height: 100%;
             object-fit: cover;
             display: block;
             transition: transform 0.5s ease;
+            pointer-events: none;
         }
         .shop-look-cell:hover img { transform: scale(1.04); }
         .shop-look-cell-overlay {
@@ -641,9 +652,22 @@
         }
         .shop-look-cell:hover .shop-look-cell-overlay { background: rgba(0,0,0,0.18); }
         .shop-look-cell:hover .shop-look-cell-overlay span { opacity: 1; transform: scale(1); }
-        @media (max-width: 768px) {
-            .shop-look-grid { grid-template-columns: repeat(2, 1fr); }
+        .shop-look-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 46px; height: 46px; border: none; border-radius: 50%;
+            background: rgba(255,255,255,0.95); box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            cursor: pointer; z-index: 4; font-size: 1.3rem; color: #2c2c2c;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s ease, opacity 0.2s ease;
         }
+        .shop-look-arrow:hover { background: #fff; }
+        .shop-look-arrow.prev { left: 16px; }
+        .shop-look-arrow.next { right: 16px; }
+        .shop-look-arrow:disabled { opacity: 0; pointer-events: none; }
+        @media (max-width: 1024px) { .shop-look-cell { flex-basis: 33.333%; max-width: 33.333%; } }
+        @media (max-width: 768px)  { .shop-look-cell { flex-basis: 50%; max-width: 50%; } .shop-look-arrow { width: 38px; height: 38px; } }
+        @media (max-width: 480px)  { .shop-look-cell { flex-basis: 80%; max-width: 80%; } }
+
 
         /* Shop the Look modal */
         .sl-modal-overlay {
@@ -2965,6 +2989,69 @@
             render();
         }
 
+        // ===== Shop the Look carousel (kaydirma + surukleme) =====
+        let _slScrollPos = 0;
+        function shopLookScroll(dir) {
+            const vp = document.getElementById('shopLookViewport');
+            const track = document.getElementById('shopLookTrack');
+            if (!vp || !track) return;
+            const cell = track.querySelector('.shop-look-cell');
+            if (!cell) return;
+            const step = cell.offsetWidth; // bir kart genisligi
+            const maxScroll = track.scrollWidth - vp.clientWidth;
+            _slScrollPos += dir * step;
+            if (_slScrollPos < 0) _slScrollPos = 0;
+            if (_slScrollPos > maxScroll) _slScrollPos = maxScroll;
+            track.style.transform = 'translateX(' + (-_slScrollPos) + 'px)';
+            updateShopLookArrows(maxScroll);
+        }
+        function updateShopLookArrows(maxScroll) {
+            const prev = document.querySelector('.shop-look-arrow.prev');
+            const next = document.querySelector('.shop-look-arrow.next');
+            if (prev) prev.disabled = _slScrollPos <= 0;
+            if (next) next.disabled = _slScrollPos >= maxScroll - 1;
+        }
+        function initShopLookCarousel() {
+            const vp = document.getElementById('shopLookViewport');
+            const track = document.getElementById('shopLookTrack');
+            if (!vp || !track) return;
+            _slScrollPos = 0;
+            track.style.transform = 'translateX(0px)';
+            const maxScroll = () => track.scrollWidth - vp.clientWidth;
+            updateShopLookArrows(maxScroll());
+
+            // Surukleme (mouse + touch)
+            let isDown = false, startX = 0, startPos = 0, moved = false;
+            const down = (x) => { isDown = true; moved = false; startX = x; startPos = _slScrollPos; track.style.transition = 'none'; vp.classList.add('dragging'); };
+            const move = (x) => {
+                if (!isDown) return;
+                const dx = x - startX;
+                if (Math.abs(dx) > 5) moved = true;
+                let pos = startPos - dx;
+                const ms = maxScroll();
+                if (pos < 0) pos = 0; if (pos > ms) pos = ms;
+                _slScrollPos = pos;
+                track.style.transform = 'translateX(' + (-pos) + 'px)';
+            };
+            const up = () => {
+                if (!isDown) return;
+                isDown = false;
+                track.style.transition = '';
+                vp.classList.remove('dragging');
+                updateShopLookArrows(maxScroll());
+            };
+            vp.addEventListener('mousedown', e => { e.preventDefault(); down(e.pageX); });
+            window.addEventListener('mousemove', e => move(e.pageX));
+            window.addEventListener('mouseup', up);
+            vp.addEventListener('touchstart', e => down(e.touches[0].pageX), { passive: true });
+            vp.addEventListener('touchmove', e => move(e.touches[0].pageX), { passive: true });
+            vp.addEventListener('touchend', up);
+            // Suruklerken tiklamayi engelle
+            vp.querySelectorAll('.shop-look-cell').forEach(cell => {
+                cell.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); } }, true);
+            });
+        }
+
         // ===== Shop the Look panel =====
         let _shopLookItems = [];
         let _shopLookIndex = 0;
@@ -3331,14 +3418,18 @@
                 `}
                 ${shopLookItems.length > 0 ? `
                 <section class="shop-look-section scroll-fade">
-                    <div class="shop-look-grid">
-                        ${shopLookItems.map((item, i) => `
-                            <div class="shop-look-cell" onclick="openShopLook(${i})">
-                                <img src="${item.url}" alt="Shop the look" loading="lazy">
-                                <div class="shop-look-cell-overlay"><span>＋</span></div>
-                            </div>
-                        `).join('')}
+                    <button class="shop-look-arrow prev" onclick="shopLookScroll(-1)" aria-label="Önceki">‹</button>
+                    <div class="shop-look-viewport" id="shopLookViewport">
+                        <div class="shop-look-track" id="shopLookTrack">
+                            ${shopLookItems.map((item, i) => `
+                                <div class="shop-look-cell" onclick="openShopLook(${i})">
+                                    <img src="${item.url}" alt="Shop the look" loading="lazy" draggable="false">
+                                    <div class="shop-look-cell-overlay"><span>＋</span></div>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
+                    <button class="shop-look-arrow next" onclick="shopLookScroll(1)" aria-label="Sonraki">›</button>
                 </section>
                 ` : ''}
                 <section class="py-80 scroll-fade">
@@ -5970,6 +6061,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             // Init hero slideshow if on home page
             if (path === '/') {
                 setTimeout(initHeroSlideshow, 100);
+                setTimeout(initShopLookCarousel, 150);
             }
 
             // Scroll to top

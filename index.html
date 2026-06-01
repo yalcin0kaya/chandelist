@@ -1545,10 +1545,10 @@
 
             .product-detail {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 24px;
             }
 
-            /* Mobilde urun gorseli: sabit 600px yerine ekrana uyumlu */
+            /* Mobilde urun gorseli: tam genislik, kare, kirpilmadan */
             .main-display {
                 height: auto;
                 aspect-ratio: 1 / 1;
@@ -1559,13 +1559,25 @@
                 background: #f5f0eb;
             }
             .gallery-nav-btn {
-                width: 38px;
-                height: 38px;
-                font-size: 1.2rem;
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+            }
+            .product-gallery { gap: 14px; }
+            .thumbnails {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+            .product-info {
+                text-align: left;
+                padding: 0 4px;
             }
             .product-info h1 {
-                font-size: 1.6rem;
+                font-size: 1.7rem;
                 line-height: 1.25;
+                margin-bottom: 10px;
             }
 
             .back-to-top {
@@ -1590,6 +1602,13 @@
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             margin: 40px 0;
+        }
+        /* Tablet ve genis telefonlarda tek sutun (gorsel ustte, bilgi altta) */
+        @media (max-width: 1024px) {
+            .product-detail { grid-template-columns: 1fr !important; gap: 24px; }
+            .main-display { height: auto !important; aspect-ratio: 1 / 1; }
+            .main-display img, .main-display video { object-fit: contain !important; background: #f5f0eb; }
+            .thumbnails { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         }
 
         .product-gallery {
@@ -6104,7 +6123,9 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
 
         function closeModal(event) {
             if (event && event.target.id !== event.currentTarget.id) return;
-            const modal = document.getElementById('productModal') || document.getElementById('bannerModal');
+            const modal = document.getElementById('productModal')
+                || document.getElementById('bannerModal')
+                || document.getElementById('priceModal');
             if (modal) modal.remove();
         }
 

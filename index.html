@@ -478,6 +478,14 @@
             .contact-video-hero { height: 45vh; }
         }
 
+        /* Iletisim sayfasi: mobilde adres bilgileri ve form alt alta */
+        @media (max-width: 1024px) {
+            .contact-grid {
+                grid-template-columns: 1fr !important;
+                gap: 36px !important;
+            }
+        }
+
         .hero-media {
             position: absolute;
             top: 0;
@@ -4231,7 +4239,7 @@
 
                 <section class="py-80 scroll-fade">
                     <div class="container">
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+                        <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
                             <div>
                                 <h2>${t().contactUs}</h2>
                                 <div style="margin: 30px 0;">

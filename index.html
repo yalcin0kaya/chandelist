@@ -2265,21 +2265,25 @@
     <script type="application/ld+json" id="schema-org">
     {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": ["Organization", "Manufacturer"],
         "name": "CHANDELIST",
+        "alternateName": "Chandelist Chandelier Factory",
         "url": "https://chandelist.com",
         "logo": "https://chandelist.com/logo.png",
-        "description": "Luxury chandeliers and decorative lighting crafted with precision",
+        "description": "Turkey-based manufacturer of handcrafted luxury chandeliers, Ottoman-style pendant lighting and decorative metal lighting. Custom and contract lighting for hospitality, residential and heritage projects worldwide.",
+        "knowsAbout": ["Chandelier manufacturing", "Custom lighting", "Ottoman style lighting", "Brass lighting", "Laser-cut metal lighting", "Contract & hospitality lighting"],
+        "areaServed": "Worldwide",
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Istanbul",
+            "addressLocality": "Istanbul",
             "addressCountry": "TR"
         },
         "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+90-555-123-4567",
-            "contactType": "Customer Service",
-            "email": "info@chandelist.com"
+            "telephone": "+905326681094",
+            "contactType": "Sales",
+            "email": "info@chandelist.com",
+            "availableLanguage": ["English", "Turkish"]
         },
         "sameAs": ["https://www.instagram.com/thechandelist/"]
     }
@@ -3839,6 +3843,17 @@
                         "@type": "Brand",
                         "name": "CHANDELIST"
                     },
+                    "manufacturer": {
+                        "@type": "Organization",
+                        "name": "CHANDELIST",
+                        "url": "https://chandelist.com",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": "Istanbul",
+                            "addressCountry": "TR"
+                        }
+                    },
+                    "countryOfOrigin": "TR",
                     "url": `https://chandelist.com${productUrl(product)}`,
                     "sku": product.sku || String(product.id),
                     "offers": {

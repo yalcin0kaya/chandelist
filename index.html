@@ -2296,6 +2296,7 @@
                 lighting: 'Aydınlatma',
                 decorative: 'Dekoratif Eşya',
                 about: 'Hakkımızda',
+                custom: 'Özel Üretim',
                 contact: 'İletişim',
                 admin: 'Admin',
                 logo: 'CHANDELIST',
@@ -2400,6 +2401,7 @@
                 lighting: 'Lighting',
                 decorative: 'Decorative',
                 about: 'About',
+                custom: 'Custom & Contract',
                 contact: 'Contact',
                 admin: 'Admin',
                 logo: 'CHANDELIST',
@@ -3395,6 +3397,7 @@
                                 </div>
                             </div>
                             <a href="/decorative" data-page="decorative">${t().decorative}</a>
+                            <a href="/custom" data-page="custom">${t().custom}</a>
                             <a href="/about" data-page="about">${t().about}</a>
                             <a href="/contact" data-page="contact">${t().contact}</a>
                         </nav>
@@ -4267,6 +4270,108 @@
         }
 
         // ============= CONTACT PAGE =============
+        function renderCustomLightingPage() {
+            const isTr = currentLanguage === 'tr';
+            updateSEO(
+                isTr
+                    ? 'Özel Üretim & Proje Aydınlatması — CHANDELIST | Otel ve Restoran Avizeleri'
+                    : 'Custom & Contract Lighting — CHANDELIST | Hospitality Chandelier Manufacturer',
+                isTr
+                    ? '1984\'ten beri otel, restoran ve projeler için özel ölçü avize ve aydınlatma üretimi. Pirinç el işçiliği ve lazer kesim metal ile sıfırdan, dünya geneline imalat.'
+                    : 'Custom-made chandeliers and contract lighting for hotels, restaurants and projects since 1984. Handcrafted brass and laser-cut metal, made to order, shipped worldwide.',
+                '',
+                null,
+                isTr
+                    ? 'özel avize üretimi, otel avize imalatı, restoran aydınlatma, proje bazlı aydınlatma, contract lighting, özel ölçü avize'
+                    : 'custom lighting manufacturer, hospitality lighting, hotel chandeliers, restaurant lighting, contract lighting, bespoke chandelier manufacturer turkey',
+                '/custom'
+            );
+
+            const steps = [
+                { n: '01', t: isTr ? 'Brief & Konsept' : 'Brief & Concept', d: isTr ? 'İhtiyacınızı, mekanı ve tarzı dinliyoruz. Referans görseller ve ölçülerle başlıyoruz.' : 'We listen to your needs, space and style. We begin with reference images and dimensions.' },
+                { n: '02', t: isTr ? 'Tasarım & Teknik Çizim' : 'Design & Technical Drawing', d: isTr ? 'Konsepti teknik çizime döküyoruz; ölçü, malzeme ve bitiş seçenekleriyle onayınıza sunuyoruz.' : 'We turn the concept into technical drawings, presented for your approval with size, material and finish options.' },
+                { n: '03', t: isTr ? 'El İşçiliği Üretim' : 'Handcrafted Production', d: isTr ? 'Pirinç/bakır el işçiliği ve lazer kesim metal ile ustalarımız ürünü sıfırdan üretir.' : 'Our master craftsmen build the piece from scratch using brass/copper handwork and laser-cut metal.' },
+                { n: '04', t: isTr ? 'Paketleme & Global Sevkiyat' : 'Packing & Global Shipping', d: isTr ? 'Güvenli ihracat paketlemesi ile dünyanın her yerine gönderiyoruz.' : 'Securely export-packed and shipped to anywhere in the world.' },
+            ];
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    <div class="hero-content fade-in" style="background:rgba(0,0,0,0.55); padding: 60px 40px;">
+                        <h1 style="font-size:clamp(2rem,5vw,3.5rem); letter-spacing:4px;">
+                            ${isTr ? 'ÖZEL ÜRETİM & PROJELER' : 'CUSTOM & CONTRACT LIGHTING'}
+                        </h1>
+                        <p style="font-size:1.1rem; letter-spacing:2px; margin-top:12px; opacity:0.9;">
+                            ${isTr ? 'Oteller, Restoranlar ve Projeler İçin' : 'For Hotels, Restaurants & Projects'}
+                        </p>
+                    </div>
+                </section>
+
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="about-grid" style="margin-bottom: 70px;">
+                            <div class="about-text">
+                                <h2 style="font-size:1.8rem; margin-bottom:20px;">
+                                    ${isTr ? 'Hayalinizdeki Aydınlatmayı Üretiyoruz' : 'We Manufacture the Lighting You Envision'}
+                                </h2>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? '1984\'ten bu yana otel, restoran ve butik mekanlar için özel ölçü avize ve aydınlatma üretiyoruz. Seri üretim değil; her proje, mekanın mimarisine ve müşterinin vizyonuna göre sıfırdan tasarlanır.'
+                                        : 'Since 1984 we have produced made-to-order chandeliers and lighting for hotels, restaurants and boutique venues. Not mass production — every project is designed from scratch around the architecture of the space and the client\'s vision.'}
+                                </p>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? 'Pirinç ve bakır el işçiliği, lazer kesim metal ve özel yüzey kaplama tekniklerini bir arada kullanıyoruz. Tek bir özel parçadan, bir otelin tüm aydınlatma konseptine kadar her ölçekte üretim yapabiliyoruz.'
+                                        : 'We combine handcrafted brass and copper work, laser-cut metal and custom surface finishing. We produce at any scale — from a single bespoke piece to the complete lighting concept of an entire hotel.'}
+                                </p>
+                                <p style="line-height:1.9;">
+                                    ${isTr
+                                        ? 'Mimarlar, iç mimarlar ve proje firmalarıyla doğrudan çalışıyor, teknik çizimden global sevkiyata kadar tüm süreci yönetiyoruz.'
+                                        : 'We work directly with architects, interior designers and project firms, managing the entire process from technical drawing to global shipping.'}
+                                </p>
+                            </div>
+                            <div style="background: #f5f0e8; border-radius:4px; display:flex; align-items:center; justify-content:center; min-height:340px; padding:40px;">
+                                <div style="text-align:center;">
+                                    <div style="font-family:'Cormorant Garamond',serif; font-size:3.4rem; color:#8a7d6b; line-height:1.1;">${isTr ? 'Otele Özel' : 'Hospitality'}</div>
+                                    <div style="font-size:0.85rem; letter-spacing:3px; color:#aaa; margin-top:10px; text-transform:uppercase;">
+                                        ${isTr ? 'Proje Aydınlatması' : 'Contract Lighting'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:70px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">
+                                ${isTr ? 'NASIL ÇALIŞIYORUZ' : 'HOW WE WORK'}
+                            </h2>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+                                ${steps.map(s => `
+                                    <div style="background:#fff; border:1px solid #ece6dc; border-radius:6px; padding:30px 24px;">
+                                        <div style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; color:#c9a84c; line-height:1;">${s.n}</div>
+                                        <h3 style="font-size:1.05rem; margin:12px 0 10px; letter-spacing:1px;">${s.t}</h3>
+                                        <p style="line-height:1.7; font-size:0.92rem; color:#666;">${s.d}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div style="text-align:center; background:#f5f0e8; border-radius:6px; padding:50px 30px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:14px; letter-spacing:1px;">
+                                ${isTr ? 'Projeniz İçin Teklif Alın' : 'Request a Quote for Your Project'}
+                            </h2>
+                            <p style="line-height:1.8; max-width:620px; margin:0 auto 26px; color:#666;">
+                                ${isTr
+                                    ? 'Otel, restoran veya özel projeniz için fikrinizi paylaşın; teknik ekibimiz size özel bir teklif hazırlasın.'
+                                    : 'Share your idea for your hotel, restaurant or bespoke project, and our technical team will prepare a tailored quote for you.'}
+                            </p>
+                            <a href="/contact" onclick="navigate(event,'/contact')" class="btn-enquire" style="display:inline-block; padding:14px 38px; letter-spacing:2px;">
+                                ${isTr ? 'İLETİŞİME GEÇİN' : 'GET IN TOUCH'}
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
         function renderContactPage() {
             updateSEO(
                 `Contact CHANDELIST - Get in Touch`,
@@ -6323,6 +6428,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     content = await renderSearchPage(q);
                 } else if (path === '/about') {
                     content = renderAboutPage();
+                } else if (path === '/custom') {
+                    content = renderCustomLightingPage();
                 } else if (path === '/contact') {
                     content = renderContactPage();
                 } else if (path === '/admin') {

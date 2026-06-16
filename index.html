@@ -31,8 +31,8 @@
 
     <!-- Canonical and hreflang -->
     <link rel="canonical" href="https://chandelist.com">
-    <link rel="alternate" hreflang="en" href="https://chandelist.com/en">
-    <link rel="alternate" hreflang="tr" href="https://chandelist.com/tr">
+    <link rel="alternate" hreflang="en" href="https://chandelist.com">
+    <link rel="alternate" hreflang="tr" href="https://osmanliaydinlatma.com">
     <link rel="alternate" hreflang="x-default" href="https://chandelist.com">
 
     <title>CHANDELIST — Luxury Chandeliers & Decorative Lighting</title>
@@ -2297,6 +2297,7 @@
                 decorative: 'Dekoratif Eşya',
                 about: 'Hakkımızda',
                 custom: 'Özel Üretim',
+                workshop: 'Atölyemiz',
                 contact: 'İletişim',
                 admin: 'Admin',
                 logo: 'CHANDELIST',
@@ -2402,6 +2403,7 @@
                 decorative: 'Decorative',
                 about: 'About',
                 custom: 'Custom & Contract',
+                workshop: 'Our Workshop',
                 contact: 'Contact',
                 admin: 'Admin',
                 logo: 'CHANDELIST',
@@ -3398,6 +3400,7 @@
                             </div>
                             <a href="/decorative" data-page="decorative">${t().decorative}</a>
                             <a href="/custom" data-page="custom">${t().custom}</a>
+                            <a href="/workshop" data-page="workshop">${t().workshop}</a>
                             <a href="/about" data-page="about">${t().about}</a>
                             <a href="/contact" data-page="contact">${t().contact}</a>
                         </nav>
@@ -4365,6 +4368,107 @@
                             </p>
                             <a href="/contact" onclick="navigate(event,'/contact')" class="btn-enquire" style="display:inline-block; padding:14px 38px; letter-spacing:2px;">
                                 ${isTr ? 'İLETİŞİME GEÇİN' : 'GET IN TOUCH'}
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderWorkshopPage() {
+            const isTr = currentLanguage === 'tr';
+            updateSEO(
+                isTr
+                    ? 'Atölyemiz & Üretim — CHANDELIST | El Yapımı Avize İmalatı'
+                    : 'Our Workshop & Manufacturing — CHANDELIST | Handcrafted Chandelier Maker',
+                isTr
+                    ? 'Atölyemizde pirinç ve bakır el işçiliği, lazer kesim metal ve özel yüzey kaplama ile her avize sıfırdan üretilir. 1984\'ten beri usta ellerde.'
+                    : 'In our workshop every chandelier is built from scratch with handcrafted brass and copper work, laser-cut metal and custom finishing. In master hands since 1984.',
+                '',
+                null,
+                isTr
+                    ? 'avize atölyesi, el yapımı avize, pirinç işçiliği, lazer kesim metal, avize üretim süreci, avize fabrikası istanbul'
+                    : 'chandelier workshop, handmade lighting, brass craftsmanship, laser cut metal, lighting manufacturing process, chandelier factory turkey',
+                '/workshop'
+            );
+
+            const crafts = [
+                { t: isTr ? 'Pirinç & Bakır El İşçiliği' : 'Brass & Copper Handwork', d: isTr ? 'Ustalarımız metali elde şekillendirir, döver ve yüzeyini işler — her parça insan eliyle.' : 'Our masters shape, hammer and finish metal by hand — every piece touched by human hands.' },
+                { t: isTr ? 'Lazer Kesim Metal' : 'Laser-Cut Metal', d: isTr ? 'Karmaşık desenleri milimetrik hassasiyetle lazerle keseriz; gelenek ile teknolojiyi birleştiririz.' : 'We cut intricate patterns with millimetric laser precision, blending tradition with technology.' },
+                { t: isTr ? 'Özel Yüzey Kaplama' : 'Custom Surface Finishing', d: isTr ? 'Antik pirinç eskitme, parlak, mat ve özel renk seçenekleriyle her projeye özgü bitiş.' : 'Antique brass, polished, matte and custom color finishes — a finish unique to each project.' },
+                { t: isTr ? 'Montaj & Kalite Kontrol' : 'Assembly & Quality Control', d: isTr ? 'Her ürün montaj sonrası tek tek elektrik ve dayanıklılık testinden geçer.' : 'Every product is individually tested for electrics and durability after assembly.' },
+            ];
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    <div class="hero-content fade-in" style="background:rgba(0,0,0,0.55); padding: 60px 40px;">
+                        <h1 style="font-size:clamp(2rem,5vw,3.5rem); letter-spacing:4px;">
+                            ${isTr ? 'ATÖLYEMİZ' : 'OUR WORKSHOP'}
+                        </h1>
+                        <p style="font-size:1.1rem; letter-spacing:2px; margin-top:12px; opacity:0.9;">
+                            ${isTr ? 'Işığın El Emeğiyle Doğduğu Yer' : 'Where Light Is Born by Hand'}
+                        </p>
+                    </div>
+                </section>
+
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="about-grid" style="margin-bottom: 70px;">
+                            <div class="about-text">
+                                <h2 style="font-size:1.8rem; margin-bottom:20px;">
+                                    ${isTr ? 'Seri Üretim Değil, El Sanatı' : 'Not Mass Production — Craftsmanship'}
+                                </h2>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? '1984\'ten bu yana aynı tutkuyla çalışan atölyemizde, her avize metal işlemeden montaja kadar usta ellerde sıfırdan hayat bulur. Makineye değil, insana ve deneyime güveniyoruz.'
+                                        : 'In our workshop, working with the same passion since 1984, every chandelier comes to life from scratch in master hands — from metalwork to assembly. We trust people and experience, not just machines.'}
+                                </p>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? 'Geleneksel pirinç ve bakır işçiliğini, modern lazer kesim teknolojisiyle birleştiriyoruz. Bu sayede hem zamansız el sanatını hem de milimetrik hassasiyeti aynı üründe sunabiliyoruz.'
+                                        : 'We combine traditional brass and copper craftsmanship with modern laser-cutting technology — bringing both timeless artistry and millimetric precision to the same piece.'}
+                                </p>
+                                <p style="line-height:1.9;">
+                                    ${isTr
+                                        ? 'Tek bir özel parçadan büyük proje üretimlerine kadar, her işi aynı titizlikle ele alıyoruz.'
+                                        : 'From a single bespoke piece to large project runs, we treat every job with the same care.'}
+                                </p>
+                            </div>
+                            <div style="background: #f5f0e8; border-radius:4px; display:flex; align-items:center; justify-content:center; min-height:340px; padding:40px;">
+                                <div style="text-align:center;">
+                                    <div style="font-family:'Cormorant Garamond',serif; font-size:5rem; color:#8a7d6b; line-height:1;">40+</div>
+                                    <div style="font-size:0.85rem; letter-spacing:3px; color:#aaa; margin-top:10px; text-transform:uppercase;">
+                                        ${isTr ? 'Yıllık El Emeği' : 'Years of Craft'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:70px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">
+                                ${isTr ? 'ÜRETİM SÜRECİMİZ' : 'OUR CRAFT PROCESS'}
+                            </h2>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+                                ${crafts.map(c => `
+                                    <div style="background:#fff; border:1px solid #ece6dc; border-radius:6px; padding:30px 24px;">
+                                        <h3 style="font-size:1.05rem; margin:0 0 10px; letter-spacing:1px; color:#8a7d6b;">${c.t}</h3>
+                                        <p style="line-height:1.7; font-size:0.92rem; color:#666;">${c.d}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div style="text-align:center; background:#f5f0e8; border-radius:6px; padding:50px 30px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:14px; letter-spacing:1px;">
+                                ${isTr ? 'Özel Bir Proje mi Var?' : 'Have a Custom Project?'}
+                            </h2>
+                            <p style="line-height:1.8; max-width:620px; margin:0 auto 26px; color:#666;">
+                                ${isTr
+                                    ? 'Atölyemiz hayalinizdeki aydınlatmayı üretmeye hazır. Fikrinizi paylaşın, birlikte hayata geçirelim.'
+                                    : 'Our workshop is ready to manufacture the lighting you envision. Share your idea and let\'s build it together.'}
+                            </p>
+                            <a href="/custom" onclick="navigate(event,'/custom')" class="btn-enquire" style="display:inline-block; padding:14px 38px; letter-spacing:2px;">
+                                ${isTr ? 'ÖZEL ÜRETİM' : 'CUSTOM LIGHTING'}
                             </a>
                         </div>
                     </div>
@@ -6430,6 +6534,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     content = renderAboutPage();
                 } else if (path === '/custom') {
                     content = renderCustomLightingPage();
+                } else if (path === '/workshop') {
+                    content = renderWorkshopPage();
                 } else if (path === '/contact') {
                     content = renderContactPage();
                 } else if (path === '/admin') {

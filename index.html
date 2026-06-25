@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJ1196V6KX"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4MNSL61GK"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-HJ1196V6KX');
+      gtag('config', 'G-N4MNSL61GK');
     </script>
     <meta name="description" content="CHANDELIST - Luxury chandeliers and decorative lighting, crafted with precision and elegance.">
     <meta name="robots" content="index, follow">
@@ -2812,6 +2812,59 @@
         // Geriye donuk uyumluluk icin sabit (okuma yollarinda kullanilir)
         const SB_HEADERS = sbHeaders(null);
 
+        // ============= ZİYARETÇİ TAKİBİ =============
+        async function trackVisit() {
+            try {
+                // Admin sayfasını sayma
+                if (location.pathname.startsWith('/admin') || location.hash.includes('admin')) return;
+                // Aynı oturumda aynı sayfayı tekrar sayma
+                const path = location.pathname || '/';
+                const sessionKey = 'visit_' + path;
+                if (sessionStorage.getItem(sessionKey)) return;
+                sessionStorage.setItem(sessionKey, '1');
+
+                // Session ID (kişiyi tanımak için, kalıcı)
+                let sid = localStorage.getItem('visitor_sid');
+                if (!sid) { sid = 'v' + Date.now() + Math.random().toString(36).slice(2,8); localStorage.setItem('visitor_sid', sid); }
+
+                // Cihaz tipi
+                const device = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobil' : 'masaüstü';
+                // Yönlendiren kaynak
+                let ref = document.referrer || '';
+                if (!ref) ref = 'direkt';
+                else if (/google\./i.test(ref)) ref = 'google';
+                else if (/instagram\./i.test(ref)) ref = 'instagram';
+                else if (/facebook\./i.test(ref)) ref = 'facebook';
+                else if (/pinterest\./i.test(ref)) ref = 'pinterest';
+                else if (/bing\./i.test(ref)) ref = 'bing';
+                else { try { ref = new URL(ref).hostname; } catch(e){} }
+
+                // Ülke (ücretsiz servis, hata olursa boş geç)
+                let country = '';
+                try {
+                    const geo = await fetch('https://ipapi.co/json/').then(r=>r.json());
+                    country = geo.country_name || geo.country || '';
+                } catch(e) {}
+
+                const record = {
+                    site: location.hostname.includes('osmanli') ? 'osmanli' : 'chandelist',
+                    path: path,
+                    page_title: (document.title || '').slice(0,120),
+                    referrer: ref.slice(0,120),
+                    country: country.slice(0,60),
+                    device: device,
+                    language: (navigator.language || '').slice(0,10),
+                    session_id: sid
+                };
+
+                fetch(SB_URL + '/visits', {
+                    method: 'POST',
+                    headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+                    body: JSON.stringify(record)
+                }).catch(()=>{});
+            } catch(e) {}
+        }
+
         async function sbFetch(endpoint, options = {}) {
             try {
                 const method = (options.method || 'GET').toUpperCase();
@@ -4626,6 +4679,7 @@
                             <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
                             <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
+                            <a href="#" class="admin-nav" data-section="visitors">📊 Ziyaretçiler</a>
                             <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
                             <a href="#" onclick="event.preventDefault(); if(confirm('Çıkış yapmak istediğinize emin misiniz?')){ sbSignOut(); window.location.hash='#/'; render(); }" style="color:#c0392b;margin-top:8px;">⏻ ${t().logout}</a>
                         </nav>
@@ -4768,6 +4822,63 @@
                             <div style="margin-top:20px;display:flex;gap:12px;align-items:center;">
                                 <button onclick="saveSortOrder()" style="padding:10px 28px;background:#2c2c2c;color:#fff;border:none;border-radius:4px;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">💾 Kaydet</button>
                                 <span id="sortSaveMsg" style="display:none;color:#27ae60;font-size:0.85rem;"></span>
+                            </div>
+                        </div>
+
+                        <div id="visitors-section" class="admin-section" style="display: none;">
+                            <h2>📊 Ziyaretçiler</h2>
+                            <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+                                <button class="vis-site-btn active" data-site="chandelist" onclick="setVisSite('chandelist')" style="padding:8px 18px;border:2px solid #8a7d6b;background:#8a7d6b;color:#fff;border-radius:6px;cursor:pointer;font-weight:600;">Chandelist</button>
+                                <button class="vis-site-btn" data-site="osmanli" onclick="setVisSite('osmanli')" style="padding:8px 18px;border:2px solid #8a7d6b;background:#fff;color:#8a7d6b;border-radius:6px;cursor:pointer;font-weight:600;">Osmanlı</button>
+                            </div>
+                            <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+                                <button class="vis-range-btn active" data-days="1" onclick="loadVisitors(1)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Bugün</button>
+                                <button class="vis-range-btn" data-days="7" onclick="loadVisitors(7)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Son 7 Gün</button>
+                                <button class="vis-range-btn" data-days="30" onclick="loadVisitors(30)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Son 30 Gün</button>
+                                <button class="vis-range-btn" data-days="9999" onclick="loadVisitors(9999)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Tümü</button>
+                            </div>
+
+                            <div id="vis-summary" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:24px;">
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;text-align:center;">
+                                    <div style="font-size:2rem;font-weight:700;color:#8a7d6b;" id="vis-total">—</div>
+                                    <div style="font-size:0.8rem;color:#999;letter-spacing:1px;text-transform:uppercase;">Toplam Görüntülenme</div>
+                                </div>
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;text-align:center;">
+                                    <div style="font-size:2rem;font-weight:700;color:#8a7d6b;" id="vis-unique">—</div>
+                                    <div style="font-size:0.8rem;color:#999;letter-spacing:1px;text-transform:uppercase;">Tekil Ziyaretçi</div>
+                                </div>
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;text-align:center;">
+                                    <div style="font-size:2rem;font-weight:700;color:#8a7d6b;" id="vis-countries">—</div>
+                                    <div style="font-size:0.8rem;color:#999;letter-spacing:1px;text-transform:uppercase;">Ülke Sayısı</div>
+                                </div>
+                            </div>
+
+                            <div id="vis-loading" style="text-align:center;padding:30px;color:#999;">Yükleniyor...</div>
+
+                            <div id="vis-detail" style="display:none;">
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;margin-bottom:20px;">
+                                    <h3 style="margin-top:0;font-size:1rem;">📈 Günlük Ziyaret Grafiği</h3>
+                                    <div id="vis-chart" style="display:flex;align-items:flex-end;gap:4px;height:140px;padding-top:10px;"></div>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">🔥 En Çok Bakılan Sayfalar</h3>
+                                        <div id="vis-pages"></div>
+                                    </div>
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">🌍 Ülkeler</h3>
+                                        <div id="vis-country-list"></div>
+                                    </div>
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">↗️ Nereden Geldiler</h3>
+                                        <div id="vis-referrers"></div>
+                                    </div>
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">📱 Cihaz</h3>
+                                        <div id="vis-devices"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -6498,9 +6609,128 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         }
 
         // ============= MAIN RENDER =============
+        // ============= ZİYARETÇİ PANELİ (admin) =============
+        let _visSite = 'chandelist';
+        let _visDays = 1;
+        function setVisSite(site) {
+            _visSite = site;
+            document.querySelectorAll('.vis-site-btn').forEach(b => {
+                const on = b.dataset.site === site;
+                b.style.background = on ? '#8a7d6b' : '#fff';
+                b.style.color = on ? '#fff' : '#8a7d6b';
+            });
+            loadVisitors(_visDays);
+        }
+        async function loadVisitors(days = 1) {
+            _visDays = days;
+            const loading = document.getElementById('vis-loading');
+            const detail = document.getElementById('vis-detail');
+            if (loading) loading.style.display = 'block';
+            if (detail) detail.style.display = 'none';
+
+            // aktif buton stilini güncelle
+            document.querySelectorAll('.vis-range-btn').forEach(b => {
+                const on = parseInt(b.dataset.days) === days;
+                b.style.background = on ? '#2c2c2c' : '#fff';
+                b.style.color = on ? '#fff' : '#2c2c2c';
+            });
+
+            try {
+                let since = '';
+                if (days < 9999) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - days + 1);
+                    d.setHours(0,0,0,0);
+                    since = '&created_at=gte.' + d.toISOString();
+                }
+                const siteFilter = '&site=eq.' + _visSite;
+                const res = await fetch(SB_URL + '/visits?select=*' + since + siteFilter + '&order=created_at.desc&limit=10000', {
+                    headers: { 'apikey': SB_KEY }
+                });
+                const visits = await res.json();
+                if (loading) loading.style.display = 'none';
+                if (detail) detail.style.display = 'block';
+
+                if (!Array.isArray(visits)) {
+                    document.getElementById('vis-total').textContent = '0';
+                    return;
+                }
+
+                // Özet
+                document.getElementById('vis-total').textContent = visits.length;
+                const uniqueSids = new Set(visits.map(v => v.session_id).filter(Boolean));
+                document.getElementById('vis-unique').textContent = uniqueSids.size;
+                const countries = {};
+                visits.forEach(v => { if (v.country) countries[v.country] = (countries[v.country]||0)+1; });
+                document.getElementById('vis-countries').textContent = Object.keys(countries).length;
+
+                // Günlük grafik
+                const byDay = {};
+                visits.forEach(v => {
+                    const d = (v.created_at||'').slice(0,10);
+                    if (d) byDay[d] = (byDay[d]||0)+1;
+                });
+                const sortedDays = Object.keys(byDay).sort();
+                const maxDay = Math.max(1, ...Object.values(byDay));
+                const chart = document.getElementById('vis-chart');
+                if (sortedDays.length === 0) {
+                    chart.innerHTML = '<div style="color:#999;margin:auto;">Henüz veri yok</div>';
+                } else {
+                    chart.innerHTML = sortedDays.map(d => {
+                        const h = Math.round((byDay[d]/maxDay)*110)+10;
+                        const label = d.slice(8,10)+'.'+d.slice(5,7);
+                        return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:24px;">
+                            <div style="font-size:0.7rem;color:#8a7d6b;font-weight:600;">${byDay[d]}</div>
+                            <div style="width:100%;max-width:36px;height:${h}px;background:linear-gradient(180deg,#b8a888,#8a7d6b);border-radius:4px 4px 0 0;"></div>
+                            <div style="font-size:0.65rem;color:#aaa;">${label}</div>
+                        </div>`;
+                    }).join('');
+                }
+
+                // Yardımcı: sıralı liste oluştur
+                const makeList = (obj, fmt) => {
+                    const entries = Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,10);
+                    if (entries.length === 0) return '<div style="color:#999;font-size:0.85rem;">Veri yok</div>';
+                    const max = entries[0][1];
+                    return entries.map(([k,v]) => `
+                        <div style="margin-bottom:10px;">
+                            <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:3px;">
+                                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;">${fmt?fmt(k):k}</span>
+                                <span style="font-weight:600;color:#8a7d6b;">${v}</span>
+                            </div>
+                            <div style="height:6px;background:#f0ebe2;border-radius:3px;overflow:hidden;">
+                                <div style="height:100%;width:${Math.round(v/max*100)}%;background:#b8a888;"></div>
+                            </div>
+                        </div>`).join('');
+                };
+
+                // En çok bakılan sayfalar
+                const pages = {};
+                visits.forEach(v => { const p = v.path||'/'; pages[p] = (pages[p]||0)+1; });
+                document.getElementById('vis-pages').innerHTML = makeList(pages);
+
+                // Ülkeler
+                document.getElementById('vis-country-list').innerHTML = makeList(countries);
+
+                // Kaynaklar
+                const refs = {};
+                visits.forEach(v => { const r = v.referrer||'direkt'; refs[r] = (refs[r]||0)+1; });
+                document.getElementById('vis-referrers').innerHTML = makeList(refs);
+
+                // Cihazlar
+                const devices = {};
+                visits.forEach(v => { const dv = v.device||'?'; devices[dv] = (devices[dv]||0)+1; });
+                document.getElementById('vis-devices').innerHTML = makeList(devices);
+
+            } catch(e) {
+                if (loading) { loading.style.display = 'block'; loading.textContent = 'Hata: ' + e.message; }
+            }
+        }
+
         async function render() {
             const path = window.location.pathname || '/';
             currentPage = path;
+            trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
 
             const app = document.getElementById('app');
             // Show loading state
@@ -6592,6 +6822,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     document.getElementById(`${section}-section`).style.display = 'block';
                     // Sıralama sekmesi açılınca avizeyi otomatik yükle
                     if (section === 'sorting') loadSortGrid('chandelier');
+                    // Ziyaretçiler sekmesi açılınca verileri yükle
+                    if (section === 'visitors') loadVisitors(1);
                 });
             });
 

@@ -3657,6 +3657,7 @@
             const _settings = await getSiteSettings();
             window._heroText = _settings.hero_text || null;
             window._pageBanners = _settings.page_banners || {};
+            // NOT: _pageBanners ayrıca render() başında da yüklenir (her sayfa için)
 
             const featuredList = products.filter(p => p.isFeatured);
             const homeProducts = featuredList.length > 0 ? featuredList.slice(0, 8) : products.slice(0, 8);
@@ -6866,6 +6867,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const path = window.location.pathname || '/';
             currentPage = path;
             trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
+            if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; } catch(e){ window._pageBanners = {}; } }
 
             const app = document.getElementById('app');
             // Show loading state

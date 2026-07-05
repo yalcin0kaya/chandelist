@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N4MNSL61GK"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HJ1196V6KX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-N4MNSL61GK');
+      gtag('config', 'G-HJ1196V6KX');
     </script>
     <meta name="description" content="CHANDELIST - Luxury chandeliers and decorative lighting, crafted with precision and elegance.">
     <meta name="robots" content="index, follow">
@@ -486,6 +486,14 @@
             }
         }
 
+        /* Mobilde kategori kartları tek sütun (alt alta), kare görsel */
+        @media (max-width: 768px) {
+            .grid-3 {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+        }
+
         .hero-media {
             position: absolute;
             top: 0;
@@ -546,8 +554,10 @@
         .hero-slide .hero-mobile-img { display: none; }
         .hero-slide .hero-desktop-img { display: block; }
         @media (max-width: 768px) {
-            .hero-slide .hero-desktop-img { display: none; }
+            /* Mobil görsel VARSA: masaüstünü gizle, mobili göster */
+            .hero-slide:has(.hero-mobile-img) .hero-desktop-img { display: none; }
             .hero-slide .hero-mobile-img { display: block; }
+            /* Mobil görsel YOKSA masaüstü görseli mobilde de görünür (yukarıdaki :has kuralı sayesinde gizlenmez) */
         }
         .hero-dots {
             position: absolute;
@@ -823,7 +833,7 @@
 
         .card-image {
             width: 100%;
-            height: 360px;
+            aspect-ratio: 1 / 1;
             overflow: hidden;
             background: #f5f0eb;
             display: flex;

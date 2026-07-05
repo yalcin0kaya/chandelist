@@ -2706,11 +2706,15 @@
         }
 
         // ===== SAYFA BANNER'LARI (site_settings üzerinden, iki site ortak) =====
-        // Kategori sayfalarının hero görselleri. Boşsa varsayılan placeholder kullanılır.
-        function getPageBanner(key) {
+        // Her sayfa için { desktop, mobile } saklanır. Eski tek-string kayıtlarla da uyumlu.
+        function getPageBanner(key, type) {
             try {
                 const banners = (window._pageBanners) || {};
-                return banners[key] || '';
+                const val = banners[key];
+                if (!val) return '';
+                if (typeof val === 'string') return val; // eski format (tek görsel)
+                if (type === 'mobile') return val.mobile || val.desktop || '';
+                return val.desktop || '';
             } catch(e) { return ''; }
         }
         // Admin'de düzenlenecek sayfa listesi
@@ -3732,7 +3736,9 @@
 
             let html = `
                 <section class="hero" style="margin-top: 80px;">
-                    <img class="hero-media" src="${getPageBanner('lighting') || 'https://picsum.photos/1400/600?random=200'}" alt="${t().lighting}" loading="lazy">
+                    ${getPageBanner('lighting','mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner('lighting','desktop') || 'https://picsum.photos/1400/600?random=200'}" alt="${t().lighting}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner('lighting','mobile')}" alt="${t().lighting}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner('lighting','desktop') || 'https://picsum.photos/1400/600?random=200'}" alt="${t().lighting}" loading="lazy">`}
                     <div class="hero-content fade-in">
                         <h1>${t().lighting}</h1>
                     </div>
@@ -3851,7 +3857,9 @@
 
             return `
                 <section class="hero" style="margin-top: 80px;">
-                    <img class="hero-media" src="${getPageBanner(subcategory) || 'https://picsum.photos/1400/600?random=300'}" alt="${subcatName}" loading="lazy">
+                    ${getPageBanner(subcategory,'mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=300'}" alt="${subcatName}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner(subcategory,'mobile')}" alt="${subcatName}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=300'}" alt="${subcatName}" loading="lazy">`}
                     <div class="hero-content fade-in">
                         <h1>${subcatName}</h1>
                     </div>
@@ -3883,7 +3891,9 @@
 
             return `
                 <section class="hero" style="margin-top: 80px;">
-                    <img class="hero-media" src="${getPageBanner('decorative') || 'https://picsum.photos/1400/600?random=400'}" alt="${t().decorative}" loading="lazy">
+                    ${getPageBanner('decorative','mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner('decorative','desktop') || 'https://picsum.photos/1400/600?random=400'}" alt="${t().decorative}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner('decorative','mobile')}" alt="${t().decorative}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner('decorative','desktop') || 'https://picsum.photos/1400/600?random=400'}" alt="${t().decorative}" loading="lazy">`}
                     <div class="hero-content fade-in">
                         <h1>${t().decorative}</h1>
                     </div>
@@ -4851,7 +4861,8 @@
                             <h2>🖼 Sayfa Banner'ları</h2>
                             <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:8px;">
                                 Kategori sayfalarının üst görsellerini buradan yönetin. Değişiklik <strong>her iki sitede de</strong> (Chandelist + Osmanlı) geçerli olur.<br>
-                                <strong>Önerilen boyut: 1400 × 600 px · JPG/PNG/WEBP</strong>
+                                <strong>Masaüstü: 1400×600 (yatay) · Mobil: 800×1000 (dikey/kare)</strong> · JPG/PNG/WEBP<br>
+                                <span style="color:#999;">Mobil görsel yüklemezseniz masaüstü görseli mobilde de kullanılır (ortadan kırpılabilir).</span>
                             </p>
                             <div id="pb-list"></div>
                         </div>
@@ -6647,24 +6658,36 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             window._pageBanners = banners;
             const list = document.getElementById('pb-list');
             if (!list) return;
+            const slot = (pg, val, type) => {
+                const url = (val && typeof val === 'object') ? (val[type]||'') : (type==='desktop' ? (val||'') : '');
+                const label = type === 'desktop' ? '🖥 Masaüstü (yatay, 1400×600)' : '📱 Mobil (dikey/kare, 800×1000)';
+                return `
+                    <div style="flex:1;min-width:220px;">
+                        <div style="font-size:0.8rem;color:#8a7d6b;margin-bottom:6px;font-weight:600;">${label}</div>
+                        ${url
+                            ? `<img src="${url}" style="width:100%;max-height:150px;object-fit:cover;border-radius:6px;margin-bottom:8px;">`
+                            : `<div style="background:#f0ece6;height:110px;display:flex;align-items:center;justify-content:center;color:#aaa;border-radius:6px;margin-bottom:8px;font-size:0.8rem;">Varsayılan</div>`}
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                            <button type="button" class="btn" onclick="uploadPageBanner('${pg.key}','${type}')" style="font-size:0.85rem;">📷 Yükle</button>
+                            ${url ? `<button type="button" class="btn" onclick="removePageBanner('${pg.key}','${type}')" style="background:#fff;border:1px solid #ddd;color:#c00;font-size:0.85rem;">Kaldır</button>` : ''}
+                        </div>
+                    </div>`;
+            };
             list.innerHTML = PAGE_BANNER_LIST.map(pg => {
-                const img = banners[pg.key] || '';
+                const val = banners[pg.key];
                 return `
                     <div class="collection-admin-card" style="margin-bottom:18px;">
                         <h3 style="margin-top:0;">${pg.label}</h3>
-                        ${img
-                            ? `<img src="${img}" alt="${pg.label}" class="collection-img-preview" style="max-height:160px;">`
-                            : `<div style="background:#f0ece6;height:140px;display:flex;align-items:center;justify-content:center;color:#aaa;margin-bottom:12px;border-radius:6px;">Şu an varsayılan görsel kullanılıyor</div>`}
-                        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                            <button type="button" class="btn" onclick="uploadPageBanner('${pg.key}')">📷 Görsel Yükle</button>
-                            ${img ? `<button type="button" class="btn" onclick="removePageBanner('${pg.key}')" style="background:#fff;border:1px solid #ddd;color:#c00;">Görseli Kaldır</button>` : ''}
-                            <span id="pb-msg-${pg.key}" style="color:#27ae60;font-size:0.85rem;display:none;">✓ Kaydedildi</span>
+                        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                            ${slot(pg, val, 'desktop')}
+                            ${slot(pg, val, 'mobile')}
                         </div>
+                        <span id="pb-msg-${pg.key}" style="color:#27ae60;font-size:0.85rem;display:none;margin-top:8px;">✓ Kaydedildi</span>
                     </div>`;
             }).join('');
         }
 
-        function uploadPageBanner(key) {
+        function uploadPageBanner(key, type) {
             if (typeof cloudinary === 'undefined') {
                 alert('Cloudinary yükleniyor, lütfen bekleyin.');
                 return;
@@ -6687,7 +6710,11 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                         try {
                             const settings = await getSiteSettings();
                             const banners = settings.page_banners || {};
-                            banners[key] = url;
+                            let cur = banners[key];
+                            if (typeof cur === 'string') cur = { desktop: cur }; // eski formatı çevir
+                            if (!cur || typeof cur !== 'object') cur = {};
+                            cur[type] = url;
+                            banners[key] = cur;
                             await saveSiteSetting('page_banners', banners);
                             window._pageBanners = banners;
                             if (msg) { msg.textContent = '✓ Kaydedildi'; msg.style.color = '#27ae60'; }
@@ -6701,11 +6728,17 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             widget.open();
         }
 
-        async function removePageBanner(key) {
-            if (!confirm('Bu sayfanın özel banner\'ını kaldırıp varsayılana döndürmek istiyor musunuz?')) return;
+        async function removePageBanner(key, type) {
+            if (!confirm('Bu görseli kaldırmak istiyor musunuz?')) return;
             const settings = await getSiteSettings();
             const banners = settings.page_banners || {};
-            delete banners[key];
+            let cur = banners[key];
+            if (typeof cur === 'string') cur = { desktop: cur };
+            if (cur && typeof cur === 'object') {
+                delete cur[type];
+                if (!cur.desktop && !cur.mobile) delete banners[key];
+                else banners[key] = cur;
+            }
             await saveSiteSetting('page_banners', banners);
             window._pageBanners = banners;
             loadPageBanners();

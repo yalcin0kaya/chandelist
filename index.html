@@ -3459,7 +3459,8 @@
             twitterDescription.setAttribute('content', description);
 
             const DEFAULT_OG_IMAGE = 'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg';
-            const _ogImg = imageUrl || DEFAULT_OG_IMAGE;
+            // picsum bir placeholder servisi; sosyal paylasimda asla kullanilmasin
+            const _ogImg = (imageUrl && !/picsum\.photos/.test(imageUrl)) ? imageUrl : DEFAULT_OG_IMAGE;
             document.querySelector('meta[property="og:image"]').setAttribute('content', _ogImg);
             document.querySelector('meta[name="twitter:image"]').setAttribute('content', _ogImg);
 
@@ -3555,7 +3556,7 @@
                                 <h4>${t().contact}</h4>
                                 <p>Çobançeşme Mah. Mithatpaşa Cad.<br>Söğütlü Sok. No:2/1<br>Bahçelievler, İstanbul</p>
                                 <a href="mailto:info@chandelist.com">info@chandelist.com</a>
-                                <a href="tel:+905322814267">+90 532 281 42 67</a>
+                                <a href="tel:+905326681094">+90 532 668 10 94</a>
                             </div>
                         </div>
                         <div class="footer-bottom">
@@ -3669,7 +3670,7 @@
             updateSEO(
                 'CHANDELIST — Luxury Chandeliers & Decorative Lighting',
                 'Handcrafted luxury chandeliers and decorative lighting that unite contemporary design with traditional craftsmanship.',
-                'https://picsum.photos/1200/630?random=og',
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
                 orgSchema,
                 'lüks avize, dekoratif aydınlatma, kristal avize, modern avize, chandelist',
                 '/'
@@ -3751,7 +3752,7 @@
             updateSEO(
                 `${t().lighting} - CHANDELIST Luxury Lighting`,
                 `Explore our collection of ${t().lighting}: chandeliers, sconces, floor lamps, and outdoor lights.`,
-                'https://picsum.photos/1200/630?random=lighting'
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg'
             );
 
             const subcategories = [
@@ -3911,7 +3912,7 @@
             updateSEO(
                 `${t().decorative} - CHANDELIST`,
                 `Explore our decorative items and accessories.`,
-                'https://picsum.photos/1200/630?random=decorative'
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg'
             );
 
             const products = (await getProducts()).filter(p => p.category === 'decorative');
@@ -4710,7 +4711,7 @@
                                 </div>
                                 <div style="margin: 30px 0;">
                                     <h4 style="margin-bottom: 15px;">${t().phone}</h4>
-                                    <a href="tel:+905322814267">+90 532 281 42 67</a>
+                                    <a href="tel:+905326681094">+90 532 668 10 94</a>
                                 </div>
                                 <div style="margin: 30px 0;">
                                     <h4 style="margin-bottom: 15px;">${t().email}</h4>

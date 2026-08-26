@@ -6999,10 +6999,12 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         let _lastTrackedPath = window.location.pathname;
         function trackPageView(path) {
             try {
-                if (window.fbq && path !== _lastTrackedPath) {
+                const yeniSayfa = (path !== _lastTrackedPath);
+                _lastTrackedPath = path;
+                if (!yeniSayfa) return;
+                if (window.fbq) {
                     fbq('track', 'PageView');
                 }
-                _lastTrackedPath = path;
                 if (window.gtag) {
                     gtag('event', 'page_view', {
                         page_path: path,

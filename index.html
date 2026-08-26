@@ -9,7 +9,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-N4MNSL61GK');
+      gtag('config', 'G-N4MNSL61GK', { send_page_view: false });
     </script>
 
     <!-- Meta Pixel (CHANDELIST) -->
@@ -6996,22 +6996,15 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         // ============= REKLAM OLAY TAKIBI =============
         // SPA oldugu icin pixel'in PageView'i sadece ilk yuklemede atar;
         // her rota degisiminde elle tetikliyoruz.
-        let _lastTrackedPath = window.location.pathname;
+        let _lastTrackedPath = null;
         function trackPageView(path) {
             try {
+                const ilkAcilis = (_lastTrackedPath === null);
                 const yeniSayfa = (path !== _lastTrackedPath);
                 _lastTrackedPath = path;
                 if (!yeniSayfa) return;
-                if (window.fbq) {
-                    fbq('track', 'PageView');
-                }
-                if (window.gtag) {
-                    gtag('event', 'page_view', {
-                        page_path: path,
-                        page_title: document.title,
-                        page_location: 'https://chandelist.com' + path
-                    });
-                }
+                if (!ilkAcilis && window.fbq) fbq('track', 'PageView');
+                if (window.gtag) gtag('event', 'page_view', { page_path: path, page_title: document.title, page_location: 'https://chandelist.com' + path });
             } catch (e) {}
         }
         function trackViewContent(product) {

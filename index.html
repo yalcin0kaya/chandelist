@@ -5475,6 +5475,11 @@
             }
             const imageUrl = firstImg.src;
 
+            if (!localStorage.getItem('anthropic_api_key')) {
+                alert('API anahtari girilmemis.\n\nAdmin -> Ayarlar bolumunden Anthropic API anahtarini gir, sonra tekrar dene.');
+                return;
+            }
+
             const btn = document.getElementById('autoFillBtn');
             const status = document.getElementById('autoFillStatus');
             btn.disabled = true;
@@ -5532,7 +5537,7 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                 const resp = await fetch('https://api.anthropic.com/v1/messages', {
                     method: 'POST',
                     headers: {
-                        'x-api-key': 'sk-ant-api03-YIlsyzRVyew0s10DE65mPBUmq--TOU0oVGCi9Dc_e9Ifu'+'dX70eqrDVMGY64sGXYuMQnwmW_oduaiP-d_90Ij_w-SKq8xQAA',
+                        'x-api-key': (localStorage.getItem('anthropic_api_key') || ''),
                         'anthropic-version': '2023-06-01',
                         'content-type': 'application/json',
                         'anthropic-dangerous-direct-browser-access': 'true'

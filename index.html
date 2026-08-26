@@ -2711,6 +2711,7 @@
         function setLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('language', lang);
+            try { document.documentElement.setAttribute('lang', lang); } catch (e) {}
             render();
         }
 
@@ -6998,6 +6999,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         // ============= REKLAM OLAY TAKIBI =============
         // SPA oldugu icin pixel'in PageView'i sadece ilk yuklemede atar;
         // her rota degisiminde elle tetikliyoruz.
+        try { document.documentElement.setAttribute('lang', currentLanguage); } catch (e) {}
         let _lastTrackedPath = null;
         function trackPageView(path) {
             try {
@@ -7091,6 +7093,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             window.scrollTo(0, 0);
 
             // Reklam platformlarina sayfa gorunumu bildir
+            try { document.documentElement.setAttribute('lang', currentLanguage); } catch (e) {}
             trackPageView(path);
         }
 

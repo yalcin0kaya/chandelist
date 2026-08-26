@@ -6017,6 +6017,105 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
             }
         }
 
+        // ===== AI ASISTAN — katalogda benzer urun var mi? =====
+        let _aiKatalog = null;
+
+        function aiNormalize(s) {
+            return String(s || '').toLowerCase()
+                .replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s')
+                .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
+                .replace(/[^a-z0-9\s]/g,' ')
+                .split(/\s+/).filter(w => w.length > 2 || /\d/.test(w));
+        }
+
+        async function aiBenzerBul(taslak) {
+            try {
+                if (!_aiKatalog) _aiKatalog = await getProducts();
+                const urunler = _aiKatalog || [];
+                if (!urunler.length) return [];
+
+                // Kelime ne kadar yaygin? Yaygin kelime az bilgi tasir (avize, pirinc...)
+                const df = {};
+                const dokuman = urunler.map(p => {
+                    const kelimeler = new Set(aiNormalize((p.name?.tr || '') + ' ' + (p.name?.en || '')));
+                    kelimeler.forEach(w => { df[w] = (df[w] || 0) + 1; });
+                    return { p, kelimeler };
+                });
+                const N = urunler.length;
+                const agirlik = w => Math.log(N / (1 + (df[w] || 0))) + 0.2;
+
+                const yeni = new Set(aiNormalize((taslak.name_tr || '') + ' ' + (taslak.name_en || '')));
+                const yeniSku = String(taslak.sku || '').trim().toLowerCase();
+                const yeniAlt = taslak.subcategory || '';
+
+                const puanlar = dokuman.map(({ p, kelimeler }) => {
+                    // Simetrik benzerlik: tek tarafli kapsama, uzun isimleri haksiz yere birebir gosteriyordu
+                    let kesisim = 0, birlesim = 0;
+                    const tum = new Set([...yeni, ...kelimeler]);
+                    tum.forEach(w => {
+                        const a = agirlik(w);
+                        birlesim += a;
+                        if (yeni.has(w) && kelimeler.has(w)) kesisim += a;
+                    });
+                    let puan = birlesim > 0 ? kesisim / birlesim : 0;
+                    const ayniAlt = yeniAlt && (p.subcategory || []).includes(yeniAlt);
+                    if (ayniAlt) puan += 0.05;
+                    const skuAyni = !!(yeniSku && String(p.sku || '').trim().toLowerCase() === yeniSku);
+                    puan = skuAyni ? 1 : Math.min(puan, 1);
+                    return { p, puan, skuAyni };
+                });
+
+                return puanlar.filter(x => x.puan >= 0.40)
+                              .sort((a, b) => b.puan - a.puan)
+                              .slice(0, 4);
+            } catch (e) { return []; }
+        }
+
+        function aiBenzerGoster(benzerler) {
+            if (!benzerler.length) return;
+            const kutu = document.getElementById('aiChatBox');
+            const skuCakisma = benzerler.some(b => b.skuAyni);
+            const guclu = benzerler[0].puan >= 0.75 || skuCakisma;
+
+            const kart = document.createElement('div');
+            kart.style.cssText = `align-self:flex-start;max-width:94%;background:${guclu?'#fdf0ef':'#fffdf5'};border:1px solid ${guclu?'#e8bfba':'#e6dcc0'};border-radius:12px;padding:15px;font-size:0.86rem;`;
+
+            const kartlar = benzerler.map(b => {
+                const gorsel = (b.p.images && b.p.images[0]) || '';
+                const ad = (b.p.name?.tr || b.p.name?.en || '').slice(0, 60);
+                const yuzde = Math.round(b.puan * 100);
+                return `<div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #efe9dd;">
+                    ${gorsel ? `<img src="${gorsel}" style="width:52px;height:52px;object-fit:cover;border-radius:6px;border:1px solid #e0d8cc;flex-shrink:0;">` : '<div style="width:52px;height:52px;background:#f0ece4;border-radius:6px;flex-shrink:0;"></div>'}
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-weight:500;">${ad.replace(/</g,'&lt;')}</div>
+                        <div style="color:#8a7d6b;font-size:0.8rem;">ID ${b.p.id}${b.p.sku ? ' · ' + b.p.sku : ''} · benzerlik %${yuzde}${b.skuAyni ? ' · AYNI STOK KODU' : ''}</div>
+                    </div>
+                    <button type="button" class="btn" style="font-size:0.78rem;padding:5px 11px;flex-shrink:0;" onclick="aiMevcuduAc(${b.p.id})">Ac</button>
+                </div>`;
+            }).join('');
+
+            kart.innerHTML = `
+                <div style="font-weight:600;margin-bottom:6px;color:${guclu?'#a03228':'#7a6a4a'};">
+                    ${guclu ? 'Dikkat: bu urun katalogda zaten olabilir' : 'Katalogda benzer urunler var'}
+                </div>
+                <div style="color:#7a6a55;margin-bottom:4px;">
+                    Gorsellere bak — ayni urunse yenisini ekleme, mevcut olani duzenle.
+                </div>
+                ${kartlar}`;
+            kutu.appendChild(kart);
+            kutu.scrollTop = kutu.scrollHeight;
+        }
+
+        function aiMevcuduAc(id) {
+            document.querySelectorAll('.admin-nav').forEach(l => l.classList.remove('active'));
+            const link = document.querySelector('.admin-nav[data-section="products"]');
+            if (link) link.classList.add('active');
+            document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+            const bolum = document.getElementById('products-section');
+            if (bolum) bolum.style.display = 'block';
+            setTimeout(() => { try { editProduct(id); } catch (e) {} }, 250);
+        }
+
         // ===== AI ASISTAN (sohbetle urun ekleme) =====
         const AI_MARKA = 'CHANDELIST';
         const AI_SITE_TIPI = 'SITE HAKKINDA: CHANDELIST 1984ten beri Istanbulda el yapimi pirinc avize ve dekoratif aydinlatma ureten bir imalatcidir. Site bir KATALOGDUR, uzerinden odeme alinmaz. Musteri teklif ister; otel, restoran, ic mimar ve proje firmalari hedef kitledir. Urunlerin cogu antik pirinc eskitme yuzeylidir; fotografta baska bir renk net gorunmuyorsa antik pirinc eskitme kabul et.';
@@ -6214,6 +6313,10 @@ Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi y
                     try {
                         aiTaslak = JSON.parse(m[1].trim());
                         aiOnizleme(aiTaslak);
+                        aiDurum('Katalog kontrol ediliyor...');
+                        const benzerler = await aiBenzerBul(aiTaslak);
+                        aiBenzerGoster(benzerler);
+                        aiDurum('');
                     } catch (e) {
                         aiEkle('assistant', 'Urun bilgisini okuyamadim, tekrar dener misin?');
                     }
@@ -6252,6 +6355,7 @@ Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi y
             };
             const ok = await saveProductToDB(urun);
             if (ok) {
+                _aiKatalog = null;
                 aiEkle('assistant', 'Urun siteye eklendi: ' + urun.name.tr + '\n\nYeni bir urun icin "Yeni urun" dugmesine bas.');
                 aiTaslak = null;
                 aiDurum('Kaydedildi');

@@ -4841,6 +4841,7 @@
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
                             <a href="#" class="admin-nav" data-section="pagebanners">🖼 Sayfa Banner'ları</a>
                             <a href="#" class="admin-nav" data-section="visitors">📊 Ziyaretçiler</a>
+                            <a href="#" class="admin-nav" data-section="aichat">🤖 AI Asistan</a>
                             <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
                             <a href="#" onclick="event.preventDefault(); if(confirm('Çıkış yapmak istediğinize emin misiniz?')){ sbSignOut(); window.location.hash='#/'; render(); }" style="color:#c0392b;margin-top:8px;">⏻ ${t().logout}</a>
                         </nav>
@@ -5050,6 +5051,29 @@
                                         <div id="vis-devices"></div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                                                <div id="aichat-section" class="admin-section" style="display: none;">
+                            <h2>AI Asistan ile Ürün Ekle</h2>
+                            <p style="color:#8a7d6b;font-size:0.9rem;margin-bottom:20px;">
+                                Ürün fotoğrafını bırak, sohbet ederek ekleyelim. Emin olmadığı şeyi uydurmaz, sana sorar.
+                            </p>
+
+                            <div id="aiChatBox" style="border:1px solid #e0d8cc;border-radius:10px;background:#fdfcfa;height:460px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;"></div>
+
+                            <div id="aiImageStrip" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"></div>
+
+                            <div style="display:flex;gap:10px;margin-top:12px;align-items:flex-end;">
+                                <input type="file" id="aiImageInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none;" onchange="aiAddImages(this)">
+                                <button type="button" class="btn" onclick="document.getElementById('aiImageInput').click()" style="flex-shrink:0;">📷 Fotoğraf</button>
+                                <textarea id="aiChatInput" rows="2" placeholder="Mesaj yaz veya fotoğraf ekleyip Gönder'e bas..." style="flex:1;resize:vertical;padding:10px;border:1px solid #d8cfc0;border-radius:8px;font-family:inherit;font-size:0.92rem;"></textarea>
+                                <button type="button" id="aiSendBtn" class="btn btn-primary" onclick="aiSend()" style="flex-shrink:0;">Gönder</button>
+                            </div>
+
+                            <div style="display:flex;gap:10px;margin-top:10px;">
+                                <button type="button" class="btn" onclick="aiReset()" style="font-size:0.85rem;">↺ Yeni ürün</button>
+                                <span id="aiStatus" style="font-size:0.85rem;color:#8a7d6b;align-self:center;"></span>
                             </div>
                         </div>
 
@@ -5992,6 +6016,251 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                 showToast('✗ Kayıt başarısız! Lütfen tekrar deneyin.', 'error');
             }
         }
+
+        // ===== AI ASISTAN (sohbetle urun ekleme) =====
+        const AI_MARKA = 'CHANDELIST';
+        const AI_SITE_TIPI = 'SITE HAKKINDA: CHANDELIST 1984ten beri Istanbulda el yapimi pirinc avize ve dekoratif aydinlatma ureten bir imalatcidir. Site bir KATALOGDUR, uzerinden odeme alinmaz. Musteri teklif ister; otel, restoran, ic mimar ve proje firmalari hedef kitledir. Urunlerin cogu antik pirinc eskitme yuzeylidir; fotografta baska bir renk net gorunmuyorsa antik pirinc eskitme kabul et.';
+        let aiMesajlar = [];
+        let aiGorseller = [];
+        let aiTaslak = null;
+
+        const AI_SISTEM = `Sen ${AI_MARKA} icin calisan bir urun katalog editorusun. Kullanici sana urun fotografi ve bilgi verir; sen siteye eklenecek Turkce ve Ingilizce urun icerigini hazirlarsin.
+
+${AI_SITE_TIPI}
+
+MUTLAK KURALLAR — bunlari cignersen icerik kullanilamaz:
+1. GORMEDIGIN SEYI YAZMA. Malzeme, olcu, ampul tipi, agirlik gibi bilgileri fotograftan kesin goremiyorsan UYDURMA — kullaniciya sor. Ozellikle "kristal" deme; urunun kristal oldugunu kullanici soylemediyse yazma.
+2. TICARI VAAT YOK. Ucretsiz kargo, hizli teslimat, garanti, indirim, fiyat, "simdi satin al", "siparis ver", "order now", "free shipping", "fast delivery" gibi ifadeler KESINLIKLE gecmeyecek. Bu sitede odeme yok; cagri her zaman teklif almaya veya incelemeye yonelik olacak ("Teklif alin", "Detaylari inceleyin", "Request a quote", "See details").
+3. DIL AYRIMI. _tr alanlarinda sadece Turkce, _en alanlarinda sadece Ingilizce. Turkce alanda Ingilizce kelime, Ingilizce alanda Turkce kelime birakma.
+4. TERMINOLOJI. Turkcede "Fas tarzi" veya "Fas desenli" yaz. Marokken, Marokko, Marokkolu, Marokkan, Moroccan gibi yazimlar Turkce metinde YASAK. Ingilizcede "Moroccan" dogru.
+5. URUN ADI stok kodu olmayacak. "CH-002", "ch-6481" gibi kodlari isim olarak kullanma; kodu kullanici verirse sadece SKU alanina yaz.
+6. UZUNLUK. meta_title en fazla 60 karakter, meta_description en fazla 155 karakter. Sinirin altinda kal.
+7. Her urun icin ozgun metin yaz. Kaliplasmis cumle tekrarlama. "Luks" kelimesini gercekten oyle gorunmuyorsa kullanma.
+8. Marka adi metinlerde ${AI_MARKA} olarak gecer. Baska marka adi yazma.
+
+NASIL CALISIRSIN:
+- Fotografi inceledikten sonra, eksik ve onemli bilgi varsa ONCE SORU SOR. Ayni anda en fazla 3 soru sor, kisa ve net sor, Turkce sor.
+- Kritik eksikler sunlardir: olculer (cap/yukseklik/genislik), malzeme, kategori belirsizse kategori, avizeyse stil (modern mi geleneksel mi).
+- Kullanici "bilmiyorum" veya "sen karar ver" derse, o alani BOS birak ya da sadece fotografta net gorunen kadarini yaz. Tahmini kesin bilgi gibi sunma.
+- Yeterli bilgin olunca urunu hazirla.
+
+CIKTI BICIMI:
+Soru soracaksan sadece duz metin yaz, JSON verme.
+Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi yaz, sonra blok):
+
+<URUN>
+{
+  "name_tr": "", "name_en": "",
+  "description_tr": "", "description_en": "",
+  "meta_title_tr": "", "meta_title_en": "",
+  "meta_description_tr": "", "meta_description_en": "",
+  "keywords_tr": "", "keywords_en": "",
+  "category": "lighting|decorative",
+  "subcategory": "chandelier|sconce|table_lamp|floor_lamp|outdoor|decorative",
+  "style": "modern|traditional|",
+  "materials": "",
+  "dimensions": "",
+  "sku": ""
+}
+</URUN>`;
+
+        function aiEkle(rol, metin) {
+            const kutu = document.getElementById('aiChatBox');
+            if (!kutu) return;
+            const d = document.createElement('div');
+            const benMi = rol === 'user';
+            d.style.cssText = `max-width:80%;align-self:${benMi?'flex-end':'flex-start'};background:${benMi?'#2c2c2c':'#fff'};color:${benMi?'#fff':'#2c2c2c'};border:1px solid ${benMi?'#2c2c2c':'#e6ded2'};padding:11px 14px;border-radius:12px;font-size:0.9rem;line-height:1.55;white-space:pre-wrap;`;
+            d.textContent = metin;
+            kutu.appendChild(d);
+            kutu.scrollTop = kutu.scrollHeight;
+            return d;
+        }
+
+        function aiDurum(metin) {
+            const s = document.getElementById('aiStatus');
+            if (s) s.textContent = metin || '';
+        }
+
+        function aiReset() {
+            aiMesajlar = [];
+            aiGorseller = [];
+            aiTaslak = null;
+            const kutu = document.getElementById('aiChatBox');
+            if (kutu) kutu.innerHTML = '';
+            const strip = document.getElementById('aiImageStrip');
+            if (strip) strip.innerHTML = '';
+            aiDurum('');
+            aiEkle('assistant', 'Merhaba. Urun fotografini ekle, birlikte hazirlayalim.\n\nEmin olmadigim bir sey olursa sana sorarim — uydurmam.');
+        }
+
+        async function aiAddImages(input) {
+            const dosyalar = Array.from(input.files || []);
+            if (!dosyalar.length) return;
+            aiDurum('Gorseller yukleniyor...');
+            for (const f of dosyalar) {
+                try {
+                    const fd = new FormData();
+                    fd.append('file', f);
+                    fd.append('upload_preset', CLOUDINARY_PRESET);
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method: 'POST', body: fd });
+                    const data = await res.json();
+                    if (data.secure_url) aiGorseller.push(data.secure_url);
+                } catch (e) { /* sessiz gec */ }
+            }
+            input.value = '';
+            const strip = document.getElementById('aiImageStrip');
+            if (strip) strip.innerHTML = aiGorseller.map((u,i) => `<div style="position:relative;"><img src="${u}" style="width:74px;height:74px;object-fit:cover;border-radius:7px;border:1px solid #e0d8cc;"><button type="button" onclick="aiGorselSil(${i})" style="position:absolute;top:-6px;right:-6px;background:#c0392b;color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:12px;line-height:1;">×</button></div>`).join('');
+            aiDurum(aiGorseller.length + ' gorsel hazir');
+        }
+
+        function aiGorselSil(i) {
+            aiGorseller.splice(i, 1);
+            const strip = document.getElementById('aiImageStrip');
+            if (strip) strip.innerHTML = aiGorseller.map((u,j) => `<div style="position:relative;"><img src="${u}" style="width:74px;height:74px;object-fit:cover;border-radius:7px;border:1px solid #e0d8cc;"><button type="button" onclick="aiGorselSil(${j})" style="position:absolute;top:-6px;right:-6px;background:#c0392b;color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:12px;line-height:1;">×</button></div>`).join('');
+            aiDurum(aiGorseller.length + ' gorsel hazir');
+        }
+
+        function aiDenetle(u) {
+            const uyari = [];
+            const vaat = /ucretsiz kargo|ücretsiz kargo|free shipping|hizli teslimat|hızlı teslimat|fast delivery|garanti|warranty|indirim|discount|satin al|satın al|siparis ver|sipariş ver|order now|shop now|buy now/i;
+            const marok = /marokk\w*|marok\w*|moroccan/i;
+            const tumTr = [u.name_tr,u.description_tr,u.meta_title_tr,u.meta_description_tr,u.keywords_tr].join(' ');
+            const tumEn = [u.name_en,u.description_en,u.meta_title_en,u.meta_description_en,u.keywords_en].join(' ');
+            if (vaat.test(tumTr + ' ' + tumEn)) uyari.push('Ticari vaat ifadesi var (kargo/teslimat/garanti/satin al)');
+            if (marok.test(tumTr)) uyari.push('Turkce metinde Marokken/Moroccan yazimi var — "Fas tarzi" olmali');
+            if ((u.meta_title_tr||'').length > 60) uyari.push('meta_title_tr 60 karakteri asiyor (' + u.meta_title_tr.length + ')');
+            if ((u.meta_title_en||'').length > 60) uyari.push('meta_title_en 60 karakteri asiyor (' + u.meta_title_en.length + ')');
+            if ((u.meta_description_tr||'').length > 155) uyari.push('meta_description_tr 155 karakteri asiyor');
+            if ((u.meta_description_en||'').length > 155) uyari.push('meta_description_en 155 karakteri asiyor');
+            if (/^[a-zA-Z]{1,4}[- ]?\d{2,5}\s*$/.test((u.name_tr||'').trim())) uyari.push('name_tr stok kodu gibi gorunuyor');
+            if (/kristal|crystal/i.test(tumTr + ' ' + tumEn) && !/kristal/i.test(u.materials||'')) uyari.push('"Kristal" deniyor ama malzemede kristal yok');
+            if (!u.name_tr || !u.name_en) uyari.push('Urun adi eksik');
+            return uyari;
+        }
+
+        function aiOnizleme(u) {
+            const uyari = aiDenetle(u);
+            const kutu = document.getElementById('aiChatBox');
+            const kart = document.createElement('div');
+            kart.style.cssText = 'align-self:flex-start;max-width:94%;background:#fff;border:1px solid #cbbfa8;border-radius:12px;padding:16px;font-size:0.86rem;line-height:1.6;';
+            const sat = (b, d) => d ? `<div style="margin-bottom:7px;"><span style="color:#8a7d6b;">${b}:</span> ${String(d).replace(/</g,'&lt;')}</div>` : '';
+            kart.innerHTML = `
+                <div style="font-weight:600;margin-bottom:10px;font-size:0.95rem;">Hazirlanan urun</div>
+                ${sat('Ad (TR)', u.name_tr)}${sat('Ad (EN)', u.name_en)}
+                ${sat('Kategori', (u.category||'') + (u.subcategory ? ' / ' + u.subcategory : '') + (u.style ? ' / ' + u.style : ''))}
+                ${sat('Malzeme', u.materials)}${sat('Olcu', u.dimensions)}${sat('SKU', u.sku)}
+                ${sat('Meta baslik (TR)', (u.meta_title_tr||'') + ' [' + (u.meta_title_tr||'').length + ']')}
+                ${sat('Meta baslik (EN)', (u.meta_title_en||'') + ' [' + (u.meta_title_en||'').length + ']')}
+                ${sat('Aciklama (TR)', (u.description_tr||'').slice(0,180) + ((u.description_tr||'').length>180?'...':''))}
+                ${sat('Anahtar kelime (TR)', (u.keywords_tr||'').slice(0,140))}
+                ${sat('Gorsel', aiGorseller.length + ' adet')}
+                ${uyari.length ? `<div style="margin-top:10px;padding:10px;background:#fdf0ef;border:1px solid #e8bfba;border-radius:7px;color:#a03228;"><b>Kontrol uyarilari:</b><br>• ${uyari.join('<br>• ')}<br><span style="color:#7a5a55;">Duzeltmek icin sohbete yaz, yeniden hazirlayayim.</span></div>` : `<div style="margin-top:10px;color:#2e7d32;">Kontrollerden gecti.</div>`}
+                <div style="margin-top:14px;display:flex;gap:9px;">
+                    <button type="button" class="btn btn-primary" onclick="aiKaydet()">Siteye ekle</button>
+                    <button type="button" class="btn" onclick="document.getElementById('aiChatInput').focus()">Duzeltme iste</button>
+                </div>`;
+            kutu.appendChild(kart);
+            kutu.scrollTop = kutu.scrollHeight;
+        }
+
+        async function aiSend() {
+            const inp = document.getElementById('aiChatInput');
+            const btn = document.getElementById('aiSendBtn');
+            const metin = (inp.value || '').trim();
+            if (!metin && !aiGorseller.length) { alert('Once bir mesaj yaz veya fotograf ekle.'); return; }
+            if (!localStorage.getItem('anthropic_api_key')) {
+                alert('API anahtari girilmemis.\n\nAdmin -> Ayarlar bolumunden Anthropic API anahtarini gir, sonra tekrar dene.');
+                return;
+            }
+
+            const icerik = [];
+            if (!aiMesajlar.length && aiGorseller.length) {
+                aiGorseller.slice(0,4).forEach(u => icerik.push({ type:'image', source:{ type:'url', url:u } }));
+            }
+            icerik.push({ type:'text', text: metin || 'Bu urunu hazirla.' });
+
+            aiEkle('user', metin || '(fotograf gonderildi)');
+            inp.value = '';
+            btn.disabled = true;
+            aiDurum('Dusunuyor...');
+
+            aiMesajlar.push({ role:'user', content: icerik });
+
+            try {
+                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        'x-api-key': (localStorage.getItem('anthropic_api_key') || ''),
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-5',
+                        max_tokens: 2000,
+                        system: AI_SISTEM,
+                        messages: aiMesajlar
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error((data.error && data.error.message) || ('API hatasi ' + res.status));
+                const cevap = (data.content || []).map(c => c.text || '').join('').trim();
+                aiMesajlar.push({ role:'assistant', content: cevap });
+
+                const m = cevap.match(/<URUN>([\s\S]*?)<\/URUN>/);
+                if (m) {
+                    const oncesi = cevap.slice(0, m.index).trim();
+                    if (oncesi) aiEkle('assistant', oncesi);
+                    try {
+                        aiTaslak = JSON.parse(m[1].trim());
+                        aiOnizleme(aiTaslak);
+                    } catch (e) {
+                        aiEkle('assistant', 'Urun bilgisini okuyamadim, tekrar dener misin?');
+                    }
+                } else {
+                    aiEkle('assistant', cevap);
+                }
+                aiDurum('');
+            } catch (e) {
+                aiEkle('assistant', 'Hata: ' + e.message);
+                aiDurum('');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function aiKaydet() {
+            if (!aiTaslak) return;
+            if (!aiGorseller.length && !confirm('Hic gorsel eklenmedi. Yine de kaydedilsin mi?')) return;
+            aiDurum('Kaydediliyor...');
+            const u = aiTaslak;
+            const urun = {
+                id: null, _dbId: null,
+                name: { tr: u.name_tr || '', en: u.name_en || '' },
+                description: { tr: u.description_tr || '', en: u.description_en || '' },
+                category: u.category || 'lighting',
+                subcategory: u.subcategory ? [u.subcategory] : [],
+                style: u.style || null,
+                sku: u.sku || '',
+                materials: u.materials || '',
+                dimensions: u.dimensions || '',
+                images: aiGorseller.slice(),
+                videos: [],
+                metaTitle: { tr: u.meta_title_tr || '', en: u.meta_title_en || '' },
+                metaDescription: { tr: u.meta_description_tr || '', en: u.meta_description_en || '' },
+                keywords: { tr: u.keywords_tr || '', en: u.keywords_en || '' }
+            };
+            const ok = await saveProductToDB(urun);
+            if (ok) {
+                aiEkle('assistant', 'Urun siteye eklendi: ' + urun.name.tr + '\n\nYeni bir urun icin "Yeni urun" dugmesine bas.');
+                aiTaslak = null;
+                aiDurum('Kaydedildi');
+            } else {
+                aiEkle('assistant', 'Kayit basarisiz oldu. Tekrar denemek ister misin?');
+                aiDurum('');
+            }
+        }
+
 
         function showToast(message, type) {
             const existing = document.getElementById('saveToast');
@@ -7134,6 +7403,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     if (section === 'pagebanners') loadPageBanners();
                     // Ziyaretçiler sekmesi açılınca verileri yükle
                     if (section === 'visitors') loadVisitors(1);
+                    if (section === 'aichat' && !document.getElementById('aiChatBox').childElementCount) aiReset();
                 });
             });
 

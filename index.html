@@ -180,8 +180,8 @@
         }
 
         .logo {
-            text-align: center;
-            flex: 1;
+            text-align: left;
+            flex: 0 0 auto;
         }
 
         .logo h1 {
@@ -189,29 +189,33 @@
             letter-spacing: 4px;
             margin: 0;
             font-weight: 300;
+            white-space: nowrap;
         }
 
         .logo p {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             letter-spacing: 2px;
             margin-top: 2px;
             font-weight: 400;
             color: #8a7d6b;
+            white-space: nowrap;
         }
 
         nav {
-            flex: 1;
+            flex: 1 1 auto;
             display: flex;
             justify-content: center;
-            gap: 40px;
-            font-size: 0.95rem;
+            gap: 24px;
+            font-size: 0.9rem;
             letter-spacing: 1px;
         }
 
         nav a {
             position: relative;
             padding-bottom: 5px;
+            white-space: nowrap;
         }
+
 
         nav a::after {
             content: '';
@@ -359,7 +363,7 @@
         }
 
         .header-right {
-            flex: 1;
+            flex: 0 0 auto;
             display: flex;
             justify-content: flex-end;
             gap: 20px;
@@ -1522,6 +1526,66 @@
         }
 
         /* Responsive */
+        /* Tablet (769-1024): masaustu menu sigmiyor, hamburger'a gec */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: #fff;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+                font-size: 0.9rem;
+            }
+
+            nav.mobile-menu-open {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-dropdown {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .nav-dropdown > a {
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                display: block;
+                position: static;
+                transform: none;
+                border-top: none;
+                border-left: 2px solid #e8e0d8;
+                box-shadow: none;
+                margin-left: 12px;
+                padding: 4px 0;
+                min-width: unset;
+            }
+
+            .dropdown-menu a {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 1025-1200: menu siginiyor ama dar - kucult */
+        @media (min-width: 1025px) and (max-width: 1200px) {
+            .logo h1 { font-size: 1.4rem; letter-spacing: 3px; }
+            .logo p { display: none; }
+            nav { gap: 10px; font-size: 0.75rem; }
+            .header-right { gap: 10px; }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 0 20px;
@@ -2328,6 +2392,7 @@
                 workshop: 'Atölyemiz',
                 contact: 'İletişim',
                 admin: 'Admin',
+                navHome: 'Ana Sayfa',
                 logo: 'CHANDELIST',
                 logoSub: 'chandelier factory',
                 featuredProducts: 'Öne Çıkan Ürünler',
@@ -2434,6 +2499,7 @@
                 workshop: 'Our Workshop',
                 contact: 'Contact',
                 admin: 'Admin',
+                navHome: 'Home',
                 logo: 'CHANDELIST',
                 logoSub: 'chandelier factory',
                 featuredProducts: 'Featured Products',
@@ -3517,7 +3583,7 @@
                         </div>
                         <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
                         <nav id="mainNav">
-                            <a href="/" data-page="home">${t().logo}</a>
+                            <a href="/" data-page="home">${t().navHome}</a>
                             <div class="nav-dropdown">
                                 <a href="/lighting" data-page="lighting">${t().lighting}</a>
                                 <div class="dropdown-menu dropdown-two-col">
@@ -3854,7 +3920,7 @@
             `).join('');
 
             return `
-                <div style="margin-top: 80px;">
+                <div style="margin-top: 150px;">
                     <div class="breadcrumb" style="padding: 20px 40px;">
                         <a href="/lighting">${t().lighting}</a> / <span>${t().chandelier}</span>
                     </div>

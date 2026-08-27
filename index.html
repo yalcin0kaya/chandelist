@@ -2731,7 +2731,29 @@
         ];
 
         function getCollections() {
-            return JSON.parse(localStorage.getItem('chandelierCollections') || JSON.stringify(defaultCollections));
+            // Once ortak ayarlardan (iki site + tum ziyaretciler ayni veriyi gorur)
+            try {
+                if (window._koleksiyonlar && Array.isArray(window._koleksiyonlar) && window._koleksiyonlar.length) {
+                    return window._koleksiyonlar;
+                }
+            } catch (e) {}
+            try {
+                const yerel = localStorage.getItem('chandelierCollections');
+                if (yerel) return JSON.parse(yerel);
+            } catch (e) {}
+            return JSON.parse(JSON.stringify(defaultCollections));
+        }
+
+        // Ortak ayarlardan koleksiyonlari yukle (render oncesi bir kez calisir)
+        async function koleksiyonlariYukle() {
+            try {
+                const ayar = await getSiteSettings();
+                const ham = ayar && ayar['chandelier_collections'];
+                if (ham) {
+                    const veri = typeof ham === 'string' ? JSON.parse(ham) : ham;
+                    if (Array.isArray(veri) && veri.length) window._koleksiyonlar = veri;
+                }
+            } catch (e) {}
         }
 
         // ===== SAYFA BANNER'LARI (site_settings üzerinden, iki site ortak) =====
@@ -2760,7 +2782,10 @@
         ];
 
         function saveCollections(collections) {
-            localStorage.setItem('chandelierCollections', JSON.stringify(collections));
+            try { localStorage.setItem('chandelierCollections', JSON.stringify(collections)); } catch (e) {}
+            window._koleksiyonlar = collections;
+            // Ortak ayara da yaz — yoksa gorseller sadece bu tarayicida gorunur
+            try { saveSiteSetting('chandelier_collections', JSON.stringify(collections)); } catch (e) {}
         }
 
         function initializeLocalStorage() {
@@ -3817,7 +3842,7 @@
                     <div class="collection-banner">
                         ${col.image
                             ? `<img src="${col.image}" alt="${col.title[currentLanguage]}" loading="lazy">`
-                            : `<div class="collection-banner-placeholder">📷 ${currentLanguage === 'tr' ? 'Resim ekleyin' : 'Add image'}</div>`
+                            : `<div class="collection-banner-placeholder" style="background:linear-gradient(135deg,#3a332b 0%,#241f1a 100%);"></div>`
                         }
                         <div class="collection-banner-content">
                             <h2>${col.title[currentLanguage]}</h2>
@@ -6132,6 +6157,7 @@ MUTLAK KURALLAR — bunlari cignersen icerik kullanilamaz:
 2. TICARI VAAT YOK. Ucretsiz kargo, hizli teslimat, garanti, indirim, fiyat, "simdi satin al", "siparis ver", "order now", "free shipping", "fast delivery" gibi ifadeler KESINLIKLE gecmeyecek. Bu sitede odeme yok; cagri her zaman teklif almaya veya incelemeye yonelik olacak ("Teklif alin", "Detaylari inceleyin", "Request a quote", "See details").
 3. DIL AYRIMI. _tr alanlarinda sadece Turkce, _en alanlarinda sadece Ingilizce. Turkce alanda Ingilizce kelime, Ingilizce alanda Turkce kelime birakma.
 4. TERMINOLOJI. Turkcede "Fas tarzi" veya "Fas desenli" yaz. Marokken, Marokko, Marokkolu, Marokkan, Moroccan gibi yazimlar Turkce metinde YASAK. Ingilizcede "Moroccan" dogru.
+4b. PIRINC BIR RENK/YUZEYDIR, MALZEME DEGILDIR. "Antik pirinc eskitme" urunun YUZEY RENGIDIR; govde demir, celik veya baska bir metal olabilir. Bu yuzden "pirinc malzeme", "pirincten uretilmis", "masif pirinc", "brass material", "made of brass", "solid brass" gibi ifadeler YASAK. Bunun yerine "metal govde, antik pirinc eskitme yuzey" / "metal with an antique brass finish" yaz. Ayni sekilde pleksi ile cami karistirma: seffaf panel gorurusen ve kullanici cam demediyse "pleksi" yaz, "cam" deme.
 5. URUN ADI stok kodu olmayacak. "CH-002", "ch-6481" gibi kodlari isim olarak kullanma; kodu kullanici verirse sadece SKU alanina yaz.
 6. UZUNLUK. meta_title en fazla 60 karakter, meta_description en fazla 155 karakter. Sinirin altinda kal.
 7. Her urun icin ozgun metin yaz. Kaliplasmis cumle tekrarlama. "Luks" kelimesini gercekten oyle gorunmuyorsa kullanma.
@@ -6233,6 +6259,8 @@ Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi y
             if ((u.meta_description_en||'').length > 155) uyari.push('meta_description_en 155 karakteri asiyor');
             if (/^[a-zA-Z]{1,4}[- ]?\d{2,5}\s*$/.test((u.name_tr||'').trim())) uyari.push('name_tr stok kodu gibi gorunuyor');
             if (/kristal|crystal/i.test(tumTr + ' ' + tumEn) && !/kristal/i.test(u.materials||'')) uyari.push('"Kristal" deniyor ama malzemede kristal yok');
+            if (/pirinç malzeme|pirinçten üretil|masif pirinç|brass material|solid brass|made of brass|crafted from brass|brass construction/i.test(tumTr + ' ' + tumEn)) uyari.push('Pirinc malzeme gibi yazilmis — pirinc bir yuzey rengidir, "metal govde, antik pirinc eskitme yuzey" olmali');
+            if (/\bcam\b|glass/i.test(tumTr + ' ' + tumEn) && !/cam/i.test(u.materials||'')) uyari.push('"Cam" deniyor ama malzemede cam yok — pleksi olabilir');
             if (!u.name_tr || !u.name_en) uyari.push('Urun adi eksik');
             return uyari;
         }
@@ -7409,6 +7437,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             currentPage = path;
             trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
             if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; } catch(e){ window._pageBanners = {}; } }
+            if (!window._koleksiyonlar) { await koleksiyonlariYukle(); }
 
             const app = document.getElementById('app');
             // Show loading state

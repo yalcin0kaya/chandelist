@@ -1995,6 +1995,18 @@
             color: #8a7d6b;
         }
 
+        .privacy-body h3 {
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin: 34px 0 10px;
+            color: #2b2b2b;
+        }
+
+        .privacy-body p { margin: 0 0 14px; }
+
+        .privacy-body a { color: #8a7d6b; text-decoration: underline; }
+
         /* Stats */
         .stats-grid {
             display: grid;
@@ -2447,6 +2459,7 @@
                 contact_link: 'İletişim',
                 shipping: 'Kargo',
                 returns: 'İadeler',
+                privacy: 'Gizlilik Politikası',
                 follow: 'Bizi Takip Edin',
                 rights: 'Tüm hakları saklıdır.',
                 adminPanel: 'Admin Paneli',
@@ -2554,6 +2567,7 @@
                 contact_link: 'Contact',
                 shipping: 'Shipping',
                 returns: 'Returns',
+                privacy: 'Privacy Policy',
                 follow: 'Follow Us',
                 rights: 'All rights reserved.',
                 adminPanel: 'Admin Panel',
@@ -3530,7 +3544,7 @@
             }
 
             // Update canonical URL
-            const canonicalUrl = 'https://chandelist.com' + (canonicalPath || '');
+            const canonicalUrl = 'https://chandelist.com' + (canonicalPath || (typeof window !== 'undefined' && window.location ? window.location.pathname : '') || '/');
             let canonicalTag = document.querySelector('link[rel="canonical"]');
             if (!canonicalTag) {
                 canonicalTag = document.createElement('link');
@@ -3641,8 +3655,7 @@
                                 <h4>${t().company}</h4>
                                 <a href="/about">${t().about_link}</a>
                                 <a href="/contact">${t().contact_link}</a>
-                                <a href="/">${t().shipping}</a>
-                                <a href="/">${t().returns}</a>
+                                <a href="/privacy">${t().privacy}</a>
                             </div>
                             <div class="footer-col">
                                 <h4>${t().follow}</h4>
@@ -3852,9 +3865,18 @@
         // ============= LIGHTING PAGE =============
         async function renderLightingPage() {
             updateSEO(
-                `${t().lighting} - CHANDELIST Luxury Lighting`,
-                `Explore our collection of ${t().lighting}: chandeliers, sconces, floor lamps, and outdoor lights.`,
-                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg'
+                currentLanguage === 'tr'
+                    ? 'Avize, Sarkıt, Aplik ve Lambader — CHANDELIST'
+                    : 'Chandeliers, Pendants, Sconces & Floor Lamps — CHANDELIST',
+                currentLanguage === 'tr'
+                    ? 'Otel, restoran ve projeler için el yapımı pirinç aydınlatma: avize, sarkıt, aplik, masa lambası, lambader ve dış mekân aydınlatma. Ölçüye özel üretim.'
+                    : 'Handmade brass lighting for hotels, restaurants and projects: chandeliers, pendants, sconces, table and floor lamps, outdoor lighting. Made to measure.',
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
+                null,
+                currentLanguage === 'tr'
+                    ? 'avize, sarkıt, aplik, lambader, otel aydınlatma, proje aydınlatma, pirinç aydınlatma'
+                    : 'brass lighting, chandelier, pendant light, wall sconce, hotel lighting supplier, contract lighting',
+                '/lighting'
             );
 
             const subcategories = [
@@ -3901,7 +3923,20 @@
         // ============= CHANDELIER COLLECTIONS PAGE =============
         async function renderChandelierPage() {
             const collections = getCollections();
-            updateSEO('Avize - CHANDELIST', 'Lüks avize koleksiyonlarımızı keşfedin.');
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'Avize Modelleri — El Yapımı Pirinç Avize | CHANDELIST'
+                    : 'Handmade Brass Chandeliers — Ottoman & Moroccan Styles',
+                currentLanguage === 'tr'
+                    ? '1984\'ten beri İstanbul atölyemizde el işçiliğiyle ürettiğimiz pirinç avizeler. Otel, restoran ve projeler için ölçüye özel üretim.'
+                    : 'Hand-crafted brass chandeliers made in our Istanbul workshop since 1984. Ottoman, Moroccan and modern collections, made to your dimensions. One piece or a full project.',
+                '',
+                null,
+                currentLanguage === 'tr'
+                    ? 'avize modelleri, pirinç avize, el yapımı avize, otel avizesi, özel üretim avize'
+                    : 'brass chandelier, handmade chandelier, ottoman chandelier, moroccan chandelier, custom chandelier manufacturer, hotel chandelier',
+                '/lighting/chandelier'
+            );
 
             const collectionsHTML = collections.map(col => `
                 <a href="/lighting/chandelier/${col.key}" class="collection-banner-link">
@@ -3935,7 +3970,18 @@
         async function renderChandelierStylePage(style) {
             const collections = getCollections();
             const col = collections.find(c => c.key === style) || collections[0];
-            updateSEO(`${col.title[currentLanguage]} - CHANDELIST`, col.subtitle[currentLanguage]);
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? `${col.title[currentLanguage]} Avize Modelleri — CHANDELIST`
+                    : `${col.title[currentLanguage]} Chandeliers — CHANDELIST`,
+                currentLanguage === 'tr'
+                    ? `${col.subtitle[currentLanguage]} El yapımı pirinç avize koleksiyonu, İstanbul atölyemizde ölçüye özel üretilir.`
+                    : `${col.subtitle[currentLanguage]} Handmade brass chandelier collection, made to measure in our Istanbul workshop.`,
+                col.image || '',
+                null,
+                '',
+                '/lighting/chandelier/' + col.key
+            );
 
             const allProducts = await getProducts();
             const hasSubcat = (p, key) => parseSubcat(p.subcategory).includes(key);
@@ -3981,7 +4027,18 @@
                 outdoor: t().outdoor, lantern: t().lantern
             };
             const subcatName = subcatNames[subcategory] || subcategory;
-            updateSEO(`${subcatName} - CHANDELIST ${t().lighting}`, `Browse our premium ${subcatName} collection.`);
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? `${subcatName} Modelleri — CHANDELIST`
+                    : `${subcatName} — CHANDELIST`,
+                currentLanguage === 'tr'
+                    ? `El yapımı pirinç ${subcatName.toLocaleLowerCase('tr')} modelleri. 1984'ten beri İstanbul atölyemizde üretiyoruz; ölçüye özel üretim mümkündür.`
+                    : `Handmade brass ${subcatName.toLowerCase()} from our Istanbul workshop. Made to measure since 1984, one piece or a full project.`,
+                '',
+                null,
+                '',
+                '/lighting/' + subcategory
+            );
 
             const products = (await getProducts()).filter(p => parseSubcat(p.subcategory).includes(subcategory));
 
@@ -4012,9 +4069,18 @@
         // ============= DECORATIVE PAGE =============
         async function renderDecorativePage() {
             updateSEO(
-                `${t().decorative} - CHANDELIST`,
-                `Explore our decorative items and accessories.`,
-                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg'
+                currentLanguage === 'tr'
+                    ? 'Dekoratif Eşya — Pirinç Ayna, Tepsi, Mumluk ve Fener'
+                    : 'Decorative Objects — Brass Mirrors, Trays, Candleholders & Lanterns',
+                currentLanguage === 'tr'
+                    ? 'El yapımı pirinç dekoratif ürünler: duvar aynası, tepsi, mumluk, şamdan ve fener. Eskitme pirinç yüzey, İstanbul atölyemizde üretim.'
+                    : 'Handmade brass decorative objects: wall mirrors, trays, candleholders and lanterns. Antique brass finish, made in our Istanbul workshop.',
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
+                null,
+                currentLanguage === 'tr'
+                    ? 'pirinç ayna, pirinç tepsi, mumluk, şamdan, dekoratif fener, pirinç dekoratif ürünler'
+                    : 'brass mirror, brass tray, candle holder, decorative lantern, moroccan decor',
+                '/decorative'
             );
 
             const products = (await getProducts()).filter(p => p.category === 'decorative');
@@ -4782,8 +4848,16 @@
 
         function renderContactPage() {
             updateSEO(
-                `Contact CHANDELIST - Get in Touch`,
-                `Contact us for inquiries about our luxury lighting products and bespoke commissions.`
+                currentLanguage === 'tr'
+                    ? 'İletişim — CHANDELIST | İstanbul Avize Atölyesi'
+                    : 'Contact — CHANDELIST | Istanbul Chandelier Workshop',
+                currentLanguage === 'tr'
+                    ? 'İstanbul Bahçelievler\'deki atölyemize ulaşın. Otel, restoran ve proje aydınlatması için telefon, e-posta ve adres bilgilerimiz.'
+                    : 'Reach our workshop in Istanbul. Phone, email and address for hotel, restaurant and project lighting enquiries. We ship worldwide.',
+                '',
+                null,
+                '',
+                '/contact'
             );
 
             return `
@@ -7498,6 +7572,118 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             try { if (window.gtag) gtag('event', 'generate_lead', { method: kaynak || 'contact' }); } catch (e) {}
         }
 
+
+        function renderPrivacyPage() {
+            const tr = (currentLanguage === 'tr');
+            updateSEO(
+                tr ? 'Gizlilik Politikası — CHANDELIST' : 'Privacy Policy — CHANDELIST',
+                tr ? 'CHANDELIST gizlilik politikası: hangi bilgileri topluyoruz, neden kullanıyoruz, kimlerle paylaşıyoruz ve KVKK kapsamındaki haklarınız.'
+                   : 'Privacy policy of CHANDELIST: what information we collect, why we use it, who we share it with and your rights under Turkish data protection law.',
+                '',
+                null,
+                '',
+                '/privacy'
+            );
+            const guncelleme = '27.08.2026';
+            const body = tr ? `
+                <p><strong>Veri sorumlusu:</strong> Chandelist Lighting Factory<br>
+                Çobançeşme Mah. Mithatpaşa Cad. Söğütlü Sok. No:2/1, Bahçelievler / İstanbul<br>
+                E-posta: <a href="mailto:info@chandelist.com">info@chandelist.com</a> &nbsp;·&nbsp; Telefon: <a href="tel:+905326681094">+90 532 668 10 94</a></p>
+
+                <h3>Hangi bilgileri topluyoruz</h3>
+                <p>Sitemizdeki iletişim formunu doldurduğunuzda ya da sosyal medya reklamlarımızdaki teklif formunu gönderdiğinizde
+                bize ilettiğiniz ad-soyad, telefon numarası, e-posta adresi ve varsa firma/proje adı ile talebinize dair yazdığınız
+                bilgileri topluyoruz. Ayrıca siteyi nasıl kullandığınızı anlamak için ziyaret istatistikleri (hangi sayfaların
+                görüntülendiği, cihaz ve tarayıcı türü gibi) tutuluyor.</p>
+
+                <h3>Neden topluyoruz</h3>
+                <p>Bu bilgileri yalnızca talebinizi değerlendirmek, size fiyat ve üretim süresi bilgisi vermek, sizi arayıp
+                teklif hazırlamak ve siparişiniz varsa süreci yürütmek için kullanıyoruz. Ziyaret istatistiklerini ise sitemizi
+                ve reklamlarımızı iyileştirmek için kullanıyoruz.</p>
+
+                <h3>Kimlerle paylaşıyoruz</h3>
+                <p>Bilgilerinizi satmıyoruz, pazarlama amacıyla üçüncü kişilere devretmiyoruz. Yalnızca hizmet aldığımız
+                altyapı sağlayıcıları (site barındırma, veritabanı, e-posta ve reklam platformları) teknik olarak bu verilere
+                erişebilir. Yasal bir zorunluluk olması hâlinde yetkili kamu kurumlarıyla paylaşım yapılabilir.</p>
+
+                <h3>Ne kadar süre saklıyoruz</h3>
+                <p>İletişim ve teklif taleplerini, talebin sonuçlanmasından itibaren makul bir süre boyunca saklıyoruz.
+                Sürecin tamamlanmasının ardından ihtiyaç kalmayan kayıtlar siliniyor. Ticari ve vergisel mevzuatın saklama
+                zorunluluğu getirdiği kayıtlar için yasal süreler geçerlidir.</p>
+
+                <h3>Çerezler ve ölçümleme</h3>
+                <p>Sitemizde ziyaretçi davranışını ölçmek için Google Analytics ve Meta (Facebook) pikseli kullanılıyor.
+                Bu araçlar tarayıcınıza çerez yerleştirebilir. Tarayıcınızın ayarlarından çerezleri reddedebilir veya
+                silebilirsiniz; bu durumda sitenin bazı bölümleri beklendiği gibi çalışmayabilir.</p>
+
+                <h3>Haklarınız</h3>
+                <p>6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında; kişisel verilerinizin işlenip işlenmediğini
+                öğrenme, işlenmişse bilgi talep etme, işlenme amacını öğrenme, eksik veya yanlış işlenmişse düzeltilmesini,
+                şartların oluşması hâlinde silinmesini veya yok edilmesini isteme ve işlemenin hukuka aykırı olması sebebiyle
+                zarara uğramanız hâlinde zararın giderilmesini talep etme haklarına sahipsiniz.</p>
+
+                <p>Bu haklarınızı kullanmak veya bilgilerinizin silinmesini istemek için
+                <a href="mailto:info@chandelist.com">info@chandelist.com</a> adresine yazmanız yeterlidir. Talebinizi en geç 30 gün içinde
+                sonuçlandırıyoruz.</p>
+
+                <p style="margin-top:40px;color:#8a7d6b;font-size:0.85rem;">Son güncelleme: ${guncelleme}</p>
+            ` : `
+                <p><strong>Data controller:</strong> Chandelist Lighting Factory<br>
+                Çobançeşme Mah. Mithatpaşa Cad. Söğütlü Sok. No:2/1, Bahçelievler / İstanbul, Türkiye<br>
+                Email: <a href="mailto:info@chandelist.com">info@chandelist.com</a> &nbsp;·&nbsp; Phone: <a href="tel:+905326681094">+90 532 668 10 94</a></p>
+
+                <h3>What we collect</h3>
+                <p>When you fill in the contact form on this site or submit the enquiry form in one of our social media ads,
+                we collect the name, phone number, email address, company or project name where given, and whatever you write
+                about your requirement. We also keep basic visit statistics (which pages are viewed, device and browser type)
+                to understand how the site is used.</p>
+
+                <h3>Why we collect it</h3>
+                <p>We use this information only to assess your enquiry, give you pricing and lead-time information, call you
+                back with a quotation, and run the order process if you place one. Visit statistics are used to improve the
+                site and our advertising.</p>
+
+                <h3>Who we share it with</h3>
+                <p>We do not sell your information and we do not pass it to third parties for marketing. Only the service
+                providers we rely on (site hosting, database, email and advertising platforms) can technically access this
+                data. Disclosure to public authorities may occur where legally required.</p>
+
+                <h3>How long we keep it</h3>
+                <p>Enquiries are kept for a reasonable period after the request is concluded, then deleted once no longer
+                needed. Records that commercial or tax legislation requires us to retain are kept for the statutory period.</p>
+
+                <h3>Cookies and measurement</h3>
+                <p>This site uses Google Analytics and the Meta (Facebook) pixel to measure visitor behaviour. These tools
+                may place cookies in your browser. You can refuse or delete cookies in your browser settings; some parts of
+                the site may then not work as expected.</p>
+
+                <h3>Your rights</h3>
+                <p>Under Turkish Personal Data Protection Law no. 6698 you have the right to learn whether your personal data
+                is processed, to request information about it, to learn the purpose of processing, to request correction of
+                incomplete or inaccurate data, to request erasure or destruction where the conditions are met, and to claim
+                compensation for damage arising from unlawful processing.</p>
+
+                <p>To exercise these rights or to ask us to delete your information, write to
+                <a href="mailto:info@chandelist.com">info@chandelist.com</a>. We respond within 30 days at the latest.</p>
+
+                <p style="margin-top:40px;color:#8a7d6b;font-size:0.85rem;">Last updated: ${guncelleme}</p>
+            `;
+
+            return `
+                <section class="py-80" style="margin-top:150px;">
+                    <div class="container" style="max-width:820px;">
+                        <div class="breadcrumb">
+                            <a href="/">${t().logo}</a> / <span>${t().privacy}</span>
+                        </div>
+                        <h1 style="font-size:2.2rem;font-weight:300;letter-spacing:1px;margin:0 0 30px;">${t().privacy}</h1>
+                        <div class="privacy-body" style="line-height:1.9;color:#3a332b;">
+                            ${body}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
         async function render() {
             const path = window.location.pathname || '/';
             currentPage = path;
@@ -7541,6 +7727,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     content = renderWorkshopPage();
                 } else if (path === '/contact') {
                     content = renderContactPage();
+                } else if (path === '/privacy') {
+                    content = renderPrivacyPage();
                 } else if (path === '/admin') {
                     content = await renderAdminPanel();
                 } else {

@@ -2399,6 +2399,12 @@
             tr: {
                 lighting: 'Aydınlatma',
                 decorative: 'Dekoratif Eşya',
+                homedecor: 'Ev Dekorasyonu',
+                sideTable: 'Yan Sehpa',
+                tray: 'Tepsi',
+                mirror: 'Ayna',
+                candleholder: 'Mumluk & Şamdan',
+                vase: 'Vazo & Obje',
                 about: 'Hakkımızda',
                 custom: 'Özel Üretim',
                 workshop: 'Atölyemiz',
@@ -2507,6 +2513,12 @@
             en: {
                 lighting: 'Lighting',
                 decorative: 'Decorative',
+                homedecor: 'Home Decor',
+                sideTable: 'Side Table',
+                tray: 'Tray',
+                mirror: 'Mirror',
+                candleholder: 'Candleholders',
+                vase: 'Vases & Objects',
                 about: 'About',
                 custom: 'Custom & Contract',
                 workshop: 'Our Workshop',
@@ -2859,6 +2871,12 @@
             { key: 'outdoor',     label: 'Dış Mekan' },
             { key: 'lantern',     label: 'Tekli Fener' },
             { key: 'decorative',  label: 'Dekoratif Eşya' },
+            { key: 'homedecor',   label: 'Ev Dekorasyonu (Ana Kategori)' },
+            { key: 'side_table',  label: 'Yan Sehpalar' },
+            { key: 'tray',        label: 'Tepsiler' },
+            { key: 'mirror',      label: 'Aynalar' },
+            { key: 'candleholder',label: 'Mumluk & Şamdan' },
+            { key: 'vase',        label: 'Vazo & Obje' },
         ];
 
         function saveCollections(collections) {
@@ -3621,6 +3639,16 @@
                                 </div>
                             </div>
                             <a href="/decorative" data-page="decorative">${t().decorative}</a>
+                            <div class="nav-dropdown">
+                                <a href="/homedecor" data-page="homedecor">${t().homedecor}</a>
+                                <div class="dropdown-menu">
+                                    <a href="/homedecor/side_table">${t().sideTable}</a>
+                                    <a href="/homedecor/tray">${t().tray}</a>
+                                    <a href="/homedecor/mirror">${t().mirror}</a>
+                                    <a href="/homedecor/candleholder">${t().candleholder}</a>
+                                    <a href="/homedecor/vase">${t().vase}</a>
+                                </div>
+                            </div>
                             <a href="/custom" data-page="custom">${t().custom}</a>
                             <a href="/workshop" data-page="workshop">${t().workshop}</a>
                             <a href="/about" data-page="about">${t().about}</a>
@@ -4106,6 +4134,123 @@
             `;
         }
 
+
+        // ============= EV DEKORASYONU (HOME DECOR) =============
+        const HOMEDECOR_SUBCATS = ['side_table', 'tray', 'mirror', 'candleholder', 'vase'];
+
+        function homeDecorSubcatName(key) {
+            return ({
+                side_table: t().sideTable,
+                tray: t().tray,
+                mirror: t().mirror,
+                candleholder: t().candleholder,
+                vase: t().vase
+            })[key] || key;
+        }
+
+        async function renderHomeDecorPage() {
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'Ev Dekorasyonu — Yan Sehpa, Tepsi, Ayna, Mumluk ve Vazo'
+                    : 'Home Decor — Side Tables, Trays, Mirrors, Candleholders & Vases',
+                currentLanguage === 'tr'
+                    ? 'El yapımı ev dekorasyon ürünleri: yan sehpa, tepsi, duvar aynası, mumluk ve vazo. Pirinç ve metal üzerine İstanbul atölyemizde üretim.'
+                    : 'Handmade home decor: side tables, trays, wall mirrors, candleholders and vases. Brass and metal, made in our Istanbul workshop.',
+                '',
+                null,
+                currentLanguage === 'tr'
+                    ? 'ev dekorasyonu, yan sehpa, dekoratif sehpa, pirinç tepsi, duvar aynası, mumluk, şamdan, vazo, ev aksesuarı'
+                    : 'home decor, side table, decorative tray, wall mirror, candleholder, vase, home accessories',
+                '/homedecor'
+            );
+
+            const all = await getProducts();
+            const products = all.filter(p => p.category === 'homedecor');
+
+            const subcategories = HOMEDECOR_SUBCATS.map(k => ({
+                key: k,
+                name: homeDecorSubcatName(k),
+                image: getPageBanner(k, 'card') || 'https://picsum.photos/600/600?random=' + (500 + HOMEDECOR_SUBCATS.indexOf(k))
+            }));
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner('homedecor','mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner('homedecor','desktop') || 'https://picsum.photos/1400/600?random=500'}" alt="${t().homedecor}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner('homedecor','mobile')}" alt="${t().homedecor}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner('homedecor','desktop') || 'https://picsum.photos/1400/600?random=500'}" alt="${t().homedecor}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${t().homedecor}</h1>
+                    </div>
+                </section>
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="grid grid-3">
+                            ${subcategories.map(s => `
+                                <a href="/homedecor/${s.key}" class="card">
+                                    <div class="card-image">
+                                        <img src="${s.image}" alt="${s.name}" loading="lazy">
+                                    </div>
+                                    <div class="card-content">
+                                        <h3>${s.name}</h3>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+                ${products.length ? `
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <h2 style="text-align:center;margin-bottom:36px;">${t().homedecor}</h2>
+                        <div class="grid grid-4">
+                            ${products.map(product => renderProductCard(product)).join('')}
+                        </div>
+                    </div>
+                </section>` : ''}
+            `;
+        }
+
+        async function renderHomeDecorSubcategoryPage(subcategory) {
+            const subcatName = homeDecorSubcatName(subcategory);
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? `${subcatName} Modelleri — Osmanlı Aydınlatma`
+                    : `${subcatName} — Osmanlı Aydınlatma`,
+                currentLanguage === 'tr'
+                    ? `El yapımı ${subcatName.toLocaleLowerCase('tr')} modelleri. İstanbul'daki atölyemizde üretiyoruz; ölçüye özel üretim mümkündür.`
+                    : `Handmade ${subcatName.toLowerCase()} from our Istanbul workshop. Made to measure.`,
+                '',
+                null,
+                '',
+                '/homedecor/' + subcategory
+            );
+
+            const products = (await getProducts()).filter(
+                p => p.category === 'homedecor' && parseSubcat(p.subcategory).includes(subcategory)
+            );
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner(subcategory,'mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=510'}" alt="${subcatName}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner(subcategory,'mobile')}" alt="${subcatName}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=510'}" alt="${subcatName}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${subcatName}</h1>
+                    </div>
+                </section>
+                <section class="py-80">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <a href="/homedecor">${t().homedecor}</a> / <span>${subcatName}</span>
+                        </div>
+                        <div class="grid grid-4">
+                            ${products.map(product => renderProductCard(product)).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
         // ============= PRODUCT DETAIL PAGE =============
         async function renderProductDetailPage(productId) {
             const products = await getProducts();
@@ -4205,7 +4350,7 @@
                     <div class="container">
                         <div class="breadcrumb">
                             <a href="/">${t().logo}</a> /
-                            <a href="/${product.category}">${product.category === 'lighting' ? t().lighting : t().decorative}</a> /
+                            <a href="/${product.category}">${({lighting: t().lighting, decorative: t().decorative, homedecor: t().homedecor})[product.category] || product.category}</a> /
                             <span>${product.name[currentLanguage]}</span>
                         </div>
 
@@ -5041,6 +5186,11 @@
                                     <button class="prod-cat-btn" data-cat="table_lamp" onclick="setProductCat(this,'table_lamp')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Masa Lambaları</button>
                                     <button class="prod-cat-btn" data-cat="floor_lamp" onclick="setProductCat(this,'floor_lamp')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Lambaderler</button>
                                     <button class="prod-cat-btn" data-cat="outdoor" onclick="setProductCat(this,'outdoor')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Dış Mekan</button>
+                                    <button class="prod-cat-btn" data-cat="side_table" onclick="setProductCat(this,'side_table')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Yan Sehpalar</button>
+                                    <button class="prod-cat-btn" data-cat="tray" onclick="setProductCat(this,'tray')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Tepsiler</button>
+                                    <button class="prod-cat-btn" data-cat="mirror" onclick="setProductCat(this,'mirror')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Aynalar</button>
+                                    <button class="prod-cat-btn" data-cat="candleholder" onclick="setProductCat(this,'candleholder')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Mumluklar</button>
+                                    <button class="prod-cat-btn" data-cat="vase" onclick="setProductCat(this,'vase')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Vazolar</button>
                                     <button class="prod-cat-btn" data-cat="lantern" onclick="setProductCat(this,'lantern')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Tekli Fener</button>
                                     <button class="prod-cat-btn" data-cat="decorative" onclick="setProductCat(this,'decorative')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Dekoratif</button>
                                 </div>
@@ -5140,6 +5290,12 @@
                                 <button class="sort-cat-btn" data-cat="outdoor" onclick="loadSortGrid('outdoor')">Dış Mekan</button>
                                 <button class="sort-cat-btn" data-cat="lantern" onclick="loadSortGrid('lantern')">Tekli Fener</button>
                                 <button class="sort-cat-btn" data-cat="decorative" onclick="loadSortGrid('decorative')">Dekoratif</button>
+                                <button class="sort-cat-btn" data-cat="homedecor" onclick="loadSortGrid('homedecor')">Ev Dekorasyonu</button>
+                                <button class="sort-cat-btn" data-cat="side_table" onclick="loadSortGrid('side_table')">Yan Sehpalar</button>
+                                <button class="sort-cat-btn" data-cat="tray" onclick="loadSortGrid('tray')">Tepsiler</button>
+                                <button class="sort-cat-btn" data-cat="mirror" onclick="loadSortGrid('mirror')">Aynalar</button>
+                                <button class="sort-cat-btn" data-cat="candleholder" onclick="loadSortGrid('candleholder')">Mumluklar</button>
+                                <button class="sort-cat-btn" data-cat="vase" onclick="loadSortGrid('vase')">Vazolar</button>
                             </div>
 
                             <div id="sortGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;min-height:200px;padding:16px;background:#faf8f5;border-radius:8px;border:2px dashed #e8e0d5;">
@@ -5324,7 +5480,7 @@
                                             ['urun_adi_en','Ürün adı (İngilizce)','Crystal Chandelier'],
                                             ['aciklama_tr','Açıklama (TR)','Lüks kristal avize'],
                                             ['aciklama_en','Açıklama (EN)','Luxury crystal chandelier'],
-                                            ['kategori','lighting veya decorative','lighting'],
+                                            ['kategori','lighting veya decorative veya homedecor','lighting'],
                                             ['alt_kategori','chandelier / sconce / table_lamp / floor_lamp / outdoor','chandelier'],
                                             ['koleksiyon','modern veya traditional (sadece avize)','modern'],
                                             ['fiyat','Fiyat bilgisi','Fiyat İçin Sor'],
@@ -5370,6 +5526,11 @@
                 { value: 'floor_lamp', label: 'Lambader' },
                 { value: 'outdoor', label: 'Dış Mekan Aydınlatma' },
                 { value: 'lantern', label: 'Tekli Fener' },
+                { value: 'side_table', label: 'Yan Sehpa' },
+                { value: 'tray', label: 'Tepsi' },
+                { value: 'mirror', label: 'Ayna' },
+                { value: 'candleholder', label: 'Mumluk & Şamdan' },
+                { value: 'vase', label: 'Vazo & Obje' },
             ];
 
             let imagesHTML = product && product.images ? product.images.map((img, idx) => `
@@ -5472,6 +5633,7 @@
                                     <select id="formCategory" required>
                                         <option value="lighting" ${product && product.category === 'lighting' ? 'selected' : ''}>Lighting</option>
                                         <option value="decorative" ${product && product.category === 'decorative' ? 'selected' : ''}>Decorative</option>
+                                        <option value="homedecor" ${product && product.category === 'homedecor' ? 'selected' : ''}>Ev Dekorasyonu</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -5715,8 +5877,8 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
   "meta_description_en": "SEO description English, max 155 chars, highlight key product feature, include CTA",
   "keywords_tr": "10 anahtar kelime öbeği virgülle — Google'da gerçekten aranan, spesifik, uzun kuyruklu terimler",
   "keywords_en": "10 keyword phrases comma-separated — real Google search terms, specific and long-tail",
-  "category": "lighting veya decorative",
-  "subcategory": "chandelier veya sconce veya table_lamp veya floor_lamp veya outdoor veya decorative",
+  "category": "lighting veya decorative veya homedecor",
+  "subcategory": "chandelier veya sconce veya table_lamp veya floor_lamp veya outdoor veya decorative veya side_table veya tray veya mirror veya candleholder veya vase",
   "style": "modern veya traditional (sadece avize için, diğerleri için boş bırak)",
   "materials": "Tespit ettiğin malzemeler virgülle — varsayılan: antik pirinç eskitme",
   "dimensions_hint": "Görsel ipucu ile boyut tahmini — JSON formatında: {\"h\":\"yükseklik\",\"dia\":\"çap\",\"w\":\"genişlik\",\"d\":\"derinlik\"} — sadece görselde net görünen değerleri doldur, emin olmadıklarını boş bırak. Emin değilsen tamamen boş string döndür."
@@ -6320,8 +6482,8 @@ Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi y
   "meta_title_tr": "", "meta_title_en": "",
   "meta_description_tr": "", "meta_description_en": "",
   "keywords_tr": "", "keywords_en": "",
-  "category": "lighting|decorative",
-  "subcategory": "chandelier|sconce|table_lamp|floor_lamp|outdoor|decorative",
+  "category": "lighting|decorative|homedecor",
+  "subcategory": "chandelier|sconce|table_lamp|floor_lamp|outdoor|decorative|side_table|tray|mirror|candleholder|vase",
   "style": "modern|traditional|",
   "materials": "",
   "dimensions": "",
@@ -6790,7 +6952,7 @@ Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi y
         async function generateProductSEO(nameTr, subcategory, materials, dimensions) {
             const ANTHROPIC_KEY = localStorage.getItem('anthropic_api_key') || '';
             if (!ANTHROPIC_KEY) throw new Error('API key girilmemiş — Admin → Ayarlar bölümünden girin');
-            const subcatLabel = { chandelier:'avize', sconce:'aplik', table_lamp:'masa lambası', floor_lamp:'lambader', outdoor:'dış mekan aydınlatma', decorative:'dekoratif eşya' }[subcategory] || subcategory;
+            const subcatLabel = { chandelier:'avize', sconce:'aplik', table_lamp:'masa lambası', floor_lamp:'lambader', outdoor:'dış mekan aydınlatma', decorative:'dekoratif eşya', side_table:'yan sehpa', tray:'tepsi', mirror:'ayna', candleholder:'mumluk', vase:'vazo' }[subcategory] || subcategory;
             const prompt = `Sen CHANDELIST adlı lüks aydınlatma markası için ürün içerikleri yazıyorsun. Dil zarif, kısa ve lüks olmalı.
 
 Ürün: ${nameTr}
@@ -7712,6 +7874,10 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     content = await renderLightingSubcategoryPage(subcategory);
                 } else if (path === '/decorative') {
                     content = await renderDecorativePage();
+                } else if (path === '/homedecor') {
+                    content = await renderHomeDecorPage();
+                } else if (path.startsWith('/homedecor/')) {
+                    content = await renderHomeDecorSubcategoryPage(path.split('/')[2]);
                 } else if (path.startsWith('/products/')) {
                     const productId = path.split('/')[2].split('-')[0];
                     content = await renderProductDetailPage(productId);
@@ -8157,8 +8323,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             grid.innerHTML = '<p style="color:#aaa;font-size:0.85rem;grid-column:1/-1;text-align:center;padding:40px 0;">Yükleniyor...</p>';
 
             const all = await getProducts();
-            if (subcat === 'decorative') {
-                _sortProducts = all.filter(p => p.category === 'decorative');
+            if (subcat === 'decorative' || subcat === 'homedecor') {
+                _sortProducts = all.filter(p => p.category === subcat);
             } else {
                 _sortProducts = all.filter(p => parseSubcat(p.subcategory).includes(subcat));
             }

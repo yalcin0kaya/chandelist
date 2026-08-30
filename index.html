@@ -3638,7 +3638,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="/decorative" data-page="decorative">${t().decorative}</a>
                             <div class="nav-dropdown">
                                 <a href="/homedecor" data-page="homedecor">${t().homedecor}</a>
                                 <div class="dropdown-menu">
@@ -4350,7 +4349,7 @@
                     <div class="container">
                         <div class="breadcrumb">
                             <a href="/">${t().logo}</a> /
-                            <a href="/${product.category}">${({lighting: t().lighting, decorative: t().decorative, homedecor: t().homedecor})[product.category] || product.category}</a> /
+                            <a href="/${product.category}">${({lighting: t().lighting, decorative: t().homedecor, homedecor: t().homedecor})[product.category] || product.category}</a> /
                             <span>${product.name[currentLanguage]}</span>
                         </div>
 
@@ -5632,7 +5631,6 @@
                                     <label>${t().category}</label>
                                     <select id="formCategory" required>
                                         <option value="lighting" ${product && product.category === 'lighting' ? 'selected' : ''}>Lighting</option>
-                                        <option value="decorative" ${product && product.category === 'decorative' ? 'selected' : ''}>Decorative</option>
                                         <option value="homedecor" ${product && product.category === 'homedecor' ? 'selected' : ''}>Ev Dekorasyonu</option>
                                     </select>
                                 </div>
@@ -7873,7 +7871,8 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     const subcategory = path.split('/')[2];
                     content = await renderLightingSubcategoryPage(subcategory);
                 } else if (path === '/decorative') {
-                    content = await renderDecorativePage();
+                    history.replaceState(null, '', '/homedecor');
+                    content = await renderHomeDecorPage();
                 } else if (path === '/homedecor') {
                     content = await renderHomeDecorPage();
                 } else if (path.startsWith('/homedecor/')) {

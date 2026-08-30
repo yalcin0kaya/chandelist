@@ -3544,7 +3544,16 @@
             return metin.replace(/Osmanl[ıi] Ayd[ıi]nlatma/gi, 'CHANDELIST');
         }
 
+        const SITE_MARKA = 'Chandelist';
+        function markaEkle(baslik) {
+            const b = (baslik || '').trim();
+            if (!b) return SITE_MARKA;
+            // zaten iceriyorsa tekrar ekleme
+            if (b.toLowerCase().includes(SITE_MARKA.toLowerCase())) return b;
+            return b + ' | ' + SITE_MARKA;
+        }
         function updateSEO(title, description, imageUrl = '', productSchema = null, keywords = '', canonicalPath = '') {
+            title = markaEkle(title);
             document.title = title;
 
             const metaDescription = document.querySelector('meta[name="description"]');
@@ -5869,8 +5878,8 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
   "name_en": "Short descriptive product name English (max 80 chars) — reflect real product features",
   "description_tr": "2-3 cümle Türkçe açıklama. Bu ürüne özgü detayları (form, motif, malzeme, boyut ipuçları) belirt. Kullanım mekanı ve atmosfer vurgula. Her seferinde farklı yaz.",
   "description_en": "2-3 sentences English description. Highlight unique features of THIS product (form, pattern, material). Mention ambiance and placement. Write differently each time.",
-  "meta_title_tr": "SEO başlık Türkçe, maks 60 karakter, CHANDELIST markasını içermeli",
-  "meta_title_en": "SEO title English, max 60 chars, include CHANDELIST brand",
+  "meta_title_tr": "SEO başlık Türkçe, maks 55 karakter, marka adı YAZMA (site kendi ekler)",
+  "meta_title_en": "SEO title English, max 55 chars, do NOT include the brand (the site appends it)",
   "meta_description_tr": "SEO açıklama Türkçe, maks 155 karakter, ürünün öne çıkan özelliğini vurgula, CTA içermeli (örn: 'Şimdi inceleyin', 'Sipariş verin')",
   "meta_description_en": "SEO description English, max 155 chars, highlight key product feature, include CTA",
   "keywords_tr": "10 anahtar kelime öbeği virgülle — Google'da gerçekten aranan, spesifik, uzun kuyruklu terimler",

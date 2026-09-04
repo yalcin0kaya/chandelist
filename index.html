@@ -868,7 +868,7 @@
         .card-image video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             backface-visibility: hidden;
         }
@@ -3845,6 +3845,7 @@
 
             return `
                 ${renderHero(homeSlides)}
+                ${renderKoleksiyonBolumu(products)}
                 ${homeVideoBanner && homeVideoBanner.url ? `
                 <section class="homepage-video-section">
                     <video autoplay muted loop playsinline webkit-playsinline>
@@ -3954,6 +3955,46 @@
                 </section>
             `;
             return html;
+        }
+
+
+        // ============= ANA SAYFA KOLEKSIYON BOLUMU =============
+        function renderKoleksiyonBolumu(products) {
+            const cols = getCollections();
+            if (!cols || !cols.length) return '';
+            const kartlar = cols.map(col => {
+                let gorsel = col.image;
+                if (!gorsel) {
+                    const p = (products || []).find(x =>
+                        parseSubcat(x.subcategory).includes('chandelier') &&
+                        (x.style === col.key || x.style === 'both' ||
+                         (!x.style && col.key === 'modern')) &&
+                        x.images && x.images.filter(i => i && i.trim()).length);
+                    if (p) gorsel = p.images.filter(i => i && i.trim())[0];
+                }
+                return `
+                <a href="/lighting/chandelier/${col.key}" class="collection-banner-link">
+                    <div class="collection-banner">
+                        ${gorsel
+                            ? `<img src="${gorsel}" alt="${col.title[currentLanguage]}" loading="lazy">`
+                            : `<div class="collection-banner-placeholder" style="background:linear-gradient(135deg,#3a332b 0%,#241f1a 100%);"></div>`}
+                        <div class="collection-banner-content">
+                            <h2>${col.title[currentLanguage]}</h2>
+                            <p>${col.subtitle[currentLanguage]}</p>
+                            <span class="btn">${t().explore}</span>
+                        </div>
+                    </div>
+                </a>`;
+            }).join('');
+            return `
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>${currentLanguage === 'tr' ? 'Koleksiyonlar' : 'Collections'}</h2>
+                        </div>
+                        <div class="collections-grid">${kartlar}</div>
+                    </div>
+                </section>`;
         }
 
         // ============= CHANDELIER COLLECTIONS PAGE =============

@@ -5168,7 +5168,7 @@
                 const thumb = (product.images && product.images[0]) ? product.images[0] : '';
                 const subcatArr = parseSubcat(product.subcategory);
                 const subcatLabel = subcatArr.join(', ') || '-';
-                const searchStr = ((product.name.tr || '') + ' ' + (product.name.en || '') + ' ' + subcatArr.join(' ') + ' ' + product.id).toLowerCase().replace(/"/g,'&quot;');
+                const searchStr = ((product.name.tr || '') + ' ' + (product.name.en || '') + ' ' + subcatArr.join(' ') + ' ' + product.id + ' ' + (product.sku || '')).toLowerCase().replace(/"/g,'&quot;');
                 const styleBadge = product.style ? `<span style="font-size:0.72rem;background:#f0ece6;border:1px solid #ddd;border-radius:3px;padding:1px 6px;margin-left:6px;color:#8a7d6b;">${product.style}</span>` : '';
                 return `
                 <div class="admin-product-row" data-subcat="${subcatArr.join('|')}" data-search="${searchStr}" style="display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid #ede8e1;background:${idx%2===0?'#fff':'#faf8f5'};transition:background 0.15s;" onmouseover="this.style.background='#f5f0eb'" onmouseout="this.style.background='${idx%2===0?'#fff':'#faf8f5'}'">
@@ -5177,7 +5177,7 @@
                     </div>
                     <div style="flex:1;min-width:0;">
                         <div style="font-weight:500;font-size:0.92rem;color:#2c2c2c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name.tr || product.name.en}${styleBadge}</div>
-                        <div style="font-size:0.78rem;color:#999;margin-top:2px;">${subcatLabel} &nbsp;·&nbsp; ID: ${product.id}</div>
+                        <div style="font-size:0.78rem;color:#999;margin-top:2px;">${subcatLabel} &nbsp;·&nbsp; ID: ${product.id}${product.sku ? ' &nbsp;·&nbsp; <span style="color:#8a7d6b;font-weight:500;">' + product.sku + '</span>' : ''}</div>
                     </div>
                     <div style="display:flex;gap:7px;flex-shrink:0;">
                         <button style="padding:5px 14px;background:#fff;border:1px solid #c9b99a;border-radius:3px;font-size:0.82rem;cursor:pointer;color:#5a4a3a;" onclick="editProduct(${product.id})">${t().edit}</button>
@@ -5227,7 +5227,7 @@
                                 <button class="btn btn-primary" onclick="(async () => { await addNewProduct(); })()">${t().addProduct}</button>
                             </div>
                             <div style="margin-bottom:16px;">
-                                <input type="text" id="productSearchInput" placeholder="🔍 Ürün adı, kategori veya ID ara..." oninput="filterAdminProducts()" style="width:100%;padding:10px 14px;border:1px solid #d8cfc2;border-radius:6px;font-size:0.9rem;margin-bottom:12px;box-sizing:border-box;">
+                                <input type="text" id="productSearchInput" placeholder="🔍 Ürün adı, kod, kategori veya ID ara..." oninput="filterAdminProducts()" style="width:100%;padding:10px 14px;border:1px solid #d8cfc2;border-radius:6px;font-size:0.9rem;margin-bottom:12px;box-sizing:border-box;">
                                 <div id="productCatFilter" style="display:flex;flex-wrap:wrap;gap:8px;">
                                     <button class="prod-cat-btn active" data-cat="all" onclick="setProductCat(this,'all')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#5a4a3a;color:#fff;font-size:0.82rem;cursor:pointer;">Tümü</button>
                                     <button class="prod-cat-btn" data-cat="chandelier" onclick="setProductCat(this,'chandelier')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Avizeler</button>

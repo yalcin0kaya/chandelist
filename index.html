@@ -2405,6 +2405,7 @@
                 mirror: 'Ayna',
                 candleholder: 'Mumluk & Şamdan',
                 vase: 'Vazo & Obje',
+                planter: 'Saksı',
                 about: 'Hakkımızda',
                 custom: 'Özel Üretim',
                 workshop: 'Atölyemiz',
@@ -2519,6 +2520,7 @@
                 mirror: 'Mirror',
                 candleholder: 'Candleholders',
                 vase: 'Vases & Objects',
+                planter: 'Planters',
                 about: 'About',
                 custom: 'Custom & Contract',
                 workshop: 'Our Workshop',
@@ -2877,6 +2879,7 @@
             { key: 'mirror',      label: 'Aynalar' },
             { key: 'candleholder',label: 'Mumluk & Şamdan' },
             { key: 'vase',        label: 'Vazo & Obje' },
+            { key: 'planter',     label: 'Saksılar' },
         ];
 
         function saveCollections(collections) {
@@ -3655,6 +3658,7 @@
                                     <a href="/homedecor/mirror">${t().mirror}</a>
                                     <a href="/homedecor/candleholder">${t().candleholder}</a>
                                     <a href="/homedecor/vase">${t().vase}</a>
+                                    <a href="/homedecor/planter">${t().planter}</a>
                                 </div>
                             </div>
                             <a href="/custom" data-page="custom">${t().custom}</a>
@@ -4185,7 +4189,7 @@
 
 
         // ============= EV DEKORASYONU (HOME DECOR) =============
-        const HOMEDECOR_SUBCATS = ['side_table', 'tray', 'mirror', 'candleholder', 'vase'];
+        const HOMEDECOR_SUBCATS = ['side_table', 'tray', 'mirror', 'candleholder', 'vase', 'planter'];
 
         function homeDecorSubcatName(key) {
             return ({
@@ -4193,7 +4197,8 @@
                 tray: t().tray,
                 mirror: t().mirror,
                 candleholder: t().candleholder,
-                vase: t().vase
+                vase: t().vase,
+                planter: t().planter
             })[key] || key;
         }
 
@@ -5580,6 +5585,7 @@
                 { value: 'mirror', label: 'Ayna' },
                 { value: 'candleholder', label: 'Mumluk & Şamdan' },
                 { value: 'vase', label: 'Vazo & Obje' },
+                { value: 'planter', label: 'Saksı' },
             ];
 
             let imagesHTML = product && product.images ? product.images.map((img, idx) => `
@@ -7000,7 +7006,7 @@ Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi y
         async function generateProductSEO(nameTr, subcategory, materials, dimensions) {
             const ANTHROPIC_KEY = localStorage.getItem('anthropic_api_key') || '';
             if (!ANTHROPIC_KEY) throw new Error('API key girilmemiş — Admin → Ayarlar bölümünden girin');
-            const subcatLabel = { chandelier:'avize', sconce:'aplik', table_lamp:'masa lambası', floor_lamp:'lambader', outdoor:'dış mekan aydınlatma', decorative:'dekoratif eşya', side_table:'yan sehpa', tray:'tepsi', mirror:'ayna', candleholder:'mumluk', vase:'vazo' }[subcategory] || subcategory;
+            const subcatLabel = { chandelier:'avize', sconce:'aplik', table_lamp:'masa lambası', floor_lamp:'lambader', outdoor:'dış mekan aydınlatma', decorative:'dekoratif eşya', side_table:'yan sehpa', tray:'tepsi', mirror:'ayna', candleholder:'mumluk', vase:'vazo', planter:'saksı' }[subcategory] || subcategory;
             const prompt = `Sen CHANDELIST adlı lüks aydınlatma markası için ürün içerikleri yazıyorsun. Dil zarif, kısa ve lüks olmalı.
 
 Ürün: ${nameTr}

@@ -868,7 +868,8 @@
         .card-image video {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+            object-position: center;
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             backface-visibility: hidden;
         }
@@ -5027,6 +5028,27 @@
                             </div>
                         </div>
 
+                        ${(() => {
+                            const gallery = (window._workshopGallery) || [];
+                            if (!gallery.length) return '';
+                            return `
+                            <div style="margin-bottom:70px;">
+                                <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">${isTr ? 'ATÖLYEDEN GÖRÜNTÜLER' : 'FROM OUR WORKSHOP'}</h2>
+                                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+                                    ${gallery.map(url => `<div style="aspect-ratio:1/1; overflow:hidden; border-radius:8px; background:#f5f0e8;"><img src="${url}" alt="${isTr ? 'Atölye üretim' : 'Workshop production'}" loading="lazy" style="width:100%; height:100%; object-fit:cover;"></div>`).join('')}
+                                </div>
+                            </div>`;
+                        })()}
+                        ${(() => {
+                            const vid = (window._workshopVideo) || '';
+                            if (!vid) return '';
+                            return `
+                            <div style="margin-bottom:70px;">
+                                <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">${isTr ? 'ÜRETİM VİDEOSU' : 'PRODUCTION VIDEO'}</h2>
+                                <div style="max-width:900px; margin:0 auto; border-radius:10px; overflow:hidden; background:#000;"><video src="${vid}" controls playsinline preload="metadata" style="width:100%; display:block;"></video></div>
+                            </div>`;
+                        })()}
+
                         <div style="text-align:center; background:#f5f0e8; border-radius:6px; padding:50px 30px;">
                             <h2 style="font-size:1.6rem; margin-bottom:14px; letter-spacing:1px;">
                                 ${isTr ? 'Özel Bir Proje mi Var?' : 'Have a Custom Project?'}
@@ -5203,6 +5225,7 @@
                             <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
                             <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
+                            <a href="#" class="admin-nav" data-section="workshop">🔨 Atölye Görselleri</a>
                             <a href="#" class="admin-nav" data-section="pagebanners">🖼 Sayfa Banner'ları</a>
                             <a href="#" class="admin-nav" data-section="visitors">📊 Ziyaretçiler</a>
                             <a href="#" class="admin-nav" data-section="aichat">🤖 AI Asistan</a>
@@ -5359,6 +5382,24 @@
                             <div style="margin-top:20px;display:flex;gap:12px;align-items:center;">
                                 <button onclick="saveSortOrder()" style="padding:10px 28px;background:#2c2c2c;color:#fff;border:none;border-radius:4px;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">💾 Kaydet</button>
                                 <span id="sortSaveMsg" style="display:none;color:#27ae60;font-size:0.85rem;"></span>
+                            </div>
+                        </div>
+
+                        <div id="workshop-section" class="admin-section" style="display: none;">
+                            <h2>🔨 Atölye Görselleri & Video</h2>
+                            <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:8px;">Atölyemiz sayfasındaki üretim fotoğrafları ve videosu. Değişiklik <strong>her iki sitede de</strong> geçerli olur.</p>
+                            <div class="collection-admin-card" style="margin-bottom:20px;">
+                                <h3 style="margin-top:0;">📷 Üretim Fotoğrafları</h3>
+                                <p style="font-size:0.85rem; color:#999;">Kare (1×1) fotoğraflar en iyi görünür. İstediğiniz kadar ekleyebilirsiniz.</p>
+                                <button type="button" class="btn" onclick="uploadWorkshopImage()">📷 Fotoğraf Ekle</button>
+                                <div id="ws-gallery" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:12px; margin-top:16px;"></div>
+                            </div>
+                            <div class="collection-admin-card">
+                                <h3 style="margin-top:0;">🎬 Üretim Videosu</h3>
+                                <p style="font-size:0.85rem; color:#999;">Tek bir üretim/atölye videosu. Yeni yüklerseniz eskisinin yerini alır.</p>
+                                <div id="ws-video-preview"></div>
+                                <button type="button" class="btn" onclick="uploadWorkshopVideo()">🎬 Video Yükle</button>
+                                <span id="ws-video-msg" style="color:#27ae60;font-size:0.85rem;display:none;margin-left:10px;">✓ Kaydedildi</span>
                             </div>
                         </div>
 
@@ -7542,6 +7583,35 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         }
 
         // ============= MAIN RENDER =============
+        // ============= ATÖLYE GÖRSELLERİ YÖNETİMİ (admin) =============
+        async function loadWorkshop() {
+            const settings = await getSiteSettings();
+            const gallery = settings.workshop_gallery || [];
+            const video = settings.workshop_video || '';
+            window._workshopGallery = gallery; window._workshopVideo = video;
+            const g = document.getElementById('ws-gallery');
+            if (g) { g.innerHTML = gallery.length ? gallery.map((url, i) => `<div style="position:relative; aspect-ratio:1/1; border-radius:8px; overflow:hidden; border:1px solid #ece6dc;"><img src="${url}" style="width:100%; height:100%; object-fit:cover;"><button type="button" onclick="removeWorkshopImage(${i})" style="position:absolute; top:6px; right:6px; background:rgba(200,0,0,0.85); color:#fff; border:none; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:14px;">×</button></div>`).join('') : '<div style="color:#aaa; font-size:0.85rem; grid-column:1/-1;">Henüz fotoğraf eklenmemiş.</div>'; }
+            const vp = document.getElementById('ws-video-preview');
+            if (vp) { vp.innerHTML = video ? `<video src="${video}" controls style="max-width:100%; max-height:200px; border-radius:8px; margin-bottom:10px; display:block;"></video>` : ''; }
+        }
+        function uploadWorkshopImage() {
+            if (typeof cloudinary === 'undefined') { alert('Cloudinary yükleniyor, bekleyin.'); return; }
+            const widget = cloudinary.createUploadWidget({ cloudName: 'dcvkzpvmy', uploadPreset: 'chandelist_upload', sources: ['local','url'], multiple: true, resourceType: 'image', clientAllowedFormats: ['jpg','jpeg','png','webp'], maxFileSize: 10000000 },
+                async (error, result) => { if (!error && result && result.event === 'success') { try { const settings = await getSiteSettings(); const gallery = settings.workshop_gallery || []; gallery.push(result.info.secure_url); await saveSiteSetting('workshop_gallery', gallery); window._workshopGallery = gallery; loadWorkshop(); } catch(e) { alert('Hata: ' + e.message); } } });
+            widget.open();
+        }
+        async function removeWorkshopImage(idx) {
+            if (!confirm('Bu fotoğrafı kaldırmak istiyor musunuz?')) return;
+            const settings = await getSiteSettings(); const gallery = settings.workshop_gallery || []; gallery.splice(idx, 1);
+            await saveSiteSetting('workshop_gallery', gallery); window._workshopGallery = gallery; loadWorkshop();
+        }
+        function uploadWorkshopVideo() {
+            if (typeof cloudinary === 'undefined') { alert('Cloudinary yükleniyor, bekleyin.'); return; }
+            const widget = cloudinary.createUploadWidget({ cloudName: 'dcvkzpvmy', uploadPreset: 'chandelist_upload', sources: ['local','url'], multiple: false, resourceType: 'video', maxFileSize: 100000000 },
+                async (error, result) => { if (!error && result && result.event === 'success') { const msg = document.getElementById('ws-video-msg'); if (msg) { msg.style.display='inline'; msg.textContent='Kaydediliyor...'; msg.style.color='#8a7d6b'; } try { await saveSiteSetting('workshop_video', result.info.secure_url); window._workshopVideo = result.info.secure_url; if (msg) { msg.textContent='✓ Kaydedildi'; msg.style.color='#27ae60'; } loadWorkshop(); } catch(e) { if (msg) { msg.textContent='Hata: '+e.message; msg.style.color='#c00'; } } } });
+            widget.open();
+        }
+
         // ============= SAYFA BANNER YÖNETİMİ (admin) =============
         async function loadPageBanners() {
             const settings = await getSiteSettings();
@@ -7904,7 +7974,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const path = window.location.pathname || '/';
             currentPage = path;
             trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
-            if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; } catch(e){ window._pageBanners = {}; } }
+            if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; window._workshopGallery = s.workshop_gallery || []; window._workshopVideo = s.workshop_video || ''; } catch(e){ window._pageBanners = {}; } }
             if (!window._koleksiyonlar) { await koleksiyonlariYukle(); }
 
             const app = document.getElementById('app');
@@ -8008,6 +8078,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     document.getElementById(`${section}-section`).style.display = 'block';
                     // Sıralama sekmesi açılınca avizeyi otomatik yükle
                     if (section === 'sorting') loadSortGrid('chandelier');
+                    if (section === 'workshop') loadWorkshop();
                     if (section === 'pagebanners') loadPageBanners();
                     // Ziyaretçiler sekmesi açılınca verileri yükle
                     if (section === 'visitors') loadVisitors(1);
@@ -8339,6 +8410,10 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                                 <label>${t().yourPhone}</label>
                                 <input type="tel" id="priceFormPhone">
                             </div>
+                            <div class="form-group">
+                                <label>${currentLanguage === 'tr' ? 'Mesajınız / Sorunuz' : 'Your Message / Question'}</label>
+                                <textarea id="priceFormMessage" rows="3" placeholder="${currentLanguage === 'tr' ? 'Fiyat, adet, ölçü veya merak ettiğiniz her şeyi yazabilirsiniz...' : 'Ask about price, quantity, size or anything else...'}" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; font-family:inherit; resize:vertical;"></textarea>
+                            </div>
                             <div class="modal-buttons">
                                 <button type="button" class="btn" onclick="closeModal()">${t().cancel}</button>
                                 <button type="button" class="btn btn-primary" onclick="(async () => { await sendPriceInquiry(); })()">${t().sendMessage}</button>
@@ -8356,9 +8431,17 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const name = document.getElementById('priceFormName').value;
             const email = document.getElementById('priceFormEmail').value;
             const phone = document.getElementById('priceFormPhone').value;
+            const message = document.getElementById('priceFormMessage').value;
 
             if (name && email) {
-                const text = encodeURIComponent(`Product: ${product.name[currentLanguage]}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}`);
+                const productUrlFull = 'https://chandelist.com' + productUrl(product);
+                let waMsg = `🛍 Ürün: ${product.name[currentLanguage]}\n`;
+                waMsg += `🔗 ${productUrlFull}\n\n`;
+                waMsg += `👤 İsim: ${name}\n`;
+                waMsg += `📧 E-posta: ${email}\n`;
+                if (phone) waMsg += `📞 Telefon: ${phone}\n`;
+                if (message) waMsg += `\n💬 Mesaj: ${message}`;
+                const text = encodeURIComponent(waMsg);
                 window.open(`https://wa.me/905326681094?text=${text}`, '_blank');
                 closeModal();
             }

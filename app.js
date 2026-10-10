@@ -1247,11 +1247,27 @@
             const DEFAULT_OG_IMAGE = 'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg';
             // picsum bir placeholder servisi; sosyal paylasimda asla kullanilmasin
             const _ogImg = (imageUrl && !/picsum\.photos/.test(imageUrl)) ? imageUrl : DEFAULT_OG_IMAGE;
-            document.querySelector('meta[property="og:image"]').setAttribute('content', _ogImg);
-            document.querySelector('meta[name="twitter:image"]').setAttribute('content', _ogImg);
+            // Etiket yoksa olustur - statik sayfalarda eksik olabiliyor
+            function ensureMeta(attr, key) {
+                let el = document.querySelector('meta[' + attr + '="' + key + '"]');
+                if (!el) {
+                    el = document.createElement('meta');
+                    el.setAttribute(attr, key);
+                    document.head.appendChild(el);
+                }
+                return el;
+            }
+            ensureMeta('property', 'og:image').setAttribute('content', _ogImg);
+            ensureMeta('name', 'twitter:image').setAttribute('content', _ogImg);
 
             if (productSchema) {
-                const schemaScript = document.getElementById('schema-org');
+                let schemaScript = document.getElementById('schema-org');
+                if (!schemaScript) {
+                    schemaScript = document.createElement('script');
+                    schemaScript.type = 'application/ld+json';
+                    schemaScript.id = 'schema-org';
+                    document.head.appendChild(schemaScript);
+                }
                 schemaScript.textContent = JSON.stringify(productSchema);
             }
         }

@@ -388,10 +388,25 @@
         const t = () => translations[currentLanguage];
 
         // Auto language detection (IP-based)
+        function urlLang() { return /^\/en(\/|$)/.test(location.pathname || '') ? 'en' : null; }
+        function stripLangPrefix(p) { return (p || '/').replace(/^\/en(?=\/|$)/, '') || '/'; }
+        function withLangPrefix(p) {
+            if (currentLanguage !== 'en') return p;
+            if (/^\/en(\/|$)/.test(p)) return p;
+            if (!p.startsWith('/') || p.startsWith('/admin')) return p;
+            return '/en' + (p === '/' ? '' : p);
+        }
+
         async function initializeLanguage() {
+            const fromUrl = urlLang();
+            if (fromUrl) { currentLanguage = fromUrl; localStorage.setItem('language', fromUrl); return; }
+            // /en/ onegi yoksa URL Turkcedir; sadece ana sayfada otomatik yonlendirme yapariz
+            const atRoot = (location.pathname || '/') === '/' || (location.pathname || '') === '';
+            if (!atRoot) { currentLanguage = 'tr'; return; }
             const savedLang = localStorage.getItem('language');
             if (savedLang) {
                 currentLanguage = savedLang;
+                if (currentLanguage === 'en') { try { history.replaceState(null, '', '/en/'); } catch (e) {} }
                 return;
             }
             try {
@@ -404,14 +419,35 @@
                 currentLanguage = browserLang.startsWith('tr') ? 'tr' : 'en';
             }
             localStorage.setItem('language', currentLanguage);
+            if (currentLanguage === 'en') { try { history.replaceState(null, '', '/en/'); } catch (e) {} }
         }
 
         function setLanguage(lang) {
             currentLanguage = lang;
             localStorage.setItem('language', lang);
             try { document.documentElement.setAttribute('lang', lang); } catch (e) {}
+            try {
+                const bare = stripLangPrefix(location.pathname || '/');
+                const want = (lang === 'en') ? ('/en' + (bare === '/' ? '' : bare)) : bare;
+                if ((location.pathname || '/') !== (want || '/')) {
+                    history.replaceState(null, '', (want || '/') + location.search + location.hash);
+                }
+            } catch (e) {}
             render();
         }
+
+        // Ingilizce modda site ici baglantilari /en/ altinda tut
+        document.addEventListener('click', function (ev) {
+            if (currentLanguage !== 'en') return;
+            if (ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+            const a = ev.target && ev.target.closest ? ev.target.closest('a[href^="/"]') : null;
+            if (!a) return;
+            if (a.target && a.target !== '_self') return;
+            if (a.hasAttribute('download')) return;
+            const href = a.getAttribute('href') || '';
+            if (href.startsWith('//') || href.startsWith('/admin') || /^\/en(\/|$)/.test(href)) return;
+            a.setAttribute('href', '/en' + (href === '/' ? '' : href));
+        }, true);
 
         const defaultCollections = [
             {
@@ -980,7 +1016,7 @@
         }
 
         function navigateTo(path) {
-            history.pushState(null, '', path);
+            history.pushState(null, '', withLangPrefix(path));
             render();
         }
 
@@ -5574,7 +5610,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
         }
 
         async function render() {
-            const path = window.location.pathname || '/';
+            const path = stripLangPrefix(window.location.pathname || '/');
             currentPage = path;
             trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
             if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; window._workshopGallery = s.workshop_gallery || []; window._workshopVideo = s.workshop_video || ''; } catch(e){ window._pageBanners = {}; } }
@@ -5634,6 +5670,18 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             }
 
             app.innerHTML = renderHeader() + content + renderFooter();
+
+            // Ingilizce modda site ici baglantilara /en onegi ekle
+            if (currentLanguage === 'en') {
+                try {
+                    app.querySelectorAll('a[href^="/"]').forEach(function (a) {
+                        const h = a.getAttribute('href') || '';
+                        if (h.startsWith('//') || h.startsWith('/admin') || /^\/en(\/|$)/.test(h)) return;
+                        a.setAttribute('href', '/en' + (h === '/' ? '' : h));
+                    });
+                } catch (e) {}
+            }
+            try { document.documentElement.setAttribute('lang', currentLanguage); } catch (e) {}
 
             // Attach event listeners
             attachEventListeners();

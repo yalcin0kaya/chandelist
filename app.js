@@ -1,0 +1,6163 @@
+        // ============= TRANSLATIONS =============
+        const translations = {
+            tr: {
+                lighting: 'Aydınlatma',
+                decorative: 'Dekoratif Eşya',
+                homedecor: 'Ev Dekorasyonu',
+                sideTable: 'Yan Sehpa',
+                tray: 'Tepsi',
+                mirror: 'Ayna',
+                candleholder: 'Mumluk & Şamdan',
+                vase: 'Vazo & Obje',
+                planter: 'Saksı',
+                about: 'Hakkımızda',
+                custom: 'Özel Üretim',
+                workshop: 'Atölyemiz',
+                contact: 'İletişim',
+                admin: 'Admin',
+                navHome: 'Ana Sayfa',
+                logo: 'CHANDELIST',
+                logoSub: 'chandelier factory',
+                featuredProducts: 'Öne Çıkan Ürünler',
+                exploreCollections: 'Koleksiyonları Keşfet',
+                craftedWithPrecision: 'Hassasiyet ile El Sanatı',
+                luxuryChandeliers: 'Lüks avizeler, her mekanı dönüştüren ışık tasarımları',
+                ourStory: 'Bizim Hikayemiz',
+                about_text: 'CHANDELIST, çağdaş tasarım ile geleneksel el sanatını birleştiren lüks avize ve dekoratif aydınlatma ürünleri üretir. Her ürün, mükemmellik arayışı ve kalite taahhüdümüzün ifadesidir.',
+                craftsmanship: 'El Sanatı',
+                craftsmanship_text: 'Uzman ustalarımız her detayda titizlik ile çalışır. Seçilmiş malzemeleri ve klasik teknikleri kullanarak, zamansız güzellik yaratırız.',
+                values: 'Değerlerimiz',
+                values_text: 'Kalite, inovasyon ve müşteri memnuniyeti bizim temel değerlerimizdir. Her projede, en yüksek standartları sağlamaya kararlıyız.',
+                chandelier: 'Avize',
+                sconce: 'Aplik',
+                tableLamp: 'Masa Lambası',
+                floorLamp: 'Lambader',
+                outdoor: 'Dış Mekan Aydınlatma',
+                lantern: 'Tekli Fener',
+                modernChandelier: 'Modern Avize',
+                traditionalChandelier: 'Türk · Fas · Rustik Avize',
+                colModern: 'Modern',
+                colTraditional: 'Türk · Fas · Rustik',
+                explore: 'Keşfet',
+                details: 'Detay',
+                material: 'Malzeme',
+                dimensions: 'Boyutlar',
+                askPrice: 'Fiyat Sor',
+                productName: 'Ürün Adı',
+                description: 'Açıklama',
+                price: 'Fiyat',
+                materials: 'Malzemeler',
+                height: 'Yükseklik',
+                width: 'Genişlik',
+                depth: 'Derinlik',
+                askForPrice: 'Fiyat Sor',
+                yourName: 'Adınız',
+                yourEmail: 'E-posta',
+                yourPhone: 'Telefon',
+                message: 'Mesaj',
+                sendWhatsApp: 'WhatsApp ile Gönder',
+                sendEmail: 'E-posta ile Gönder',
+                close: 'Kapat',
+                contactUs: 'İletişim',
+                address: 'Adres',
+                phone: 'Telefon',
+                email: 'E-posta',
+                whatsapp: 'WhatsApp',
+                sendMessage: 'Mesaj Gönder',
+                message_sent: 'Mesajınız alındı, teşekkür ederiz!',
+                company: 'Şirket',
+                about_link: 'Hakkımızda',
+                contact_link: 'İletişim',
+                shipping: 'Kargo',
+                returns: 'İadeler',
+                privacy: 'Gizlilik Politikası',
+                follow: 'Bizi Takip Edin',
+                rights: 'Tüm hakları saklıdır.',
+                adminPanel: 'Admin Paneli',
+                login: 'Giriş Yap',
+                logout: 'Çıkış',
+                username: 'Kullanıcı Adı',
+                password: 'Şifre',
+                dashboard: 'Gösterge Paneli',
+                products: 'Ürünler',
+                banners: 'Bannerlar',
+                categories: 'Kategoriler',
+                addProduct: 'Ürün Ekle',
+                editProduct: 'Ürün Düzenle',
+                deleteProduct: 'Sil',
+                addBanner: 'Banner Ekle',
+                editBanner: 'Banner Düzenle',
+                save: 'Kaydet',
+                cancel: 'İptal',
+                productNameTr: 'Ürün Adı (TR)',
+                productNameEn: 'Ürün Adı (EN)',
+                descriptionTr: 'Açıklama (TR)',
+                descriptionEn: 'Açıklama (EN)',
+                category: 'Kategori',
+                subcategory: 'Alt Kategori',
+                imageUrl: 'Resim URL',
+                videoUrl: 'Video URL',
+                addImage: 'Resim Ekle',
+                addVideo: 'Video Ekle',
+                totalProducts: 'Toplam Ürün',
+                totalBanners: 'Toplam Banner',
+                bannerImage: 'Banner Resmi (URL)',
+                bannerVideo: 'Banner Videosu (URL)',
+                bannerType: 'Banner Tipi',
+                recent_activity: 'Son Aktivite',
+                stats: 'İstatistikler',
+                edit: 'Düzenle',
+                search: 'Ara',
+                filter: 'Filtrele',
+                sort: 'Sırala',
+                latest: 'En Yeni',
+                popular: 'Popüler',
+                priceAscending: 'Fiyata Göre (Artan)',
+                priceDescending: 'Fiyata Göre (Azalan)',
+            },
+            en: {
+                lighting: 'Lighting',
+                decorative: 'Decorative',
+                homedecor: 'Home Decor',
+                sideTable: 'Side Table',
+                tray: 'Tray',
+                mirror: 'Mirror',
+                candleholder: 'Candleholders',
+                vase: 'Vases & Objects',
+                planter: 'Planters',
+                about: 'About',
+                custom: 'Custom & Contract',
+                workshop: 'Our Workshop',
+                contact: 'Contact',
+                admin: 'Admin',
+                navHome: 'Home',
+                logo: 'CHANDELIST',
+                logoSub: 'chandelier factory',
+                featuredProducts: 'Featured Products',
+                exploreCollections: 'Explore Collections',
+                craftedWithPrecision: 'Crafted with Precision',
+                luxuryChandeliers: 'Luxury chandeliers, light designs that transform every space',
+                ourStory: 'Our Story',
+                about_text: 'CHANDELIST produces luxury chandeliers and decorative lighting that unite contemporary design with traditional craftsmanship. Each piece is an expression of our pursuit of excellence and commitment to quality.',
+                craftsmanship: 'Craftsmanship',
+                craftsmanship_text: 'Our master craftsmen work with meticulous attention to every detail. Using carefully selected materials and classic techniques, we create timeless beauty.',
+                values: 'Our Values',
+                values_text: 'Quality, innovation, and customer satisfaction are our core values. In every project, we are committed to maintaining the highest standards.',
+                chandelier: 'Chandelier',
+                sconce: 'Sconce',
+                tableLamp: 'Table Lamp',
+                floorLamp: 'Floor Lamp',
+                outdoor: 'Outdoor Lighting',
+                lantern: 'Lantern',
+                modernChandelier: 'Modern Chandelier',
+                traditionalChandelier: 'Turkish · Moroccan · Rustic',
+                colModern: 'Modern',
+                colTraditional: 'Turkish · Moroccan · Rustic',
+                explore: 'Explore',
+                details: 'Details',
+                material: 'Material',
+                dimensions: 'Dimensions',
+                askPrice: 'Ask for Price',
+                productName: 'Product Name',
+                description: 'Description',
+                price: 'Price',
+                materials: 'Materials',
+                height: 'Height',
+                width: 'Width',
+                depth: 'Depth',
+                askForPrice: 'Ask for Price',
+                yourName: 'Your Name',
+                yourEmail: 'Email',
+                yourPhone: 'Phone',
+                message: 'Message',
+                sendWhatsApp: 'Send via WhatsApp',
+                sendEmail: 'Send via Email',
+                close: 'Close',
+                contactUs: 'Contact Us',
+                address: 'Address',
+                phone: 'Phone',
+                email: 'Email',
+                whatsapp: 'WhatsApp',
+                sendMessage: 'Send Message',
+                message_sent: 'Your message was sent, thank you!',
+                company: 'Company',
+                about_link: 'About',
+                contact_link: 'Contact',
+                shipping: 'Shipping',
+                returns: 'Returns',
+                privacy: 'Privacy Policy',
+                follow: 'Follow Us',
+                rights: 'All rights reserved.',
+                adminPanel: 'Admin Panel',
+                login: 'Login',
+                logout: 'Logout',
+                username: 'Username',
+                password: 'Password',
+                dashboard: 'Dashboard',
+                products: 'Products',
+                banners: 'Banners',
+                categories: 'Categories',
+                addProduct: 'Add Product',
+                editProduct: 'Edit Product',
+                deleteProduct: 'Delete',
+                addBanner: 'Add Banner',
+                editBanner: 'Edit Banner',
+                save: 'Save',
+                cancel: 'Cancel',
+                productNameTr: 'Product Name (TR)',
+                productNameEn: 'Product Name (EN)',
+                descriptionTr: 'Description (TR)',
+                descriptionEn: 'Description (EN)',
+                category: 'Category',
+                subcategory: 'Subcategory',
+                imageUrl: 'Image URL',
+                videoUrl: 'Video URL',
+                addImage: 'Add Image',
+                addVideo: 'Add Video',
+                totalProducts: 'Total Products',
+                totalBanners: 'Total Banners',
+                bannerImage: 'Banner Image (URL)',
+                bannerVideo: 'Banner Video (URL)',
+                bannerType: 'Banner Type',
+                recent_activity: 'Recent Activity',
+                stats: 'Statistics',
+                edit: 'Edit',
+                search: 'Search',
+                filter: 'Filter',
+                sort: 'Sort',
+                latest: 'Latest',
+                popular: 'Popular',
+                priceAscending: 'Price (Low to High)',
+                priceDescending: 'Price (High to Low)',
+            }
+        };
+
+        // ============= DEMO DATA =============
+        const demoProducts = [
+            {
+                id: 1,
+                name: { tr: 'Kristal Avize - Klasik', en: 'Crystal Chandelier - Classic' },
+                description: { tr: 'El yapımı kristal avize, zamansal tasarım', en: 'Handmade crystal chandelier, timeless design' },
+                metaTitle: { tr: 'Kristal Avize - El Yapımı Lüks Avize | CHANDELIST', en: 'Crystal Chandelier - Handmade Luxury | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST ile zamansal tasarımlı el yapımı kristal avizelerimizi keşfedin. Premium kalite, lüks tasarım.', en: 'Discover our handmade crystal chandeliers with timeless design at CHANDELIST. Premium quality, luxury lighting.' },
+                keywords: { tr: 'kristal avize, el yapımı avize, lüks avize, salon avizesi, klasik avize', en: 'crystal chandelier, handmade chandelier, luxury chandelier, living room chandelier, classic chandelier' },
+                category: 'lighting',
+                subcategory: 'chandelier',
+                images: ['https://picsum.photos/600/600?random=1'],
+                videos: ['https://www.w3schools.com/html/mov_bbb.mp4'],
+                materials: 'Brass, Crystal',
+                dimensions: 'H: 80cm, W: 60cm, D: 60cm',
+                price: '5000',
+                relatedProducts: [5, 2, 6],
+            },
+            {
+                id: 2,
+                name: { tr: 'Modern Aplik', en: 'Modern Sconce' },
+                description: { tr: 'Minimalist tasarım aplik', en: 'Minimalist design sconce' },
+                metaTitle: { tr: 'Modern Aplik - Minimalist Tasarım | CHANDELIST', en: 'Modern Sconce - Minimalist Design | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST modern aplik koleksiyonu. Minimalist tasarım, fırçalanmış altın ve cam kombinasyonu.', en: 'CHANDELIST modern sconce collection. Minimalist design with brushed gold and glass.' },
+                keywords: { tr: 'modern aplik, aplik, duvar ışığı, minimalist tasarım', en: 'modern sconce, wall light, minimalist sconce, contemporary lighting' },
+                category: 'lighting',
+                subcategory: 'sconce',
+                images: ['https://picsum.photos/600/600?random=2'],
+                videos: [],
+                materials: 'Brushed Gold, Glass',
+                dimensions: 'H: 30cm, W: 25cm, D: 15cm',
+                price: '1200',
+                relatedProducts: [6, 3, 7],
+            },
+            {
+                id: 3,
+                name: { tr: 'Lambader - Altın', en: 'Floor Lamp - Gold' },
+                description: { tr: 'Zarif lambader, oturma odası için ideal', en: 'Elegant floor lamp, ideal for living rooms' },
+                metaTitle: { tr: 'Altın Lambader - Zarif Tasarım | CHANDELIST', en: 'Gold Floor Lamp - Elegant Design | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST zarif altın lambader. Oturma odası için ideal, linen şapkalı tasarım. Yüksek kalite malzeme.', en: 'CHANDELIST elegant gold floor lamp. Ideal for living rooms with linen shade. Premium quality materials.' },
+                keywords: { tr: 'lambader, altın lambader, yer ışığı, oturma odası lambaderi', en: 'floor lamp, gold lamp, standing lamp, living room lighting' },
+                category: 'lighting',
+                subcategory: 'floor_lamp',
+                images: ['https://picsum.photos/600/600?random=3'],
+                videos: ['https://www.w3schools.com/html/mov_bbb.mp4'],
+                materials: 'Gold Metal, Linen Shade',
+                dimensions: 'H: 180cm, W: 40cm, D: 40cm',
+                price: '2500',
+                relatedProducts: [1, 4, 5],
+            },
+            {
+                id: 4,
+                name: { tr: 'Dış Mekan Işık', en: 'Outdoor Light' },
+                description: { tr: 'Bahçe için paslanmaz çelik ışık', en: 'Stainless steel light for gardens' },
+                metaTitle: { tr: 'Dış Mekan Işığı - Bahçe Aydınlatması | CHANDELIST', en: 'Outdoor Light - Garden Lighting | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST dış mekan ışıkları. Paslanmaz çelik yapı, LED teknolojisi, dayanıklı ve modern tasarım.', en: 'CHANDELIST outdoor lights. Stainless steel construction, LED technology, durable and modern design.' },
+                keywords: { tr: 'dış mekan ışığı, bahçe ışığı, paslanmaz çelik ışık, LED bahçe ışığı', en: 'outdoor light, garden light, stainless steel light, LED outdoor lighting' },
+                category: 'lighting',
+                subcategory: 'outdoor',
+                images: ['https://picsum.photos/600/600?random=4'],
+                videos: [],
+                materials: 'Stainless Steel, LED',
+                dimensions: 'H: 50cm, W: 35cm, D: 35cm',
+                price: '800',
+                relatedProducts: [3, 1, 5],
+            },
+            {
+                id: 5,
+                name: { tr: 'Bronz Avize', en: 'Bronze Chandelier' },
+                description: { tr: 'İtalyan tarzı bronz avize', en: 'Italian style bronze chandelier' },
+                metaTitle: { tr: 'Bronz Avize - İtalyan Tarzı Lüks | CHANDELIST', en: 'Bronze Chandelier - Italian Style Luxury | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST İtalyan tarzı bronz avizesi. Kristal cam detaylar, handmade tasarım, premium kalite.', en: 'CHANDELIST Italian style bronze chandelier. Crystal glass details, handmade design, premium quality.' },
+                keywords: { tr: 'bronz avize, İtalyan avize, lüks avize, kristal bronz avize', en: 'bronze chandelier, Italian chandelier, luxury chandelier, crystal bronze chandelier' },
+                category: 'lighting',
+                subcategory: 'chandelier',
+                images: ['https://picsum.photos/600/600?random=5'],
+                videos: [],
+                materials: 'Bronze, Crystal Glass',
+                dimensions: 'H: 90cm, W: 70cm, D: 70cm',
+                price: '6500',
+                relatedProducts: [1, 2, 6],
+            },
+            {
+                id: 6,
+                name: { tr: 'Cam Aplik', en: 'Glass Sconce' },
+                description: { tr: 'Sanatsal cam aplik', en: 'Artistic glass sconce' },
+                metaTitle: { tr: 'Murano Cam Aplik - Sanatsal Tasarım | CHANDELIST', en: 'Murano Glass Sconce - Artistic Design | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST Murano cam apliği. Sanatsal tasarım, pirinç detaylar, el yapımı cam sanatı.', en: 'CHANDELIST Murano glass sconce. Artistic design, brass details, handmade glass art.' },
+                keywords: { tr: 'cam aplik, Murano cam, sanatsal aplik, tasarım aplik', en: 'glass sconce, Murano glass, artistic sconce, designer sconce' },
+                category: 'lighting',
+                subcategory: 'sconce',
+                images: ['https://picsum.photos/600/600?random=6'],
+                videos: [],
+                materials: 'Murano Glass, Brass',
+                dimensions: 'H: 28cm, W: 22cm, D: 18cm',
+                price: '1500',
+                relatedProducts: [2, 5, 7],
+            },
+            {
+                id: 7,
+                name: { tr: 'Ayna - Dekoratif', en: 'Mirror - Decorative' },
+                description: { tr: 'Çerçeveli dekoratif ayna', en: 'Framed decorative mirror' },
+                metaTitle: { tr: 'Dekoratif Ayna - Pirinç Çerçeve | CHANDELIST', en: 'Decorative Mirror - Brass Frame | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST dekoratif aynası pirinç çerçeve ile. Yüksek kalite cam, zarif tasarım, iç mekan dekorasyonu.', en: 'CHANDELIST decorative mirror with brass frame. High quality glass, elegant design, home décor.' },
+                keywords: { tr: 'dekoratif ayna, pirinç çerçeve ayna, duvar aynası, tasarım ayna', en: 'decorative mirror, brass frame mirror, wall mirror, designer mirror' },
+                category: 'decorative',
+                subcategory: 'decorative',
+                images: ['https://picsum.photos/600/600?random=7'],
+                videos: [],
+                materials: 'Brass Frame, Glass',
+                dimensions: 'H: 120cm, W: 90cm, D: 5cm',
+                price: '2000',
+                relatedProducts: [8, 6, 2],
+            },
+            {
+                id: 8,
+                name: { tr: 'Mumluk - Kristal', en: 'Candlestick - Crystal' },
+                description: { tr: 'Kristal mumluk seti', en: 'Crystal candlestick set' },
+                metaTitle: { tr: 'Kristal Mumluk Seti - Lüks Dekorasyon | CHANDELIST', en: 'Crystal Candlestick Set - Luxury Décor | CHANDELIST' },
+                metaDescription: { tr: 'CHANDELIST kristal mumluk seti. Premium kristal ve pirinç kombinasyonu, şık masa dekorasyonu.', en: 'CHANDELIST crystal candlestick set. Premium crystal and brass combination, elegant table décor.' },
+                keywords: { tr: 'kristal mumluk, mumluk seti, dekoratif mumluk, masa dekorasyonu', en: 'crystal candlestick, candlestick set, decorative candleholder, table décor' },
+                category: 'decorative',
+                subcategory: 'decorative',
+                images: ['https://picsum.photos/600/600?random=8'],
+                videos: [],
+                materials: 'Crystal, Brass',
+                dimensions: 'H: 25cm, W: 8cm, D: 8cm',
+                price: '400',
+                relatedProducts: [7, 6, 1],
+            },
+        ];
+
+        const demoBanners = [
+            {
+                id: 1,
+                type: 'image',
+                url: 'https://picsum.photos/1920/900?random=100',
+                mobileUrl: 'https://picsum.photos/750/1000?random=101',
+                position: 'home',
+            },
+            {
+                id: 2,
+                type: 'video',
+                url: 'https://res.cloudinary.com/dcvkzpvmy/video/upload/v1775145297/sitevideo3_j7e2to.mp4',
+                mobileUrl: '',
+                position: 'home_video'
+            },
+        ];
+
+        // ============= UTILITIES =============
+        let currentLanguage = 'en';
+        let currentPage = '/';
+
+        const t = () => translations[currentLanguage];
+
+        // Auto language detection (IP-based)
+        async function initializeLanguage() {
+            const savedLang = localStorage.getItem('language');
+            if (savedLang) {
+                currentLanguage = savedLang;
+                return;
+            }
+            try {
+                const resp = await fetch('https://api.country.is/');
+                const data = await resp.json();
+                currentLanguage = (data.country === 'TR') ? 'tr' : 'en';
+            } catch(e) {
+                // Fallback: tarayıcı diline göre
+                const browserLang = navigator.language || navigator.userLanguage || '';
+                currentLanguage = browserLang.startsWith('tr') ? 'tr' : 'en';
+            }
+            localStorage.setItem('language', currentLanguage);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('language', lang);
+            try { document.documentElement.setAttribute('lang', lang); } catch (e) {}
+            render();
+        }
+
+        const defaultCollections = [
+            {
+                key: 'modern',
+                title: { tr: 'Modern Avize', en: 'Modern Chandelier' },
+                subtitle: { tr: 'Çağdaş tasarım, saf estetik', en: 'Contemporary design, pure aesthetics' },
+                image: ''
+            },
+            {
+                key: 'traditional',
+                title: { tr: 'Türk · Fas · Rustik', en: 'Turkish · Moroccan · Rustic' },
+                subtitle: { tr: 'Gelenekten ilham alan zamansız şıklık', en: 'Timeless elegance inspired by tradition' },
+                image: ''
+            }
+        ];
+
+        function getCollections() {
+            // Once ortak ayarlardan (iki site + tum ziyaretciler ayni veriyi gorur)
+            try {
+                if (window._koleksiyonlar && Array.isArray(window._koleksiyonlar) && window._koleksiyonlar.length) {
+                    return window._koleksiyonlar;
+                }
+            } catch (e) {}
+            try {
+                const yerel = localStorage.getItem('chandelierCollections');
+                if (yerel) return JSON.parse(yerel);
+            } catch (e) {}
+            return JSON.parse(JSON.stringify(defaultCollections));
+        }
+
+        // Ortak ayarlardan koleksiyonlari yukle (render oncesi bir kez calisir)
+        async function koleksiyonlariYukle() {
+            try {
+                const ayar = await getSiteSettings();
+                const ham = ayar && ayar['chandelier_collections'];
+                if (ham) {
+                    const veri = typeof ham === 'string' ? JSON.parse(ham) : ham;
+                    if (Array.isArray(veri) && veri.length) window._koleksiyonlar = veri;
+                }
+            } catch (e) {}
+        }
+
+        // ===== SAYFA BANNER'LARI (site_settings üzerinden, iki site ortak) =====
+        // Her sayfa için { desktop, mobile } saklanır. Eski tek-string kayıtlarla da uyumlu.
+        function getPageBanner(key, type) {
+            try {
+                const banners = (window._pageBanners) || {};
+                const val = banners[key];
+                if (!val) return '';
+                if (typeof val === 'string') return type === 'card' ? '' : val; // eski format (tek görsel)
+                if (type === 'card') return val.card || '';
+                if (type === 'mobile') return val.mobile || val.desktop || '';
+                return val.desktop || '';
+            } catch(e) { return ''; }
+        }
+        // Admin'de düzenlenecek sayfa listesi
+        const PAGE_BANNER_LIST = [
+            { key: 'lighting',    label: 'Aydınlatma (Ana Kategori)' },
+            { key: 'chandelier',  label: 'Avizeler' },
+            { key: 'sconce',      label: 'Aplikler' },
+            { key: 'table_lamp',  label: 'Masa Lambaları' },
+            { key: 'floor_lamp',  label: 'Lambaderler' },
+            { key: 'outdoor',     label: 'Dış Mekan' },
+            { key: 'lantern',     label: 'Tekli Fener' },
+            { key: 'decorative',  label: 'Dekoratif Eşya' },
+            { key: 'homedecor',   label: 'Ev Dekorasyonu (Ana Kategori)' },
+            { key: 'side_table',  label: 'Yan Sehpalar' },
+            { key: 'tray',        label: 'Tepsiler' },
+            { key: 'mirror',      label: 'Aynalar' },
+            { key: 'candleholder',label: 'Mumluk & Şamdan' },
+            { key: 'vase',        label: 'Vazo & Obje' },
+            { key: 'planter',     label: 'Saksılar' },
+        ];
+
+        function saveCollections(collections) {
+            try { localStorage.setItem('chandelierCollections', JSON.stringify(collections)); } catch (e) {}
+            window._koleksiyonlar = collections;
+            // Ortak ayara da yaz — yoksa gorseller sadece bu tarayicida gorunur
+            try { saveSiteSetting('chandelier_collections', JSON.stringify(collections)); } catch (e) {}
+        }
+
+        function initializeLocalStorage() {
+            if (!localStorage.getItem('products')) {
+                localStorage.setItem('products', JSON.stringify(demoProducts));
+            }
+            if (!localStorage.getItem('chandelierCollections')) {
+                localStorage.setItem('chandelierCollections', JSON.stringify(defaultCollections));
+            }
+            // Always update banners to latest demo data (ensures new video URL is used)
+            const savedBanners = JSON.parse(localStorage.getItem('banners') || '[]');
+            const hasRealVideo = savedBanners.some(b => b.position === 'home_video' && b.url && b.url.includes('cloudinary'));
+            if (!hasRealVideo) {
+                localStorage.setItem('banners', JSON.stringify(demoBanners));
+            }
+        }
+
+        // ============= SUPABASE REST API =============
+        const SB_URL = 'https://sqvwgghdksxmstmucxdm.supabase.co/rest/v1';
+        const SB_AUTH_URL = 'https://sqvwgghdksxmstmucxdm.supabase.co/auth/v1';
+        const SB_KEY = 'sb_publishable_JNL2rwjFyL4F7C5iK2xmfQ_fIaWla5h';
+
+        // ----- Supabase Auth (admin oturumu) -----
+        // Giris yapildiginda donen access_token localStorage'da tutulur.
+        // Yazma islemleri (POST/PATCH/DELETE) bu token ile yapilir; RLS sadece
+        // giris yapmis kullaniciya izin verir. Okuma anon anahtarla herkese acik.
+        function sbGetSession() {
+            try { return JSON.parse(localStorage.getItem('sb_session') || 'null'); }
+            catch { return null; }
+        }
+        function sbSetSession(sess) {
+            if (sess) localStorage.setItem('sb_session', JSON.stringify(sess));
+            else localStorage.removeItem('sb_session');
+        }
+        function sbAccessToken() {
+            const s = sbGetSession();
+            return (s && s.access_token) ? s.access_token : null;
+        }
+        // Token gecerlilik suresi dolmussa refresh_token ile yeniler.
+        async function sbEnsureToken() {
+            const s = sbGetSession();
+            if (!s) return null;
+            // expires_at saniye cinsinden; 60sn pay birak
+            if (s.expires_at && (s.expires_at * 1000) > (Date.now() + 60000)) {
+                return s.access_token;
+            }
+            // Suresi dolmus -> yenile
+            if (s.refresh_token) {
+                try {
+                    const r = await fetch(SB_AUTH_URL + '/token?grant_type=refresh_token', {
+                        method: 'POST',
+                        headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ refresh_token: s.refresh_token })
+                    });
+                    if (r.ok) {
+                        const data = await r.json();
+                        const newSess = { ...data, expires_at: Math.floor(Date.now()/1000) + (data.expires_in || 3600) };
+                        sbSetSession(newSess);
+                        return newSess.access_token;
+                    }
+                } catch (e) { console.error('Token yenileme hatasi', e); }
+            }
+            // Yenilenemedi -> oturumu temizle
+            sbSetSession(null);
+            return null;
+        }
+        async function sbSignIn(email, password) {
+            const r = await fetch(SB_AUTH_URL + '/token?grant_type=password', {
+                method: 'POST',
+                headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await r.json().catch(() => ({}));
+            if (!r.ok) {
+                return { ok: false, error: data.error_description || data.msg || 'Giris basarisiz' };
+            }
+            const sess = { ...data, expires_at: Math.floor(Date.now()/1000) + (data.expires_in || 3600) };
+            sbSetSession(sess);
+            return { ok: true };
+        }
+        function sbSignOut() {
+            const token = sbAccessToken();
+            if (token) {
+                fetch(SB_AUTH_URL + '/logout', {
+                    method: 'POST',
+                    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token }
+                }).catch(() => {});
+            }
+            sbSetSession(null);
+        }
+        function sbIsLoggedIn() { return !!sbAccessToken(); }
+
+        // Header'lar dinamik: yazma icin oturum token'i varsa onu, yoksa anon anahtari kullan
+        function sbHeaders(token) {
+            const bearer = token || SB_KEY;
+            return {
+                'apikey': SB_KEY,
+                'Authorization': 'Bearer ' + bearer,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=representation'
+            };
+        }
+        // Geriye donuk uyumluluk icin sabit (okuma yollarinda kullanilir)
+        const SB_HEADERS = sbHeaders(null);
+
+        // ============= ZİYARETÇİ TAKİBİ =============
+        async function trackVisit() {
+            try {
+                // Admin sayfasını sayma
+                if (location.pathname.startsWith('/admin') || location.hash.includes('admin')) return;
+                // Aynı oturumda aynı sayfayı tekrar sayma
+                const path = location.pathname || '/';
+                const sessionKey = 'visit_' + path;
+                if (sessionStorage.getItem(sessionKey)) return;
+                sessionStorage.setItem(sessionKey, '1');
+
+                // Session ID (kişiyi tanımak için, kalıcı)
+                let sid = localStorage.getItem('visitor_sid');
+                if (!sid) { sid = 'v' + Date.now() + Math.random().toString(36).slice(2,8); localStorage.setItem('visitor_sid', sid); }
+
+                // Cihaz tipi
+                const device = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'mobil' : 'masaüstü';
+                // Yönlendiren kaynak
+                let ref = document.referrer || '';
+                if (!ref) ref = 'direkt';
+                else if (/google\./i.test(ref)) ref = 'google';
+                else if (/instagram\./i.test(ref)) ref = 'instagram';
+                else if (/facebook\./i.test(ref)) ref = 'facebook';
+                else if (/pinterest\./i.test(ref)) ref = 'pinterest';
+                else if (/bing\./i.test(ref)) ref = 'bing';
+                else { try { ref = new URL(ref).hostname; } catch(e){} }
+
+                // Ülke (ücretsiz servis, hata olursa boş geç)
+                let country = '';
+                try {
+                    const geo = await fetch('https://ipapi.co/json/').then(r=>r.json());
+                    country = geo.country_name || geo.country || '';
+                } catch(e) {}
+
+                const record = {
+                    site: location.hostname.includes('osmanli') ? 'osmanli' : 'chandelist',
+                    path: path,
+                    page_title: (document.title || '').slice(0,120),
+                    referrer: ref.slice(0,120),
+                    country: country.slice(0,60),
+                    device: device,
+                    language: (navigator.language || '').slice(0,10),
+                    session_id: sid
+                };
+
+                fetch(SB_URL + '/visits', {
+                    method: 'POST',
+                    headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+                    body: JSON.stringify(record)
+                }).catch(()=>{});
+            } catch(e) {}
+        }
+
+        async function sbFetch(endpoint, options = {}) {
+            try {
+                const method = (options.method || 'GET').toUpperCase();
+                const isWrite = method !== 'GET' && method !== 'HEAD';
+                // Yazma islemlerinde gecerli oturum token'i kullan
+                const token = isWrite ? await sbEnsureToken() : null;
+                const headers = sbHeaders(token);
+                const res = await fetch(SB_URL + endpoint, { headers, ...options });
+                if (!res.ok) {
+                    const errText = await res.text().catch(() => '');
+                    console.error('Supabase error', res.status, endpoint, errText);
+                    return null;
+                }
+                const text = await res.text();
+                return text ? JSON.parse(text) : [];
+            } catch (e) {
+                console.error('DB fetch error:', e);
+                return null;
+            }
+        }
+
+        // Extra fields stored in localStorage when Supabase column doesn't exist yet
+        function getProductExtras() {
+            try { return JSON.parse(localStorage.getItem('productExtras') || '{}'); } catch { return {}; }
+        }
+        function setProductExtras(id, data) {
+            const all = getProductExtras();
+            all[String(id)] = { ...(all[String(id)] || {}), ...data };
+            localStorage.setItem('productExtras', JSON.stringify(all));
+        }
+
+        function parseSubcat(val) {
+            if (Array.isArray(val)) return val;
+            if (!val) return [];
+            try { const p = JSON.parse(val); return Array.isArray(p) ? p : [val]; } catch { return [val]; }
+        }
+
+        // ---- Kart resim navigasyonu ----
+        const _cardIdx = {};
+        function cardNavImg(e, productId, dir, imagesJson) {
+            e.preventDefault();
+            e.stopPropagation();
+            const images = JSON.parse(imagesJson);
+            if (!images || images.length < 2) return;
+            _cardIdx[productId] = ((_cardIdx[productId] || 0) + dir + images.length) % images.length;
+            const card = document.getElementById('pcard-' + productId);
+            if (!card) return;
+            const img = card.querySelector('.card-image img');
+            if (img) img.src = images[_cardIdx[productId]];
+            card.querySelectorAll('.card-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === _cardIdx[productId]);
+            });
+        }
+
+        function renderProductCard(product) {
+            const imgs = product.images && product.images.filter(i => i && i.trim()).length > 0
+                ? product.images.filter(i => i && i.trim())
+                : ['https://picsum.photos/600/600?random=' + product.id];
+            const firstImg = imgs[0];
+            const hasMany = imgs.length > 1;
+            const imgsJson = JSON.stringify(imgs).replace(/"/g, '&quot;');
+            const hasVideo = product.videos && product.videos.filter(v => v && v.trim()).length > 0;
+
+            return `
+                <a href="${productUrl(product)}" class="card" id="pcard-${product.id}">
+                    <div class="card-image">
+                        <img src="${firstImg}" alt="${((product.name && (product.name[currentLanguage] || product.name.en || product.name.tr)) || '').replace(/"/g,'')}" loading="lazy" decoding="async" width="600" height="600">
+                        ${hasVideo ? '<div class="video-badge">▶</div>' : ''}
+                        ${hasMany ? `
+                            <button class="card-nav-btn card-nav-prev" onclick="cardNavImg(event,${product.id},-1,'${imgsJson}')">&#8249;</button>
+                            <button class="card-nav-btn card-nav-next" onclick="cardNavImg(event,${product.id},1,'${imgsJson}')">&#8250;</button>
+                            <div class="card-dots">${imgs.map((_,i) => `<div class="card-dot${i===0?' active':''}"></div>`).join('')}</div>
+                        ` : ''}
+                    </div>
+                    <div class="card-content">
+                        <h3 style="font-size:0.95rem;font-weight:400;line-height:1.4;margin:0 0 6px;color:#2b2b2b;">${(product.name && (product.name[currentLanguage] || product.name.en || product.name.tr)) || ''}</h3>
+                        <p style="font-size:0.72rem;color:#8a7d6b;font-family:monospace;margin:0;letter-spacing:0.5px;">${getProductCode(product)}</p>
+                    </div>
+                </a>
+            `;
+        }
+
+        async function getProducts() {
+            const data = await sbFetch('/products?select=*&order=sort_order.asc.nullslast,created_at.desc');
+            if (!data || data.length === 0) return demoProducts;
+            const extras = getProductExtras();
+            return data.map(p => {
+                const ex = extras[String(p.id)] || {};
+                // Deduplicate images (guard against non-array values from malformed pipeline data)
+                const rawImages = Array.isArray(p.images) ? p.images : [];
+                const images = [...new Set(rawImages)];
+                return {
+                    id: p.id,
+                    _dbId: p.id,
+                    name: { tr: p.name_tr, en: p.name_en },
+                    description: { tr: p.description_tr || '', en: p.description_en || '' },
+                    category: p.category,
+                    subcategory: parseSubcat(p.subcategory),
+                    style: p.style || ex.style || null,
+                    price: p.price || ex.price || '',
+                    sku: p.sku || ex.sku || '',
+                    sort_order: p.sort_order || null,
+                    isFeatured: p.is_featured === true,
+                    materials: p.materials || '',
+                    dimensions: p.dimensions || '',
+                    images,
+                    videos: p.videos || [],
+                    variants: ex.variants || (() => { try { return JSON.parse(p.variants || '[]'); } catch { return []; } })(),
+                    relatedProducts: ex.relatedProducts || (() => { try { return JSON.parse(p.related_products || '[]'); } catch { return []; } })(),
+                    metaTitle: { tr: p.meta_title_tr || '', en: p.meta_title_en || '' },
+                    metaDescription: { tr: p.meta_description_tr || '', en: p.meta_description_en || '' },
+                    keywords: { tr: p.keywords_tr || '', en: p.keywords_en || '' },
+                };
+            });
+        }
+
+        async function getBanners() {
+            const data = await sbFetch('/banners?select=*&order=created_at.desc');
+            if (!data || data.length === 0) return demoBanners;
+            return data.map(b => ({
+                id: b.id,
+                type: b.type,
+                url: b.url,
+                mobileUrl: b.mobile_url || '',
+                position: b.position,
+                linkedProductId: b.linked_product_id || null,
+            }));
+        }
+
+        async function saveProductToDB(product) {
+            const subcatVal = Array.isArray(product.subcategory)
+                ? JSON.stringify(product.subcategory)
+                : JSON.stringify([product.subcategory].filter(Boolean));
+
+            // Core columns — guaranteed to exist in Supabase schema
+            const coreFields = {
+                name_tr: product.name.tr,
+                name_en: product.name.en,
+                description_tr: product.description.tr,
+                description_en: product.description.en,
+                category: product.category,
+                subcategory: subcatVal,
+                materials: product.materials,
+                dimensions: product.dimensions,
+                images: product.images,
+                videos: product.videos || [],
+                meta_title_tr: product.metaTitle?.tr || '',
+                meta_title_en: product.metaTitle?.en || '',
+                meta_description_tr: product.metaDescription?.tr || '',
+                meta_description_en: product.metaDescription?.en || '',
+                keywords_tr: product.keywords?.tr || '',
+                keywords_en: product.keywords?.en || '',
+            };
+
+            // Extended fields — try to include, fallback to localStorage if column missing
+            const extFields = {
+                style: product.style || null,
+                price: product.price || '',
+                sku: product.sku || '',
+                variants: JSON.stringify(product.variants || []),
+                related_products: JSON.stringify(product.relatedProducts || []),
+            };
+
+            const existingId = product._dbId || product.id;
+            let savedId = existingId;
+
+            if (existingId) {
+                // Try with all fields first
+                let res = await sbFetch('/products?id=eq.' + existingId, {
+                    method: 'PATCH', body: JSON.stringify({ ...coreFields, ...extFields })
+                });
+                // If failed (likely missing columns), retry with core only
+                if (!res) {
+                    res = await sbFetch('/products?id=eq.' + existingId, {
+                        method: 'PATCH', body: JSON.stringify(coreFields)
+                    });
+                    if (!res) {
+                        return false;
+                    }
+                    // Save extended fields to localStorage
+                    setProductExtras(existingId, { ...extFields,
+                        style: product.style || null,
+                        price: product.price || '',
+                        variants: product.variants || [],
+                        relatedProducts: product.relatedProducts || [],
+                    });
+                } else {
+                    // Success with all fields — clear localStorage extras
+                    setProductExtras(existingId, {
+                        style: product.style || null,
+                        price: product.price || '',
+                        variants: product.variants || [],
+                        relatedProducts: product.relatedProducts || [],
+                    });
+                }
+            } else {
+                // New product — try with all fields
+                let res = await sbFetch('/products', {
+                    method: 'POST', body: JSON.stringify({ ...coreFields, ...extFields })
+                });
+                if (!res) {
+                    res = await sbFetch('/products', {
+                        method: 'POST', body: JSON.stringify(coreFields)
+                    });
+                }
+                if (res && res[0]) {
+                    savedId = res[0].id;
+                    setProductExtras(savedId, {
+                        style: product.style || null,
+                        price: product.price || '',
+                        variants: product.variants || [],
+                        relatedProducts: product.relatedProducts || [],
+                    });
+                    return true;
+                }
+                // Both attempts failed
+                return false;
+            }
+            return true;
+        }
+
+        async function deleteProductFromDB(id) {
+            await sbFetch('/products?id=eq.' + id, { method: 'DELETE' });
+        }
+
+        // ===== Site Settings (hero metni vb.) =====
+        let _siteSettingsCache = null;
+        async function getSiteSettings() {
+            if (_siteSettingsCache) return _siteSettingsCache;
+            try {
+                const data = await sbFetch('/site_settings?select=key,value');
+                const map = {};
+                (data || []).forEach(row => { map[row.key] = row.value; });
+                _siteSettingsCache = map;
+                return map;
+            } catch (e) { return {}; }
+        }
+        async function saveSiteSetting(key, value) {
+            _siteSettingsCache = null;
+            const existing = await sbFetch('/site_settings?key=eq.' + encodeURIComponent(key) + '&select=key');
+            if (existing && existing.length) {
+                await sbFetch('/site_settings?key=eq.' + encodeURIComponent(key), { method: 'PATCH', body: JSON.stringify({ value, updated_at: new Date().toISOString() }) });
+            } else {
+                await sbFetch('/site_settings', { method: 'POST', body: JSON.stringify({ key, value, updated_at: new Date().toISOString() }) });
+            }
+        }
+
+        async function saveHeroText() {
+            const v = {
+                title_tr: document.getElementById('heroTitleTr').value.trim(),
+                subtitle_tr: document.getElementById('heroSubtitleTr').value.trim(),
+                title_en: document.getElementById('heroTitleEn').value.trim(),
+                subtitle_en: document.getElementById('heroSubtitleEn').value.trim(),
+            };
+            const btn = event?.target;
+            if (btn) { btn.disabled = true; btn.textContent = 'Kaydediliyor...'; }
+            try {
+                await saveSiteSetting('hero_text', v);
+                window._heroText = v;
+                window._adminHeroText = v;
+                const msg = document.getElementById('heroSaveMsg');
+                if (msg) { msg.style.display = 'inline'; msg.textContent = '✓ Kaydedildi'; }
+            } catch (e) {
+                alert('Kaydedilemedi: ' + e.message);
+            } finally {
+                if (btn) { btn.disabled = false; btn.textContent = '💾 Başlığı Kaydet'; }
+            }
+        }
+
+        async function saveBannerToDB(banner) {
+            const dbBanner = {
+                type: banner.type,
+                url: banner.url,
+                mobile_url: banner.mobileUrl || '',
+                position: banner.position,
+                linked_product_id: banner.linkedProductId || null,
+            };
+            if (banner._dbId) {
+                await sbFetch('/banners?id=eq.' + banner._dbId, { method: 'PATCH', body: JSON.stringify(dbBanner) });
+            } else {
+                await sbFetch('/banners', { method: 'POST', body: JSON.stringify(dbBanner) });
+            }
+        }
+
+        async function deleteBannerFromDB(id) {
+            await sbFetch('/banners?id=eq.' + id, { method: 'DELETE' });
+        }
+
+        function html(template) {
+            const div = document.createElement('div');
+            div.innerHTML = template;
+            return div;
+        }
+
+        function slugify(str) {
+            return (str || '')
+                .toLowerCase()
+                .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+                .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+                .replace(/[^a-z0-9\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/-+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        function productUrl(product) {
+            const name = (product.name && (product.name.en || product.name.tr)) || product.name_en || product.name_tr || '';
+            const s = slugify(name);
+            return '/products/' + product.id + (s ? '-' + s : '');
+        }
+
+        function getProductCode(product) {
+            if (product.sku && product.sku.trim()) return product.sku.trim();
+            // Auto-generate from subcategory + ID
+            const sub = (Array.isArray(product.subcategory) ? product.subcategory[0] : product.subcategory) || '';
+            const subStr = typeof sub === 'string' ? sub.replace(/[\[\]"]/g,'').split(',')[0].trim() : '';
+            const cat = product.category || 'lighting';
+            const prefixMap = {
+                'chandelier':  'CHD',
+                'sconce':      'APL',
+                'table_lamp':  'MSL',
+                'floor_lamp':  'LBD',
+                'outdoor':     'DIS',
+                'decorative':  'DKR',
+                'lantern':     'LNT',
+            };
+            const prefix = prefixMap[subStr] || prefixMap[cat] || 'PRD';
+            return prefix + '-' + String(product.id).padStart(3, '0');
+        }
+
+        function navigateTo(path) {
+            history.pushState(null, '', path);
+            render();
+        }
+
+        function togglePdAcc(btn) {
+            const item = btn.closest('.pd-acc-item');
+            if (item) item.classList.toggle('open');
+        }
+
+        // ===== Shop the Look carousel (kaydirma + surukleme) =====
+        let _slScrollPos = 0;
+        function shopLookScroll(dir) {
+            const vp = document.getElementById('shopLookViewport');
+            const track = document.getElementById('shopLookTrack');
+            if (!vp || !track) return;
+            const cell = track.querySelector('.shop-look-cell');
+            if (!cell) return;
+            const step = cell.offsetWidth; // bir kart genisligi
+            const maxScroll = track.scrollWidth - vp.clientWidth;
+            _slScrollPos += dir * step;
+            if (_slScrollPos < 0) _slScrollPos = 0;
+            if (_slScrollPos > maxScroll) _slScrollPos = maxScroll;
+            track.style.transform = 'translateX(' + (-_slScrollPos) + 'px)';
+            updateShopLookArrows(maxScroll);
+        }
+        function updateShopLookArrows(maxScroll) {
+            const prev = document.querySelector('.shop-look-arrow.prev');
+            const next = document.querySelector('.shop-look-arrow.next');
+            if (prev) prev.disabled = _slScrollPos <= 0;
+            if (next) next.disabled = _slScrollPos >= maxScroll - 1;
+        }
+        function initShopLookCarousel() {
+            const vp = document.getElementById('shopLookViewport');
+            const track = document.getElementById('shopLookTrack');
+            if (!vp || !track) return;
+            _slScrollPos = 0;
+            track.style.transform = 'translateX(0px)';
+            const maxScroll = () => track.scrollWidth - vp.clientWidth;
+            updateShopLookArrows(maxScroll());
+
+            // Surukleme + momentum (atilma) - daha seri his
+            let isDown = false, startX = 0, startPos = 0, moved = false;
+            let lastX = 0, lastT = 0, velocity = 0, momentumRAF = null;
+
+            const clamp = (p) => { const ms = maxScroll(); return p < 0 ? 0 : (p > ms ? ms : p); };
+            const apply = (p) => { _slScrollPos = p; track.style.transform = 'translateX(' + (-p) + 'px)'; };
+
+            const down = (x) => {
+                if (momentumRAF) { cancelAnimationFrame(momentumRAF); momentumRAF = null; }
+                isDown = true; moved = false; startX = x; startPos = _slScrollPos;
+                lastX = x; lastT = Date.now(); velocity = 0;
+                track.style.transition = 'none'; vp.classList.add('dragging');
+            };
+            const move = (x) => {
+                if (!isDown) return;
+                const dx = x - startX;
+                if (Math.abs(dx) > 5) moved = true;
+                // hiz hesapla (px/ms)
+                const now = Date.now();
+                const dt = now - lastT;
+                if (dt > 0) { velocity = (x - lastX) / dt; lastX = x; lastT = now; }
+                apply(clamp(startPos - dx));
+            };
+            const momentum = () => {
+                // hizi (px/ms) carpanla buyut, daha seri kaysin
+                let v = -velocity * 18;
+                const step = () => {
+                    if (Math.abs(v) < 0.5) { momentumRAF = null; track.style.transition = ''; updateShopLookArrows(maxScroll()); return; }
+                    const np = clamp(_slScrollPos + v);
+                    apply(np);
+                    if (np === 0 || np === maxScroll()) { v = 0; }
+                    v *= 0.92; // surtunme
+                    momentumRAF = requestAnimationFrame(step);
+                };
+                momentumRAF = requestAnimationFrame(step);
+            };
+            const up = () => {
+                if (!isDown) return;
+                isDown = false;
+                vp.classList.remove('dragging');
+                if (Math.abs(velocity) > 0.15) { momentum(); }
+                else { track.style.transition = ''; updateShopLookArrows(maxScroll()); }
+            };
+            vp.addEventListener('mousedown', e => { e.preventDefault(); down(e.pageX); });
+            window.addEventListener('mousemove', e => move(e.pageX));
+            window.addEventListener('mouseup', up);
+            vp.addEventListener('touchstart', e => down(e.touches[0].pageX), { passive: true });
+            vp.addEventListener('touchmove', e => move(e.touches[0].pageX), { passive: true });
+            vp.addEventListener('touchend', up);
+            vp.querySelectorAll('.shop-look-cell').forEach(cell => {
+                cell.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); } }, true);
+            });
+        }
+
+        // ===== Shop the Look panel =====
+        let _shopLookItems = [];
+        let _shopLookIndex = 0;
+
+        async function openShopLook(index) {
+            const banners = await getBanners();
+            _shopLookItems = banners.filter(b => b.position === 'shop_look' && b.url);
+            if (!_shopLookItems.length) return;
+            _shopLookIndex = index || 0;
+            await renderShopLookModal();
+        }
+
+        async function renderShopLookModal() {
+            const item = _shopLookItems[_shopLookIndex];
+            if (!item) return;
+            const products = await getProducts();
+            const product = item.linkedProductId
+                ? products.find(p => String(p.id) === String(item.linkedProductId))
+                : null;
+
+            let productHTML;
+            if (product) {
+                const pName = product.name?.[currentLanguage] || product.name?.en || product.name?.tr || '';
+                const pImg = (product.images && product.images[0]) || '';
+                const slug = slugify(product.name?.en || product.name?.tr || '');
+                productHTML = `
+                    <div class="sl-product-card" onclick="closeShopLook(); navigateTo('/products/${product.id}-${slug}')">
+                        ${pImg ? `<img src="${pImg}" alt="${pName}">` : ''}
+                        <h3>${pName}</h3>
+                        <span class="sl-view-btn">${currentLanguage === 'tr' ? 'Ürünü Gör' : 'View Product'}</span>
+                    </div>`;
+            } else {
+                productHTML = `<p class="sl-no-product">${currentLanguage === 'tr' ? 'Bu görsele ürün bağlanmamış' : 'No product linked'}</p>`;
+            }
+
+            const multiple = _shopLookItems.length > 1;
+            let modal = document.getElementById('slModalOverlay');
+            const inner = `
+                <div class="sl-modal">
+                    <button class="sl-modal-close" onclick="closeShopLook()">&times;</button>
+                    <div class="sl-image-side">
+                        ${multiple ? `<button class="sl-nav prev" onclick="shopLookNav(-1)">‹</button>` : ''}
+                        <img src="${item.url}" alt="Shop the look">
+                        ${multiple ? `<button class="sl-nav next" onclick="shopLookNav(1)">›</button>` : ''}
+                    </div>
+                    <div class="sl-product-side">${productHTML}</div>
+                </div>`;
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'slModalOverlay';
+                modal.className = 'sl-modal-overlay';
+                modal.onclick = (e) => { if (e.target === modal) closeShopLook(); };
+                document.body.appendChild(modal);
+            }
+            modal.innerHTML = inner;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function shopLookNav(dir) {
+            _shopLookIndex = (_shopLookIndex + dir + _shopLookItems.length) % _shopLookItems.length;
+            renderShopLookModal();
+        }
+
+        function closeShopLook() {
+            const modal = document.getElementById('slModalOverlay');
+            if (modal) modal.remove();
+            document.body.style.overflow = '';
+        }
+
+        // Update SEO metadata dynamically
+        // Chandelist ve Osmanli ayni urun veritabanini paylasiyor.
+        // Urun meta metinlerinde diger markanin adi gecebiliyor; bu sitede duzelt.
+        function markaDuzelt(metin) {
+            if (!metin || typeof metin !== 'string') return metin;
+            return metin.replace(/Osmanl[ıi] Ayd[ıi]nlatma/gi, 'CHANDELIST');
+        }
+
+        const SITE_MARKA = 'Chandelist';
+        function markaEkle(baslik) {
+            const b = (baslik || '').trim();
+            if (!b) return SITE_MARKA;
+            // zaten iceriyorsa tekrar ekleme
+            if (b.toLowerCase().includes(SITE_MARKA.toLowerCase())) return b;
+            return b + ' | ' + SITE_MARKA;
+        }
+        function updateSEO(title, description, imageUrl = '', productSchema = null, keywords = '', canonicalPath = '') {
+            title = markaEkle(title);
+            document.title = title;
+
+            const metaDescription = document.querySelector('meta[name="description"]');
+            if (metaDescription) metaDescription.setAttribute('content', description);
+
+            // Update keywords meta tag
+            let metaKeywords = document.querySelector('meta[name="keywords"]');
+            if (!metaKeywords && keywords) {
+                metaKeywords = document.createElement('meta');
+                metaKeywords.setAttribute('name', 'keywords');
+                document.head.appendChild(metaKeywords);
+            }
+            if (metaKeywords && keywords) {
+                metaKeywords.setAttribute('content', keywords);
+            }
+
+            // Update canonical URL
+            const canonicalUrl = 'https://chandelist.com' + (canonicalPath || (typeof window !== 'undefined' && window.location ? window.location.pathname : '') || '/');
+            let canonicalTag = document.querySelector('link[rel="canonical"]');
+            if (!canonicalTag) {
+                canonicalTag = document.createElement('link');
+                canonicalTag.setAttribute('rel', 'canonical');
+                document.head.appendChild(canonicalTag);
+            }
+            canonicalTag.setAttribute('href', canonicalUrl);
+
+            document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+            document.querySelector('meta[property="og:url"]').setAttribute('content', canonicalUrl);
+
+            // Update Twitter meta tags
+            let twitterTitle = document.querySelector('meta[name="twitter:title"]');
+            if (!twitterTitle) {
+                twitterTitle = document.createElement('meta');
+                twitterTitle.setAttribute('name', 'twitter:title');
+                document.head.appendChild(twitterTitle);
+            }
+            twitterTitle.setAttribute('content', title);
+
+            let twitterDescription = document.querySelector('meta[name="twitter:description"]');
+            if (!twitterDescription) {
+                twitterDescription = document.createElement('meta');
+                twitterDescription.setAttribute('name', 'twitter:description');
+                document.head.appendChild(twitterDescription);
+            }
+            twitterDescription.setAttribute('content', description);
+
+            const DEFAULT_OG_IMAGE = 'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg';
+            // picsum bir placeholder servisi; sosyal paylasimda asla kullanilmasin
+            const _ogImg = (imageUrl && !/picsum\.photos/.test(imageUrl)) ? imageUrl : DEFAULT_OG_IMAGE;
+            document.querySelector('meta[property="og:image"]').setAttribute('content', _ogImg);
+            document.querySelector('meta[name="twitter:image"]').setAttribute('content', _ogImg);
+
+            if (productSchema) {
+                const schemaScript = document.getElementById('schema-org');
+                schemaScript.textContent = JSON.stringify(productSchema);
+            }
+        }
+
+        // ============= HEADER =============
+        function renderHeader() {
+            return `
+                <header id="header">
+                    <div class="header-content">
+                        <div class="logo">
+                            <span class="logo-title">${t().logo}</span>
+                            <p>${t().logoSub}</p>
+                        </div>
+                        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+                        <nav id="mainNav">
+                            <a href="/" data-page="home">${t().navHome}</a>
+                            <div class="nav-dropdown">
+                                <a href="/lighting" data-page="lighting">${t().lighting}</a>
+                                <div class="dropdown-menu dropdown-two-col">
+                                    <div class="dropdown-col">
+                                        <div class="dropdown-col-title">${t().colModern}</div>
+                                        <a href="/lighting/chandelier/modern">${t().modernChandelier}</a>
+                                        <a href="/lighting/sconce">${t().sconce}</a>
+                                        <a href="/lighting/table_lamp">${t().tableLamp}</a>
+                                        <a href="/lighting/floor_lamp">${t().floorLamp}</a>
+                                        <a href="/lighting/outdoor">${t().outdoor}</a>
+                                    </div>
+                                    <div class="dropdown-col">
+                                        <div class="dropdown-col-title">${t().colTraditional}</div>
+                                        <a href="/lighting/chandelier/traditional">${t().traditionalChandelier}</a>
+                                        <a href="/lighting/sconce">${t().sconce}</a>
+                                        <a href="/lighting/table_lamp">${t().tableLamp}</a>
+                                        <a href="/lighting/floor_lamp">${t().floorLamp}</a>
+                                        <a href="/lighting/outdoor">${t().outdoor}</a>
+                                        <a href="/lighting/lantern" class="lantern-link">${t().lantern}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="nav-dropdown">
+                                <a href="/homedecor" data-page="homedecor">${t().homedecor}</a>
+                                <div class="dropdown-menu">
+                                    <a href="/homedecor/side_table">${t().sideTable}</a>
+                                    <a href="/homedecor/tray">${t().tray}</a>
+                                    <a href="/homedecor/mirror">${t().mirror}</a>
+                                    <a href="/homedecor/candleholder">${t().candleholder}</a>
+                                    <a href="/homedecor/vase">${t().vase}</a>
+                                    <a href="/homedecor/planter">${t().planter}</a>
+                                </div>
+                            </div>
+                            <a href="/custom" data-page="custom">${t().custom}</a>
+                            <a href="/workshop" data-page="workshop">${t().workshop}</a>
+                            <a href="/about" data-page="about">${t().about}</a>
+                            <a href="/contact" data-page="contact">${t().contact}</a>
+                        </nav>
+                        <div class="header-right">
+                            <div class="search-bar-wrap" id="searchBarWrap" style="display:none; align-items:center; gap:6px;">
+                                <input type="text" id="headerSearchInput" placeholder="${currentLanguage === 'tr' ? 'Ürün ara...' : 'Search products...'}" style="border:1px solid #ddd; padding:6px 12px; font-size:0.85rem; outline:none; background:#fafaf9; width:180px;">
+                                <button onclick="document.getElementById('searchBarWrap').style.display='none';" style="background:none;border:none;cursor:pointer;font-size:1rem;color:#999;">✕</button>
+                            </div>
+                            <button id="searchToggleBtn" aria-label="Search" onclick="toggleSearchBar()" style="background:none;border:none;cursor:pointer;padding:4px 8px;display:flex;align-items:center;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            </button>
+                            <div class="language-toggle">
+                                <button id="lang-tr" class="lang-btn${currentLanguage === 'tr' ? ' active' : ''}" aria-label="Turkish">TR</button>
+                                <button id="lang-en" class="lang-btn${currentLanguage === 'en' ? ' active' : ''}" aria-label="English">EN</button>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            `;
+        }
+
+        // ============= FOOTER =============
+        function renderFooter() {
+            const year = new Date().getFullYear();
+            return `
+                <footer>
+                    <div class="container">
+                        <div class="footer-content">
+                            <div class="footer-col">
+                                <h4>${t().company}</h4>
+                                <a href="/about">${t().about_link}</a>
+                                <a href="/contact">${t().contact_link}</a>
+                                <a href="/privacy">${t().privacy}</a>
+                            </div>
+                            <div class="footer-col">
+                                <h4>${t().follow}</h4>
+                                <a href="https://www.instagram.com/thechandelist/" target="_blank" rel="noopener noreferrer">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; margin-right: 8px; vertical-align: middle;">
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <circle cx="17.5" cy="6.5" r="1.5"></circle>
+                                    </svg>Instagram
+                                </a>
+                            </div>
+                            <div class="footer-col">
+                                <h4>${t().contact}</h4>
+                                <p>Çobançeşme Mah. Mithatpaşa Cad.<br>Söğütlü Sok. No:2/1<br>Bahçelievler, İstanbul</p>
+                                <a href="mailto:info@chandelist.com">info@chandelist.com</a>
+                                <a href="tel:+905326681094">+90 532 668 10 94</a>
+                            </div>
+                        </div>
+                        <div class="footer-bottom">
+                            <p>&copy; ${year} CHANDELIST. ${t().rights}</p>
+                        </div>
+                    </div>
+                </footer>
+            `;
+        }
+
+        // ============= HERO SLIDESHOW =============
+        let heroSlideTimer = null;
+
+        function heroTitle() {
+            const h = window._heroText;
+            if (h) return (currentLanguage === 'tr' ? h.title_tr : h.title_en) || h.title_tr || h.title_en || '';
+            return t()?.craftedWithPrecision || 'Crafted with Precision';
+        }
+        function heroSubtitle() {
+            const h = window._heroText;
+            if (h) return (currentLanguage === 'tr' ? h.subtitle_tr : h.subtitle_en) || h.subtitle_tr || h.subtitle_en || '';
+            return t()?.luxuryChandeliers || 'Luxury chandeliers, light designs that transform every space';
+        }
+
+        function renderHero(banners) {
+            // Accept single banner or array
+            const slides = Array.isArray(banners) ? banners : (banners ? [banners] : []);
+
+            if (slides.length === 0) {
+                return `
+                    <section class="hero">
+                        <div class="hero-content fade-in">
+                            <h1>${heroTitle()}</h1>
+                            <p>${heroSubtitle()}</p>
+                        </div>
+                    </section>`;
+            }
+
+            const slidesHTML = slides.map((banner, i) => {
+                let inner = '';
+                if (banner.type === 'video') {
+                    inner = `<video class="hero-desktop-img" autoplay muted loop playsinline preload="auto"><source src="${banner.url}" type="video/mp4"></video>`;
+                } else {
+                    inner = `<img class="hero-desktop-img" src="${banner.url}" alt="${banner.title || 'CHANDELIST'}" loading="${i === 0 ? 'eager' : 'lazy'}" fetchpriority="${i === 0 ? 'high' : 'low'}" width="1920" height="800">`;
+                    if (banner.mobileUrl) {
+                        inner += `<img class="hero-mobile-img" src="${banner.mobileUrl}" alt="${banner.title || 'CHANDELIST'}" loading="${i === 0 ? 'eager' : 'lazy'}" width="750" height="1000">`;
+                    }
+                }
+                return `<div class="hero-slide${i === 0 ? ' active' : ''}" data-index="${i}">${inner}</div>`;
+            }).join('');
+
+            const dotsHTML = slides.length > 1
+                ? `<div class="hero-dots">${slides.map((_, i) => `<button class="hero-dot${i === 0 ? ' active' : ''}" data-dot="${i}" aria-label="Slide ${i+1}"></button>`).join('')}</div>`
+                : '';
+
+            return `
+                <section class="hero" id="heroSection">
+                    ${slidesHTML}
+                    <div class="hero-content fade-in" style="z-index:10;">
+                        <h1>${heroTitle()}</h1>
+                        <p>${heroSubtitle()}</p>
+                    </div>
+                    ${dotsHTML}
+                </section>`;
+        }
+
+        function initHeroSlideshow() {
+            const section = document.getElementById('heroSection');
+            if (!section) return;
+            const slides = section.querySelectorAll('.hero-slide');
+            const dots = section.querySelectorAll('.hero-dot');
+            if (slides.length <= 1) return;
+
+            let current = 0;
+            if (heroSlideTimer) clearInterval(heroSlideTimer);
+
+            function goTo(n) {
+                slides[current].classList.remove('active');
+                if (dots[current]) dots[current].classList.remove('active');
+                current = (n + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                if (dots[current]) dots[current].classList.add('active');
+            }
+
+            heroSlideTimer = setInterval(() => goTo(current + 1), 5000);
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    clearInterval(heroSlideTimer);
+                    goTo(parseInt(dot.dataset.dot));
+                    heroSlideTimer = setInterval(() => goTo(current + 1), 5000);
+                });
+            });
+        }
+
+        // ============= HOME PAGE =============
+        async function renderHomePage() {
+            const orgSchema = {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "CHANDELIST",
+                "url": "https://chandelist.com",
+                "logo": "https://chandelist.com/logo.png",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "customer service",
+                    "availableLanguage": ["Turkish", "English"]
+                },
+                "sameAs": []
+            };
+            updateSEO(
+                'CHANDELIST — Luxury Chandeliers & Decorative Lighting',
+                'Handcrafted luxury chandeliers and decorative lighting that unite contemporary design with traditional craftsmanship.',
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
+                orgSchema,
+                'lüks avize, dekoratif aydınlatma, kristal avize, modern avize, chandelist',
+                '/'
+            );
+
+            const products = await getProducts();
+            const banners = await getBanners();
+            // Collect all home banners for slideshow (position === 'home' or fallback to all non-video)
+            const homeBanners = banners.filter(b => b.position === 'home');
+            const homeSlides = homeBanners.length > 0 ? homeBanners : (banners.filter(b => b.type !== 'video').slice(0, 5));
+            const homeVideoBanner = banners.find(b => b.position === 'home_video');
+            const shopLookItems = banners.filter(b => b.position === 'shop_look' && b.url);
+            const _settings = await getSiteSettings();
+            window._heroText = _settings.hero_text || null;
+            window._pageBanners = _settings.page_banners || {};
+            // NOT: _pageBanners ayrıca render() başında da yüklenir (her sayfa için)
+
+            const featuredList = products.filter(p => p.isFeatured);
+            const homeProducts = featuredList.length > 0 ? featuredList.slice(0, 8) : products.slice(0, 8);
+            let productsHTML = homeProducts.map(product => renderProductCard(product)).join('');
+
+            return `
+                ${renderHero(homeSlides)}
+                ${renderKoleksiyonBolumu(products)}
+                ${homeVideoBanner && homeVideoBanner.url ? `
+                <section class="homepage-video-section">
+                    <video autoplay muted loop playsinline webkit-playsinline>
+                        <source src="${homeVideoBanner.url}" type="video/mp4">
+                    </video>
+                    <div class="video-overlay-text">
+                        <h2>CHANDELIST</h2>
+                        <p>chandelier factory</p>
+                    </div>
+                </section>
+                ` : `
+                <div class="homepage-video-placeholder">
+                    Admin panelinden video ekleyebilirsiniz
+                </div>
+                `}
+                ${shopLookItems.length > 0 ? `
+                <section class="shop-look-section scroll-fade">
+                    <button class="shop-look-arrow prev" onclick="shopLookScroll(-1)" aria-label="Önceki">‹</button>
+                    <div class="shop-look-viewport" id="shopLookViewport">
+                        <div class="shop-look-track" id="shopLookTrack">
+                            ${shopLookItems.map((item, i) => `
+                                <div class="shop-look-cell" onclick="openShopLook(${i})">
+                                    <img src="${item.url}" alt="Shop the look" loading="lazy" draggable="false">
+                                    <div class="shop-look-cell-overlay"><span>＋</span></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <button class="shop-look-arrow next" onclick="shopLookScroll(1)" aria-label="Sonraki">›</button>
+                </section>
+                ` : ''}
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>${t().featuredProducts}</h2>
+                        </div>
+                        <div class="grid grid-4">
+                            ${productsHTML}
+                        </div>
+                    </div>
+                </section>
+                <section class="featured scroll-fade">
+                    <div class="container">
+                        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                            <h2>${t().ourStory}</h2>
+                            <p>${t().about_text}</p>
+                            <a href="/about" class="btn btn-primary" style="margin-top: 30px;">${t().about}</a>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= LIGHTING PAGE =============
+        async function renderLightingPage() {
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'Avize, Sarkıt, Aplik ve Lambader — CHANDELIST'
+                    : 'Chandeliers, Pendants, Sconces & Floor Lamps — CHANDELIST',
+                currentLanguage === 'tr'
+                    ? 'Otel, restoran ve projeler için el yapımı pirinç aydınlatma: avize, sarkıt, aplik, masa lambası, lambader ve dış mekân aydınlatma. Ölçüye özel üretim.'
+                    : 'Handmade brass lighting for hotels, restaurants and projects: chandeliers, pendants, sconces, table and floor lamps, outdoor lighting. Made to measure.',
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
+                null,
+                currentLanguage === 'tr'
+                    ? 'avize, sarkıt, aplik, lambader, otel aydınlatma, proje aydınlatma, pirinç aydınlatma'
+                    : 'brass lighting, chandelier, pendant light, wall sconce, hotel lighting supplier, contract lighting',
+                '/lighting'
+            );
+
+            const subcategories = [
+                { key: 'chandelier', name: t().chandelier, image: 'https://picsum.photos/600/600?random=10' },
+                { key: 'sconce', name: t().sconce, image: 'https://picsum.photos/600/600?random=11' },
+                { key: 'table_lamp', name: t().tableLamp, image: 'https://picsum.photos/600/600?random=14' },
+                { key: 'floor_lamp', name: t().floorLamp, image: 'https://picsum.photos/600/600?random=12' },
+                { key: 'outdoor', name: t().outdoor, image: 'https://picsum.photos/600/600?random=13' },
+                { key: 'lantern', name: t().lantern, image: 'https://picsum.photos/600/600?random=15' },
+            ].map(s => ({ ...s, image: getPageBanner(s.key, 'card') || s.image }));
+
+            let html = `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner('lighting','mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner('lighting','desktop') || 'https://picsum.photos/1400/600?random=200'}" alt="${t().lighting}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner('lighting','mobile')}" alt="${t().lighting}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner('lighting','desktop') || 'https://picsum.photos/1400/600?random=200'}" alt="${t().lighting}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${t().lighting}</h1>
+                    </div>
+                </section>
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="grid grid-3">
+            `;
+            subcategories.forEach(sub => {
+                html += `
+                    <a href="/lighting/${sub.key}" class="card">
+                        <div class="card-image">
+                            <img src="${sub.image}" alt="${sub.name}" loading="lazy">
+                        </div>
+                        <div class="card-content">
+                            <h3>${sub.name}</h3>
+                        </div>
+                    </a>`;
+            });
+            html += `
+                        </div>
+                    </div>
+                </section>
+            `;
+            return html;
+        }
+
+
+        // ============= ANA SAYFA KOLEKSIYON BOLUMU =============
+        function renderKoleksiyonBolumu(products) {
+            const cols = getCollections();
+            if (!cols || !cols.length) return '';
+            const kartlar = cols.map(col => {
+                let gorsel = col.image;
+                if (!gorsel) {
+                    const p = (products || []).find(x =>
+                        parseSubcat(x.subcategory).includes('chandelier') &&
+                        (x.style === col.key || x.style === 'both' ||
+                         (!x.style && col.key === 'modern')) &&
+                        x.images && x.images.filter(i => i && i.trim()).length);
+                    if (p) gorsel = p.images.filter(i => i && i.trim())[0];
+                }
+                return `
+                <a href="/lighting/chandelier/${col.key}" class="collection-banner-link">
+                    <div class="collection-banner">
+                        ${gorsel
+                            ? `<img src="${gorsel}" alt="${col.title[currentLanguage]}" loading="lazy">`
+                            : `<div class="collection-banner-placeholder" style="background:linear-gradient(135deg,#3a332b 0%,#241f1a 100%);"></div>`}
+                        <div class="collection-banner-content">
+                            <h2>${col.title[currentLanguage]}</h2>
+                            <p>${col.subtitle[currentLanguage]}</p>
+                            <span class="btn">${t().explore}</span>
+                        </div>
+                    </div>
+                </a>`;
+            }).join('');
+            return `
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>${currentLanguage === 'tr' ? 'Koleksiyonlar' : 'Collections'}</h2>
+                        </div>
+                        <div class="collections-grid">${kartlar}</div>
+                    </div>
+                </section>`;
+        }
+
+        // ============= CHANDELIER COLLECTIONS PAGE =============
+        async function renderChandelierPage() {
+            const collections = getCollections();
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'Avize Modelleri — El Yapımı Pirinç Avize | CHANDELIST'
+                    : 'Handmade Brass Chandeliers — Ottoman & Moroccan Styles',
+                currentLanguage === 'tr'
+                    ? '1984\'ten beri İstanbul atölyemizde el işçiliğiyle ürettiğimiz pirinç avizeler. Otel, restoran ve projeler için ölçüye özel üretim.'
+                    : 'Hand-crafted brass chandeliers made in our Istanbul workshop since 1984. Ottoman, Moroccan and modern collections, made to your dimensions. One piece or a full project.',
+                '',
+                null,
+                currentLanguage === 'tr'
+                    ? 'avize modelleri, pirinç avize, el yapımı avize, otel avizesi, özel üretim avize'
+                    : 'brass chandelier, handmade chandelier, ottoman chandelier, moroccan chandelier, custom chandelier manufacturer, hotel chandelier',
+                '/lighting/chandelier'
+            );
+
+            const collectionsHTML = collections.map(col => `
+                <a href="/lighting/chandelier/${col.key}" class="collection-banner-link">
+                    <div class="collection-banner">
+                        ${col.image
+                            ? `<img src="${col.image}" alt="${col.title[currentLanguage]}" loading="lazy">`
+                            : `<div class="collection-banner-placeholder" style="background:linear-gradient(135deg,#3a332b 0%,#241f1a 100%);"></div>`
+                        }
+                        <div class="collection-banner-content">
+                            <h2>${col.title[currentLanguage]}</h2>
+                            <p>${col.subtitle[currentLanguage]}</p>
+                            <span class="btn">${t().explore}</span>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+
+            return `
+                <div style="margin-top: 150px;">
+                    <div class="breadcrumb" style="padding: 20px 40px;">
+                        <a href="/lighting">${t().lighting}</a> / <span>${t().chandelier}</span>
+                    </div>
+                    <div class="collections-grid">
+                        ${collectionsHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============= CHANDELIER STYLE PAGE =============
+        async function renderChandelierStylePage(style) {
+            const collections = getCollections();
+            const col = collections.find(c => c.key === style) || collections[0];
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? `${col.title[currentLanguage]} Avize Modelleri — CHANDELIST`
+                    : `${col.title[currentLanguage]} Chandeliers — CHANDELIST`,
+                currentLanguage === 'tr'
+                    ? `${col.subtitle[currentLanguage]} El yapımı pirinç avize koleksiyonu, İstanbul atölyemizde ölçüye özel üretilir.`
+                    : `${col.subtitle[currentLanguage]} Handmade brass chandelier collection, made to measure in our Istanbul workshop.`,
+                col.image || '',
+                null,
+                '',
+                '/lighting/chandelier/' + col.key
+            );
+
+            const allProducts = await getProducts();
+            const hasSubcat = (p, key) => parseSubcat(p.subcategory).includes(key);
+            const products = allProducts.filter(p => hasSubcat(p, 'chandelier') && (!p.style || p.style === style || p.style === 'both'));
+
+            const productsHTML = products.length > 0
+                ? products.map(product => renderProductCard(product)).join('')
+                : `<p style="color:#999; grid-column:1/-1; text-align:center; padding:60px 0;">${currentLanguage === 'tr' ? 'Bu koleksiyonda henüz ürün yok.' : 'No products in this collection yet.'}</p>`;
+
+            return `
+                ${col.image ? `
+                <section class="hero" style="margin-top: 80px; height: 50vh;">
+                    <img class="hero-media" src="${col.image}" alt="${col.title[currentLanguage]}" loading="lazy">
+                    <div class="hero-content fade-in">
+                        <h1>${col.title[currentLanguage]}</h1>
+                        <p style="font-size:1.1rem; letter-spacing:2px; margin-top:10px; opacity:0.85;">${col.subtitle[currentLanguage]}</p>
+                    </div>
+                </section>` : `
+                <div style="margin-top:80px; padding:60px 40px 20px; text-align:center;">
+                    <h1 style="font-size:2.5rem; letter-spacing:4px; font-weight:300;">${col.title[currentLanguage]}</h1>
+                    <p style="color:#8a7d6b; margin-top:10px;">${col.subtitle[currentLanguage]}</p>
+                </div>`}
+                <section class="py-80">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <a href="/lighting">${t().lighting}</a> /
+                            <a href="/lighting/chandelier">${t().chandelier}</a> /
+                            <span>${col.title[currentLanguage]}</span>
+                        </div>
+                        <div class="grid grid-4" style="margin-top:30px;">
+                            ${productsHTML}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= LIGHTING SUBCATEGORY PAGE =============
+        async function renderLightingSubcategoryPage(subcategory) {
+            const subcatNames = {
+                chandelier: t().chandelier, sconce: t().sconce,
+                table_lamp: t().tableLamp, floor_lamp: t().floorLamp,
+                outdoor: t().outdoor, lantern: t().lantern
+            };
+            const subcatName = subcatNames[subcategory] || subcategory;
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? `${subcatName} Modelleri — CHANDELIST`
+                    : `${subcatName} — CHANDELIST`,
+                currentLanguage === 'tr'
+                    ? `El yapımı pirinç ${subcatName.toLocaleLowerCase('tr')} modelleri. 1984'ten beri İstanbul atölyemizde üretiyoruz; ölçüye özel üretim mümkündür.`
+                    : `Handmade brass ${subcatName.toLowerCase()} from our Istanbul workshop. Made to measure since 1984, one piece or a full project.`,
+                '',
+                null,
+                '',
+                '/lighting/' + subcategory
+            );
+
+            const products = (await getProducts()).filter(p => parseSubcat(p.subcategory).includes(subcategory));
+
+            let productsHTML = products.map(product => renderProductCard(product)).join('');
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner(subcategory,'mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=300'}" alt="${subcatName}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner(subcategory,'mobile')}" alt="${subcatName}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=300'}" alt="${subcatName}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${subcatName}</h1>
+                    </div>
+                </section>
+                <section class="py-80">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <a href="/lighting">${t().lighting}</a> / <span>${subcatName}</span>
+                        </div>
+                        <div class="grid grid-4">
+                            ${productsHTML}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= DECORATIVE PAGE =============
+        async function renderDecorativePage() {
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'Dekoratif Eşya — Pirinç Ayna, Tepsi, Mumluk ve Fener'
+                    : 'Decorative Objects — Brass Mirrors, Trays, Candleholders & Lanterns',
+                currentLanguage === 'tr'
+                    ? 'El yapımı pirinç dekoratif ürünler: duvar aynası, tepsi, mumluk, şamdan ve fener. Eskitme pirinç yüzey, İstanbul atölyemizde üretim.'
+                    : 'Handmade brass decorative objects: wall mirrors, trays, candleholders and lanterns. Antique brass finish, made in our Istanbul workshop.',
+                'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
+                null,
+                currentLanguage === 'tr'
+                    ? 'pirinç ayna, pirinç tepsi, mumluk, şamdan, dekoratif fener, pirinç dekoratif ürünler'
+                    : 'brass mirror, brass tray, candle holder, decorative lantern, moroccan decor',
+                '/decorative'
+            );
+
+            const products = (await getProducts()).filter(p => p.category === 'decorative');
+
+            let productsHTML = products.map(product => renderProductCard(product)).join('');
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner('decorative','mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner('decorative','desktop') || 'https://picsum.photos/1400/600?random=400'}" alt="${t().decorative}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner('decorative','mobile')}" alt="${t().decorative}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner('decorative','desktop') || 'https://picsum.photos/1400/600?random=400'}" alt="${t().decorative}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${t().decorative}</h1>
+                    </div>
+                </section>
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="grid grid-4">
+                            ${productsHTML}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+
+        // ============= EV DEKORASYONU (HOME DECOR) =============
+        const HOMEDECOR_SUBCATS = ['side_table', 'tray', 'mirror', 'candleholder', 'vase', 'planter'];
+
+        function homeDecorSubcatName(key) {
+            return ({
+                side_table: t().sideTable,
+                tray: t().tray,
+                mirror: t().mirror,
+                candleholder: t().candleholder,
+                vase: t().vase,
+                planter: t().planter
+            })[key] || key;
+        }
+
+        async function renderHomeDecorPage() {
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'Ev Dekorasyonu — Yan Sehpa, Tepsi, Ayna, Mumluk ve Vazo'
+                    : 'Home Decor — Side Tables, Trays, Mirrors, Candleholders & Vases',
+                currentLanguage === 'tr'
+                    ? 'El yapımı ev dekorasyon ürünleri: yan sehpa, tepsi, duvar aynası, mumluk ve vazo. Pirinç ve metal üzerine İstanbul atölyemizde üretim.'
+                    : 'Handmade home decor: side tables, trays, wall mirrors, candleholders and vases. Brass and metal, made in our Istanbul workshop.',
+                '',
+                null,
+                currentLanguage === 'tr'
+                    ? 'ev dekorasyonu, yan sehpa, dekoratif sehpa, pirinç tepsi, duvar aynası, mumluk, şamdan, vazo, ev aksesuarı'
+                    : 'home decor, side table, decorative tray, wall mirror, candleholder, vase, home accessories',
+                '/homedecor'
+            );
+
+            const all = await getProducts();
+            const products = all.filter(p => p.category === 'homedecor');
+
+            const subcategories = HOMEDECOR_SUBCATS.map(k => ({
+                key: k,
+                name: homeDecorSubcatName(k),
+                image: getPageBanner(k, 'card') || 'https://picsum.photos/600/600?random=' + (500 + HOMEDECOR_SUBCATS.indexOf(k))
+            }));
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner('homedecor','mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner('homedecor','desktop') || 'https://picsum.photos/1400/600?random=500'}" alt="${t().homedecor}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner('homedecor','mobile')}" alt="${t().homedecor}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner('homedecor','desktop') || 'https://picsum.photos/1400/600?random=500'}" alt="${t().homedecor}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${t().homedecor}</h1>
+                    </div>
+                </section>
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="grid grid-3">
+                            ${subcategories.map(s => `
+                                <a href="/homedecor/${s.key}" class="card">
+                                    <div class="card-image">
+                                        <img src="${s.image}" alt="${s.name}" loading="lazy">
+                                    </div>
+                                    <div class="card-content">
+                                        <h3>${s.name}</h3>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+                ${products.length ? `
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <h2 style="text-align:center;margin-bottom:36px;">${t().homedecor}</h2>
+                        <div class="grid grid-4">
+                            ${products.map(product => renderProductCard(product)).join('')}
+                        </div>
+                    </div>
+                </section>` : ''}
+            `;
+        }
+
+        async function renderHomeDecorSubcategoryPage(subcategory) {
+            const subcatName = homeDecorSubcatName(subcategory);
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? `${subcatName} Modelleri — Osmanlı Aydınlatma`
+                    : `${subcatName} — Osmanlı Aydınlatma`,
+                currentLanguage === 'tr'
+                    ? `El yapımı ${subcatName.toLocaleLowerCase('tr')} modelleri. İstanbul'daki atölyemizde üretiyoruz; ölçüye özel üretim mümkündür.`
+                    : `Handmade ${subcatName.toLowerCase()} from our Istanbul workshop. Made to measure.`,
+                '',
+                null,
+                '',
+                '/homedecor/' + subcategory
+            );
+
+            const products = (await getProducts()).filter(
+                p => p.category === 'homedecor' && parseSubcat(p.subcategory).includes(subcategory)
+            );
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    ${getPageBanner(subcategory,'mobile')
+                        ? `<img class="hero-media hero-desktop" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=510'}" alt="${subcatName}" loading="lazy"><img class="hero-media hero-mobile" src="${getPageBanner(subcategory,'mobile')}" alt="${subcatName}" loading="lazy">`
+                        : `<img class="hero-media" src="${getPageBanner(subcategory,'desktop') || 'https://picsum.photos/1400/600?random=510'}" alt="${subcatName}" loading="lazy">`}
+                    <div class="hero-content fade-in">
+                        <h1>${subcatName}</h1>
+                    </div>
+                </section>
+                <section class="py-80">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <a href="/homedecor">${t().homedecor}</a> / <span>${subcatName}</span>
+                        </div>
+                        <div class="grid grid-4">
+                            ${products.map(product => renderProductCard(product)).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= PRODUCT DETAIL PAGE =============
+        async function renderProductDetailPage(productId) {
+            const products = await getProducts();
+            const product = products.find(p => p.id === parseInt(productId));
+            if (!product) return '<section><div class="container"><h2>Product not found</h2></div></section>';
+
+            const metaTitle = markaDuzelt(product.metaTitle ? product.metaTitle[currentLanguage] : `${product.name[currentLanguage]} - CHANDELIST`);
+            const metaDesc = markaDuzelt(product.metaDescription ? product.metaDescription[currentLanguage] : (product.description && product.description[currentLanguage] || ''));
+            const metaKeywords = markaDuzelt(product.keywords ? product.keywords[currentLanguage] : '');
+
+            const productImages = (product.images || []).filter(Boolean);
+            updateSEO(
+                metaTitle,
+                metaDesc,
+                productImages[0] || '',
+                {
+                    "@context": "https://schema.org",
+                    "@type": "Product",
+                    "name": product.name && product.name[currentLanguage] || '',
+                    "description": product.description && product.description[currentLanguage] || '',
+                    "image": productImages,
+                    "brand": {
+                        "@type": "Brand",
+                        "name": "CHANDELIST"
+                    },
+                    "manufacturer": {
+                        "@type": "Organization",
+                        "name": "CHANDELIST",
+                        "url": "https://chandelist.com",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": "Istanbul",
+                            "addressCountry": "TR"
+                        }
+                    },
+                    "countryOfOrigin": "TR",
+                    "url": `https://chandelist.com${productUrl(product)}`,
+                    "sku": product.sku || String(product.id),
+                    "offers": {
+                        "@type": "Offer",
+                        "url": `https://chandelist.com${productUrl(product)}`,
+                        "availability": "https://schema.org/InStock",
+                        "priceSpecification": {
+                            "@type": "PriceSpecification",
+                            "description": currentLanguage === 'tr' ? "Fiyat için iletişime geçin" : "Contact for price"
+                        },
+                        "seller": {
+                            "@type": "Organization",
+                            "name": "CHANDELIST",
+                            "url": "https://chandelist.com"
+                        }
+                    }
+                },
+                metaKeywords,
+                productUrl(product)
+            );
+
+            trackViewContent(product);
+
+            // Combine images and videos for gallery
+            const allMedia = [
+                ...(product.images || []).filter(img => img && img.trim()).map(img => ({ type: 'image', url: img })),
+                ...(product.videos || []).filter(vid => vid && vid.trim()).map(vid => ({ type: 'video', url: vid }))
+            ];
+
+            const mainMediaIdx = 0;
+            const mainMedia = allMedia[mainMediaIdx];
+
+            let mainDisplayHTML = '';
+            if (mainMedia) {
+                if (mainMedia.type === 'video') {
+                    mainDisplayHTML = `<video class="main-display" id="mainDisplay" controls autoplay muted loop playsinline webkit-playsinline preload="auto"><source src="${mainMedia.url}" type="video/mp4"></video>`;
+                } else {
+                    mainDisplayHTML = `<img class="main-display" id="mainDisplay" src="${mainMedia.url}" alt="${product.name[currentLanguage]}" loading="eager" fetchpriority="high" decoding="sync" width="600" height="600">`;
+                }
+            }
+
+            let thumbnailsHTML = allMedia.map((media, idx) => {
+                if (media.type === 'video') {
+                    return `
+                        <div class="thumbnail${idx === mainMediaIdx ? ' active' : ''}" data-media-idx="${idx}" role="button" tabindex="0" aria-label="Video ${idx + 1}">
+                            <video src="${media.url}" muted playsinline webkit-playsinline></video>
+                            <div class="video-badge-small">▶</div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="thumbnail${idx === mainMediaIdx ? ' active' : ''}" data-media-idx="${idx}" role="button" tabindex="0" aria-label="Image ${idx + 1}">
+                            <img src="${media.url}" alt="Product image" loading="lazy" decoding="async" width="100" height="100">
+                        </div>
+                    `;
+                }
+            }).join('');
+
+            return `
+                <section class="py-80">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <a href="/">${t().logo}</a> /
+                            <a href="/${product.category}">${({lighting: t().lighting, decorative: t().homedecor, homedecor: t().homedecor})[product.category] || product.category}</a> /
+                            <span>${product.name[currentLanguage]}</span>
+                        </div>
+
+                        <div class="product-detail">
+                            <div class="product-gallery">
+                                <div style="position:relative;">
+                                    <div class="main-display" id="mainDisplayWrapper">
+                                        ${mainDisplayHTML}
+                                    </div>
+                                    ${allMedia.length > 1 ? `
+                                    <button class="gallery-nav-btn prev" id="galleryPrev" aria-label="Previous image">&#8249;</button>
+                                    <button class="gallery-nav-btn next" id="galleryNext" aria-label="Next image">&#8250;</button>
+                                    ` : ''}
+                                </div>
+                                <div class="thumbnails">
+                                    ${thumbnailsHTML}
+                                </div>
+                            </div>
+
+                            <div class="product-info">
+                                <h1>${product.name && product.name[currentLanguage] || ''}</h1>
+
+                                ${(() => {
+                                    const variants = product.variants && product.variants.length > 0 ? product.variants : [];
+                                    if (variants.length === 0) return '';
+
+                                    // Unique colors (by colorHex)
+                                    const colorMap = {};
+                                    variants.forEach(v => {
+                                        if ((v.colorTr || v.colorEn) && !colorMap[v.colorHex]) {
+                                            colorMap[v.colorHex] = { hex: v.colorHex, tr: v.colorTr, en: v.colorEn };
+                                        }
+                                    });
+                                    const uniqueColors = Object.values(colorMap);
+
+                                    // Unique sizes
+                                    const uniqueSizes = [...new Set(variants.map(v => v.size).filter(Boolean))];
+
+                                    const hasColors = uniqueColors.length > 0;
+                                    const hasSizes = uniqueSizes.length > 0;
+
+                                    const variantsJSON = JSON.stringify(variants).replace(/'/g, "\\'");
+
+                                    return `
+                                        <div class="variant-section" id="variantSection" data-variants='${JSON.stringify(variants)}' data-baseprice="${product.price || ''}">
+                                            ${hasColors ? `
+                                            <div style="margin-bottom:20px;">
+                                                <span class="variant-label">${currentLanguage === 'tr' ? 'Renk' : 'Color'}: <span id="selectedColorName">${uniqueColors[0][currentLanguage === 'tr' ? 'tr' : 'en']}</span></span>
+                                                <div class="color-swatches">
+                                                    ${uniqueColors.map((c, i) => `
+                                                        <div class="color-swatch ${i === 0 ? 'active' : ''}" style="background:${c.hex};" onclick="selectVariantColor('${c.hex}')" data-hex="${c.hex}" title="${currentLanguage === 'tr' ? c.tr : c.en}">
+                                                            <span class="color-swatch-tooltip">${currentLanguage === 'tr' ? c.tr : c.en}</span>
+                                                        </div>
+                                                    `).join('')}
+                                                </div>
+                                            </div>` : ''}
+                                            ${hasSizes ? `
+                                            <div style="margin-bottom:20px;">
+                                                <span class="variant-label">${currentLanguage === 'tr' ? 'Boyut' : 'Size'}</span>
+                                                <div class="size-buttons">
+                                                    ${uniqueSizes.map((s, i) => `
+                                                        <button type="button" class="size-btn ${i === 0 ? 'active' : ''}" onclick="selectVariantSize('${s}')" data-size="${s}">${s}</button>
+                                                    `).join('')}
+                                                </div>
+                                            </div>` : ''}
+                                            <div class="variant-price" id="variantPrice">${product.price || (currentLanguage === 'tr' ? 'Fiyat İçin Sor' : 'Ask for Price')}</div>
+                                        </div>
+                                    `;
+                                })()}
+
+                                <div class="pd-accordion">
+                                    <div class="pd-acc-item open">
+                                        <button type="button" class="pd-acc-header" onclick="togglePdAcc(this)">
+                                            ${currentLanguage === 'tr' ? 'Açıklama' : 'Description'}
+                                            <span class="pd-acc-icon">+</span>
+                                        </button>
+                                        <div class="pd-acc-body">
+                                            <div class="pd-acc-body-inner" style="color:#555;line-height:1.7;">
+                                                ${product.description && product.description[currentLanguage] || ''}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pd-acc-item">
+                                        <button type="button" class="pd-acc-header" onclick="togglePdAcc(this)">
+                                            ${currentLanguage === 'tr' ? 'Detaylar' : 'Details'}
+                                            <span class="pd-acc-icon">+</span>
+                                        </button>
+                                        <div class="pd-acc-body">
+                                            <div class="pd-acc-body-inner">
+                                                <div class="detail-row">
+                                                    <span class="detail-label">${currentLanguage === 'tr' ? 'Ürün Kodu' : 'Product Code'}</span>
+                                                    <span style="font-family:monospace; font-size:0.9rem; color:#333; font-weight:600;">${getProductCode(product)}</span>
+                                                </div>
+                                                <div class="detail-row">
+                                                    <span class="detail-label">${t().materials}</span>
+                                                    <span>${product.materials || '-'}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    ${(() => {
+                                        if (!product.dimensions) return '';
+                                        let dim = {h:'',dia:'',w:'',d:''};
+                                        let dimRows = '';
+                                        try {
+                                            dim = JSON.parse(product.dimensions);
+                                            const parts = [];
+                                            if (dim.h)   parts.push(`<div class="detail-row"><span class="detail-label">Yükseklik / Height</span><span>${dim.h} cm</span></div>`);
+                                            if (dim.dia) parts.push(`<div class="detail-row"><span class="detail-label">Çap / Diameter</span><span>${dim.dia} cm</span></div>`);
+                                            if (dim.w)   parts.push(`<div class="detail-row"><span class="detail-label">Genişlik / Width</span><span>${dim.w} cm</span></div>`);
+                                            if (dim.d)   parts.push(`<div class="detail-row"><span class="detail-label">Derinlik / Depth</span><span>${dim.d} cm</span></div>`);
+                                            dimRows = parts.join('');
+                                        } catch(e) {
+                                            dimRows = `<div class="detail-row"><span class="detail-label">${t().dimensions}</span><span>${product.dimensions}</span></div>`;
+                                        }
+                                        if (!dimRows) return '';
+                                        return `
+                                        <div class="pd-acc-item">
+                                            <button type="button" class="pd-acc-header" onclick="togglePdAcc(this)">
+                                                ${currentLanguage === 'tr' ? 'Boyutlar' : 'Dimensions'}
+                                                <span class="pd-acc-icon">+</span>
+                                            </button>
+                                            <div class="pd-acc-body">
+                                                <div class="pd-acc-body-inner">${dimRows}</div>
+                                            </div>
+                                        </div>`;
+                                    })()}
+                                </div>
+
+                                <button class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1rem; margin: 30px 0;" id="askPriceBtn">${t().askForPrice}</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                ${await renderRelatedProducts(product, products)}
+            `;
+        }
+
+        async function renderRelatedProducts(product, allProducts) {
+            if (!product.relatedProducts || product.relatedProducts.length === 0) return '';
+            const related = allProducts.filter(p => product.relatedProducts.includes(p.id));
+            if (related.length === 0) return '';
+            return `
+                <section class="related-products-section">
+                    <div class="container">
+                        <h2>${currentLanguage === 'tr' ? 'Benzer Ürünler' : 'Related Products'}</h2>
+                        <div class="products-grid">
+                            ${related.slice(0, 5).map(p => `
+                                <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.en||p.name?.tr||'')}')" style="cursor:pointer;">
+                                    <div class="card-image">
+                                        <img src="${p.images[0] || 'https://picsum.photos/600/600?random=' + p.id}" alt="${p.name[currentLanguage]}" loading="lazy" width="400" height="400">
+                                    </div>
+                                    <div class="card-content">
+                                        <h3>${p.name[currentLanguage]}</h3>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= SEARCH =============
+        function toggleSearchBar() {
+            const wrap = document.getElementById('searchBarWrap');
+            const input = document.getElementById('headerSearchInput');
+            if (!wrap) return;
+            const isVisible = wrap.style.display === 'flex';
+            wrap.style.display = isVisible ? 'none' : 'flex';
+            if (!isVisible && input) {
+                input.focus();
+                input.onkeydown = function(e) {
+                    if (e.key === 'Enter') {
+                        const q = input.value.trim();
+                        if (q) { navigateTo('/search?q=' + encodeURIComponent(q)); }
+                    }
+                };
+            }
+        }
+
+        async function renderSearchPage(query) {
+            if (!query) return `<section class="py-80"><div class="container"><h2>${currentLanguage === 'tr' ? 'Arama' : 'Search'}</h2><p style="color:#999; margin-top:20px;">${currentLanguage === 'tr' ? 'Aramak istediğiniz ürünü yazın.' : 'Type a product name to search.'}</p></div></section>`;
+
+            const allProducts = await getProducts();
+            const q = query.toLowerCase();
+            const results = allProducts.filter(p =>
+                (p.name.tr && p.name.tr.toLowerCase().includes(q)) ||
+                (p.name.en && p.name.en.toLowerCase().includes(q)) ||
+                (p.description && p.description.tr && p.description.tr.toLowerCase().includes(q)) ||
+                getProductCode(p).toLowerCase().includes(q) ||
+                (p.materials && p.materials.toLowerCase().includes(q))
+            );
+
+            const resultsHTML = results.length === 0
+                ? `<p style="color:#999; margin-top:20px;">${currentLanguage === 'tr' ? '"' + query + '" için sonuç bulunamadı.' : 'No results found for "' + query + '".'}</p>`
+                : `<div class="grid grid-4" style="margin-top:30px;">
+                    ${results.map(p => `
+                        <div class="card" onclick="navigateTo('/products/${p.id}-${slugify(p.name?.en||p.name?.tr||'')}')" style="cursor:pointer;">
+                            <div class="card-image">
+                                <img src="${p.images[0] || 'https://picsum.photos/600/600?random=' + p.id}" alt="${p.name[currentLanguage]}" loading="lazy" width="400" height="400">
+                            </div>
+                            <div class="card-content">
+                                <h3>${p.name[currentLanguage]}</h3>
+                                <p style="font-size:0.75rem;color:#aaa;font-family:monospace;margin:4px 0 0;">${getProductCode(p)}</p>
+                                <a href="/products/${p.id}-${slugify(p.name?.tr || p.name?.en || '')}" class="btn" style="margin-top:10px;">${currentLanguage === 'tr' ? 'İncele' : 'View'}</a>
+                            </div>
+                        </div>
+                    `).join('')}
+                  </div>`;
+
+            return `
+                <section class="py-80">
+                    <div class="container">
+                        <h2 style="margin-bottom:10px;">${currentLanguage === 'tr' ? 'Arama Sonuçları' : 'Search Results'}</h2>
+                        <p style="color:#999;">${currentLanguage === 'tr' ? '"' + query + '" için ' + results.length + ' sonuç bulundu.' : results.length + ' result(s) found for "' + query + '".'}</p>
+                        <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+                            <input type="text" id="searchPageInput" value="${query.replace(/"/g,'&quot;')}" placeholder="${currentLanguage === 'tr' ? 'Yeni arama...' : 'New search...'}" style="border:1px solid #ddd; padding:10px 16px; font-size:0.95rem; outline:none; background:#fafaf9; width:300px;">
+                            <button onclick="const q=document.getElementById('searchPageInput').value.trim();if(q)navigateTo('/search?q='+encodeURIComponent(q));" class="btn btn-primary">${currentLanguage === 'tr' ? 'Ara' : 'Search'}</button>
+                        </div>
+                        ${resultsHTML}
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= ABOUT PAGE =============
+        function renderAboutPage() {
+            const isTr = currentLanguage === 'tr';
+            updateSEO(
+                isTr
+                    ? 'Hakkımızda — CHANDELIST | 1984\'den Beri Özel Avize İmalatı'
+                    : 'About CHANDELIST — Custom Chandelier Manufacturer Since 1984',
+                isTr
+                    ? '1984\'ten beri dünya genelinde özel tasarım avize ve aydınlatma imalatı yapıyoruz. Ev, otel, restoran ve camilere sıfırdan proje bazlı üretim.'
+                    : 'Custom chandelier and lighting manufacturer since 1984, exporting worldwide. Bespoke projects for homes, hotels, restaurants and mosques.',
+                '',
+                null,
+                isTr
+                    ? 'chandelist hakkında, avize imalatçısı, özel tasarım avize istanbul, 1984 avize fabrika, lüks avize üretimi'
+                    : 'about chandelist, chandelier manufacturer, custom lighting istanbul, bespoke chandelier factory',
+                '/about'
+            );
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    <div class="hero-content fade-in" style="background:rgba(0,0,0,0.55); padding: 60px 40px;">
+                        <h1 style="font-size:clamp(2rem,5vw,3.5rem); letter-spacing:4px;">
+                            ${isTr ? '1984\'DEN BERİ' : 'SINCE 1984'}
+                        </h1>
+                        <p style="font-size:1.1rem; letter-spacing:2px; margin-top:12px; opacity:0.9;">
+                            ${isTr ? 'Dünyaya Işık Taşıyoruz' : 'Illuminating the World'}
+                        </p>
+                    </div>
+                </section>
+
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+
+                        <!-- Hikaye -->
+                        <div class="about-grid" style="margin-bottom: 70px;">
+                            <div class="about-text">
+                                <h2 style="font-size:1.8rem; margin-bottom:20px;">
+                                    ${isTr ? '40 Yılı Aşkın Bir Miras' : 'A Legacy of Over 40 Years'}
+                                </h2>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? '1984 yılında kurulan CHANDELIST, bugün dünyanın dört bir yanına ihracat yapan köklü bir avize ve dekoratif aydınlatma imalatçısıdır. Onlarca ülkeye gönderilen ürünlerimiz, her melanda ışığı sanata dönüştürüyor.'
+                                        : 'Founded in 1984, CHANDELIST is an established chandelier and decorative lighting manufacturer now exporting to dozens of countries worldwide. Our products transform light into art across every setting imaginable.'}
+                                </p>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? 'Fabrikamızda her ürün; metal işleme, döküm, yüzey kaplama ve montaj aşamalarından geçerek, ustalarımızın elleriyle sıfırdan hayata geçirilir. Seri üretim değil — her proje kendine özgü, kişiye özel.'
+                                        : 'In our factory, every product passes through metal fabrication, casting, surface finishing and assembly — brought to life from scratch by the hands of our master craftsmen. Not mass production — every project is unique, made to order.'}
+                                </p>
+                                <p style="line-height:1.9;">
+                                    ${isTr
+                                        ? 'Metalin üzerinde dekoratif ürünler de dahil olmak üzere; tarz farketmeksizin, mekan farketmeksizin, ölçek farketmeksizin — müşterimizin hayal ettiği her şeyi üretebiliyoruz.'
+                                        : 'From decorative pieces on metal to any style, any space, any scale — we can manufacture everything our client imagines.'}
+                                </p>
+                            </div>
+                            <div style="background: #f5f0e8; border-radius:4px; display:flex; align-items:center; justify-content:center; min-height:340px; padding:40px;">
+                                <div style="text-align:center;">
+                                    <div style="font-family:'Cormorant Garamond',serif; font-size:5rem; color:#8a7d6b; line-height:1;">1984</div>
+                                    <div style="font-size:0.85rem; letter-spacing:3px; color:#aaa; margin-top:10px; text-transform:uppercase;">
+                                        ${isTr ? 'Kuruluş Yılı' : 'Year Founded'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rakamlar -->
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:2px; margin-bottom:70px; background:#e8e0d5;">
+                            ${[
+                                { num: '40+', label: isTr ? 'Yıllık Deneyim' : 'Years Experience' },
+                                { num: isTr ? 'Düzinelerce' : 'Dozens', label: isTr ? 'İhracat Ülkesi' : 'Export Countries' },
+                                { num: isTr ? 'Binlerce' : 'Thousands', label: isTr ? 'Tamamlanan Proje' : 'Completed Projects' },
+                                { num: '100%', label: isTr ? 'Özel İmalat' : 'Custom Made' },
+                            ].map(s => `
+                                <div style="background:#fff; padding:40px 20px; text-align:center;">
+                                    <div style="font-family:'Cormorant Garamond',serif; font-size:2.8rem; color:#2c2c2c; line-height:1;">${s.num}</div>
+                                    <div style="font-size:0.78rem; letter-spacing:2px; color:#aaa; margin-top:8px; text-transform:uppercase;">${s.label}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Ne Üretiyoruz -->
+                        <div style="margin-bottom:70px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">
+                                ${isTr ? 'NE ÜRETIYORUZ' : 'WHAT WE MANUFACTURE'}
+                            </h2>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+                                ${[
+                                    { icon: '🏠', title: isTr ? 'Özel Konut' : 'Private Residences', desc: isTr ? 'Villalar, rezidanslar ve özel evler için benzersiz aydınlatma çözümleri.' : 'Unique lighting solutions for villas, residences and private homes.' },
+                                    { icon: '🏨', title: isTr ? 'Otel & Resort' : 'Hotels & Resorts', desc: isTr ? 'Otel lobileri, odalar ve ortak alanlar için prestijli avize projeleri.' : 'Prestigious chandelier projects for hotel lobbies, rooms and common areas.' },
+                                    { icon: '🍽️', title: isTr ? 'Restoran & Kafe' : 'Restaurants & Cafés', desc: isTr ? 'Mekan atmosferini tamamlayan, markayla uyumlu özel aydınlatmalar.' : 'Custom lighting that completes the venue atmosphere and matches your brand.' },
+                                    { icon: '🕌', title: isTr ? 'Cami & İbadet Mekanları' : 'Mosques & Religious Spaces', desc: isTr ? 'Manevi atmosferi güçlendiren, geleneksel ve modern cami avizeleri.' : 'Traditional and modern mosque chandeliers that strengthen the spiritual atmosphere.' },
+                                    { icon: '🏢', title: isTr ? 'Ticari Alanlar' : 'Commercial Spaces', desc: isTr ? 'Alışveriş merkezleri, ofisler, lobiler için büyük ölçekli projeler.' : 'Large-scale projects for shopping centres, offices and lobbies.' },
+                                    { icon: '⚙️', title: isTr ? 'Dekoratif Metal Ürünler' : 'Decorative Metal Products', desc: isTr ? 'Metal üzerine her türlü dekoratif obje ve aksesuar imalatı.' : 'Manufacturing of all kinds of decorative objects and accessories on metal.' },
+                                ].map(item => `
+                                    <div style="border:1px solid #e8e0d5; padding:28px 24px; border-radius:4px;">
+                                        <div style="font-size:2rem; margin-bottom:12px;">${item.icon}</div>
+                                        <h3 style="font-size:1rem; letter-spacing:1px; margin-bottom:10px; text-transform:uppercase;">${item.title}</h3>
+                                        <p style="font-size:0.88rem; color:#777; line-height:1.7;">${item.desc}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- CTA -->
+                        <div style="text-align:center; background:#2c2c2c; color:#fff; padding:60px 40px; border-radius:4px;">
+                            <h2 style="font-size:1.6rem; letter-spacing:3px; margin-bottom:16px; font-family:'Cormorant Garamond',serif;">
+                                ${isTr ? 'PROJENİZİ BİRLİKTE TASARLAYALIM' : 'LET\'S DESIGN YOUR PROJECT TOGETHER'}
+                            </h2>
+                            <p style="color:#ccc; margin-bottom:28px; max-width:520px; margin-left:auto; margin-right:auto; line-height:1.8;">
+                                ${isTr
+                                    ? 'Hayalinizdeki avize veya aydınlatma projesini gerçeğe dönüştürmek için bizimle iletişime geçin. Tarz, mekan, ölçek — hiçbir sınır yok.'
+                                    : 'Contact us to bring your dream chandelier or lighting project to life. Style, space, scale — no limits.'}
+                            </p>
+                            <a href="/contact" style="display:inline-block; background:#fff; color:#2c2c2c; padding:14px 36px; text-decoration:none; font-size:0.85rem; letter-spacing:2px; text-transform:uppercase;">
+                                ${isTr ? 'İletişime Geç' : 'Get In Touch'}
+                            </a>
+                        </div>
+
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= CONTACT PAGE =============
+        function renderCustomLightingPage() {
+            const isTr = currentLanguage === 'tr';
+            updateSEO(
+                isTr
+                    ? 'Özel Üretim & Proje Aydınlatması — CHANDELIST | Otel ve Restoran Avizeleri'
+                    : 'Custom & Contract Lighting — CHANDELIST | Hospitality Chandelier Manufacturer',
+                isTr
+                    ? '1984\'ten beri otel, restoran ve projeler için özel ölçü avize ve aydınlatma üretimi. Pirinç el işçiliği ve lazer kesim metal ile sıfırdan, dünya geneline imalat.'
+                    : 'Custom-made chandeliers and contract lighting for hotels, restaurants and projects since 1984. Handcrafted brass and laser-cut metal, made to order, shipped worldwide.',
+                '',
+                null,
+                isTr
+                    ? 'özel avize üretimi, otel avize imalatı, restoran aydınlatma, proje bazlı aydınlatma, contract lighting, özel ölçü avize'
+                    : 'custom lighting manufacturer, hospitality lighting, hotel chandeliers, restaurant lighting, contract lighting, bespoke chandelier manufacturer turkey',
+                '/custom'
+            );
+
+            const steps = [
+                { n: '01', t: isTr ? 'Brief & Konsept' : 'Brief & Concept', d: isTr ? 'İhtiyacınızı, mekanı ve tarzı dinliyoruz. Referans görseller ve ölçülerle başlıyoruz.' : 'We listen to your needs, space and style. We begin with reference images and dimensions.' },
+                { n: '02', t: isTr ? 'Tasarım & Teknik Çizim' : 'Design & Technical Drawing', d: isTr ? 'Konsepti teknik çizime döküyoruz; ölçü, malzeme ve bitiş seçenekleriyle onayınıza sunuyoruz.' : 'We turn the concept into technical drawings, presented for your approval with size, material and finish options.' },
+                { n: '03', t: isTr ? 'El İşçiliği Üretim' : 'Handcrafted Production', d: isTr ? 'Pirinç/bakır el işçiliği ve lazer kesim metal ile ustalarımız ürünü sıfırdan üretir.' : 'Our master craftsmen build the piece from scratch using brass/copper handwork and laser-cut metal.' },
+                { n: '04', t: isTr ? 'Paketleme & Global Sevkiyat' : 'Packing & Global Shipping', d: isTr ? 'Güvenli ihracat paketlemesi ile dünyanın her yerine gönderiyoruz.' : 'Securely export-packed and shipped to anywhere in the world.' },
+            ];
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    <div class="hero-content fade-in" style="background:rgba(0,0,0,0.55); padding: 60px 40px;">
+                        <h1 style="font-size:clamp(2rem,5vw,3.5rem); letter-spacing:4px;">
+                            ${isTr ? 'ÖZEL ÜRETİM & PROJELER' : 'CUSTOM & CONTRACT LIGHTING'}
+                        </h1>
+                        <p style="font-size:1.1rem; letter-spacing:2px; margin-top:12px; opacity:0.9;">
+                            ${isTr ? 'Oteller, Restoranlar ve Projeler İçin' : 'For Hotels, Restaurants & Projects'}
+                        </p>
+                    </div>
+                </section>
+
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="about-grid" style="margin-bottom: 70px;">
+                            <div class="about-text">
+                                <h2 style="font-size:1.8rem; margin-bottom:20px;">
+                                    ${isTr ? 'Hayalinizdeki Aydınlatmayı Üretiyoruz' : 'We Manufacture the Lighting You Envision'}
+                                </h2>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? '1984\'ten bu yana otel, restoran ve butik mekanlar için özel ölçü avize ve aydınlatma üretiyoruz. Seri üretim değil; her proje, mekanın mimarisine ve müşterinin vizyonuna göre sıfırdan tasarlanır.'
+                                        : 'Since 1984 we have produced made-to-order chandeliers and lighting for hotels, restaurants and boutique venues. Not mass production — every project is designed from scratch around the architecture of the space and the client\'s vision.'}
+                                </p>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? 'Pirinç ve bakır el işçiliği, lazer kesim metal ve özel yüzey kaplama tekniklerini bir arada kullanıyoruz. Tek bir özel parçadan, bir otelin tüm aydınlatma konseptine kadar her ölçekte üretim yapabiliyoruz.'
+                                        : 'We combine handcrafted brass and copper work, laser-cut metal and custom surface finishing. We produce at any scale — from a single bespoke piece to the complete lighting concept of an entire hotel.'}
+                                </p>
+                                <p style="line-height:1.9;">
+                                    ${isTr
+                                        ? 'Mimarlar, iç mimarlar ve proje firmalarıyla doğrudan çalışıyor, teknik çizimden global sevkiyata kadar tüm süreci yönetiyoruz.'
+                                        : 'We work directly with architects, interior designers and project firms, managing the entire process from technical drawing to global shipping.'}
+                                </p>
+                            </div>
+                            <div style="background: #f5f0e8; border-radius:4px; display:flex; align-items:center; justify-content:center; min-height:340px; padding:40px;">
+                                <div style="text-align:center;">
+                                    <div style="font-family:'Cormorant Garamond',serif; font-size:3.4rem; color:#8a7d6b; line-height:1.1;">${isTr ? 'Otele Özel' : 'Hospitality'}</div>
+                                    <div style="font-size:0.85rem; letter-spacing:3px; color:#aaa; margin-top:10px; text-transform:uppercase;">
+                                        ${isTr ? 'Proje Aydınlatması' : 'Contract Lighting'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:70px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">
+                                ${isTr ? 'NASIL ÇALIŞIYORUZ' : 'HOW WE WORK'}
+                            </h2>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+                                ${steps.map(s => `
+                                    <div style="background:#fff; border:1px solid #ece6dc; border-radius:6px; padding:30px 24px;">
+                                        <div style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; color:#c9a84c; line-height:1;">${s.n}</div>
+                                        <h3 style="font-size:1.05rem; margin:12px 0 10px; letter-spacing:1px;">${s.t}</h3>
+                                        <p style="line-height:1.7; font-size:0.92rem; color:#666;">${s.d}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div style="text-align:center; background:#f5f0e8; border-radius:6px; padding:50px 30px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:14px; letter-spacing:1px;">
+                                ${isTr ? 'Projeniz İçin Teklif Alın' : 'Request a Quote for Your Project'}
+                            </h2>
+                            <p style="line-height:1.8; max-width:620px; margin:0 auto 26px; color:#666;">
+                                ${isTr
+                                    ? 'Otel, restoran veya özel projeniz için fikrinizi paylaşın; teknik ekibimiz size özel bir teklif hazırlasın.'
+                                    : 'Share your idea for your hotel, restaurant or bespoke project, and our technical team will prepare a tailored quote for you.'}
+                            </p>
+                            <form id="quoteForm" onsubmit="return false;" style="max-width:560px; margin:0 auto; text-align:left;">
+                                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+                                    <div class="form-group">
+                                        <label>${isTr ? 'Adınız' : 'Your Name'}</label>
+                                        <input type="text" id="quoteName" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>${isTr ? 'Firma / Proje' : 'Company / Project'}</label>
+                                        <input type="text" id="quoteCompany">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>${isTr ? 'E-posta' : 'Email'}</label>
+                                        <input type="email" id="quoteEmail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>${isTr ? 'Telefon' : 'Phone'}</label>
+                                        <input type="tel" id="quotePhone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>${isTr ? 'Projenizi kısaca anlatın' : 'Tell us about your project'}</label>
+                                    <textarea id="quoteMessage" rows="4" required placeholder="${isTr ? 'Mekan türü, adet, ölçü, teslim tarihi...' : 'Space type, quantity, dimensions, deadline...'}"></textarea>
+                                </div>
+                                <button type="button" id="quoteSubmit" class="btn btn-primary" style="width:100%; padding:14px; letter-spacing:2px;">
+                                    ${isTr ? 'TEKLİF İSTEYİN' : 'REQUEST A QUOTE'}
+                                </button>
+                                <p id="quoteResult" style="display:none; margin-top:14px; text-align:center; font-size:0.9rem;"></p>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // /custom sayfasindaki teklif formunu gonderir
+        async function submitQuoteForm() {
+            const isTr = currentLanguage === 'tr';
+            const name = document.getElementById('quoteName')?.value.trim();
+            const company = document.getElementById('quoteCompany')?.value.trim();
+            const email = document.getElementById('quoteEmail')?.value.trim();
+            const phone = document.getElementById('quotePhone')?.value.trim();
+            const message = document.getElementById('quoteMessage')?.value.trim();
+            const btn = document.getElementById('quoteSubmit');
+            const out = document.getElementById('quoteResult');
+            if (!name || !email || !message) {
+                out.style.display = 'block';
+                out.style.color = '#c0392b';
+                out.textContent = isTr ? 'Lütfen ad, e-posta ve proje bilgisini doldurun.' : 'Please fill in name, email and project details.';
+                return;
+            }
+            const original = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = isTr ? 'GÖNDERİLİYOR...' : 'SENDING...';
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: 'a26d7e8c-2a99-4af0-b3ce-64470ec2d6ef',
+                        subject: 'CHANDELIST - Ozel Uretim Teklif Talebi',
+                        from_name: name,
+                        name: name,
+                        company: company || '-',
+                        email: email,
+                        phone: phone || '-',
+                        message: message,
+                        kaynak: 'custom / project quote'
+                    })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    trackLead('custom_quote');
+                    out.style.display = 'block';
+                    out.style.color = '#2d7a4f';
+                    out.textContent = isTr
+                        ? 'Teşekkürler. Talebiniz bize ulaştı, en kısa sürede dönüş yapacağız.'
+                        : 'Thank you. We received your request and will get back to you shortly.';
+                    ['quoteName','quoteCompany','quoteEmail','quotePhone','quoteMessage'].forEach(id => {
+                        const el = document.getElementById(id); if (el) el.value = '';
+                    });
+                } else {
+                    throw new Error('fail');
+                }
+            } catch (e) {
+                out.style.display = 'block';
+                out.style.color = '#c0392b';
+                out.textContent = isTr
+                    ? 'Gönderilemedi. Lütfen info@chandelist.com adresine yazın.'
+                    : 'Could not send. Please email info@chandelist.com.';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = original;
+            }
+        }
+
+        function renderWorkshopPage() {
+            const isTr = currentLanguage === 'tr';
+            updateSEO(
+                isTr
+                    ? 'Atölyemiz & Üretim — CHANDELIST | El Yapımı Avize İmalatı'
+                    : 'Our Workshop & Manufacturing — CHANDELIST | Handcrafted Chandelier Maker',
+                isTr
+                    ? 'Atölyemizde pirinç ve bakır el işçiliği, lazer kesim metal ve özel yüzey kaplama ile her avize sıfırdan üretilir. 1984\'ten beri usta ellerde.'
+                    : 'In our workshop every chandelier is built from scratch with handcrafted brass and copper work, laser-cut metal and custom finishing. In master hands since 1984.',
+                '',
+                null,
+                isTr
+                    ? 'avize atölyesi, el yapımı avize, pirinç işçiliği, lazer kesim metal, avize üretim süreci, avize fabrikası istanbul'
+                    : 'chandelier workshop, handmade lighting, brass craftsmanship, laser cut metal, lighting manufacturing process, chandelier factory turkey',
+                '/workshop'
+            );
+
+            const crafts = [
+                { t: isTr ? 'Pirinç & Bakır El İşçiliği' : 'Brass & Copper Handwork', d: isTr ? 'Ustalarımız metali elde şekillendirir, döver ve yüzeyini işler — her parça insan eliyle.' : 'Our masters shape, hammer and finish metal by hand — every piece touched by human hands.' },
+                { t: isTr ? 'Lazer Kesim Metal' : 'Laser-Cut Metal', d: isTr ? 'Karmaşık desenleri milimetrik hassasiyetle lazerle keseriz; gelenek ile teknolojiyi birleştiririz.' : 'We cut intricate patterns with millimetric laser precision, blending tradition with technology.' },
+                { t: isTr ? 'Özel Yüzey Kaplama' : 'Custom Surface Finishing', d: isTr ? 'Antik pirinç eskitme, parlak, mat ve özel renk seçenekleriyle her projeye özgü bitiş.' : 'Antique brass, polished, matte and custom color finishes — a finish unique to each project.' },
+                { t: isTr ? 'Montaj & Kalite Kontrol' : 'Assembly & Quality Control', d: isTr ? 'Her ürün montaj sonrası tek tek elektrik ve dayanıklılık testinden geçer.' : 'Every product is individually tested for electrics and durability after assembly.' },
+            ];
+
+            return `
+                <section class="hero" style="margin-top: 80px;">
+                    <div class="hero-content fade-in" style="background:rgba(0,0,0,0.55); padding: 60px 40px;">
+                        <h1 style="font-size:clamp(2rem,5vw,3.5rem); letter-spacing:4px;">
+                            ${isTr ? 'ATÖLYEMİZ' : 'OUR WORKSHOP'}
+                        </h1>
+                        <p style="font-size:1.1rem; letter-spacing:2px; margin-top:12px; opacity:0.9;">
+                            ${isTr ? 'Işığın El Emeğiyle Doğduğu Yer' : 'Where Light Is Born by Hand'}
+                        </p>
+                    </div>
+                </section>
+
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="about-grid" style="margin-bottom: 70px;">
+                            <div class="about-text">
+                                <h2 style="font-size:1.8rem; margin-bottom:20px;">
+                                    ${isTr ? 'Seri Üretim Değil, El Sanatı' : 'Not Mass Production — Craftsmanship'}
+                                </h2>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? '1984\'ten bu yana aynı tutkuyla çalışan atölyemizde, her avize metal işlemeden montaja kadar usta ellerde sıfırdan hayat bulur. Makineye değil, insana ve deneyime güveniyoruz.'
+                                        : 'In our workshop, working with the same passion since 1984, every chandelier comes to life from scratch in master hands — from metalwork to assembly. We trust people and experience, not just machines.'}
+                                </p>
+                                <p style="line-height:1.9; margin-bottom:16px;">
+                                    ${isTr
+                                        ? 'Geleneksel pirinç ve bakır işçiliğini, modern lazer kesim teknolojisiyle birleştiriyoruz. Bu sayede hem zamansız el sanatını hem de milimetrik hassasiyeti aynı üründe sunabiliyoruz.'
+                                        : 'We combine traditional brass and copper craftsmanship with modern laser-cutting technology — bringing both timeless artistry and millimetric precision to the same piece.'}
+                                </p>
+                                <p style="line-height:1.9;">
+                                    ${isTr
+                                        ? 'Tek bir özel parçadan büyük proje üretimlerine kadar, her işi aynı titizlikle ele alıyoruz.'
+                                        : 'From a single bespoke piece to large project runs, we treat every job with the same care.'}
+                                </p>
+                            </div>
+                            <div style="background: #f5f0e8; border-radius:4px; display:flex; align-items:center; justify-content:center; min-height:340px; padding:40px;">
+                                <div style="text-align:center;">
+                                    <div style="font-family:'Cormorant Garamond',serif; font-size:5rem; color:#8a7d6b; line-height:1;">40+</div>
+                                    <div style="font-size:0.85rem; letter-spacing:3px; color:#aaa; margin-top:10px; text-transform:uppercase;">
+                                        ${isTr ? 'Yıllık El Emeği' : 'Years of Craft'}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom:70px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">
+                                ${isTr ? 'ÜRETİM SÜRECİMİZ' : 'OUR CRAFT PROCESS'}
+                            </h2>
+                            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:24px;">
+                                ${crafts.map(c => `
+                                    <div style="background:#fff; border:1px solid #ece6dc; border-radius:6px; padding:30px 24px;">
+                                        <h3 style="font-size:1.05rem; margin:0 0 10px; letter-spacing:1px; color:#8a7d6b;">${c.t}</h3>
+                                        <p style="line-height:1.7; font-size:0.92rem; color:#666;">${c.d}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        ${(() => {
+                            const gallery = (window._workshopGallery) || [];
+                            if (!gallery.length) return '';
+                            return `
+                            <div style="margin-bottom:70px;">
+                                <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">${isTr ? 'ATÖLYEDEN GÖRÜNTÜLER' : 'FROM OUR WORKSHOP'}</h2>
+                                <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+                                    ${gallery.map(url => `<div style="aspect-ratio:1/1; overflow:hidden; border-radius:8px; background:#f5f0e8;"><img src="${url}" alt="${isTr ? 'Atölye üretim' : 'Workshop production'}" loading="lazy" style="width:100%; height:100%; object-fit:cover;"></div>`).join('')}
+                                </div>
+                            </div>`;
+                        })()}
+                        ${(() => {
+                            const vid = (window._workshopVideo) || '';
+                            if (!vid) return '';
+                            return `
+                            <div style="margin-bottom:70px;">
+                                <h2 style="font-size:1.6rem; margin-bottom:30px; text-align:center; letter-spacing:2px;">${isTr ? 'ÜRETİM VİDEOSU' : 'PRODUCTION VIDEO'}</h2>
+                                <div style="max-width:900px; margin:0 auto; border-radius:10px; overflow:hidden; background:#000;"><video src="${vid}" controls playsinline preload="metadata" style="width:100%; display:block;"></video></div>
+                            </div>`;
+                        })()}
+
+                        <div style="text-align:center; background:#f5f0e8; border-radius:6px; padding:50px 30px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:14px; letter-spacing:1px;">
+                                ${isTr ? 'Özel Bir Proje mi Var?' : 'Have a Custom Project?'}
+                            </h2>
+                            <p style="line-height:1.8; max-width:620px; margin:0 auto 26px; color:#666;">
+                                ${isTr
+                                    ? 'Atölyemiz hayalinizdeki aydınlatmayı üretmeye hazır. Fikrinizi paylaşın, birlikte hayata geçirelim.'
+                                    : 'Our workshop is ready to manufacture the lighting you envision. Share your idea and let\'s build it together.'}
+                            </p>
+                            <a href="/custom" onclick="navigate(event,'/custom')" class="btn-enquire" style="display:inline-block; padding:14px 38px; letter-spacing:2px;">
+                                ${isTr ? 'ÖZEL ÜRETİM' : 'CUSTOM LIGHTING'}
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        function renderContactPage() {
+            updateSEO(
+                currentLanguage === 'tr'
+                    ? 'İletişim — CHANDELIST | İstanbul Avize Atölyesi'
+                    : 'Contact — CHANDELIST | Istanbul Chandelier Workshop',
+                currentLanguage === 'tr'
+                    ? 'İstanbul Bahçelievler\'deki atölyemize ulaşın. Otel, restoran ve proje aydınlatması için telefon, e-posta ve adres bilgilerimiz.'
+                    : 'Reach our workshop in Istanbul. Phone, email and address for hotel, restaurant and project lighting enquiries. We ship worldwide.',
+                '',
+                null,
+                '',
+                '/contact'
+            );
+
+            return `
+                <section class="hero contact-video-hero" style="margin-top: 80px;">
+                    <div class="contact-video-wrap">
+                        <iframe class="contact-video-frame"
+                            src="https://www.youtube.com/embed/DhGPEr-byqk?autoplay=1&mute=1&loop=1&playlist=DhGPEr-byqk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=20&disablekb=1"
+                            frameborder="0"
+                            allow="autoplay; encrypted-media"
+                            allowfullscreen
+                            title="Chandelist"></iframe>
+                    </div>
+                    <div class="contact-video-overlay"></div>
+                    <div class="hero-content fade-in">
+                        <h1>${t().contact}</h1>
+                    </div>
+                </section>
+
+                <section class="py-80 scroll-fade">
+                    <div class="container">
+                        <div class="contact-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;">
+                            <div>
+                                <h2>${t().contactUs}</h2>
+                                <div style="margin: 30px 0;">
+                                    <h4 style="margin-bottom: 15px;">${t().address}</h4>
+                                    <p>Çobançeşme Mah. Mithatpaşa Cad.<br>Söğütlü Sok. No:2/1<br>Bahçelievler, İstanbul, Türkiye</p>
+                                </div>
+                                <div style="margin: 30px 0;">
+                                    <h4 style="margin-bottom: 15px;">${t().phone}</h4>
+                                    <a href="tel:+905326681094">+90 532 668 10 94</a>
+                                </div>
+                                <div style="margin: 30px 0;">
+                                    <h4 style="margin-bottom: 15px;">${t().email}</h4>
+                                    <a href="mailto:info@chandelist.com">info@chandelist.com</a>
+                                </div>
+                            </div>
+
+                            <form id="contactForm" style="display: flex; flex-direction: column;">
+                                <div class="form-group">
+                                    <label>${t().yourName}</label>
+                                    <input type="text" id="contactName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().yourEmail}</label>
+                                    <input type="email" id="contactEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().yourPhone}</label>
+                                    <input type="tel" id="contactPhone">
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().message}</label>
+                                    <textarea id="contactMessage" required></textarea>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    <button type="button" class="btn btn-primary" id="sendEmail">${t().sendEmail}</button>
+                                    <button type="button" class="btn btn-gold" id="sendWhatsApp">${t().sendWhatsApp}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        // ============= ADMIN PANEL =============
+        async function adminLogin() {
+            const email = document.getElementById('adminEmailInput').value.trim();
+            const pass = document.getElementById('adminPassInput').value;
+            const errEl = document.getElementById('adminPassError');
+            const btn = document.getElementById('adminLoginBtn');
+            if (!email || !pass) {
+                errEl.textContent = 'E-posta ve şifre gerekli';
+                errEl.style.display = 'block';
+                return;
+            }
+            btn.disabled = true; btn.textContent = 'GİRİŞ YAPILIYOR...';
+            const res = await sbSignIn(email, pass);
+            if (res.ok) {
+                render();
+            } else {
+                errEl.textContent = 'Hatalı e-posta veya şifre';
+                errEl.style.display = 'block';
+                document.getElementById('adminPassInput').value = '';
+                btn.disabled = false; btn.textContent = 'GİRİŞ';
+            }
+        }
+
+        async function renderAdminPanel() {
+            // Gerçek kimlik doğrulama: Supabase Auth oturumu
+            if (!sbIsLoggedIn()) {
+                return `
+                    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f5f0eb;">
+                        <div style="background:#fff;padding:50px 40px;max-width:380px;width:90%;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,0.08);">
+                            <h2 style="font-family:'Cormorant Garamond',serif;font-size:2rem;letter-spacing:3px;margin-bottom:8px;">ADMIN</h2>
+                            <p style="font-size:0.8rem;letter-spacing:2px;color:#8a7d6b;margin-bottom:30px;">CHANDELIST</p>
+                            <input type="email" id="adminEmailInput" placeholder="E-posta" autocomplete="username" style="width:100%;padding:12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center;">
+                            <input type="password" id="adminPassInput" placeholder="Şifre" autocomplete="current-password" onkeydown="if(event.key==='Enter')adminLogin()" style="width:100%;padding:12px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:1rem;margin-bottom:12px;text-align:center;letter-spacing:4px;">
+                            <button id="adminLoginBtn" onclick="adminLogin()" style="width:100%;padding:12px;background:#000;color:#fff;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;">GİRİŞ</button>
+                            <p id="adminPassError" style="display:none;color:#c0392b;font-size:0.8rem;margin-top:10px;letter-spacing:1px;">Hatalı e-posta veya şifre</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            updateSEO('Admin Panel - CHANDELIST', 'Admin dashboard');
+
+            const products = await getProducts();
+            const banners = await getBanners();
+            const _adminSettings = await getSiteSettings();
+            window._adminHeroText = _adminSettings.hero_text || {};
+
+            let productsListHTML = products.map((product, idx) => {
+                const thumb = (product.images && product.images[0]) ? product.images[0] : '';
+                const subcatArr = parseSubcat(product.subcategory);
+                const subcatLabel = subcatArr.join(', ') || '-';
+                const searchStr = ((product.name.tr || '') + ' ' + (product.name.en || '') + ' ' + subcatArr.join(' ') + ' ' + product.id + ' ' + (product.sku || '')).toLowerCase().replace(/"/g,'&quot;');
+                const styleBadge = product.style ? `<span style="font-size:0.72rem;background:#f0ece6;border:1px solid #ddd;border-radius:3px;padding:1px 6px;margin-left:6px;color:#8a7d6b;">${product.style}</span>` : '';
+                return `
+                <div class="admin-product-row" data-subcat="${subcatArr.join('|')}" data-search="${searchStr}" style="display:flex;align-items:center;gap:14px;padding:10px 14px;border-bottom:1px solid #ede8e1;background:${idx%2===0?'#fff':'#faf8f5'};transition:background 0.15s;" onmouseover="this.style.background='#f5f0eb'" onmouseout="this.style.background='${idx%2===0?'#fff':'#faf8f5'}'">
+                    <div style="width:56px;height:56px;flex-shrink:0;border-radius:4px;overflow:hidden;background:#f0ece6;border:1px solid #e8e0d5;">
+                        ${thumb ? `<img src="${thumb}" style="width:100%;height:100%;object-fit:cover;" loading="lazy" onerror="this.style.display='none'">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:1.2rem;">📷</div>`}
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-weight:500;font-size:0.92rem;color:#2c2c2c;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${product.name.tr || product.name.en}${styleBadge}</div>
+                        <div style="font-size:0.78rem;color:#999;margin-top:2px;">${subcatLabel} &nbsp;·&nbsp; ID: ${product.id}${product.sku ? ' &nbsp;·&nbsp; <span style="color:#8a7d6b;font-weight:500;">' + product.sku + '</span>' : ''}</div>
+                    </div>
+                    <div style="display:flex;gap:7px;flex-shrink:0;">
+                        <button style="padding:5px 14px;background:#fff;border:1px solid #c9b99a;border-radius:3px;font-size:0.82rem;cursor:pointer;color:#5a4a3a;" onclick="editProduct(${product.id})">${t().edit}</button>
+                        <button style="padding:5px 12px;background:#fff;border:1px solid #e0c0c0;border-radius:3px;font-size:0.82rem;cursor:pointer;color:#c0392b;" onclick="deleteProduct(${product.id})">✕</button>
+                    </div>
+                </div>`;
+            }).join('');
+
+            return `
+                <div class="admin-container">
+                    <div class="admin-sidebar">
+                        <h3>${t().adminPanel}</h3>
+                        <nav>
+                            <a href="#" class="admin-nav active" data-section="dashboard">${t().dashboard}</a>
+                            <a href="#" class="admin-nav" data-section="products">${t().products}</a>
+                            <a href="#" class="admin-nav" data-section="banners">${t().banners}</a>
+                            <a href="#" class="admin-nav" data-section="shoplook">🛍 Shop the Look</a>
+                            <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
+                            <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
+                            <a href="#" class="admin-nav" data-section="import">Excel Import</a>
+                            <a href="#" class="admin-nav" data-section="workshop">🔨 Atölye Görselleri</a>
+                            <a href="#" class="admin-nav" data-section="pagebanners">🖼 Sayfa Banner'ları</a>
+                            <a href="#" class="admin-nav" data-section="visitors">📊 Ziyaretçiler</a>
+                            <a href="#" class="admin-nav" data-section="aichat">🤖 AI Asistan</a>
+                            <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
+                            <a href="#" onclick="event.preventDefault(); if(confirm('Çıkış yapmak istediğinize emin misiniz?')){ sbSignOut(); window.location.hash='#/'; render(); }" style="color:#c0392b;margin-top:8px;">⏻ ${t().logout}</a>
+                        </nav>
+                    </div>
+
+                    <div class="admin-content">
+                        <div id="dashboard-section" class="admin-section">
+                            <h2>${t().dashboard}</h2>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="number">${products.length}</div>
+                                    <div class="label">${t().totalProducts}</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="number">${banners.length}</div>
+                                    <div class="label">${t().totalBanners}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="products-section" class="admin-section" style="display: none;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                                <h2 style="margin:0;">${t().products} <span style="font-size:0.85rem;font-weight:400;color:#999;">(<span id="productCount">${products.length}</span>)</span></h2>
+                                <button class="btn btn-primary" onclick="(async () => { await addNewProduct(); })()">${t().addProduct}</button>
+                            </div>
+                            <div style="margin-bottom:16px;">
+                                <input type="text" id="productSearchInput" placeholder="🔍 Ürün adı, kod, kategori veya ID ara..." oninput="filterAdminProducts()" style="width:100%;padding:10px 14px;border:1px solid #d8cfc2;border-radius:6px;font-size:0.9rem;margin-bottom:12px;box-sizing:border-box;">
+                                <div id="productCatFilter" style="display:flex;flex-wrap:wrap;gap:8px;">
+                                    <button class="prod-cat-btn active" data-cat="all" onclick="setProductCat(this,'all')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#5a4a3a;color:#fff;font-size:0.82rem;cursor:pointer;">Tümü</button>
+                                    <button class="prod-cat-btn" data-cat="chandelier" onclick="setProductCat(this,'chandelier')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Avizeler</button>
+                                    <button class="prod-cat-btn" data-cat="sconce" onclick="setProductCat(this,'sconce')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Aplikler</button>
+                                    <button class="prod-cat-btn" data-cat="table_lamp" onclick="setProductCat(this,'table_lamp')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Masa Lambaları</button>
+                                    <button class="prod-cat-btn" data-cat="floor_lamp" onclick="setProductCat(this,'floor_lamp')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Lambaderler</button>
+                                    <button class="prod-cat-btn" data-cat="outdoor" onclick="setProductCat(this,'outdoor')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Dış Mekan</button>
+                                    <button class="prod-cat-btn" data-cat="side_table" onclick="setProductCat(this,'side_table')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Yan Sehpalar</button>
+                                    <button class="prod-cat-btn" data-cat="tray" onclick="setProductCat(this,'tray')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Tepsiler</button>
+                                    <button class="prod-cat-btn" data-cat="mirror" onclick="setProductCat(this,'mirror')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Aynalar</button>
+                                    <button class="prod-cat-btn" data-cat="candleholder" onclick="setProductCat(this,'candleholder')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Mumluklar</button>
+                                    <button class="prod-cat-btn" data-cat="vase" onclick="setProductCat(this,'vase')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Vazolar</button>
+                                    <button class="prod-cat-btn" data-cat="lantern" onclick="setProductCat(this,'lantern')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Tekli Fener</button>
+                                    <button class="prod-cat-btn" data-cat="decorative" onclick="setProductCat(this,'decorative')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Dekoratif</button>
+                                </div>
+                            </div>
+                            <div style="border:1px solid #ede8e1;border-radius:6px;overflow:hidden;">
+                                ${productsListHTML}
+                                <div id="noProductMatch" style="display:none;padding:30px;text-align:center;color:#aaa;">Eşleşen ürün bulunamadı.</div>
+                            </div>
+                        </div>
+
+                        <div id="banners-section" class="admin-section" style="display: none;">
+                            <h2>${t().banners}</h2>
+                            <button class="btn btn-primary" style="margin-bottom: 30px;" onclick="(async () => { await addNewBanner(); })()">${t().addBanner}</button>
+                            <div>
+                                ${banners.map(banner => `
+                                    <div class="admin-card">
+                                        <h4>Banner #${banner.id}</h4>
+                                        <p>${banner.type === 'video' ? 'Video' : 'Image'} - ${banner.position}</p>
+                                        <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                            <button class="btn" style="flex: 1;" onclick="editBanner(${banner.id})">${t().edit}</button>
+                                            <button class="btn" style="flex: 1;" onclick="deleteBanner(${banner.id})">${t().deleteProduct}</button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div id="shoplook-section" class="admin-section" style="display: none;">
+                            <h2>🛍 Shop the Look</h2>
+                            <p style="color:#888;font-size:0.88rem;margin-bottom:20px;">Ana sayfada yan yana gösterilen, tıklayınca ürüne yönlendiren lifestyle fotoğrafları.</p>
+                            <button class="btn btn-primary" style="margin-bottom: 30px;" onclick="(async () => { await addShopLook(); })()">+ Fotoğraf Ekle</button>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">
+                                ${banners.filter(b => b.position === 'shop_look').map(item => {
+                                    const lp = item.linkedProductId ? products.find(p => String(p.id) === String(item.linkedProductId)) : null;
+                                    const lpName = lp ? (lp.name?.tr || lp.name?.en || '') : '<span style="color:#c0392b;">Ürün bağlı değil</span>';
+                                    return `
+                                    <div class="admin-card">
+                                        <img src="${item.url}" style="width:100%;height:140px;object-fit:cover;border-radius:4px;margin-bottom:10px;" onerror="this.style.display='none'">
+                                        <p style="font-size:0.82rem;">Bağlı ürün: ${lpName}</p>
+                                        <div style="margin-top: 12px; display: flex; gap: 10px;">
+                                            <button class="btn" style="flex: 1;" onclick="editShopLook(${item.id})">${t().edit}</button>
+                                            <button class="btn" style="flex: 1;" onclick="deleteBanner(${item.id})">${t().deleteProduct}</button>
+                                        </div>
+                                    </div>`;
+                                }).join('') || '<p style="color:#aaa;">Henüz fotoğraf eklenmedi.</p>'}
+                            </div>
+                        </div>
+
+                        <div id="collections-section" class="admin-section" style="display: none;">
+                            <h2>Avize Koleksiyonları</h2>
+                            <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:30px;">
+                                Avize sayfasındaki iki koleksiyon banner'ını buradan düzenleyebilirsiniz.<br>
+                                <strong>Önerilen banner görseli boyutu: 1400 × 700 px</strong>
+                            </p>
+                            ${getCollections().map((col, idx) => `
+                                <div class="collection-admin-card">
+                                    <h3>${col.title.tr} / ${col.title.en}</h3>
+                                    ${col.image ? `<img src="${col.image}" alt="${col.title.tr}" class="collection-img-preview">` : `<div style="background:#f0ece6;height:160px;display:flex;align-items:center;justify-content:center;color:#aaa;margin-bottom:12px;">Henüz görsel eklenmedi</div>`}
+                                    <div class="form-group" style="margin-bottom:12px;">
+                                        <label>Başlık (TR)</label>
+                                        <input type="text" id="colTitleTr_${idx}" value="${col.title.tr}" style="width:100%;padding:8px;border:1px solid #ddd;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:12px;">
+                                        <label>Başlık (EN)</label>
+                                        <input type="text" id="colTitleEn_${idx}" value="${col.title.en}" style="width:100%;padding:8px;border:1px solid #ddd;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:12px;">
+                                        <label>Alt Başlık (TR)</label>
+                                        <input type="text" id="colSubTr_${idx}" value="${col.subtitle.tr}" style="width:100%;padding:8px;border:1px solid #ddd;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:12px;">
+                                        <label>Alt Başlık (EN)</label>
+                                        <input type="text" id="colSubEn_${idx}" value="${col.subtitle.en}" style="width:100%;padding:8px;border:1px solid #ddd;">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:16px;">
+                                        <label>Banner Görseli</label>
+                                        <div style="display:flex;gap:10px;align-items:center;margin-top:8px;">
+                                            <button type="button" class="btn" onclick="uploadCollectionImage(${idx})">📷 Görsel Yükle</button>
+                                            ${col.image ? `<button type="button" class="btn" onclick="removeCollectionImage(${idx})" style="background:#fff;border:1px solid #ddd;color:#c00;">Görseli Kaldır</button>` : ''}
+                                        </div>
+                                        <small style="color:#999;font-size:0.8rem;margin-top:6px;display:block;">Önerilen: 1400 × 700 px · JPG/PNG/WEBP</small>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="saveCollection(${idx})">Kaydet</button>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div id="sorting-section" class="admin-section" style="display: none;">
+                            <h2 style="margin-bottom:6px;">Sayfa Sıralaması</h2>
+                            <p style="color:#8a7d6b;font-size:0.85rem;margin-bottom:24px;">Ürünleri sürükleyip bırakarak sırayı değiştir, ardından Kaydet butonuna bas.</p>
+
+                            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;" id="sortCatTabs">
+                                <button class="sort-cat-btn active" data-cat="chandelier" onclick="loadSortGrid('chandelier')">Avizeler</button>
+                                <button class="sort-cat-btn" data-cat="sconce" onclick="loadSortGrid('sconce')">Aplikler</button>
+                                <button class="sort-cat-btn" data-cat="table_lamp" onclick="loadSortGrid('table_lamp')">Masa Lambaları</button>
+                                <button class="sort-cat-btn" data-cat="floor_lamp" onclick="loadSortGrid('floor_lamp')">Lambaderler</button>
+                                <button class="sort-cat-btn" data-cat="outdoor" onclick="loadSortGrid('outdoor')">Dış Mekan</button>
+                                <button class="sort-cat-btn" data-cat="lantern" onclick="loadSortGrid('lantern')">Tekli Fener</button>
+                                <button class="sort-cat-btn" data-cat="decorative" onclick="loadSortGrid('decorative')">Dekoratif</button>
+                                <button class="sort-cat-btn" data-cat="homedecor" onclick="loadSortGrid('homedecor')">Ev Dekorasyonu</button>
+                                <button class="sort-cat-btn" data-cat="side_table" onclick="loadSortGrid('side_table')">Yan Sehpalar</button>
+                                <button class="sort-cat-btn" data-cat="tray" onclick="loadSortGrid('tray')">Tepsiler</button>
+                                <button class="sort-cat-btn" data-cat="mirror" onclick="loadSortGrid('mirror')">Aynalar</button>
+                                <button class="sort-cat-btn" data-cat="candleholder" onclick="loadSortGrid('candleholder')">Mumluklar</button>
+                                <button class="sort-cat-btn" data-cat="vase" onclick="loadSortGrid('vase')">Vazolar</button>
+                            </div>
+
+                            <div id="sortGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;min-height:200px;padding:16px;background:#faf8f5;border-radius:8px;border:2px dashed #e8e0d5;">
+                                <p style="color:#aaa;font-size:0.85rem;grid-column:1/-1;text-align:center;padding:40px 0;">Yükleniyor...</p>
+                            </div>
+
+                            <div style="margin-top:20px;display:flex;gap:12px;align-items:center;">
+                                <button onclick="saveSortOrder()" style="padding:10px 28px;background:#2c2c2c;color:#fff;border:none;border-radius:4px;font-size:0.9rem;cursor:pointer;letter-spacing:1px;">💾 Kaydet</button>
+                                <span id="sortSaveMsg" style="display:none;color:#27ae60;font-size:0.85rem;"></span>
+                            </div>
+                        </div>
+
+                        <div id="workshop-section" class="admin-section" style="display: none;">
+                            <h2>🔨 Atölye Görselleri & Video</h2>
+                            <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:8px;">Atölyemiz sayfasındaki üretim fotoğrafları ve videosu. Değişiklik <strong>her iki sitede de</strong> geçerli olur.</p>
+                            <div class="collection-admin-card" style="margin-bottom:20px;">
+                                <h3 style="margin-top:0;">📷 Üretim Fotoğrafları</h3>
+                                <p style="font-size:0.85rem; color:#999;">Kare (1×1) fotoğraflar en iyi görünür. İstediğiniz kadar ekleyebilirsiniz.</p>
+                                <button type="button" class="btn" onclick="uploadWorkshopImage()">📷 Fotoğraf Ekle</button>
+                                <div id="ws-gallery" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:12px; margin-top:16px;"></div>
+                            </div>
+                            <div class="collection-admin-card">
+                                <h3 style="margin-top:0;">🎬 Üretim Videosu</h3>
+                                <p style="font-size:0.85rem; color:#999;">Tek bir üretim/atölye videosu. Yeni yüklerseniz eskisinin yerini alır.</p>
+                                <div id="ws-video-preview"></div>
+                                <button type="button" class="btn" onclick="uploadWorkshopVideo()">🎬 Video Yükle</button>
+                                <span id="ws-video-msg" style="color:#27ae60;font-size:0.85rem;display:none;margin-left:10px;">✓ Kaydedildi</span>
+                            </div>
+                        </div>
+
+                        <div id="pagebanners-section" class="admin-section" style="display: none;">
+                            <h2>🖼 Sayfa Banner'ları</h2>
+                            <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:8px;">
+                                Kategori sayfalarının üst görsellerini buradan yönetin. Değişiklik <strong>her iki sitede de</strong> (Chandelist + Osmanlı) geçerli olur.<br>
+                                <strong>Masaüstü: 1400×600 (yatay) · Mobil: 800×1000 (dikey/kare)</strong> · JPG/PNG/WEBP<br>
+                                <span style="color:#999;">Mobil görsel yüklemezseniz masaüstü görseli mobilde de kullanılır (ortadan kırpılabilir).</span>
+                            </p>
+                            <div id="pb-list"></div>
+                        </div>
+
+                        <div id="visitors-section" class="admin-section" style="display: none;">
+                            <h2>📊 Ziyaretçiler</h2>
+                            <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
+                                <button class="vis-site-btn active" data-site="chandelist" onclick="setVisSite('chandelist')" style="padding:8px 18px;border:2px solid #8a7d6b;background:#8a7d6b;color:#fff;border-radius:6px;cursor:pointer;font-weight:600;">Chandelist</button>
+                                <button class="vis-site-btn" data-site="osmanli" onclick="setVisSite('osmanli')" style="padding:8px 18px;border:2px solid #8a7d6b;background:#fff;color:#8a7d6b;border-radius:6px;cursor:pointer;font-weight:600;">Osmanlı</button>
+                            </div>
+                            <div style="display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;">
+                                <button class="vis-range-btn active" data-days="1" onclick="loadVisitors(1)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Bugün</button>
+                                <button class="vis-range-btn" data-days="7" onclick="loadVisitors(7)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Son 7 Gün</button>
+                                <button class="vis-range-btn" data-days="30" onclick="loadVisitors(30)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Son 30 Gün</button>
+                                <button class="vis-range-btn" data-days="9999" onclick="loadVisitors(9999)" style="padding:8px 16px;border:1px solid #d8cfc2;background:#fff;border-radius:6px;cursor:pointer;">Tümü</button>
+                            </div>
+
+                            <div id="vis-summary" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:16px; margin-bottom:24px;">
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;text-align:center;">
+                                    <div style="font-size:2rem;font-weight:700;color:#8a7d6b;" id="vis-total">—</div>
+                                    <div style="font-size:0.8rem;color:#999;letter-spacing:1px;text-transform:uppercase;">Toplam Görüntülenme</div>
+                                </div>
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;text-align:center;">
+                                    <div style="font-size:2rem;font-weight:700;color:#8a7d6b;" id="vis-unique">—</div>
+                                    <div style="font-size:0.8rem;color:#999;letter-spacing:1px;text-transform:uppercase;">Tekil Ziyaretçi</div>
+                                </div>
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;text-align:center;">
+                                    <div style="font-size:2rem;font-weight:700;color:#8a7d6b;" id="vis-countries">—</div>
+                                    <div style="font-size:0.8rem;color:#999;letter-spacing:1px;text-transform:uppercase;">Ülke Sayısı</div>
+                                </div>
+                            </div>
+
+                            <div id="vis-loading" style="text-align:center;padding:30px;color:#999;">Yükleniyor...</div>
+
+                            <div id="vis-detail" style="display:none;">
+                                <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;margin-bottom:20px;">
+                                    <h3 style="margin-top:0;font-size:1rem;">📈 Günlük Ziyaret Grafiği</h3>
+                                    <div id="vis-chart" style="display:flex;align-items:flex-end;gap:4px;height:140px;padding-top:10px;"></div>
+                                </div>
+
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">🔥 En Çok Bakılan Sayfalar</h3>
+                                        <div id="vis-pages"></div>
+                                    </div>
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">🌍 Ülkeler</h3>
+                                        <div id="vis-country-list"></div>
+                                    </div>
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">↗️ Nereden Geldiler</h3>
+                                        <div id="vis-referrers"></div>
+                                    </div>
+                                    <div style="background:#fff;border:1px solid #ece6dc;border-radius:8px;padding:20px;">
+                                        <h3 style="margin-top:0;font-size:1rem;">📱 Cihaz</h3>
+                                        <div id="vis-devices"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                                <div id="aichat-section" class="admin-section" style="display: none;">
+                            <h2>AI Asistan ile Ürün Ekle</h2>
+                            <p style="color:#8a7d6b;font-size:0.9rem;margin-bottom:20px;">
+                                Ürün fotoğrafını bırak, sohbet ederek ekleyelim. Emin olmadığı şeyi uydurmaz, sana sorar.
+                            </p>
+
+                            <div id="aiChatBox" style="border:1px solid #e0d8cc;border-radius:10px;background:#fdfcfa;height:460px;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;"></div>
+
+                            <div id="aiImageStrip" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;"></div>
+
+                            <div style="display:flex;gap:10px;margin-top:12px;align-items:flex-end;">
+                                <input type="file" id="aiImageInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none;" onchange="aiAddImages(this)">
+                                <button type="button" class="btn" onclick="document.getElementById('aiImageInput').click()" style="flex-shrink:0;">📷 Fotoğraf</button>
+                                <textarea id="aiChatInput" rows="2" placeholder="Mesaj yaz veya fotoğraf ekleyip Gönder'e bas..." style="flex:1;resize:vertical;padding:10px;border:1px solid #d8cfc0;border-radius:8px;font-family:inherit;font-size:0.92rem;"></textarea>
+                                <button type="button" id="aiSendBtn" class="btn btn-primary" onclick="aiSend()" style="flex-shrink:0;">Gönder</button>
+                            </div>
+
+                            <div style="display:flex;gap:10px;margin-top:10px;">
+                                <button type="button" class="btn" onclick="aiReset()" style="font-size:0.85rem;">↺ Yeni ürün</button>
+                                <span id="aiStatus" style="font-size:0.85rem;color:#8a7d6b;align-self:center;"></span>
+                            </div>
+                        </div>
+
+                        <div id="settings-section" class="admin-section" style="display: none;">
+                            <h2>Ayarlar</h2>
+                            <div class="collection-admin-card">
+                                <h3>🖼 Ana Sayfa Başlık Metni</h3>
+                                <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">Ana sayfadaki büyük görselin üzerinde görünen başlık ve alt yazı.</p>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                                    <div>
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇹🇷 Türkçe Başlık</label>
+                                        <input type="text" id="heroTitleTr" value="${(window._adminHeroText?.title_tr || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;margin-bottom:12px;">
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇹🇷 Türkçe Alt Yazı</label>
+                                        <input type="text" id="heroSubtitleTr" value="${(window._adminHeroText?.subtitle_tr || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;">
+                                    </div>
+                                    <div>
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇬🇧 İngilizce Başlık</label>
+                                        <input type="text" id="heroTitleEn" value="${(window._adminHeroText?.title_en || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;margin-bottom:12px;">
+                                        <label style="font-size:0.82rem;color:#888;display:block;margin-bottom:6px;">🇬🇧 İngilizce Alt Yazı</label>
+                                        <input type="text" id="heroSubtitleEn" value="${(window._adminHeroText?.subtitle_en || '').replace(/"/g,'&quot;')}" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;">
+                                    </div>
+                                </div>
+                                <div style="margin-top:16px;display:flex;gap:12px;align-items:center;">
+                                    <button class="btn btn-primary" onclick="saveHeroText()">💾 Başlığı Kaydet</button>
+                                    <span id="heroSaveMsg" style="display:none;color:#27ae60;font-size:0.85rem;"></span>
+                                </div>
+                            </div>
+                            <div class="collection-admin-card">
+                                <h3>Claude API Key</h3>
+                                <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">
+                                    Excel Import sırasında otomatik açıklama ve SEO üretimi için Anthropic API key gerekli.<br>
+                                    Key sadece bu tarayıcıda saklanır, hiçbir yere gönderilmez.
+                                </p>
+                                <div style="display:flex;gap:10px;align-items:center;">
+                                    <input type="password" id="anthropicKeyInput" placeholder="sk-ant-api03-..."
+                                        value="${localStorage.getItem('anthropic_api_key') ? '••••••••••••••••••••' : ''}"
+                                        style="flex:1;padding:10px;border:1px solid #ddd;font-family:monospace;font-size:0.9rem;">
+                                    <button class="btn btn-primary" onclick="
+                                        const val = document.getElementById('anthropicKeyInput').value;
+                                        if (val && !val.startsWith('•')) {
+                                            localStorage.setItem('anthropic_api_key', val);
+                                            document.getElementById('anthropicKeyInput').value = '••••••••••••••••••••';
+                                            document.getElementById('apiKeyStatus').textContent = '✓ Kaydedildi';
+                                            document.getElementById('apiKeyStatus').style.color = '#2e7d32';
+                                        }
+                                    ">Kaydet</button>
+                                    <button class="btn" onclick="
+                                        localStorage.removeItem('anthropic_api_key');
+                                        document.getElementById('anthropicKeyInput').value = '';
+                                        document.getElementById('apiKeyStatus').textContent = 'Silindi';
+                                        document.getElementById('apiKeyStatus').style.color = '#c62828';
+                                    ">Sil</button>
+                                </div>
+                                <p id="apiKeyStatus" style="font-size:0.82rem;margin-top:8px;color:${localStorage.getItem('anthropic_api_key') ? '#2e7d32' : '#999'};">
+                                    ${localStorage.getItem('anthropic_api_key') ? '✓ API key kayıtlı' : 'Henüz key girilmemiş'}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="import-section" class="admin-section" style="display: none;">
+                            <h2>Excel ile Toplu Ürün Yükleme</h2>
+                            <p style="color:#8a7d6b;font-size:0.9rem;margin-bottom:28px;">
+                                Excel dosyasını şablona göre doldurarak tüm ürünlerinizi tek seferde ekleyebilirsiniz.
+                            </p>
+
+                            <!-- Step 1: Download template -->
+                            <div class="collection-admin-card">
+                                <h3>1. Şablonu İndir</h3>
+                                <p style="font-size:0.88rem;color:#666;margin-bottom:16px;">
+                                    Şablonu indir, Excel'de doldur. Her satır bir ürün. Resim URL'lerini Cloudinary'a yükleyip adreslerini gir.
+                                </p>
+                                <button class="btn btn-primary" onclick="downloadExcelTemplate()">⬇ Excel Şablonu İndir</button>
+                                <details style="margin-top:16px;">
+                                    <summary style="cursor:pointer;color:#8a7d6b;font-size:0.85rem;">Sütun açıklamaları</summary>
+                                    <table style="width:100%;border-collapse:collapse;margin-top:12px;font-size:0.82rem;">
+                                        <tr style="background:#f5f2ed;">
+                                            <th style="padding:8px;text-align:left;border:1px solid #e8e0d5;">Sütun</th>
+                                            <th style="padding:8px;text-align:left;border:1px solid #e8e0d5;">Açıklama</th>
+                                            <th style="padding:8px;text-align:left;border:1px solid #e8e0d5;">Örnek</th>
+                                        </tr>
+                                        ${[
+                                            ['urun_adi_tr','Ürün adı (Türkçe)','Kristal Avize'],
+                                            ['urun_adi_en','Ürün adı (İngilizce)','Crystal Chandelier'],
+                                            ['aciklama_tr','Açıklama (TR)','Lüks kristal avize'],
+                                            ['aciklama_en','Açıklama (EN)','Luxury crystal chandelier'],
+                                            ['kategori','lighting veya decorative veya homedecor','lighting'],
+                                            ['alt_kategori','chandelier / sconce / table_lamp / floor_lamp / outdoor','chandelier'],
+                                            ['koleksiyon','modern veya traditional (sadece avize)','modern'],
+                                            ['fiyat','Fiyat bilgisi','Fiyat İçin Sor'],
+                                            ['malzeme','Malzeme bilgisi','Kristal, Altın Kaplama'],
+                                            ['boyut','Boyut bilgisi','60cm × 40cm'],
+                                            ['resim_1','1. resim URL (zorunlu)','https://res.cloudinary.com/...'],
+                                            ['resim_2','2. resim URL (opsiyonel)',''],
+                                            ['resim_3','3. resim URL (opsiyonel)',''],
+                                            ['video_url','Video URL (opsiyonel)',''],
+                                        ].map(([col,desc,ex]) => `
+                                            <tr>
+                                                <td style="padding:7px 8px;border:1px solid #e8e0d5;font-family:monospace;font-size:0.8rem;">${col}</td>
+                                                <td style="padding:7px 8px;border:1px solid #e8e0d5;color:#555;">${desc}</td>
+                                                <td style="padding:7px 8px;border:1px solid #e8e0d5;color:#999;">${ex}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </table>
+                                </details>
+                            </div>
+
+                            <!-- Step 2: Upload Excel -->
+                            <div class="collection-admin-card">
+                                <h3>2. Excel Dosyasını Yükle</h3>
+                                <input type="file" id="excelFileInput" accept=".xlsx,.xls,.csv" style="display:none;" onchange="previewExcelImport(this)">
+                                <button class="btn" onclick="document.getElementById('excelFileInput').click()">📂 Dosya Seç (.xlsx / .csv)</button>
+                                <div id="importPreview" style="margin-top:20px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Product edit modal with tabs
+        async function showProductModal(productId = null) {
+            const products = await getProducts();
+            const product = productId ? products.find(p => p.id === parseInt(productId)) : null;
+
+            const subcategoryOptions = [
+                { value: 'chandelier', label: 'Avize' },
+                { value: 'sconce', label: 'Aplik' },
+                { value: 'table_lamp', label: 'Masa Lambası' },
+                { value: 'floor_lamp', label: 'Lambader' },
+                { value: 'outdoor', label: 'Dış Mekan Aydınlatma' },
+                { value: 'lantern', label: 'Tekli Fener' },
+                { value: 'side_table', label: 'Yan Sehpa' },
+                { value: 'tray', label: 'Tepsi' },
+                { value: 'mirror', label: 'Ayna' },
+                { value: 'candleholder', label: 'Mumluk & Şamdan' },
+                { value: 'vase', label: 'Vazo & Obje' },
+                { value: 'planter', label: 'Saksı' },
+            ];
+
+            let imagesHTML = product && product.images ? product.images.map((img, idx) => `
+                <div style="margin-bottom: 10px;">
+                    <input type="text" value="${img}" class="form-control" style="width: 100%; padding: 8px; border: 1px solid #ddd;">
+                    <button type="button" class="btn" style="font-size: 0.75rem; margin-top: 5px;" onclick="this.parentElement.remove()">Remove</button>
+                </div>
+            `).join('') : '';
+
+            let videosHTML = product && product.videos ? product.videos.filter(v => v && v.trim()).map((vid, idx) => `
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                    <video src="${vid}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;background:#000;flex-shrink:0;" muted></video>
+                    <input type="text" value="${vid}" class="form-control" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;color:#555;" readonly>
+                    <button type="button" style="padding:6px 10px;background:#fff;border:1px solid #e0c0c0;border-radius:4px;color:#c0392b;cursor:pointer;font-size:0.85rem;" onclick="this.parentElement.remove()">✕</button>
+                </div>
+            `).join('') : '';
+
+            const modal = `
+                <div class="modal-overlay" id="productModal">
+                    <div class="modal" style="max-width: 600px;">
+                        <button class="modal-close" onclick="closeModal()">&times;</button>
+                        <h2 style="margin-bottom: 20px;">${product ? t().editProduct : t().addProduct}</h2>
+                        <form id="productForm">
+
+                            <!-- AUTO FILL BANNER -->
+                            <div id="autoFillBanner" style="background: linear-gradient(135deg,#f5f0e8,#ede8df); border:1px solid #d4c9b5; border-radius:10px; padding:16px 20px; margin-bottom:20px; display:flex; align-items:center; gap:14px;">
+                                <span style="font-size:2rem;">🤖</span>
+                                <div style="flex:1;">
+                                    <div style="font-weight:600; font-size:0.95rem; color:#2c2c2c; margin-bottom:3px;">Görsel Analizi ile Otomatik Doldur</div>
+                                    <div style="font-size:0.82rem; color:#666;">Önce ürün fotoğrafını yükle (aşağıdaki "General" sekmesi) → sonra bu butona bas → tüm alanlar otomatik dolar</div>
+                                </div>
+                                <button type="button" id="autoFillBtn" onclick="autoFillFromImage()" style="background:#2c2c2c; color:#fff; border:none; padding:10px 18px; border-radius:7px; font-size:0.9rem; cursor:pointer; white-space:nowrap; flex-shrink:0;">✨ Otomatik Doldur</button>
+                            </div>
+                            <div id="autoFillStatus" style="display:none; text-align:center; padding:12px; background:#f9f6f1; border-radius:8px; margin-bottom:16px; font-size:0.88rem; color:#8a7d6b;"></div>
+
+                            <!-- Tab Navigation -->
+                            <div class="admin-tabs">
+                                <button type="button" class="admin-tab-btn active" data-tab="tr-tab">TR</button>
+                                <button type="button" class="admin-tab-btn" data-tab="en-tab">EN</button>
+                                <button type="button" class="admin-tab-btn" data-tab="general-tab">General</button>
+                                <button type="button" class="admin-tab-btn" data-tab="variants-tab">Varyantlar</button>
+                            </div>
+
+                            <!-- TR Tab -->
+                            <div id="tr-tab" class="admin-tab-panel active">
+                                <div class="form-group">
+                                    <label>Ürün Adı (TR)</label>
+                                    <input type="text" id="formProductNameTr" value="${product ? product.name.tr : ''}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Açıklama (TR)</label>
+                                    <textarea id="formDescriptionTr" required>${product ? product.description.tr : ''}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Başlık (TR)</label>
+                                    <input type="text" id="formMetaTitleTr" value="${product && product.metaTitle ? product.metaTitle.tr : ''}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Açıklama (TR)</label>
+                                    <textarea id="formMetaDescriptionTr" required>${product && product.metaDescription ? product.metaDescription.tr : ''}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Anahtar Kelimeler (TR)</label>
+                                    <textarea id="formKeywordsTr" placeholder="Virgülle ayrılmış...">${product && product.keywords ? product.keywords.tr : ''}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- EN Tab -->
+                            <div id="en-tab" class="admin-tab-panel">
+                                <div class="form-group">
+                                    <label>Product Name (EN)</label>
+                                    <input type="text" id="formProductNameEn" value="${product ? product.name.en : ''}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description (EN)</label>
+                                    <textarea id="formDescriptionEn" required>${product ? product.description.en : ''}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Title (EN)</label>
+                                    <input type="text" id="formMetaTitleEn" value="${product && product.metaTitle ? product.metaTitle.en : ''}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Meta Description (EN)</label>
+                                    <textarea id="formMetaDescriptionEn" required>${product && product.metaDescription ? product.metaDescription.en : ''}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Keywords (EN)</label>
+                                    <textarea id="formKeywordsEn" placeholder="Comma-separated...">${product && product.keywords ? product.keywords.en : ''}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- General Tab -->
+                            <div id="general-tab" class="admin-tab-panel">
+                                <div class="form-group">
+                                    <label>Ürün Kodu (SKU)</label>
+                                    <input type="text" id="formSku" value="${product && product.sku ? product.sku : ''}" placeholder="Örn: CH-OUT-BOX-WH-32">
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().category}</label>
+                                    <select id="formCategory" required>
+                                        <option value="lighting" ${product && product.category === 'lighting' ? 'selected' : ''}>Lighting</option>
+                                        <option value="homedecor" ${product && product.category === 'homedecor' ? 'selected' : ''}>Ev Dekorasyonu</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().subcategory} <small style="color:#999;font-weight:400;">(birden fazla seçebilirsiniz)</small></label>
+                                    <div id="formSubcategory" style="display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid #ddd;background:#fafaf9;">
+                                        ${subcategoryOptions.map(opt => {
+                                            const checked = product
+                                                ? parseSubcat(product.subcategory).includes(opt.value)
+                                                : false;
+                                            return `<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:400;">
+                                                <input type="checkbox" name="subcategoryCheck" value="${opt.value}" ${checked ? 'checked' : ''} onchange="toggleStyleField()" style="width:16px;height:16px;cursor:pointer;">
+                                                ${opt.label}
+                                            </label>`;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                                <div class="form-group" id="styleFieldGroup" style="display:${product && parseSubcat(product.subcategory).includes('chandelier') ? 'block' : 'none'};">
+                                    <label>Görünüm Bölümü <small style="color:#999;font-weight:400;">(birden fazla seçebilirsiniz)</small></label>
+                                    <div style="display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid #ddd;background:#fafaf9;">
+                                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:400;">
+                                            <input type="checkbox" name="styleCheck" value="modern" ${!product || !product.style || product.style === 'modern' || product.style === 'both' ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
+                                            Modern Avize
+                                        </label>
+                                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:400;">
+                                            <input type="checkbox" name="styleCheck" value="traditional" ${product && (product.style === 'traditional' || product.style === 'both') ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
+                                            Türk · Fas · Rustik
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().price}</label>
+                                    <input type="text" id="formPrice" value="${product ? product.price : ''}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().materials}</label>
+                                    <input type="text" id="formMaterials" value="${product ? product.materials : ''}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>${t().dimensions}</label>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px;">
+                                        ${(() => {
+                                            let dim = {h:'',dia:'',w:'',d:''};
+                                            if (product && product.dimensions) {
+                                                try { dim = JSON.parse(product.dimensions); } catch(e) {}
+                                            }
+                                            return `
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Height / Yükseklik (cm)</label>
+                                                <input type="number" id="formDimH" min="0" step="0.1" placeholder="örn: 120" value="${dim.h||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Diameter / Çap (cm)</label>
+                                                <input type="number" id="formDimDia" min="0" step="0.1" placeholder="örn: 60" value="${dim.dia||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Width / Genişlik (cm)</label>
+                                                <input type="number" id="formDimW" min="0" step="0.1" placeholder="örn: 40" value="${dim.w||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>
+                                            <div>
+                                                <label style="font-size:0.82rem;color:#8a7d6b;margin-bottom:4px;display:block;">Depth / Derinlik (cm)</label>
+                                                <input type="number" id="formDimD" min="0" step="0.1" placeholder="örn: 40" value="${dim.d||''}" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;">
+                                            </div>`;
+                                        })()}
+                                    </div>
+                                </div>
+
+                                <!-- IMAGE UPLOAD SECTION -->
+                                <div style="margin-top: 30px;">
+                                    <label style="font-weight:600; margin-bottom:8px; display:block;">📷 Ürün Fotoğrafları</label>
+                                    <small style="color:#999; font-size:0.85rem; display:block; margin-bottom:12px;">İlk resim ana görsel olur. Maksimum 10 resim. JPG/PNG/WEBP desteklenir.</small>
+
+                                    <!-- Preview Grid -->
+                                    <small style="color:#aaa;font-size:0.75rem;display:block;margin-bottom:6px;">💡 Resimleri sürükleyerek sıralayabilirsiniz. İlk resim ana görsel olur.</small>
+                                    <div id="imagePreviewGrid" class="image-preview-grid">
+                                        ${[...new Set(product && product.images ? product.images : [])].map((img, idx) => `
+                                            <div class="image-preview-item" data-src="${img}" draggable="true">
+                                                <img src="${img}" alt="Ürün ${idx+1}">
+                                                ${idx === 0 ? '<span class="main-badge">Ana</span>' : ''}
+                                                <button type="button" class="remove-img" onclick="removeImagePreview(this)">×</button>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+
+                                    <!-- Native File Upload (always works) -->
+                                    <input type="file" id="nativeImageInput" accept="image/jpeg,image/png,image/webp,image/gif" multiple style="display:none;" onchange="handleNativeImageUpload(this)">
+                                    <div class="image-upload-zone" id="imageDropZone" onclick="document.getElementById('nativeImageInput').click()" style="cursor:pointer;">
+                                        <div class="upload-icon">📁</div>
+                                        <p><strong>Resim Yükle</strong><br>Bilgisayarınızdan seçin</p>
+                                        <small style="color:#999; font-size:0.75rem;">JPG · PNG · WEBP · Maks. 10 resim</small>
+                                    </div>
+                                    <div id="uploadProgress" style="display:none; margin-top:8px; font-size:0.82rem; color:#8a7d6b; letter-spacing:1px;">Yükleniyor...</div>
+
+                                    <!-- URL ile ekle -->
+                                    <details style="margin-top:10px;">
+                                        <summary style="cursor:pointer; color:#8a7d6b; font-size:0.85rem; padding:5px 0;">🔗 URL ile resim ekle</summary>
+                                        <div id="imageUrlContainer" style="margin-top:10px;">
+                                        </div>
+                                        <button type="button" class="btn" style="margin-top:8px; font-size:0.8rem;" onclick="addImageUrlInput()">+ URL Ekle</button>
+                                    </details>
+                                </div>
+
+                                <!-- VIDEO SECTION -->
+                                <div style="margin-top: 30px;">
+                                    <label style="font-weight:600; margin-bottom:8px; display:block;">🎥 Ürün Videosu</label>
+                                    <small style="color:#999; font-size:0.85rem; display:block; margin-bottom:12px;">Video yükle veya URL gir (MP4). Opsiyonel.</small>
+
+                                    <!-- Video Önizleme -->
+                                    <div id="videosContainer" style="margin-bottom:12px;">
+                                        ${videosHTML}
+                                    </div>
+
+                                    <!-- Yükleme Butonları -->
+                                    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                                        <button type="button" onclick="uploadVideoCloudinary()" style="padding:9px 18px;background:#2c2c2c;color:#fff;border:none;border-radius:4px;font-size:0.85rem;cursor:pointer;display:flex;align-items:center;gap:6px;">
+                                            ☁️ Video Yükle
+                                        </button>
+                                        <button type="button" class="btn" onclick="addVideoInput()" style="font-size:0.85rem;">+ URL ile Ekle</button>
+                                    </div>
+                                    <div id="videoUploadStatus" style="display:none;margin-top:8px;font-size:0.82rem;color:#8a7d6b;"></div>
+                                </div>
+
+                                <!-- RELATED PRODUCTS SECTION -->
+                                <div style="margin-top: 30px;">
+                                    <label style="font-weight:600; margin-bottom:8px; display:block;">🔗 Benzer / İlgili Ürünler</label>
+                                    <small style="color:#999; font-size:0.85rem; display:block; margin-bottom:10px;">Ürün sayfasının altında gösterilecek ürünleri seçin (maks. 5)</small>
+                                    <div class="related-products-grid" id="relatedProductsGrid">
+                                        ${products.filter(p => !productId || p.id !== parseInt(productId)).map(p => `
+                                            <label class="related-product-item${product && product.relatedProducts && product.relatedProducts.includes(p.id) ? ' selected' : ''}" for="rel_${p.id}" title="${(p.name.tr || p.name.en || '').replace(/"/g,'&quot;')}">
+                                                <input type="checkbox" id="rel_${p.id}" name="relatedProducts" value="${p.id}"
+                                                    ${product && product.relatedProducts && product.relatedProducts.includes(p.id) ? 'checked' : ''}
+                                                    onchange="this.closest('.related-product-item').classList.toggle('selected', this.checked)">
+                                                <img src="${(p.images && p.images[0]) || 'https://picsum.photos/300/300?random=' + p.id}" alt="${(p.name.tr || p.name.en || '').replace(/"/g,'&quot;')}" loading="lazy">
+                                                <span class="rel-check">✓</span>
+                                            </label>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- VARIANTS TAB -->
+                            <div id="variants-tab" class="admin-tab-panel">
+                                <p style="color:#8a7d6b;font-size:0.85rem;margin-bottom:20px;">
+                                    Her satır bir varyantı temsil eder. Renk ve/veya boyut ekleyebilirsiniz. Fiyat boş bırakılırsa ana fiyat kullanılır.
+                                </p>
+                                <div class="variant-header">
+                                    <span>Renk (TR)</span>
+                                    <span>Renk (EN)</span>
+                                    <span>Renk</span>
+                                    <span>Boyut</span>
+                                    <span>Fiyat (₺/€/$)</span>
+                                    <span></span>
+                                </div>
+                                <div id="variantsContainer">
+                                    ${(product && product.variants && product.variants.length > 0) ? product.variants.map((v, i) => `
+                                        <div class="variant-row">
+                                            <input type="text" placeholder="Altın" value="${v.colorTr || ''}" class="v-colorTr">
+                                            <input type="text" placeholder="Gold" value="${v.colorEn || ''}" class="v-colorEn">
+                                            <input type="color" value="${v.colorHex || '#D4AF37'}" class="v-colorHex">
+                                            <input type="text" placeholder="60cm × 40cm" value="${v.size || ''}" class="v-size">
+                                            <input type="text" placeholder="Fiyat İçin Sor" value="${v.price || ''}" class="v-price">
+                                            <button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:#999;">✕</button>
+                                        </div>
+                                    `).join('') : ''}
+                                </div>
+                                <button type="button" class="btn" style="margin-top:16px;" onclick="addVariantRow()">+ Varyant Ekle</button>
+                            </div>
+
+                            <div class="modal-buttons" style="margin-top: 30px;">
+                                <button type="button" class="btn" onclick="closeModal()">${t().cancel}</button>
+                                <button type="button" class="btn btn-primary" onclick="saveProduct(${product ? product.id : 'null'})">${t().save}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('app').insertAdjacentHTML('beforeend', modal);
+
+            // Attach tab event listeners
+            attachTabListeners();
+        }
+
+        // ===== AUTO FILL FROM IMAGE (Claude Vision) =====
+        async function autoFillFromImage() {
+            // Yüklenmiş ilk görseli al
+            const firstImg = document.querySelector('#imagePreviewGrid .image-preview-item img');
+            if (!firstImg || !firstImg.src) {
+                alert('Önce "General" sekmesine geçip bir ürün fotoğrafı yükle, sonra tekrar dene.');
+                return;
+            }
+            const imageUrl = firstImg.src;
+
+            if (!localStorage.getItem('anthropic_api_key')) {
+                alert('API anahtari girilmemis.\n\nAdmin -> Ayarlar bolumunden Anthropic API anahtarini gir, sonra tekrar dene.');
+                return;
+            }
+
+            const btn = document.getElementById('autoFillBtn');
+            const status = document.getElementById('autoFillStatus');
+            btn.disabled = true;
+            btn.textContent = '⏳ Analiz ediliyor...';
+            status.style.display = 'block';
+            status.textContent = '🔍 Görsel analiz ediliyor, tüm alanlar dolduruluyor...';
+
+            const prompt = `Sen bir e-ticaret SEO uzmanısın. CHANDELIST markası için bu ürün görselini analiz et ve aşağıdaki JSON formatında Türkçe ve İngilizce içerik üret.
+
+MARKA HAKKINDA ÖNEMLİ BİLGİLER:
+- Chandelist, Türk el yapımı aydınlatma markasıdır
+- Ürünlerin %95'i ANTİK PİRİNÇ ESKİTME yüzeylidir (patinalı, antika görünümlü pirinç). Görselde başka bir renk/yüzey açıkça görünmüyorsa "antik pirinç eskitme" yüzey kullan.
+- Siyah metal, krom, gümüş gibi renkler sadece görselde kesinlikle o renk görünüyorsa kullan
+- Yaygın stiller: Osmanlı motifli, Fas tarzı (Moroccan), Türk-İslam sanatı, Geleneksel Anadolu, Modern Bohem
+
+TERMİNOLOJİ KURALLARI (ÇOK ÖNEMLİ):
+- Türkçe'de: "Fas Tarzı" veya "Fas Desenli" (Marokkain, Marokko, Marokkan KULLANMA — bunlar Türkçe değil)
+- İngilizce'de: "Moroccan" (doğru)
+- Türkçe'de: "Osmanlı Motifli", "Osmanlı Tarzı"
+- İngilizce'de: "Ottoman", "Ottoman-inspired"
+- Türkçe'de: "Türk-İslam", "Geleneksel Türk"
+
+AÇIKLAMA KURALLARI:
+- Her ürün için FARKLI ve ÖZGÜN açıklama yaz — kalıplaşmış ifadeler kullanma
+- Ürünün gerçek özelliklerine odaklan (şekli, motifi, formu, boyutu)
+- "Lüks" kelimesini her açıklamaya koyma — sadece gerçekten lüks görünüyorsa
+- Açıklamada el işçiliği, özgün tasarım, mekan uyumu vurgula
+
+SEO ANAHTAR KELİME KURALLARI:
+- İnsanların Google'da gerçekten aradığı terimler kullan
+- Türkçe örnekler: "antik pirinç avize fiyatı", "osmanlı tarzı avize satın al", "el yapımı pirinç aplik", "salon için sarkıt avize", "otel lobisi aydınlatma"
+- İngilizce örnekler: "moroccan chandelier for sale", "antique brass pendant light", "handmade ottoman lamp", "turkish style ceiling light"
+- Genel ve soyut değil, SPESİFİK ve UZUN KUYRUKLU kelimeler seç
+
+JSON formatında yanıt ver (başka hiçbir şey yazma):
+{
+  "name_tr": "Kısa ve açıklayıcı ürün adı Türkçe (maks 80 karakter) — ürünün gerçek özelliğini yansıt",
+  "name_en": "Short descriptive product name English (max 80 chars) — reflect real product features",
+  "description_tr": "2-3 cümle Türkçe açıklama. Bu ürüne özgü detayları (form, motif, malzeme, boyut ipuçları) belirt. Kullanım mekanı ve atmosfer vurgula. Her seferinde farklı yaz.",
+  "description_en": "2-3 sentences English description. Highlight unique features of THIS product (form, pattern, material). Mention ambiance and placement. Write differently each time.",
+  "meta_title_tr": "SEO başlık Türkçe, maks 55 karakter, marka adı YAZMA (site kendi ekler)",
+  "meta_title_en": "SEO title English, max 55 chars, do NOT include the brand (the site appends it)",
+  "meta_description_tr": "SEO açıklama Türkçe, maks 155 karakter, ürünün öne çıkan özelliğini vurgula, CTA içermeli (örn: 'Şimdi inceleyin', 'Sipariş verin')",
+  "meta_description_en": "SEO description English, max 155 chars, highlight key product feature, include CTA",
+  "keywords_tr": "10 anahtar kelime öbeği virgülle — Google'da gerçekten aranan, spesifik, uzun kuyruklu terimler",
+  "keywords_en": "10 keyword phrases comma-separated — real Google search terms, specific and long-tail",
+  "category": "lighting veya decorative veya homedecor",
+  "subcategory": "chandelier veya sconce veya table_lamp veya floor_lamp veya outdoor veya decorative veya side_table veya tray veya mirror veya candleholder veya vase",
+  "style": "modern veya traditional (sadece avize için, diğerleri için boş bırak)",
+  "materials": "Tespit ettiğin malzemeler virgülle — varsayılan: antik pirinç eskitme",
+  "dimensions_hint": "Görsel ipucu ile boyut tahmini — JSON formatında: {\"h\":\"yükseklik\",\"dia\":\"çap\",\"w\":\"genişlik\",\"d\":\"derinlik\"} — sadece görselde net görünen değerleri doldur, emin olmadıklarını boş bırak. Emin değilsen tamamen boş string döndür."
+}`;
+
+            try {
+                const resp = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'x-api-key': (localStorage.getItem('anthropic_api_key') || ''),
+                        'anthropic-version': '2023-06-01',
+                        'content-type': 'application/json',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-haiku-4-5',
+                        max_tokens: 1200,
+                        messages: [{
+                            role: 'user',
+                            content: [
+                                { type: 'image', source: { type: 'url', url: imageUrl } },
+                                { type: 'text', text: prompt }
+                            ]
+                        }]
+                    })
+                });
+
+                const data = await resp.json();
+                if (!resp.ok) throw new Error(data.error?.message || 'API hatası');
+
+                const raw = data.content[0].text.trim();
+                // JSON çıkar
+                const jsonMatch = raw.match(/\{[\s\S]*\}/);
+                if (!jsonMatch) throw new Error('JSON parse hatası');
+                const ai = JSON.parse(jsonMatch[0]);
+
+                // Form alanlarını doldur
+                if (ai.name_tr)              document.getElementById('formProductNameTr').value = ai.name_tr;
+                if (ai.name_en)              document.getElementById('formProductNameEn').value = ai.name_en;
+                if (ai.description_tr)       document.getElementById('formDescriptionTr').value = ai.description_tr;
+                if (ai.description_en)       document.getElementById('formDescriptionEn').value = ai.description_en;
+                if (ai.meta_title_tr)        document.getElementById('formMetaTitleTr').value = ai.meta_title_tr;
+                if (ai.meta_title_en)        document.getElementById('formMetaTitleEn').value = ai.meta_title_en;
+                if (ai.meta_description_tr)  document.getElementById('formMetaDescriptionTr').value = ai.meta_description_tr;
+                if (ai.meta_description_en)  document.getElementById('formMetaDescriptionEn').value = ai.meta_description_en;
+                if (ai.keywords_tr)          document.getElementById('formKeywordsTr').value = ai.keywords_tr;
+                if (ai.keywords_en)          document.getElementById('formKeywordsEn').value = ai.keywords_en;
+                if (ai.materials)            document.getElementById('formMaterials').value = ai.materials;
+                if (ai.dimensions_hint) {
+                    try {
+                        const dim = JSON.parse(ai.dimensions_hint);
+                        if (dim.h)   { const el = document.getElementById('formDimH');   if(el) el.value = dim.h; }
+                        if (dim.dia) { const el = document.getElementById('formDimDia'); if(el) el.value = dim.dia; }
+                        if (dim.w)   { const el = document.getElementById('formDimW');   if(el) el.value = dim.w; }
+                        if (dim.d)   { const el = document.getElementById('formDimD');   if(el) el.value = dim.d; }
+                    } catch(e) {
+                        // AI returned plain text, ignore
+                    }
+                }
+
+                // Kategori
+                if (ai.category) {
+                    const catSel = document.getElementById('formCategory');
+                    if (catSel) catSel.value = ai.category;
+                    // subcategory dropdown'ı güncelle
+                    if (typeof updateSubcategoryOptions === 'function') updateSubcategoryOptions();
+                }
+                if (ai.subcategory) {
+                    const subSel = document.getElementById('formSubcategory');
+                    if (subSel) subSel.value = ai.subcategory;
+                }
+                if (ai.style) {
+                    document.querySelectorAll('input[name="styleCheck"]').forEach(cb => {
+                        cb.checked = (ai.style === 'both') || (cb.value === ai.style);
+                    });
+                }
+
+                status.style.display = 'block';
+                status.style.background = '#e8f5e9';
+                status.style.color = '#2e7d32';
+                status.textContent = '✅ Tüm alanlar dolduruldu! Kontrol edip kaydet.';
+
+                // TR sekmesine geç
+                document.querySelector('[data-tab="tr-tab"]')?.click();
+
+            } catch(e) {
+                status.style.background = '#ffebee';
+                status.style.color = '#c62828';
+                status.textContent = '❌ Hata: ' + e.message;
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '✨ Otomatik Doldur';
+            }
+        }
+
+        // ===== CLOUDINARY IMAGE UPLOAD =====
+        const CLOUDINARY_CLOUD = 'dcvkzpvmy';
+        const CLOUDINARY_PRESET = 'chandelist_upload';
+
+        async function handleNativeImageUpload(input) {
+            const grid = document.getElementById('imagePreviewGrid');
+            const progressEl = document.getElementById('uploadProgress');
+            if (!grid) return;
+
+            const files = Array.from(input.files);
+            const currentCount = grid.querySelectorAll('.image-preview-item').length;
+            const remaining = 10 - currentCount;
+            if (files.length === 0) return;
+
+            const toUpload = files.slice(0, remaining);
+            if (files.length > remaining) {
+                alert(`Maksimum 10 resim. Sadece ilk ${remaining} resim yüklenecek.`);
+            }
+
+            // Show progress
+            if (progressEl) { progressEl.style.display = 'block'; progressEl.textContent = `0 / ${toUpload.length} yüklendi...`; }
+
+            for (let i = 0; i < toUpload.length; i++) {
+                const file = toUpload[i];
+                try {
+                    // Upload directly to Cloudinary REST API (no widget needed)
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', CLOUDINARY_PRESET);
+                    formData.append('cloud_name', CLOUDINARY_CLOUD);
+
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!res.ok) throw new Error('Upload failed');
+                    const data = await res.json();
+                    const url = data.secure_url;
+
+                    // Dedup: don't add if URL already in grid
+                    const existingUrls = Array.from(grid.querySelectorAll('.image-preview-item')).map(el => el.dataset.src);
+                    if (existingUrls.includes(url)) {
+                        if (progressEl) progressEl.textContent = `${i + 1} / ${toUpload.length} (zaten mevcut, atlandı)`;
+                        continue;
+                    }
+                    const newItem = document.createElement('div');
+                    newItem.className = 'image-preview-item';
+                    newItem.dataset.src = url;
+                    newItem.draggable = true;
+                    newItem.innerHTML = `<img src="${url}" alt="Preview"><button type="button" class="remove-img" onclick="removeImagePreview(this)">×</button>`;
+                    grid.appendChild(newItem);
+                    initDragItem(newItem);
+                    updateMainBadge();
+
+                    if (progressEl) progressEl.textContent = `${i + 1} / ${toUpload.length} yüklendi...`;
+                } catch (err) {
+                    console.error('Upload error:', err);
+                    alert(`"${file.name}" yüklenemedi. İnternet bağlantınızı kontrol edin.`);
+                }
+            }
+
+            if (progressEl) {
+                progressEl.textContent = '✓ Yükleme tamamlandı';
+                setTimeout(() => { progressEl.style.display = 'none'; }, 2000);
+            }
+            // Reset input so same files can be re-selected if needed
+            input.value = '';
+        }
+
+        function openCloudinaryWidget() {
+            const grid = document.getElementById('imagePreviewGrid');
+            if (!grid) return;
+            const currentCount = grid.querySelectorAll('.image-preview-item').length;
+            const remaining = 10 - currentCount;
+            if (remaining <= 0) { alert('Maksimum 10 resim ekleyebilirsiniz.'); return; }
+
+            const widget = cloudinary.createUploadWidget({
+                cloudName: CLOUDINARY_CLOUD,
+                uploadPreset: CLOUDINARY_PRESET,
+                multiple: true,
+                maxFiles: remaining,
+                sources: ['local', 'url', 'camera'],
+                clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
+                maxFileSize: 10000000,
+                language: 'tr',
+                text: {
+                    tr: {
+                        or: 'veya',
+                        menu: { files: 'Dosyalarım', url: 'URL', camera: 'Kamera' },
+                        selection_counter: { image: 'Resim seçildi' },
+                        queue: { title: 'Yükleme Kuyruğu', done: 'Bitti' },
+                        upload: { label: 'Dosyaları buraya sürükleyin' }
+                    }
+                }
+            }, (error, result) => {
+                if (error) { console.error('Cloudinary upload error:', error); return; }
+                if (result.event === 'success') {
+                    const url = result.info.secure_url;
+                    const isFirst = grid.querySelectorAll('.image-preview-item').length === 0;
+                    grid.insertAdjacentHTML('beforeend', `
+                        <div class="image-preview-item" data-src="${url}">
+                            <img src="${url}" alt="Preview">
+                            ${isFirst ? '<span class="main-badge">Ana</span>' : ''}
+                            <button type="button" class="remove-img" onclick="removeImagePreview(this)">×</button>
+                        </div>
+                    `);
+                    updateMainBadge();
+                }
+            });
+            widget.open();
+        }
+
+        // ===== IMAGE DRAG & DROP REORDER =====
+        let _dragSrc = null;
+
+        function initDragItem(item) {
+            item.addEventListener('dragstart', function(e) {
+                _dragSrc = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                document.querySelectorAll('.image-preview-item').forEach(i => i.classList.remove('drag-over'));
+                updateMainBadge();
+            });
+            item.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                if (this !== _dragSrc) {
+                    document.querySelectorAll('.image-preview-item').forEach(i => i.classList.remove('drag-over'));
+                    this.classList.add('drag-over');
+                }
+            });
+            item.addEventListener('drop', function(e) {
+                e.preventDefault();
+                if (_dragSrc && _dragSrc !== this) {
+                    const grid = document.getElementById('imagePreviewGrid');
+                    const items = Array.from(grid.querySelectorAll('.image-preview-item'));
+                    const srcIdx = items.indexOf(_dragSrc);
+                    const dstIdx = items.indexOf(this);
+                    if (srcIdx < dstIdx) {
+                        grid.insertBefore(_dragSrc, this.nextSibling);
+                    } else {
+                        grid.insertBefore(_dragSrc, this);
+                    }
+                    updateMainBadge();
+                }
+                this.classList.remove('drag-over');
+            });
+        }
+
+        function initImageGridDragDrop() {
+            document.querySelectorAll('#imagePreviewGrid .image-preview-item').forEach(initDragItem);
+        }
+
+        function removeImagePreview(btn) {
+            btn.closest('.image-preview-item').remove();
+            updateMainBadge();
+        }
+
+        function updateMainBadge() {
+            const items = document.querySelectorAll('#imagePreviewGrid .image-preview-item');
+            items.forEach((item, idx) => {
+                const badge = item.querySelector('.main-badge');
+                if (idx === 0) {
+                    if (!badge) item.insertAdjacentHTML('beforeend', '<span class="main-badge">Ana</span>');
+                } else {
+                    if (badge) badge.remove();
+                }
+            });
+        }
+
+        function addImageUrlInput() {
+            const container = document.getElementById('imageUrlContainer');
+            container.insertAdjacentHTML('beforeend', `
+                <div class="image-url-row">
+                    <input type="text" placeholder="https://..." onblur="addUrlPreview(this)">
+                    <button type="button" onclick="this.parentElement.remove()" style="background:none;border:1px solid #ddd;padding:5px 10px;cursor:pointer;border-radius:4px;">✕</button>
+                </div>
+            `);
+        }
+
+        function addUrlPreview(input) {
+            const url = input.value.trim();
+            if (!url) return;
+            const grid = document.getElementById('imagePreviewGrid');
+            if (grid.querySelectorAll('.image-preview-item').length >= 10) { alert('Maksimum 10 resim.'); return; }
+            const isFirst = grid.querySelectorAll('.image-preview-item').length === 0;
+            grid.insertAdjacentHTML('beforeend', `
+                <div class="image-preview-item" data-src="${url}">
+                    <img src="${url}" alt="Preview" onerror="this.closest('.image-preview-item').remove()">
+                    ${isFirst ? '<span class="main-badge">Ana</span>' : ''}
+                    <button type="button" class="remove-img" onclick="removeImagePreview(this)">×</button>
+                </div>
+            `);
+            input.closest('.image-url-row').remove();
+            updateMainBadge();
+        }
+
+        function addVideoInput() {
+            const container = document.getElementById('videosContainer');
+            container.insertAdjacentHTML('beforeend', `
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                    <input type="text" placeholder="https://res.cloudinary.com/..." class="form-control" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.85rem;">
+                    <button type="button" style="padding:6px 10px;background:#fff;border:1px solid #e0c0c0;border-radius:4px;color:#c0392b;cursor:pointer;font-size:0.85rem;" onclick="this.parentElement.remove()">✕</button>
+                </div>
+            `);
+        }
+
+        function uploadVideoCloudinary() {
+            const status = document.getElementById('videoUploadStatus');
+            const container = document.getElementById('videosContainer');
+
+            if (typeof cloudinary === 'undefined') {
+                if (status) { status.style.display='block'; status.textContent='Cloudinary yükleniyor...'; }
+                return;
+            }
+
+            const widget = cloudinary.createUploadWidget({
+                cloudName: CLOUDINARY_CLOUD,
+                uploadPreset: CLOUDINARY_PRESET,
+                multiple: false,
+                sources: ['local', 'url'],
+                clientAllowedFormats: ['mp4', 'mov', 'avi', 'webm', 'mkv'],
+                maxFileSize: 200000000, // 200MB
+                resourceType: 'video',
+                language: 'tr',
+                text: { tr: { or: 'veya', menu: { files: 'Dosyalarım', url: 'URL' }, queue: { title: 'Yükleme', done: 'Bitti' }, upload: { label: 'Videoyu buraya sürükleyin' } } }
+            }, (error, result) => {
+                if (error) {
+                    if (status) { status.style.display='block'; status.style.color='#e74c3c'; status.textContent='Hata: '+error.message; }
+                    return;
+                }
+                if (result.event === 'upload-added') {
+                    if (status) { status.style.display='block'; status.style.color='#8a7d6b'; status.textContent='⏳ Yükleniyor...'; }
+                }
+                if (result.event === 'success') {
+                    const url = result.info.secure_url;
+                    // Input olarak ekle
+                    container.insertAdjacentHTML('beforeend', `
+                        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                            <video src="${url}" style="width:80px;height:50px;object-fit:cover;border-radius:4px;background:#000;flex-shrink:0;" muted></video>
+                            <input type="text" value="${url}" class="form-control" style="flex:1;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;color:#555;" readonly>
+                            <button type="button" style="padding:6px 10px;background:#fff;border:1px solid #e0c0c0;border-radius:4px;color:#c0392b;cursor:pointer;font-size:0.85rem;" onclick="this.parentElement.remove()">✕</button>
+                        </div>
+                    `);
+                    if (status) { status.style.display='block'; status.style.color='#27ae60'; status.textContent='✓ Video yüklendi!'; setTimeout(()=>{ status.style.display='none'; }, 3000); }
+                }
+            });
+            widget.open();
+        }
+
+        function attachTabListeners() {
+            const tabButtons = document.querySelectorAll('.admin-tab-btn');
+            const tabPanels = document.querySelectorAll('.admin-tab-panel');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tabId = button.getAttribute('data-tab');
+
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+
+                    button.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Init drag-and-drop on existing image preview items
+            initImageGridDragDrop();
+        }
+
+        async function saveProduct(productId) {
+            // Collect images from preview grid (both base64 and URLs)
+            const images = Array.from(document.querySelectorAll('#imagePreviewGrid .image-preview-item'))
+                .map(item => item.getAttribute('data-src')).filter(v => v);
+            const videos = Array.from(document.querySelectorAll('#videosContainer input')).map(i => i.value).filter(v => v);
+            // Collect related products
+            const relatedProducts = Array.from(document.querySelectorAll('#relatedProductsGrid input[name="relatedProducts"]:checked'))
+                .map(cb => parseInt(cb.value)).slice(0, 5);
+            // Collect variants
+            const variants = Array.from(document.querySelectorAll('#variantsContainer .variant-row')).map(row => ({
+                colorTr: row.querySelector('.v-colorTr').value.trim(),
+                colorEn: row.querySelector('.v-colorEn').value.trim(),
+                colorHex: row.querySelector('.v-colorHex').value,
+                size: row.querySelector('.v-size').value.trim(),
+                price: row.querySelector('.v-price').value.trim(),
+            })).filter(v => v.colorTr || v.colorEn || v.size);
+
+            const product = {
+                id: productId ? parseInt(productId) : null,
+                _dbId: productId ? parseInt(productId) : null,
+                name: {
+                    en: document.getElementById('formProductNameEn').value,
+                    tr: document.getElementById('formProductNameTr').value,
+                },
+                description: {
+                    en: document.getElementById('formDescriptionEn').value,
+                    tr: document.getElementById('formDescriptionTr').value,
+                },
+                metaTitle: {
+                    en: document.getElementById('formMetaTitleEn').value,
+                    tr: document.getElementById('formMetaTitleTr').value,
+                },
+                metaDescription: {
+                    en: document.getElementById('formMetaDescriptionEn').value,
+                    tr: document.getElementById('formMetaDescriptionTr').value,
+                },
+                keywords: {
+                    en: document.getElementById('formKeywordsEn').value,
+                    tr: document.getElementById('formKeywordsTr').value,
+                },
+                sku: document.getElementById('formSku').value,
+                category: document.getElementById('formCategory').value,
+                subcategory: Array.from(document.querySelectorAll('input[name="subcategoryCheck"]:checked')).map(cb => cb.value),
+                style: (() => {
+                    const chandelierChecked = !!document.querySelector('input[name="subcategoryCheck"][value="chandelier"]:checked');
+                    if (!chandelierChecked) return null;
+                    const styleChecks = Array.from(document.querySelectorAll('input[name="styleCheck"]:checked')).map(cb => cb.value);
+                    if (styleChecks.length >= 2) return 'both';
+                    return styleChecks[0] || 'modern';
+                })(),
+                price: document.getElementById('formPrice').value,
+                materials: document.getElementById('formMaterials').value,
+                dimensions: (() => {
+                                const h = document.getElementById('formDimH')?.value?.trim() || '';
+                                const dia = document.getElementById('formDimDia')?.value?.trim() || '';
+                                const w = document.getElementById('formDimW')?.value?.trim() || '';
+                                const d = document.getElementById('formDimD')?.value?.trim() || '';
+                                if (!h && !dia && !w && !d) return '';
+                                return JSON.stringify({h, dia, w, d});
+                            })(),
+                images: images.length ? images : ['https://picsum.photos/600/600?random=99'],
+                videos: videos,
+                relatedProducts: relatedProducts,
+                variants: variants,
+            };
+
+            // Show saving state on button
+            const saveBtn = document.querySelector('#productModal .btn-save, #productModal button[onclick*="saveProduct"]');
+            if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Kaydediliyor...'; }
+
+            const success = await saveProductToDB(product);
+            closeModal();
+            await render();
+
+            if (success) {
+                // Show success toast
+                showToast('✓ Ürün başarıyla kaydedildi!', 'success');
+                // Navigate to products section so user can see their product
+                const productsLink = document.querySelector('.admin-nav[data-section="products"]');
+                if (productsLink) {
+                    productsLink.click();
+                } else {
+                    // Fallback: manually show products-section
+                    document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+                    const ps = document.getElementById('products-section');
+                    if (ps) ps.style.display = 'block';
+                    document.querySelectorAll('.admin-nav').forEach(l => {
+                        l.classList.toggle('active', l.dataset.section === 'products');
+                    });
+                }
+            } else {
+                showToast('✗ Kayıt başarısız! Lütfen tekrar deneyin.', 'error');
+            }
+        }
+
+        // ===== AI ASISTAN — katalogda benzer urun var mi? =====
+        let _aiKatalog = null;
+
+        function aiNormalize(s) {
+            return String(s || '').toLowerCase()
+                .replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s')
+                .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
+                .replace(/[^a-z0-9\s]/g,' ')
+                .split(/\s+/).filter(w => w.length > 2 || /\d/.test(w));
+        }
+
+        async function aiBenzerBul(taslak) {
+            try {
+                if (!_aiKatalog) _aiKatalog = await getProducts();
+                const urunler = _aiKatalog || [];
+                if (!urunler.length) return [];
+
+                // Kelime ne kadar yaygin? Yaygin kelime az bilgi tasir (avize, pirinc...)
+                const df = {};
+                const dokuman = urunler.map(p => {
+                    const kelimeler = new Set(aiNormalize((p.name?.tr || '') + ' ' + (p.name?.en || '')));
+                    kelimeler.forEach(w => { df[w] = (df[w] || 0) + 1; });
+                    return { p, kelimeler };
+                });
+                const N = urunler.length;
+                const agirlik = w => Math.log(N / (1 + (df[w] || 0))) + 0.2;
+
+                const yeni = new Set(aiNormalize((taslak.name_tr || '') + ' ' + (taslak.name_en || '')));
+                const yeniSku = String(taslak.sku || '').trim().toLowerCase();
+                const yeniAlt = taslak.subcategory || '';
+
+                const puanlar = dokuman.map(({ p, kelimeler }) => {
+                    // Simetrik benzerlik: tek tarafli kapsama, uzun isimleri haksiz yere birebir gosteriyordu
+                    let kesisim = 0, birlesim = 0;
+                    const tum = new Set([...yeni, ...kelimeler]);
+                    tum.forEach(w => {
+                        const a = agirlik(w);
+                        birlesim += a;
+                        if (yeni.has(w) && kelimeler.has(w)) kesisim += a;
+                    });
+                    let puan = birlesim > 0 ? kesisim / birlesim : 0;
+                    const ayniAlt = yeniAlt && (p.subcategory || []).includes(yeniAlt);
+                    if (ayniAlt) puan += 0.05;
+                    const skuAyni = !!(yeniSku && String(p.sku || '').trim().toLowerCase() === yeniSku);
+                    puan = skuAyni ? 1 : Math.min(puan, 1);
+                    return { p, puan, skuAyni };
+                });
+
+                return puanlar.filter(x => x.puan >= 0.40)
+                              .sort((a, b) => b.puan - a.puan)
+                              .slice(0, 4);
+            } catch (e) { return []; }
+        }
+
+        function aiBenzerGoster(benzerler) {
+            if (!benzerler.length) return;
+            const kutu = document.getElementById('aiChatBox');
+            const skuCakisma = benzerler.some(b => b.skuAyni);
+            const guclu = benzerler[0].puan >= 0.75 || skuCakisma;
+
+            const kart = document.createElement('div');
+            kart.style.cssText = `align-self:flex-start;max-width:94%;background:${guclu?'#fdf0ef':'#fffdf5'};border:1px solid ${guclu?'#e8bfba':'#e6dcc0'};border-radius:12px;padding:15px;font-size:0.86rem;`;
+
+            const kartlar = benzerler.map(b => {
+                const gorsel = (b.p.images && b.p.images[0]) || '';
+                const ad = (b.p.name?.tr || b.p.name?.en || '').slice(0, 60);
+                const yuzde = Math.round(b.puan * 100);
+                return `<div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #efe9dd;">
+                    ${gorsel ? `<img src="${gorsel}" style="width:52px;height:52px;object-fit:cover;border-radius:6px;border:1px solid #e0d8cc;flex-shrink:0;">` : '<div style="width:52px;height:52px;background:#f0ece4;border-radius:6px;flex-shrink:0;"></div>'}
+                    <div style="flex:1;min-width:0;">
+                        <div style="font-weight:500;">${ad.replace(/</g,'&lt;')}</div>
+                        <div style="color:#8a7d6b;font-size:0.8rem;">ID ${b.p.id}${b.p.sku ? ' · ' + b.p.sku : ''} · benzerlik %${yuzde}${b.skuAyni ? ' · AYNI STOK KODU' : ''}</div>
+                    </div>
+                    <button type="button" class="btn" style="font-size:0.78rem;padding:5px 11px;flex-shrink:0;" onclick="aiMevcuduAc(${b.p.id})">Ac</button>
+                </div>`;
+            }).join('');
+
+            kart.innerHTML = `
+                <div style="font-weight:600;margin-bottom:6px;color:${guclu?'#a03228':'#7a6a4a'};">
+                    ${guclu ? 'Dikkat: bu urun katalogda zaten olabilir' : 'Katalogda benzer urunler var'}
+                </div>
+                <div style="color:#7a6a55;margin-bottom:4px;">
+                    Gorsellere bak — ayni urunse yenisini ekleme, mevcut olani duzenle.
+                </div>
+                ${kartlar}`;
+            kutu.appendChild(kart);
+            kutu.scrollTop = kutu.scrollHeight;
+        }
+
+        function aiMevcuduAc(id) {
+            document.querySelectorAll('.admin-nav').forEach(l => l.classList.remove('active'));
+            const link = document.querySelector('.admin-nav[data-section="products"]');
+            if (link) link.classList.add('active');
+            document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+            const bolum = document.getElementById('products-section');
+            if (bolum) bolum.style.display = 'block';
+            setTimeout(() => { try { editProduct(id); } catch (e) {} }, 250);
+        }
+
+        // ===== AI ASISTAN (sohbetle urun ekleme) =====
+        const AI_MARKA = 'CHANDELIST';
+        const AI_SITE_TIPI = 'SITE HAKKINDA: CHANDELIST 1984ten beri Istanbulda el yapimi pirinc avize ve dekoratif aydinlatma ureten bir imalatcidir. Site bir KATALOGDUR, uzerinden odeme alinmaz. Musteri teklif ister; otel, restoran, ic mimar ve proje firmalari hedef kitledir. Urunlerin cogu antik pirinc eskitme yuzeylidir; fotografta baska bir renk net gorunmuyorsa antik pirinc eskitme kabul et.';
+        let aiMesajlar = [];
+        let aiGorseller = [];
+        let aiTaslak = null;
+
+        const AI_SISTEM = `Sen ${AI_MARKA} icin calisan bir urun katalog editorusun. Kullanici sana urun fotografi ve bilgi verir; sen siteye eklenecek Turkce ve Ingilizce urun icerigini hazirlarsin.
+
+${AI_SITE_TIPI}
+
+MUTLAK KURALLAR — bunlari cignersen icerik kullanilamaz:
+1. GORMEDIGIN SEYI YAZMA. Malzeme, olcu, ampul tipi, agirlik gibi bilgileri fotograftan kesin goremiyorsan UYDURMA — kullaniciya sor. Ozellikle "kristal" deme; urunun kristal oldugunu kullanici soylemediyse yazma.
+2. TICARI VAAT YOK. Ucretsiz kargo, hizli teslimat, garanti, indirim, fiyat, "simdi satin al", "siparis ver", "order now", "free shipping", "fast delivery" gibi ifadeler KESINLIKLE gecmeyecek. Bu sitede odeme yok; cagri her zaman teklif almaya veya incelemeye yonelik olacak ("Teklif alin", "Detaylari inceleyin", "Request a quote", "See details").
+3. DIL AYRIMI. _tr alanlarinda sadece Turkce, _en alanlarinda sadece Ingilizce. Turkce alanda Ingilizce kelime, Ingilizce alanda Turkce kelime birakma.
+4. TERMINOLOJI. Turkcede "Fas tarzi" veya "Fas desenli" yaz. Marokken, Marokko, Marokkolu, Marokkan, Moroccan gibi yazimlar Turkce metinde YASAK. Ingilizcede "Moroccan" dogru.
+4b. PIRINC BIR RENK/YUZEYDIR, MALZEME DEGILDIR. "Antik pirinc eskitme" urunun YUZEY RENGIDIR; govde demir, celik veya baska bir metal olabilir. Bu yuzden "pirinc malzeme", "pirincten uretilmis", "masif pirinc", "brass material", "made of brass", "solid brass" gibi ifadeler YASAK. Bunun yerine "metal govde, antik pirinc eskitme yuzey" / "metal with an antique brass finish" yaz. Ayni sekilde pleksi ile cami karistirma: seffaf panel gorurusen ve kullanici cam demediyse "pleksi" yaz, "cam" deme.
+5. URUN ADI stok kodu olmayacak. "CH-002", "ch-6481" gibi kodlari isim olarak kullanma; kodu kullanici verirse sadece SKU alanina yaz.
+6. UZUNLUK. meta_title en fazla 60 karakter, meta_description en fazla 155 karakter. Sinirin altinda kal.
+7. Her urun icin ozgun metin yaz. Kaliplasmis cumle tekrarlama. "Luks" kelimesini gercekten oyle gorunmuyorsa kullanma.
+8. Marka adi metinlerde ${AI_MARKA} olarak gecer. Baska marka adi yazma.
+
+NASIL CALISIRSIN:
+- Fotografi inceledikten sonra, eksik ve onemli bilgi varsa ONCE SORU SOR. Ayni anda en fazla 3 soru sor, kisa ve net sor, Turkce sor.
+- Kritik eksikler sunlardir: olculer (cap/yukseklik/genislik), malzeme, kategori belirsizse kategori, avizeyse stil (modern mi geleneksel mi).
+- Kullanici "bilmiyorum" veya "sen karar ver" derse, o alani BOS birak ya da sadece fotografta net gorunen kadarini yaz. Tahmini kesin bilgi gibi sunma.
+- Yeterli bilgin olunca urunu hazirla.
+
+CIKTI BICIMI:
+Soru soracaksan sadece duz metin yaz, JSON verme.
+Urun hazirsa cevabinin SONUNA su bloku ekle (once kisa bir Turkce ozet cumlesi yaz, sonra blok):
+
+<URUN>
+{
+  "name_tr": "", "name_en": "",
+  "description_tr": "", "description_en": "",
+  "meta_title_tr": "", "meta_title_en": "",
+  "meta_description_tr": "", "meta_description_en": "",
+  "keywords_tr": "", "keywords_en": "",
+  "category": "lighting|decorative|homedecor",
+  "subcategory": "chandelier|sconce|table_lamp|floor_lamp|outdoor|decorative|side_table|tray|mirror|candleholder|vase",
+  "style": "modern|traditional|",
+  "materials": "",
+  "dimensions": "",
+  "sku": ""
+}
+</URUN>`;
+
+        function aiEkle(rol, metin) {
+            const kutu = document.getElementById('aiChatBox');
+            if (!kutu) return;
+            const d = document.createElement('div');
+            const benMi = rol === 'user';
+            d.style.cssText = `max-width:80%;align-self:${benMi?'flex-end':'flex-start'};background:${benMi?'#2c2c2c':'#fff'};color:${benMi?'#fff':'#2c2c2c'};border:1px solid ${benMi?'#2c2c2c':'#e6ded2'};padding:11px 14px;border-radius:12px;font-size:0.9rem;line-height:1.55;white-space:pre-wrap;`;
+            d.textContent = metin;
+            kutu.appendChild(d);
+            kutu.scrollTop = kutu.scrollHeight;
+            return d;
+        }
+
+        function aiDurum(metin) {
+            const s = document.getElementById('aiStatus');
+            if (s) s.textContent = metin || '';
+        }
+
+        function aiReset() {
+            aiMesajlar = [];
+            aiGorseller = [];
+            aiTaslak = null;
+            const kutu = document.getElementById('aiChatBox');
+            if (kutu) kutu.innerHTML = '';
+            const strip = document.getElementById('aiImageStrip');
+            if (strip) strip.innerHTML = '';
+            aiDurum('');
+            aiEkle('assistant', 'Merhaba. Urun fotografini ekle, birlikte hazirlayalim.\n\nEmin olmadigim bir sey olursa sana sorarim — uydurmam.');
+        }
+
+        async function aiAddImages(input) {
+            const dosyalar = Array.from(input.files || []);
+            if (!dosyalar.length) return;
+            aiDurum('Gorseller yukleniyor...');
+            for (const f of dosyalar) {
+                try {
+                    const fd = new FormData();
+                    fd.append('file', f);
+                    fd.append('upload_preset', CLOUDINARY_PRESET);
+                    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method: 'POST', body: fd });
+                    const data = await res.json();
+                    if (data.secure_url) aiGorseller.push(data.secure_url);
+                } catch (e) { /* sessiz gec */ }
+            }
+            input.value = '';
+            const strip = document.getElementById('aiImageStrip');
+            if (strip) strip.innerHTML = aiGorseller.map((u,i) => `<div style="position:relative;"><img src="${u}" style="width:74px;height:74px;object-fit:cover;border-radius:7px;border:1px solid #e0d8cc;"><button type="button" onclick="aiGorselSil(${i})" style="position:absolute;top:-6px;right:-6px;background:#c0392b;color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:12px;line-height:1;">×</button></div>`).join('');
+            aiDurum(aiGorseller.length + ' gorsel hazir');
+        }
+
+        function aiGorselSil(i) {
+            aiGorseller.splice(i, 1);
+            const strip = document.getElementById('aiImageStrip');
+            if (strip) strip.innerHTML = aiGorseller.map((u,j) => `<div style="position:relative;"><img src="${u}" style="width:74px;height:74px;object-fit:cover;border-radius:7px;border:1px solid #e0d8cc;"><button type="button" onclick="aiGorselSil(${j})" style="position:absolute;top:-6px;right:-6px;background:#c0392b;color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:12px;line-height:1;">×</button></div>`).join('');
+            aiDurum(aiGorseller.length + ' gorsel hazir');
+        }
+
+        function aiDenetle(u) {
+            const uyari = [];
+            const vaat = /ucretsiz kargo|ücretsiz kargo|free shipping|hizli teslimat|hızlı teslimat|fast delivery|garanti|warranty|indirim|discount|satin al|satın al|siparis ver|sipariş ver|order now|shop now|buy now/i;
+            const marok = /marokk\w*|marok\w*|moroccan/i;
+            const tumTr = [u.name_tr,u.description_tr,u.meta_title_tr,u.meta_description_tr,u.keywords_tr].join(' ');
+            const tumEn = [u.name_en,u.description_en,u.meta_title_en,u.meta_description_en,u.keywords_en].join(' ');
+            if (vaat.test(tumTr + ' ' + tumEn)) uyari.push('Ticari vaat ifadesi var (kargo/teslimat/garanti/satin al)');
+            if (marok.test(tumTr)) uyari.push('Turkce metinde Marokken/Moroccan yazimi var — "Fas tarzi" olmali');
+            if ((u.meta_title_tr||'').length > 60) uyari.push('meta_title_tr 60 karakteri asiyor (' + u.meta_title_tr.length + ')');
+            if ((u.meta_title_en||'').length > 60) uyari.push('meta_title_en 60 karakteri asiyor (' + u.meta_title_en.length + ')');
+            if ((u.meta_description_tr||'').length > 155) uyari.push('meta_description_tr 155 karakteri asiyor');
+            if ((u.meta_description_en||'').length > 155) uyari.push('meta_description_en 155 karakteri asiyor');
+            if (/^[a-zA-Z]{1,4}[- ]?\d{2,5}\s*$/.test((u.name_tr||'').trim())) uyari.push('name_tr stok kodu gibi gorunuyor');
+            if (/kristal|crystal/i.test(tumTr + ' ' + tumEn) && !/kristal/i.test(u.materials||'')) uyari.push('"Kristal" deniyor ama malzemede kristal yok');
+            if (/pirinç malzeme|pirinçten üretil|masif pirinç|brass material|solid brass|made of brass|crafted from brass|brass construction/i.test(tumTr + ' ' + tumEn)) uyari.push('Pirinc malzeme gibi yazilmis — pirinc bir yuzey rengidir, "metal govde, antik pirinc eskitme yuzey" olmali');
+            if (/\bcam\b|glass/i.test(tumTr + ' ' + tumEn) && !/cam/i.test(u.materials||'')) uyari.push('"Cam" deniyor ama malzemede cam yok — pleksi olabilir');
+            if (!u.name_tr || !u.name_en) uyari.push('Urun adi eksik');
+            return uyari;
+        }
+
+        function aiOnizleme(u) {
+            const uyari = aiDenetle(u);
+            const kutu = document.getElementById('aiChatBox');
+            const kart = document.createElement('div');
+            kart.style.cssText = 'align-self:flex-start;max-width:94%;background:#fff;border:1px solid #cbbfa8;border-radius:12px;padding:16px;font-size:0.86rem;line-height:1.6;';
+            const sat = (b, d) => d ? `<div style="margin-bottom:7px;"><span style="color:#8a7d6b;">${b}:</span> ${String(d).replace(/</g,'&lt;')}</div>` : '';
+            kart.innerHTML = `
+                <div style="font-weight:600;margin-bottom:10px;font-size:0.95rem;">Hazirlanan urun</div>
+                ${sat('Ad (TR)', u.name_tr)}${sat('Ad (EN)', u.name_en)}
+                ${sat('Kategori', (u.category||'') + (u.subcategory ? ' / ' + u.subcategory : '') + (u.style ? ' / ' + u.style : ''))}
+                ${sat('Malzeme', u.materials)}${sat('Olcu', u.dimensions)}${sat('SKU', u.sku)}
+                ${sat('Meta baslik (TR)', (u.meta_title_tr||'') + ' [' + (u.meta_title_tr||'').length + ']')}
+                ${sat('Meta baslik (EN)', (u.meta_title_en||'') + ' [' + (u.meta_title_en||'').length + ']')}
+                ${sat('Aciklama (TR)', (u.description_tr||'').slice(0,180) + ((u.description_tr||'').length>180?'...':''))}
+                ${sat('Anahtar kelime (TR)', (u.keywords_tr||'').slice(0,140))}
+                ${sat('Gorsel', aiGorseller.length + ' adet')}
+                ${uyari.length ? `<div style="margin-top:10px;padding:10px;background:#fdf0ef;border:1px solid #e8bfba;border-radius:7px;color:#a03228;"><b>Kontrol uyarilari:</b><br>• ${uyari.join('<br>• ')}<br><span style="color:#7a5a55;">Duzeltmek icin sohbete yaz, yeniden hazirlayayim.</span></div>` : `<div style="margin-top:10px;color:#2e7d32;">Kontrollerden gecti.</div>`}
+                <div style="margin-top:14px;display:flex;gap:9px;">
+                    <button type="button" class="btn btn-primary" onclick="aiKaydet()">Siteye ekle</button>
+                    <button type="button" class="btn" onclick="document.getElementById('aiChatInput').focus()">Duzeltme iste</button>
+                </div>`;
+            kutu.appendChild(kart);
+            kutu.scrollTop = kutu.scrollHeight;
+        }
+
+        async function aiSend() {
+            const inp = document.getElementById('aiChatInput');
+            const btn = document.getElementById('aiSendBtn');
+            const metin = (inp.value || '').trim();
+            if (!metin && !aiGorseller.length) { alert('Once bir mesaj yaz veya fotograf ekle.'); return; }
+            if (!localStorage.getItem('anthropic_api_key')) {
+                alert('API anahtari girilmemis.\n\nAdmin -> Ayarlar bolumunden Anthropic API anahtarini gir, sonra tekrar dene.');
+                return;
+            }
+
+            const icerik = [];
+            if (!aiMesajlar.length && aiGorseller.length) {
+                aiGorseller.slice(0,4).forEach(u => icerik.push({ type:'image', source:{ type:'url', url:u } }));
+            }
+            icerik.push({ type:'text', text: metin || 'Bu urunu hazirla.' });
+
+            aiEkle('user', metin || '(fotograf gonderildi)');
+            inp.value = '';
+            btn.disabled = true;
+            aiDurum('Dusunuyor...');
+
+            aiMesajlar.push({ role:'user', content: icerik });
+
+            try {
+                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        'x-api-key': (localStorage.getItem('anthropic_api_key') || ''),
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-5',
+                        max_tokens: 2000,
+                        system: AI_SISTEM,
+                        messages: aiMesajlar
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error((data.error && data.error.message) || ('API hatasi ' + res.status));
+                const cevap = (data.content || []).map(c => c.text || '').join('').trim();
+                aiMesajlar.push({ role:'assistant', content: cevap });
+
+                const m = cevap.match(/<URUN>([\s\S]*?)<\/URUN>/);
+                if (m) {
+                    const oncesi = cevap.slice(0, m.index).trim();
+                    if (oncesi) aiEkle('assistant', oncesi);
+                    try {
+                        aiTaslak = JSON.parse(m[1].trim());
+                        aiOnizleme(aiTaslak);
+                        aiDurum('Katalog kontrol ediliyor...');
+                        const benzerler = await aiBenzerBul(aiTaslak);
+                        aiBenzerGoster(benzerler);
+                        aiDurum('');
+                    } catch (e) {
+                        aiEkle('assistant', 'Urun bilgisini okuyamadim, tekrar dener misin?');
+                    }
+                } else {
+                    aiEkle('assistant', cevap);
+                }
+                aiDurum('');
+            } catch (e) {
+                aiEkle('assistant', 'Hata: ' + e.message);
+                aiDurum('');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function aiKaydet() {
+            if (!aiTaslak) return;
+            if (!aiGorseller.length && !confirm('Hic gorsel eklenmedi. Yine de kaydedilsin mi?')) return;
+            aiDurum('Kaydediliyor...');
+            const u = aiTaslak;
+            const urun = {
+                id: null, _dbId: null,
+                name: { tr: u.name_tr || '', en: u.name_en || '' },
+                description: { tr: u.description_tr || '', en: u.description_en || '' },
+                category: u.category || 'lighting',
+                subcategory: u.subcategory ? [u.subcategory] : [],
+                style: u.style || null,
+                sku: u.sku || '',
+                materials: u.materials || '',
+                dimensions: u.dimensions || '',
+                images: aiGorseller.slice(),
+                videos: [],
+                metaTitle: { tr: u.meta_title_tr || '', en: u.meta_title_en || '' },
+                metaDescription: { tr: u.meta_description_tr || '', en: u.meta_description_en || '' },
+                keywords: { tr: u.keywords_tr || '', en: u.keywords_en || '' }
+            };
+            const ok = await saveProductToDB(urun);
+            if (ok) {
+                _aiKatalog = null;
+                aiEkle('assistant', 'Urun siteye eklendi: ' + urun.name.tr + '\n\nYeni bir urun icin "Yeni urun" dugmesine bas.');
+                aiTaslak = null;
+                aiDurum('Kaydedildi');
+            } else {
+                aiEkle('assistant', 'Kayit basarisiz oldu. Tekrar denemek ister misin?');
+                aiDurum('');
+            }
+        }
+
+
+        function showToast(message, type) {
+            const existing = document.getElementById('saveToast');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.id = 'saveToast';
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+                background: ${type === 'success' ? '#2e7d32' : '#c62828'};
+                color: white; padding: 14px 28px; border-radius: 8px;
+                font-size: 15px; font-weight: 600; z-index: 99999;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+                transition: opacity 0.5s ease;
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 500); }, 3500);
+        }
+
+        // ===== VARIANT SELECTION (product detail page) =====
+        let _selectedColor = null;
+        let _selectedSize = null;
+
+        function _updateVariantPrice() {
+            const section = document.getElementById('variantSection');
+            if (!section) return;
+            const variants = JSON.parse(section.dataset.variants || '[]');
+            const basePrice = section.dataset.baseprice || '';
+            const priceEl = document.getElementById('variantPrice');
+            if (!priceEl) return;
+
+            // Find matching variant
+            const match = variants.find(v => {
+                const colorMatch = !_selectedColor || v.colorHex === _selectedColor;
+                const sizeMatch = !_selectedSize || v.size === _selectedSize;
+                return colorMatch && sizeMatch;
+            });
+
+            const displayPrice = match && match.price ? match.price : (basePrice || (currentLanguage === 'tr' ? 'Fiyat İçin Sor' : 'Ask for Price'));
+            priceEl.textContent = displayPrice;
+        }
+
+        function selectVariantColor(hex) {
+            _selectedColor = hex;
+            // Update active swatch
+            document.querySelectorAll('.color-swatch').forEach(s => {
+                s.classList.toggle('active', s.dataset.hex === hex);
+            });
+            // Update color name label
+            const swatch = document.querySelector(`.color-swatch[data-hex="${hex}"]`);
+            const nameEl = document.getElementById('selectedColorName');
+            if (nameEl && swatch) nameEl.textContent = swatch.title;
+            _updateVariantPrice();
+        }
+
+        function selectVariantSize(size) {
+            _selectedSize = size;
+            // Update active size button
+            document.querySelectorAll('.size-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.size === size);
+            });
+            _updateVariantPrice();
+        }
+
+        function addVariantRow() {
+            const container = document.getElementById('variantsContainer');
+            if (!container) return;
+            const row = document.createElement('div');
+            row.className = 'variant-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Altın" class="v-colorTr">
+                <input type="text" placeholder="Gold" class="v-colorEn">
+                <input type="color" value="#D4AF37" class="v-colorHex">
+                <input type="text" placeholder="60cm × 40cm" class="v-size">
+                <input type="text" placeholder="Fiyat İçin Sor" class="v-price">
+                <button type="button" onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:#999;">✕</button>
+            `;
+            container.appendChild(row);
+        }
+
+        function toggleStyleField() {
+            const styleGroup = document.getElementById('styleFieldGroup');
+            if (!styleGroup) return;
+            const chandelierChecked = !!document.querySelector('input[name="subcategoryCheck"][value="chandelier"]:checked');
+            styleGroup.style.display = chandelierChecked ? 'block' : 'none';
+        }
+
+        // ===== EXCEL IMPORT =====
+        function downloadExcelTemplate() {
+            if (typeof XLSX === 'undefined') {
+                alert('Sayfa yeniden yüklenirken kütüphane bekleniyor, lütfen 1 saniye bekleyip tekrar deneyin.');
+                return;
+            }
+            const headers = [
+                'urun_adi_tr','urun_adi_en',
+                'aciklama_tr','aciklama_en',
+                'kategori','alt_kategori','koleksiyon',
+                'fiyat','malzeme','boyut',
+                'resim_1','resim_2','resim_3','video_url'
+            ];
+            const example = [
+                'Kristal Avize','Crystal Chandelier',
+                'Şık kristal avize','Elegant crystal chandelier',
+                'lighting','chandelier','modern',
+                'Fiyat İçin Sor','Kristal, Altın Kaplama','60cm × 40cm',
+                'https://picsum.photos/600/600?random=50','','',''
+            ];
+            const ws = XLSX.utils.aoa_to_sheet([headers, example]);
+            // Column widths
+            ws['!cols'] = headers.map((h,i) => ({ wch: i < 4 ? 28 : i < 10 ? 18 : 40 }));
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Ürünler');
+            XLSX.writeFile(wb, 'chandelist_urun_sablonu.xlsx');
+        }
+
+        function previewExcelImport(input) {
+            if (!input.files || !input.files[0]) return;
+            if (typeof XLSX === 'undefined') { alert('Kütüphane henüz yüklenmedi, lütfen bekleyin.'); return; }
+
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const arrayBuffer = e.target.result;
+                    const wb = XLSX.read(arrayBuffer, { type: 'array', cellStyles: true, raw: true });
+                    const ws = wb.Sheets[wb.SheetNames[0]];
+
+                    // Find header row — look for row containing cell that starts with 'urun_adi_tr'
+                    const rawRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+                    let headerRowIdx = 0;
+                    let rawHeaders = [];
+                    for (let ri = 0; ri < rawRows.length; ri++) {
+                        const found = rawRows[ri].some(c => typeof c === 'string' && c.replace(/\s*\*/g,'').trim() === 'urun_adi_tr');
+                        if (found) { headerRowIdx = ri; rawHeaders = rawRows[ri]; break; }
+                    }
+                    // Clean headers: remove ' *', emoji, newlines → get plain keys
+                    const cleanHeaders = rawHeaders.map(h => {
+                        if (typeof h !== 'string') return '';
+                        return h.replace(/\s*\*\s*/g,'').replace(/📷.*/,'resim').split('\n')[0].trim();
+                    });
+                    // Parse data rows (skip header + description row below it)
+                    const allDataRows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', range: headerRowIdx + 1 });
+                    // Skip rows where first cell looks like a guide/example (contains \n or is a known placeholder)
+                    const rows = allDataRows
+                        .filter(rowArr => rowArr.some(c => c !== ''))
+                        .map(rowArr => {
+                            const obj = {};
+                            cleanHeaders.forEach((h, i) => { if (h) obj[h] = rowArr[i] !== undefined ? rowArr[i] : ''; });
+                            return obj;
+                        })
+                        .filter(r => r.urun_adi_tr && !String(r.urun_adi_tr).includes('\n') && r.urun_adi_tr !== 'Türkçe ürün adı');
+
+                    if (rows.length === 0) { alert('Dosya boş veya okunamadı.'); return; }
+
+                    const validRows = rows.filter(r => r.urun_adi_tr || r.urun_adi_en);
+
+                    // Extract images — supports new Excel "Rich Data" format (Insert Picture in Cell)
+                    const imageMap = {};
+                    try {
+                        if (!window.JSZip) {
+                            await new Promise((resolve, reject) => {
+                                const s = document.createElement('script');
+                                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+                                s.onload = resolve; s.onerror = reject;
+                                document.head.appendChild(s);
+                            });
+                        }
+                        const zip = await window.JSZip.loadAsync(arrayBuffer);
+                        const relsFile = zip.file('xl/richData/_rels/richValueRel.xml.rels');
+                        if (relsFile) {
+                            const relsXml = await relsFile.async('text');
+                            const relsDoc = new DOMParser().parseFromString(relsXml, 'text/xml');
+                            const idToFile = {};
+                            relsDoc.querySelectorAll('Relationship').forEach(rel => {
+                                const num = parseInt(rel.getAttribute('Id').replace('rId',''));
+                                idToFile[num - 1] = rel.getAttribute('Target').replace('../media/','');
+                            });
+                            const sheetFile = zip.file('xl/worksheets/sheet1.xml');
+                            if (sheetFile) {
+                                const sheetXml = await sheetFile.async('text');
+                                const vmMatches = [...sheetXml.matchAll(/<c r="([^"]+)"[^>]*vm="(\d+)"/g)];
+                                // dataStartRow: headerRowIdx (0-based) + 1 description row + 1 for Excel 1-indexing
+                                const dataStartRow1 = headerRowIdx + 3; // 1-indexed Excel row of first data row
+                                for (const m of vmMatches) {
+                                    const cellRef = m[1]; // e.g. G5
+                                    const vmIdx = parseInt(m[2]) - 1; // 0-indexed
+                                    const rowNum = parseInt(cellRef.replace(/[A-Z]/g, '')); // 1-indexed
+                                    const dataIdx = rowNum - dataStartRow1; // 0-indexed data row
+                                    if (dataIdx >= 0 && dataIdx < validRows.length) {
+                                        const imgFile = idToFile[vmIdx];
+                                        if (imgFile) {
+                                            const imgZip = zip.file('xl/media/' + imgFile);
+                                            if (imgZip) {
+                                                const imgData = await imgZip.async('base64');
+                                                const ext = imgFile.split('.').pop().toLowerCase();
+                                                const mime = {jpeg:'image/jpeg',jpg:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp'}[ext]||'image/jpeg';
+                                                imageMap[dataIdx] = { data: imgData, type: mime };
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } catch(imgErr) { console.warn('Resim okuma hatası:', imgErr); }
+
+                    window._pendingImportRows = validRows;
+                    window._pendingImportImages = imageMap;
+
+                    const imgCount = Object.keys(imageMap).length;
+                    const previewEl = document.getElementById('importPreview');
+                    previewEl.innerHTML = `
+                        <p style="margin-bottom:8px;font-size:0.88rem;color:#333;">
+                            <strong>${validRows.length} ürün</strong> bulundu${imgCount > 0 ? `, <strong>${imgCount} resim</strong> algılandı` : ''}.
+                        </p>
+                        <div style="background:#f5f0eb;padding:10px 14px;border-radius:4px;font-size:0.82rem;color:#666;margin-bottom:14px;line-height:1.9;">
+                            🤖 Claude otomatik üretecek: İngilizce ad &nbsp;·&nbsp; TR+EN açıklama &nbsp;·&nbsp; Meta başlık &nbsp;·&nbsp; SEO kelimeleri<br>
+                            📷 Resimler Cloudinary'a yüklenecek (${imgCount > 0 ? imgCount + ' resim hazır' : 'resim bulunamadı — admin panelinden eklenebilir'})
+                        </div>
+                        <div style="overflow-x:auto;margin-bottom:16px;">
+                            <table style="width:100%;border-collapse:collapse;font-size:0.82rem;">
+                                <thead>
+                                    <tr style="background:#f5f2ed;">
+                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">#</th>
+                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Ürün Adı TR</th>
+                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Alt Kategori</th>
+                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Koleksiyon</th>
+                                        <th style="padding:8px;border:1px solid #e8e0d5;text-align:left;">Resim</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${validRows.map((r, i) => `
+                                        <tr style="${i % 2 === 0 ? '' : 'background:#fafaf9;'}">
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;color:#999;">${i+1}</td>
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.urun_adi_tr || r.urun_adi_en}</td>
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.alt_kategori || '-'}</td>
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${r.koleksiyon || '-'}</td>
+                                            <td style="padding:7px 8px;border:1px solid #e8e0d5;">${imageMap[i] ? '📷 ✓' : '—'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="display:flex;gap:12px;">
+                            <button class="btn btn-primary" onclick="executeExcelImport()">✓ ${validRows.length} Ürünü İçe Aktar</button>
+                            <button class="btn" onclick="document.getElementById('importPreview').innerHTML='';document.getElementById('excelFileInput').value=''">İptal</button>
+                        </div>
+                    `;
+                } catch(err) {
+                    alert('Dosya okunamadı: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        async function generateProductSEO(nameTr, subcategory, materials, dimensions) {
+            const ANTHROPIC_KEY = localStorage.getItem('anthropic_api_key') || '';
+            if (!ANTHROPIC_KEY) throw new Error('API key girilmemiş — Admin → Ayarlar bölümünden girin');
+            const subcatLabel = { chandelier:'avize', sconce:'aplik', table_lamp:'masa lambası', floor_lamp:'lambader', outdoor:'dış mekan aydınlatma', decorative:'dekoratif eşya', side_table:'yan sehpa', tray:'tepsi', mirror:'ayna', candleholder:'mumluk', vase:'vazo', planter:'saksı' }[subcategory] || subcategory;
+            const prompt = `Sen CHANDELIST adlı lüks aydınlatma markası için ürün içerikleri yazıyorsun. Dil zarif, kısa ve lüks olmalı.
+
+Ürün: ${nameTr}
+Tür: ${subcatLabel}
+Malzeme: ${materials || '-'}
+Boyut: ${dimensions || '-'}
+
+Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
+{"name_en":"...","description_tr":"2-3 cümle TR açıklama","description_en":"2-3 sentence EN description","meta_title_tr":"...| CHANDELIST","meta_title_en":"...| CHANDELIST","keywords_tr":"kelime1, kelime2, kelime3, kelime4, kelime5","keywords_en":"word1, word2, word3, word4, word5"}`;
+
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': ANTHROPIC_KEY,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify({
+                    model: 'claude-haiku-4-5-20251001',
+                    max_tokens: 800,
+                    messages: [{ role: 'user', content: prompt }]
+                })
+            });
+            if (!res.ok) throw new Error('API ' + res.status);
+            const data = await res.json();
+            return JSON.parse(data.content[0].text.trim());
+        }
+
+        async function executeExcelImport() {
+            const rows = window._pendingImportRows;
+            if (!rows || rows.length === 0) return;
+
+            if (!localStorage.getItem('anthropic_api_key')) {
+                alert('⚠️ Claude API key girilmemiş!\n\nAdmin → ⚙ Ayarlar bölümünden API key\'i girin.\nAçıklama ve SEO olmadan da yükleyebilirsiniz.');
+                const proceed = confirm('API key olmadan devam edilsin mi? (Açıklamalar boş kalır)');
+                if (!proceed) return;
+            }
+
+            const btn = document.querySelector('#importPreview .btn-primary');
+            const previewEl = document.getElementById('importPreview');
+
+            // Add progress indicator
+            let progressHTML = `
+                <div id="importProgress" style="margin-top:16px;">
+                    <div style="background:#f5f0eb;border-radius:4px;height:8px;overflow:hidden;margin-bottom:8px;">
+                        <div id="importProgressBar" style="height:100%;background:#8a7d6b;width:0%;transition:width 0.3s;"></div>
+                    </div>
+                    <p id="importProgressText" style="font-size:0.85rem;color:#8a7d6b;">Hazırlanıyor...</p>
+                </div>`;
+            previewEl.insertAdjacentHTML('beforeend', progressHTML);
+            if (btn) { btn.disabled = true; btn.textContent = 'İşleniyor...'; }
+
+            const progressBar = document.getElementById('importProgressBar');
+            const progressText = document.getElementById('importProgressText');
+
+            let success = 0, fail = 0;
+            for (let i = 0; i < rows.length; i++) {
+                const r = rows[i];
+                const pct = Math.round((i / rows.length) * 100);
+                if (progressBar) progressBar.style.width = pct + '%';
+                if (progressText) progressText.textContent = `${i+1}/${rows.length} — Claude SEO üretiyor: "${r.urun_adi_tr}"...`;
+
+                // Claude API ile SEO üret
+                let seo = {};
+                try {
+                    seo = await generateProductSEO(
+                        r.urun_adi_tr,
+                        r.alt_kategori || 'chandelier',
+                        r.malzeme || '',
+                        r.boyut || ''
+                    );
+                } catch(e) {
+                    console.warn('SEO üretilemedi:', e.message);
+                }
+
+                // Excel'deki resmi Cloudinary'a yükle
+                let images = [];
+                const imgData = (window._pendingImportImages || {})[i];
+                if (imgData && imgData.data) {
+                    try {
+                        if (progressText) progressText.textContent = `${i+1}/${rows.length} — Resim yükleniyor: "${r.urun_adi_tr}"...`;
+                        const mimeType = imgData.type || 'image/jpeg';
+                        const dataUrl = `data:${mimeType};base64,${imgData.data}`;
+                        const fd = new FormData();
+                        fd.append('file', dataUrl);
+                        fd.append('upload_preset', 'chandelist_upload');
+                        const cldRes = await fetch('https://api.cloudinary.com/v1_1/dcvkzpvmy/image/upload', { method:'POST', body: fd });
+                        const cldData = await cldRes.json();
+                        if (cldData.secure_url) images = [cldData.secure_url];
+                    } catch(e) {
+                        console.warn('Resim yüklenemedi:', e.message);
+                    }
+                }
+                // Fallback: Excel'de URL varsa onu kullan
+                if (images.length === 0) {
+                    images = [r.resim_1, r.resim_2, r.resim_3].filter(v => v && v.toString().trim());
+                }
+                const videos = r.video_url ? [r.video_url] : [];
+                const subcatRaw = (r.alt_kategori || 'chandelier').split(',').map(s => s.trim()).filter(Boolean);
+
+                const p = {
+                    id: null, _dbId: null,
+                    name: { tr: r.urun_adi_tr || '', en: seo.name_en || r.urun_adi_tr || '' },
+                    description: { tr: seo.description_tr || r.aciklama_tr || '', en: seo.description_en || r.aciklama_en || '' },
+                    metaTitle: { tr: seo.meta_title_tr || (r.urun_adi_tr + ' | CHANDELIST'), en: seo.meta_title_en || '' },
+                    metaDescription: { tr: seo.description_tr || '', en: seo.description_en || '' },
+                    keywords: { tr: seo.keywords_tr || '', en: seo.keywords_en || '' },
+                    category: r.kategori || 'lighting',
+                    subcategory: subcatRaw,
+                    style: r.koleksiyon || null,
+                    price: r.fiyat || '',
+                    materials: r.malzeme || '',
+                    dimensions: r.boyut || '',
+                    images: images.length ? images : [],
+                    videos: videos,
+                    relatedProducts: [],
+                    variants: [],
+                };
+                try { await saveProductToDB(p); success++; }
+                catch(e) { fail++; console.error('Kayıt hatası:', e); }
+            }
+
+            if (progressBar) progressBar.style.width = '100%';
+            if (progressText) progressText.textContent = `Tamamlandı!`;
+
+            window._pendingImportRows = null;
+            document.getElementById('excelFileInput').value = '';
+            setTimeout(() => {
+                document.getElementById('importPreview').innerHTML = '';
+                alert(`✓ ${success} ürün eklendi (SEO otomatik üretildi)${fail > 0 ? `\n✗ ${fail} ürün başarısız` : ''}!`);
+                render();
+            }, 800);
+        }
+
+        // ===== COLLECTION ADMIN FUNCTIONS =====
+        function saveCollection(idx) {
+            const collections = getCollections();
+            collections[idx].title.tr = document.getElementById(`colTitleTr_${idx}`).value;
+            collections[idx].title.en = document.getElementById(`colTitleEn_${idx}`).value;
+            collections[idx].subtitle.tr = document.getElementById(`colSubTr_${idx}`).value;
+            collections[idx].subtitle.en = document.getElementById(`colSubEn_${idx}`).value;
+            saveCollections(collections);
+            alert('Koleksiyon kaydedildi!');
+        }
+
+        function uploadCollectionImage(idx) {
+            if (typeof cloudinary === 'undefined') {
+                alert('Cloudinary yükleniyor, lütfen bekleyin.');
+                return;
+            }
+            const widget = cloudinary.createUploadWidget(
+                {
+                    cloudName: 'dcvkzpvmy',
+                    uploadPreset: 'chandelist_upload',
+                    sources: ['local', 'url'],
+                    multiple: false,
+                    resourceType: 'image',
+                    clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'],
+                    maxFileSize: 10000000,
+                },
+                (error, result) => {
+                    if (!error && result && result.event === 'success') {
+                        const url = result.info.secure_url;
+                        const collections = getCollections();
+                        collections[idx].image = url;
+                        saveCollections(collections);
+                        render();
+                    }
+                }
+            );
+            widget.open();
+        }
+
+        function removeCollectionImage(idx) {
+            if (!confirm('Görseli kaldırmak istediğinize emin misiniz?')) return;
+            const collections = getCollections();
+            collections[idx].image = '';
+            saveCollections(collections);
+            render();
+        }
+
+        let currentProductCat = 'all';
+        function setProductCat(btn, cat) {
+            currentProductCat = cat;
+            document.querySelectorAll('.prod-cat-btn').forEach(b => {
+                const on = b === btn;
+                b.style.background = on ? '#5a4a3a' : '#fff';
+                b.style.color = on ? '#fff' : '#5a4a3a';
+                b.classList.toggle('active', on);
+            });
+            filterAdminProducts();
+        }
+        function filterAdminProducts() {
+            const q = (document.getElementById('productSearchInput')?.value || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('.admin-product-row');
+            let shown = 0;
+            rows.forEach(row => {
+                const cats = (row.getAttribute('data-subcat') || '').split('|');
+                const txt = row.getAttribute('data-search') || '';
+                const catOk = currentProductCat === 'all' || cats.includes(currentProductCat);
+                const qOk = !q || txt.includes(q);
+                const visible = catOk && qOk;
+                row.style.display = visible ? 'flex' : 'none';
+                if (visible) shown++;
+            });
+            const countEl = document.getElementById('productCount');
+            if (countEl) countEl.textContent = shown;
+            const noMatch = document.getElementById('noProductMatch');
+            if (noMatch) noMatch.style.display = shown === 0 ? 'block' : 'none';
+        }
+
+        async function editProduct(productId) {
+            showProductModal(productId);
+        }
+
+        async function addNewProduct() {
+            showProductModal();
+        }
+
+        async function deleteProduct(productId) {
+            if (confirm('Are you sure?')) {
+                await deleteProductFromDB(parseInt(productId));
+                await render();
+            }
+        }
+
+        async function showBannerModal(bannerId = null) {
+            const banners = await getBanners();
+            const banner = bannerId ? banners.find(b => b.id === parseInt(bannerId)) : null;
+
+            const desktopUrl = banner ? (banner.url || '') : '';
+            const mobileUrl  = banner ? (banner.mobileUrl || '') : '';
+
+            const modal = `
+                <div class="modal-overlay" id="bannerModal">
+                    <div class="modal" style="max-width:620px;">
+                        <button class="modal-close" onclick="closeModal()">&times;</button>
+                        <h2>${banner ? t().editBanner : t().addBanner}</h2>
+                        <form id="bannerForm">
+
+                            <!-- DESKTOP IMAGE -->
+                            <div class="form-group">
+                                <label>Masaüstü Görseli <small style="color:#999;font-weight:400;">1920 × 800 px önerilen</small></label>
+                                <!-- Drop zone -->
+                                <div id="bannerDropDesktop"
+                                     ondragover="event.preventDefault();this.style.borderColor='#8a7d6b';"
+                                     ondragleave="this.style.borderColor='#ddd';"
+                                     ondrop="handleBannerDrop(event,'desktop')"
+                                     style="border:2px dashed #ddd;border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:border-color 0.2s;background:#fafaf9;margin-bottom:8px;"
+                                     onclick="uploadBannerImage('desktop')">
+                                    ${desktopUrl
+                                        ? `<img src="${desktopUrl}" id="bannerPreviewDesktop" style="max-height:140px;max-width:100%;border-radius:4px;object-fit:cover;" onerror="this.style.display='none'"><br><span style="font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:inline-block;">Değiştirmek için tıkla veya sürükle-bırak</span>`
+                                        : `<div id="bannerPreviewDesktop" style="display:none;"></div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5" style="margin-bottom:8px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><br><span style="font-size:0.85rem;color:#aaa;">Tıkla veya resmi buraya sürükle-bırak</span>`}
+                                </div>
+                                <input type="text" id="formBannerUrl" value="${desktopUrl}" placeholder="ya da URL yapıştır..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;margin-top:2px;" oninput="updateBannerPreview('desktop',this.value)">
+                                <div id="bannerUploadStatusDesktop" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
+                            </div>
+
+                            <!-- MOBILE IMAGE -->
+                            <div class="form-group">
+                                <label>Mobil Görseli <small style="color:#999;font-weight:400;">750 × 1000 px önerilen · isteğe bağlı</small></label>
+                                <div id="bannerDropMobile"
+                                     ondragover="event.preventDefault();this.style.borderColor='#8a7d6b';"
+                                     ondragleave="this.style.borderColor='#ddd';"
+                                     ondrop="handleBannerDrop(event,'mobile')"
+                                     style="border:2px dashed #ddd;border-radius:6px;padding:20px;text-align:center;cursor:pointer;transition:border-color 0.2s;background:#fafaf9;margin-bottom:8px;"
+                                     onclick="uploadBannerImage('mobile')">
+                                    ${mobileUrl
+                                        ? `<img src="${mobileUrl}" id="bannerPreviewMobile" style="max-height:140px;max-width:100%;border-radius:4px;object-fit:cover;" onerror="this.style.display='none'"><br><span style="font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:inline-block;">Değiştirmek için tıkla veya sürükle-bırak</span>`
+                                        : `<div id="bannerPreviewMobile" style="display:none;"></div><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5" style="margin-bottom:8px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><br><span style="font-size:0.82rem;color:#aaa;">Tıkla veya resmi buraya sürükle-bırak</span><br><span style="font-size:0.75rem;color:#bbb;">Yoksa masaüstü görseli kullanılır</span>`}
+                                </div>
+                                <input type="text" id="formBannerMobileUrl" value="${mobileUrl}" placeholder="ya da URL yapıştır..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;margin-top:2px;" oninput="updateBannerPreview('mobile',this.value)">
+                                <div id="bannerUploadStatusMobile" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
+                            </div>
+
+                            <!-- TYPE & POSITION -->
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                                <div class="form-group">
+                                    <label>Medya Tipi</label>
+                                    <select id="formBannerType" required>
+                                        <option value="image" ${banner && banner.type === 'image' ? 'selected' : ''}>Resim (Image)</option>
+                                        <option value="video" ${banner && banner.type === 'video' ? 'selected' : ''}>Video</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobil Medya Tipi</label>
+                                    <select id="formBannerMobileType">
+                                        <option value="image" ${!banner || !banner.mobileType || banner.mobileType === 'image' ? 'selected' : ''}>Resim</option>
+                                        <option value="video" ${banner && banner.mobileType === 'video' ? 'selected' : ''}>Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Konum (Position)</label>
+                                <select id="formBannerPosition" required>
+                                    <option value="home" ${!banner || banner.position === 'home' ? 'selected' : ''}>Ana Sayfa Slideshow</option>
+                                    <option value="home_video" ${banner && banner.position === 'home_video' ? 'selected' : ''}>Ana Sayfa Video Arka Plan</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-buttons">
+                                <button type="button" class="btn" onclick="closeModal()">${t().cancel}</button>
+                                <button type="button" class="btn btn-primary" onclick="saveBanner(${banner ? banner.id : 'null'})">${t().save}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('app').insertAdjacentHTML('beforeend', modal);
+        }
+
+        // Banner image upload via Cloudinary widget
+        function uploadBannerImage(slot) {
+            if (typeof cloudinary === 'undefined') { alert('Cloudinary yükleniyor, lütfen bekleyin.'); return; }
+            const statusEl = document.getElementById(`bannerUploadStatus${slot === 'desktop' ? 'Desktop' : 'Mobile'}`);
+            if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '⏳ Yükleniyor...'; }
+            const widget = cloudinary.createUploadWidget({
+                cloudName: CLOUDINARY_CLOUD,
+                uploadPreset: CLOUDINARY_PRESET,
+                multiple: false,
+                resourceType: 'image',
+                sources: ['local','url','camera'],
+                cropping: false,
+            }, (error, result) => {
+                if (error) { if (statusEl) { statusEl.textContent = '❌ Hata: ' + error.message; } return; }
+                if (result.event === 'success') {
+                    const url = result.info.secure_url;
+                    const inputId = slot === 'desktop' ? 'formBannerUrl' : 'formBannerMobileUrl';
+                    const input = document.getElementById(inputId);
+                    if (input) input.value = url;
+                    updateBannerPreview(slot, url);
+                    if (statusEl) { statusEl.textContent = '✅ Yüklendi!'; setTimeout(() => { statusEl.style.display = 'none'; }, 2000); }
+                }
+            });
+            widget.open();
+        }
+
+        // Handle drag & drop onto banner drop zone
+        async function handleBannerDrop(event, slot) {
+            event.preventDefault();
+            const dropEl = event.currentTarget;
+            dropEl.style.borderColor = '#ddd';
+            const statusEl = document.getElementById(`bannerUploadStatus${slot === 'desktop' ? 'Desktop' : 'Mobile'}`);
+            const file = event.dataTransfer.files[0];
+            if (!file || !file.type.startsWith('image/')) { alert('Lütfen bir resim dosyası sürükleyin.'); return; }
+            if (statusEl) { statusEl.style.display = 'block'; statusEl.textContent = '⏳ Yükleniyor...'; }
+            try {
+                const fd = new FormData();
+                fd.append('file', file);
+                fd.append('upload_preset', CLOUDINARY_PRESET);
+                const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, { method: 'POST', body: fd });
+                const data = await res.json();
+                if (data.secure_url) {
+                    const inputId = slot === 'desktop' ? 'formBannerUrl' : 'formBannerMobileUrl';
+                    const input = document.getElementById(inputId);
+                    if (input) input.value = data.secure_url;
+                    updateBannerPreview(slot, data.secure_url);
+                    if (statusEl) { statusEl.textContent = '✅ Yüklendi!'; setTimeout(() => { statusEl.style.display = 'none'; }, 2000); }
+                } else {
+                    throw new Error(data.error?.message || 'Yükleme başarısız');
+                }
+            } catch (e) {
+                if (statusEl) { statusEl.textContent = '❌ ' + e.message; }
+            }
+        }
+
+        // Update preview image when URL is typed/pasted
+        function updateBannerPreview(slot, url) {
+            const previewId = slot === 'desktop' ? 'bannerPreviewDesktop' : 'bannerPreviewMobile';
+            const dropId    = slot === 'desktop' ? 'bannerDropDesktop' : 'bannerDropMobile';
+            const preview   = document.getElementById(previewId);
+            const dropZone  = document.getElementById(dropId);
+            if (!preview || !url.trim()) return;
+            if (preview.tagName === 'IMG') {
+                preview.src = url;
+                preview.style.display = 'block';
+            } else {
+                // Replace placeholder div with img
+                const img = document.createElement('img');
+                img.id = previewId;
+                img.src = url;
+                img.style.cssText = 'max-height:140px;max-width:100%;border-radius:4px;object-fit:cover;';
+                img.onerror = () => { img.style.display = 'none'; };
+                dropZone.innerHTML = '';
+                dropZone.appendChild(img);
+                const hint = document.createElement('span');
+                hint.style.cssText = 'font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:block;';
+                hint.textContent = 'Değiştirmek için tıkla veya sürükle-bırak';
+                dropZone.appendChild(hint);
+            }
+        }
+
+        async function saveBanner(bannerId) {
+            const mobileUrl = document.getElementById('formBannerMobileUrl').value;
+            const banner = {
+                id: bannerId ? parseInt(bannerId) : null,
+                type: document.getElementById('formBannerType').value,
+                url: document.getElementById('formBannerUrl').value,
+                mobileUrl: mobileUrl || undefined,
+                mobileType: document.getElementById('formBannerMobileType').value,
+                position: document.getElementById('formBannerPosition').value,
+            };
+
+            await saveBannerToDB(banner);
+            closeModal();
+            await render();
+        }
+
+        async function editBanner(bannerId) {
+            showBannerModal(bannerId);
+        }
+
+        async function addNewBanner() {
+            showBannerModal();
+        }
+
+        // ===== Shop the Look admin =====
+        async function addShopLook() { await showShopLookModal(); }
+        async function editShopLook(id) { await showShopLookModal(id); }
+
+        async function showShopLookModal(itemId = null) {
+            const banners = await getBanners();
+            const products = await getProducts();
+            const item = itemId ? banners.find(b => b.id === parseInt(itemId)) : null;
+            const imgUrl = item ? (item.url || '') : '';
+            const linkedId = item ? (item.linkedProductId || '') : '';
+            window._shopLookProducts = products;
+
+            const productGrid = products.map(p => {
+                const nm = p.name?.tr || p.name?.en || ('Ürün #' + p.id);
+                const img = (p.images && p.images[0]) || '';
+                const sel = String(linkedId) === String(p.id);
+                return `
+                    <div class="sl-pick" data-id="${p.id}" data-name="${nm.toLowerCase()} ${(p.sku||'').toLowerCase()}" onclick="selectShopLookProduct(${p.id})"
+                         style="border:2px solid ${sel ? '#2c2c2c' : '#eee'};border-radius:6px;padding:6px;cursor:pointer;text-align:center;background:#fff;">
+                        ${img ? `<img src="${img}" style="width:100%;height:90px;object-fit:cover;border-radius:4px;" onerror="this.style.opacity=0.2">` : `<div style="height:90px;background:#f5f0eb;border-radius:4px;"></div>`}
+                        <div style="font-size:0.72rem;margin-top:5px;line-height:1.2;color:#444;max-height:2.4em;overflow:hidden;">${nm}</div>
+                        <div style="font-size:0.65rem;color:#aaa;">#${p.id}</div>
+                    </div>`;
+            }).join('');
+
+            const modal = `
+                <div class="modal-overlay" id="bannerModal">
+                    <div class="modal" style="max-width:680px;">
+                        <button class="modal-close" onclick="closeModal()">&times;</button>
+                        <h2>${item ? 'Fotoğrafı Düzenle' : 'Shop the Look Fotoğrafı Ekle'}</h2>
+                        <form id="shopLookForm">
+                            <div class="form-group">
+                                <label>Fotoğraf <small style="color:#999;font-weight:400;">kare (1:1) önerilir</small></label>
+                                <div id="bannerDropDesktop"
+                                     ondragover="event.preventDefault();this.style.borderColor='#8a7d6b';"
+                                     ondragleave="this.style.borderColor='#ddd';"
+                                     ondrop="handleBannerDrop(event,'desktop')"
+                                     style="border:2px dashed #ddd;border-radius:6px;padding:20px;text-align:center;cursor:pointer;background:#fafaf9;margin-bottom:8px;"
+                                     onclick="uploadBannerImage('desktop')">
+                                    ${imgUrl
+                                        ? `<img src="${imgUrl}" id="bannerPreviewDesktop" style="max-height:160px;max-width:100%;border-radius:4px;object-fit:cover;"><br><span style="font-size:0.78rem;color:#8a7d6b;margin-top:6px;display:inline-block;">Değiştirmek için tıkla veya sürükle-bırak</span>`
+                                        : `<div id="bannerPreviewDesktop" style="display:none;"></div><span style="font-size:0.85rem;color:#aaa;">Tıkla veya resmi buraya sürükle-bırak</span>`}
+                                </div>
+                                <input type="text" id="formBannerUrl" value="${imgUrl}" placeholder="ya da URL yapıştır..." style="width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:0.82rem;margin-top:2px;" oninput="updateBannerPreview('desktop',this.value)">
+                                <div id="bannerUploadStatusDesktop" style="display:none;font-size:0.82rem;color:#8a7d6b;margin-top:4px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Bağlanacak Ürün <span id="slSelectedName" style="color:#8a7d6b;font-weight:400;">${linkedId ? '' : '— seçilmedi —'}</span></label>
+                                <input type="hidden" id="formShopLookProduct" value="${linkedId}">
+                                <input type="text" id="slProductSearch" placeholder="🔍 Ürün ara (isim veya SKU)..." oninput="filterShopLookProducts(this.value)" style="width:100%;padding:9px;border:1px solid #ddd;border-radius:4px;margin-bottom:10px;font-size:0.85rem;">
+                                <div id="slProductGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-height:280px;overflow-y:auto;padding:4px;border:1px solid #eee;border-radius:6px;">
+                                    ${productGrid}
+                                </div>
+                                <small style="color:#999;">Fotoğrafa tıklanınca seçtiğin ürünün sayfasına yönlendirir.</small>
+                            </div>
+                            <button type="button" class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="saveShopLook(${item ? item.id : 'null'})">${t().save || 'Kaydet'}</button>
+                        </form>
+                    </div>
+                </div>`;
+            const wrap = document.createElement('div');
+            wrap.innerHTML = modal;
+            document.body.appendChild(wrap.firstElementChild);
+            if (linkedId) selectShopLookProduct(linkedId);
+        }
+
+        function selectShopLookProduct(id) {
+            document.getElementById('formShopLookProduct').value = id;
+            document.querySelectorAll('.sl-pick').forEach(el => {
+                el.style.borderColor = String(el.dataset.id) === String(id) ? '#2c2c2c' : '#eee';
+            });
+            const p = (window._shopLookProducts || []).find(x => String(x.id) === String(id));
+            const nameEl = document.getElementById('slSelectedName');
+            if (nameEl && p) nameEl.textContent = '✓ ' + (p.name?.tr || p.name?.en || ('#' + id));
+        }
+
+        function filterShopLookProducts(q) {
+            q = (q || '').toLowerCase().trim();
+            document.querySelectorAll('#slProductGrid .sl-pick').forEach(el => {
+                el.style.display = (!q || el.dataset.name.includes(q)) ? '' : 'none';
+            });
+        }
+
+        async function saveShopLook(itemId) {
+            const url = document.getElementById('formBannerUrl').value.trim();
+            const productId = document.getElementById('formShopLookProduct').value;
+            if (!url) { alert('Lütfen bir fotoğraf yükleyin veya URL girin.'); return; }
+            if (!productId) { alert('Lütfen bir ürün seçin.'); return; }
+            const banner = {
+                id: itemId ? parseInt(itemId) : null,
+                _dbId: itemId ? parseInt(itemId) : null,
+                type: 'image',
+                url: url,
+                mobileUrl: '',
+                position: 'shop_look',
+                linkedProductId: parseInt(productId),
+            };
+            await saveBannerToDB(banner);
+            closeModal();
+            await render();
+        }
+
+        async function deleteBanner(bannerId) {
+            if (confirm('Are you sure?')) {
+                await deleteBannerFromDB(parseInt(bannerId));
+                await render();
+            }
+        }
+
+        function closeModal(event) {
+            if (event && event.target.id !== event.currentTarget.id) return;
+            const modal = document.getElementById('productModal')
+                || document.getElementById('bannerModal')
+                || document.getElementById('priceModal');
+            if (modal) modal.remove();
+        }
+
+        // ============= MAIN RENDER =============
+        // ============= ATÖLYE GÖRSELLERİ YÖNETİMİ (admin) =============
+        async function loadWorkshop() {
+            const settings = await getSiteSettings();
+            const gallery = settings.workshop_gallery || [];
+            const video = settings.workshop_video || '';
+            window._workshopGallery = gallery; window._workshopVideo = video;
+            const g = document.getElementById('ws-gallery');
+            if (g) { g.innerHTML = gallery.length ? gallery.map((url, i) => `<div style="position:relative; aspect-ratio:1/1; border-radius:8px; overflow:hidden; border:1px solid #ece6dc;"><img src="${url}" style="width:100%; height:100%; object-fit:cover;"><button type="button" onclick="removeWorkshopImage(${i})" style="position:absolute; top:6px; right:6px; background:rgba(200,0,0,0.85); color:#fff; border:none; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:14px;">×</button></div>`).join('') : '<div style="color:#aaa; font-size:0.85rem; grid-column:1/-1;">Henüz fotoğraf eklenmemiş.</div>'; }
+            const vp = document.getElementById('ws-video-preview');
+            if (vp) { vp.innerHTML = video ? `<video src="${video}" controls style="max-width:100%; max-height:200px; border-radius:8px; margin-bottom:10px; display:block;"></video>` : ''; }
+        }
+        function uploadWorkshopImage() {
+            if (typeof cloudinary === 'undefined') { alert('Cloudinary yükleniyor, bekleyin.'); return; }
+            const widget = cloudinary.createUploadWidget({ cloudName: 'dcvkzpvmy', uploadPreset: 'chandelist_upload', sources: ['local','url'], multiple: true, resourceType: 'image', clientAllowedFormats: ['jpg','jpeg','png','webp'], maxFileSize: 10000000 },
+                async (error, result) => { if (!error && result && result.event === 'success') { try { const settings = await getSiteSettings(); const gallery = settings.workshop_gallery || []; gallery.push(result.info.secure_url); await saveSiteSetting('workshop_gallery', gallery); window._workshopGallery = gallery; loadWorkshop(); } catch(e) { alert('Hata: ' + e.message); } } });
+            widget.open();
+        }
+        async function removeWorkshopImage(idx) {
+            if (!confirm('Bu fotoğrafı kaldırmak istiyor musunuz?')) return;
+            const settings = await getSiteSettings(); const gallery = settings.workshop_gallery || []; gallery.splice(idx, 1);
+            await saveSiteSetting('workshop_gallery', gallery); window._workshopGallery = gallery; loadWorkshop();
+        }
+        function uploadWorkshopVideo() {
+            if (typeof cloudinary === 'undefined') { alert('Cloudinary yükleniyor, bekleyin.'); return; }
+            const widget = cloudinary.createUploadWidget({ cloudName: 'dcvkzpvmy', uploadPreset: 'chandelist_upload', sources: ['local','url'], multiple: false, resourceType: 'video', maxFileSize: 100000000 },
+                async (error, result) => { if (!error && result && result.event === 'success') { const msg = document.getElementById('ws-video-msg'); if (msg) { msg.style.display='inline'; msg.textContent='Kaydediliyor...'; msg.style.color='#8a7d6b'; } try { await saveSiteSetting('workshop_video', result.info.secure_url); window._workshopVideo = result.info.secure_url; if (msg) { msg.textContent='✓ Kaydedildi'; msg.style.color='#27ae60'; } loadWorkshop(); } catch(e) { if (msg) { msg.textContent='Hata: '+e.message; msg.style.color='#c00'; } } } });
+            widget.open();
+        }
+
+        // ============= SAYFA BANNER YÖNETİMİ (admin) =============
+        async function loadPageBanners() {
+            const settings = await getSiteSettings();
+            const banners = settings.page_banners || {};
+            window._pageBanners = banners;
+            const list = document.getElementById('pb-list');
+            if (!list) return;
+            const slot = (pg, val, type) => {
+                const url = (val && typeof val === 'object') ? (val[type]||'') : (type==='desktop' ? (val||'') : '');
+                const labels = {
+                    desktop: '🖥 Masaüstü Banner (yatay, 1400×600)',
+                    mobile: '📱 Mobil Banner (dikey, 800×1000)',
+                    card: '🔲 Kategori Kartı (kare, 1×1, 600×600)'
+                };
+                return `
+                    <div style="flex:1;min-width:200px;">
+                        <div style="font-size:0.8rem;color:#8a7d6b;margin-bottom:6px;font-weight:600;">${labels[type]}</div>
+                        ${url
+                            ? `<img src="${url}" style="width:100%;max-height:150px;object-fit:cover;border-radius:6px;margin-bottom:8px;">`
+                            : `<div style="background:#f0ece6;height:110px;display:flex;align-items:center;justify-content:center;color:#aaa;border-radius:6px;margin-bottom:8px;font-size:0.8rem;">Varsayılan</div>`}
+                        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                            <button type="button" class="btn" onclick="uploadPageBanner('${pg.key}','${type}')" style="font-size:0.85rem;">📷 Yükle</button>
+                            ${url ? `<button type="button" class="btn" onclick="removePageBanner('${pg.key}','${type}')" style="background:#fff;border:1px solid #ddd;color:#c00;font-size:0.85rem;">Kaldır</button>` : ''}
+                        </div>
+                    </div>`;
+            };
+            list.innerHTML = PAGE_BANNER_LIST.map(pg => {
+                const val = banners[pg.key];
+                return `
+                    <div class="collection-admin-card" style="margin-bottom:18px;">
+                        <h3 style="margin-top:0;">${pg.label}</h3>
+                        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+                            ${slot(pg, val, 'desktop')}
+                            ${slot(pg, val, 'mobile')}
+                            ${slot(pg, val, 'card')}
+                        </div>
+                        <span id="pb-msg-${pg.key}" style="color:#27ae60;font-size:0.85rem;display:none;margin-top:8px;">✓ Kaydedildi</span>
+                    </div>`;
+            }).join('');
+        }
+
+        function uploadPageBanner(key, type) {
+            if (typeof cloudinary === 'undefined') {
+                alert('Cloudinary yükleniyor, lütfen bekleyin.');
+                return;
+            }
+            const widget = cloudinary.createUploadWidget(
+                {
+                    cloudName: 'dcvkzpvmy',
+                    uploadPreset: 'chandelist_upload',
+                    sources: ['local', 'url'],
+                    multiple: false,
+                    resourceType: 'image',
+                    clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'],
+                    maxFileSize: 10000000,
+                },
+                async (error, result) => {
+                    if (!error && result && result.event === 'success') {
+                        const url = result.info.secure_url;
+                        const msg = document.getElementById('pb-msg-' + key);
+                        if (msg) { msg.style.display = 'inline'; msg.textContent = 'Kaydediliyor...'; msg.style.color = '#8a7d6b'; }
+                        try {
+                            const settings = await getSiteSettings();
+                            const banners = settings.page_banners || {};
+                            let cur = banners[key];
+                            if (typeof cur === 'string') cur = { desktop: cur }; // eski formatı çevir
+                            if (!cur || typeof cur !== 'object') cur = {};
+                            cur[type] = url;
+                            banners[key] = cur;
+                            await saveSiteSetting('page_banners', banners);
+                            window._pageBanners = banners;
+                            if (msg) { msg.textContent = '✓ Kaydedildi'; msg.style.color = '#27ae60'; }
+                            loadPageBanners();
+                        } catch(e) {
+                            if (msg) { msg.textContent = 'Hata: ' + e.message; msg.style.color = '#c00'; }
+                        }
+                    }
+                }
+            );
+            widget.open();
+        }
+
+        async function removePageBanner(key, type) {
+            if (!confirm('Bu görseli kaldırmak istiyor musunuz?')) return;
+            const settings = await getSiteSettings();
+            const banners = settings.page_banners || {};
+            let cur = banners[key];
+            if (typeof cur === 'string') cur = { desktop: cur };
+            if (cur && typeof cur === 'object') {
+                delete cur[type];
+                if (!cur.desktop && !cur.mobile) delete banners[key];
+                else banners[key] = cur;
+            }
+            await saveSiteSetting('page_banners', banners);
+            window._pageBanners = banners;
+            loadPageBanners();
+        }
+
+        // ============= ZİYARETÇİ PANELİ (admin) =============
+        let _visSite = 'chandelist';
+        let _visDays = 1;
+        function setVisSite(site) {
+            _visSite = site;
+            document.querySelectorAll('.vis-site-btn').forEach(b => {
+                const on = b.dataset.site === site;
+                b.style.background = on ? '#8a7d6b' : '#fff';
+                b.style.color = on ? '#fff' : '#8a7d6b';
+            });
+            loadVisitors(_visDays);
+        }
+        async function loadVisitors(days = 1) {
+            _visDays = days;
+            const loading = document.getElementById('vis-loading');
+            const detail = document.getElementById('vis-detail');
+            if (loading) loading.style.display = 'block';
+            if (detail) detail.style.display = 'none';
+
+            // aktif buton stilini güncelle
+            document.querySelectorAll('.vis-range-btn').forEach(b => {
+                const on = parseInt(b.dataset.days) === days;
+                b.style.background = on ? '#2c2c2c' : '#fff';
+                b.style.color = on ? '#fff' : '#2c2c2c';
+            });
+
+            try {
+                let since = '';
+                if (days < 9999) {
+                    const d = new Date();
+                    d.setDate(d.getDate() - days + 1);
+                    d.setHours(0,0,0,0);
+                    since = '&created_at=gte.' + d.toISOString();
+                }
+                const siteFilter = '&site=eq.' + _visSite;
+                const res = await fetch(SB_URL + '/visits?select=*' + since + siteFilter + '&order=created_at.desc&limit=10000', {
+                    headers: { 'apikey': SB_KEY }
+                });
+                const visits = await res.json();
+                if (loading) loading.style.display = 'none';
+                if (detail) detail.style.display = 'block';
+
+                if (!Array.isArray(visits)) {
+                    document.getElementById('vis-total').textContent = '0';
+                    return;
+                }
+
+                // Özet
+                document.getElementById('vis-total').textContent = visits.length;
+                const uniqueSids = new Set(visits.map(v => v.session_id).filter(Boolean));
+                document.getElementById('vis-unique').textContent = uniqueSids.size;
+                const countries = {};
+                visits.forEach(v => { if (v.country) countries[v.country] = (countries[v.country]||0)+1; });
+                document.getElementById('vis-countries').textContent = Object.keys(countries).length;
+
+                // Günlük grafik
+                const byDay = {};
+                visits.forEach(v => {
+                    const d = (v.created_at||'').slice(0,10);
+                    if (d) byDay[d] = (byDay[d]||0)+1;
+                });
+                const sortedDays = Object.keys(byDay).sort();
+                const maxDay = Math.max(1, ...Object.values(byDay));
+                const chart = document.getElementById('vis-chart');
+                if (sortedDays.length === 0) {
+                    chart.innerHTML = '<div style="color:#999;margin:auto;">Henüz veri yok</div>';
+                } else {
+                    chart.innerHTML = sortedDays.map(d => {
+                        const h = Math.round((byDay[d]/maxDay)*110)+10;
+                        const label = d.slice(8,10)+'.'+d.slice(5,7);
+                        return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:24px;">
+                            <div style="font-size:0.7rem;color:#8a7d6b;font-weight:600;">${byDay[d]}</div>
+                            <div style="width:100%;max-width:36px;height:${h}px;background:linear-gradient(180deg,#b8a888,#8a7d6b);border-radius:4px 4px 0 0;"></div>
+                            <div style="font-size:0.65rem;color:#aaa;">${label}</div>
+                        </div>`;
+                    }).join('');
+                }
+
+                // Yardımcı: sıralı liste oluştur
+                const makeList = (obj, fmt) => {
+                    const entries = Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,10);
+                    if (entries.length === 0) return '<div style="color:#999;font-size:0.85rem;">Veri yok</div>';
+                    const max = entries[0][1];
+                    return entries.map(([k,v]) => `
+                        <div style="margin-bottom:10px;">
+                            <div style="display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:3px;">
+                                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px;">${fmt?fmt(k):k}</span>
+                                <span style="font-weight:600;color:#8a7d6b;">${v}</span>
+                            </div>
+                            <div style="height:6px;background:#f0ebe2;border-radius:3px;overflow:hidden;">
+                                <div style="height:100%;width:${Math.round(v/max*100)}%;background:#b8a888;"></div>
+                            </div>
+                        </div>`).join('');
+                };
+
+                // En çok bakılan sayfalar
+                const pages = {};
+                visits.forEach(v => { const p = v.path||'/'; pages[p] = (pages[p]||0)+1; });
+                document.getElementById('vis-pages').innerHTML = makeList(pages);
+
+                // Ülkeler
+                document.getElementById('vis-country-list').innerHTML = makeList(countries);
+
+                // Kaynaklar
+                const refs = {};
+                visits.forEach(v => { const r = v.referrer||'direkt'; refs[r] = (refs[r]||0)+1; });
+                document.getElementById('vis-referrers').innerHTML = makeList(refs);
+
+                // Cihazlar
+                const devices = {};
+                visits.forEach(v => { const dv = v.device||'?'; devices[dv] = (devices[dv]||0)+1; });
+                document.getElementById('vis-devices').innerHTML = makeList(devices);
+
+            } catch(e) {
+                if (loading) { loading.style.display = 'block'; loading.textContent = 'Hata: ' + e.message; }
+            }
+        }
+
+        // ============= REKLAM OLAY TAKIBI =============
+        // SPA oldugu icin pixel'in PageView'i sadece ilk yuklemede atar;
+        // her rota degisiminde elle tetikliyoruz.
+        try { document.documentElement.setAttribute('lang', currentLanguage); } catch (e) {}
+        let _lastTrackedPath = null;
+        function trackPageView(path) {
+            try {
+                const ilkAcilis = (_lastTrackedPath === null);
+                const yeniSayfa = (path !== _lastTrackedPath);
+                _lastTrackedPath = path;
+                if (!yeniSayfa) return;
+                if (!ilkAcilis && window.fbq) fbq('track', 'PageView');
+                if (window.gtag) gtag('event', 'page_view', { page_path: path, page_title: document.title, page_location: 'https://chandelist.com' + path });
+            } catch (e) {}
+        }
+        function trackViewContent(product) {
+            try {
+                if (!window.fbq || !product) return;
+                fbq('track', 'ViewContent', {
+                    content_ids: [String(product.id)],
+                    content_name: (product.name && (product.name.en || product.name.tr)) || '',
+                    content_type: 'product'
+                });
+            } catch (e) {}
+        }
+        function trackLead(kaynak) {
+            try { if (window.fbq) fbq('track', 'Lead', { content_name: kaynak || 'contact' }); } catch (e) {}
+            try { if (window.gtag) gtag('event', 'generate_lead', { method: kaynak || 'contact' }); } catch (e) {}
+        }
+
+
+        function renderPrivacyPage() {
+            const tr = (currentLanguage === 'tr');
+            updateSEO(
+                tr ? 'Gizlilik Politikası — CHANDELIST' : 'Privacy Policy — CHANDELIST',
+                tr ? 'CHANDELIST gizlilik politikası: hangi bilgileri topluyoruz, neden kullanıyoruz, kimlerle paylaşıyoruz ve KVKK kapsamındaki haklarınız.'
+                   : 'Privacy policy of CHANDELIST: what information we collect, why we use it, who we share it with and your rights under Turkish data protection law.',
+                '',
+                null,
+                '',
+                '/privacy'
+            );
+            const guncelleme = '27.08.2026';
+            const body = tr ? `
+                <p><strong>Veri sorumlusu:</strong> Chandelist Lighting Factory<br>
+                Çobançeşme Mah. Mithatpaşa Cad. Söğütlü Sok. No:2/1, Bahçelievler / İstanbul<br>
+                E-posta: <a href="mailto:info@chandelist.com">info@chandelist.com</a> &nbsp;·&nbsp; Telefon: <a href="tel:+905326681094">+90 532 668 10 94</a></p>
+
+                <h3>Hangi bilgileri topluyoruz</h3>
+                <p>Sitemizdeki iletişim formunu doldurduğunuzda ya da sosyal medya reklamlarımızdaki teklif formunu gönderdiğinizde
+                bize ilettiğiniz ad-soyad, telefon numarası, e-posta adresi ve varsa firma/proje adı ile talebinize dair yazdığınız
+                bilgileri topluyoruz. Ayrıca siteyi nasıl kullandığınızı anlamak için ziyaret istatistikleri (hangi sayfaların
+                görüntülendiği, cihaz ve tarayıcı türü gibi) tutuluyor.</p>
+
+                <h3>Neden topluyoruz</h3>
+                <p>Bu bilgileri yalnızca talebinizi değerlendirmek, size fiyat ve üretim süresi bilgisi vermek, sizi arayıp
+                teklif hazırlamak ve siparişiniz varsa süreci yürütmek için kullanıyoruz. Ziyaret istatistiklerini ise sitemizi
+                ve reklamlarımızı iyileştirmek için kullanıyoruz.</p>
+
+                <h3>Kimlerle paylaşıyoruz</h3>
+                <p>Bilgilerinizi satmıyoruz, pazarlama amacıyla üçüncü kişilere devretmiyoruz. Yalnızca hizmet aldığımız
+                altyapı sağlayıcıları (site barındırma, veritabanı, e-posta ve reklam platformları) teknik olarak bu verilere
+                erişebilir. Yasal bir zorunluluk olması hâlinde yetkili kamu kurumlarıyla paylaşım yapılabilir.</p>
+
+                <h3>Ne kadar süre saklıyoruz</h3>
+                <p>İletişim ve teklif taleplerini, talebin sonuçlanmasından itibaren makul bir süre boyunca saklıyoruz.
+                Sürecin tamamlanmasının ardından ihtiyaç kalmayan kayıtlar siliniyor. Ticari ve vergisel mevzuatın saklama
+                zorunluluğu getirdiği kayıtlar için yasal süreler geçerlidir.</p>
+
+                <h3>Çerezler ve ölçümleme</h3>
+                <p>Sitemizde ziyaretçi davranışını ölçmek için Google Analytics ve Meta (Facebook) pikseli kullanılıyor.
+                Bu araçlar tarayıcınıza çerez yerleştirebilir. Tarayıcınızın ayarlarından çerezleri reddedebilir veya
+                silebilirsiniz; bu durumda sitenin bazı bölümleri beklendiği gibi çalışmayabilir.</p>
+
+                <h3>Haklarınız</h3>
+                <p>6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında; kişisel verilerinizin işlenip işlenmediğini
+                öğrenme, işlenmişse bilgi talep etme, işlenme amacını öğrenme, eksik veya yanlış işlenmişse düzeltilmesini,
+                şartların oluşması hâlinde silinmesini veya yok edilmesini isteme ve işlemenin hukuka aykırı olması sebebiyle
+                zarara uğramanız hâlinde zararın giderilmesini talep etme haklarına sahipsiniz.</p>
+
+                <p>Bu haklarınızı kullanmak veya bilgilerinizin silinmesini istemek için
+                <a href="mailto:info@chandelist.com">info@chandelist.com</a> adresine yazmanız yeterlidir. Talebinizi en geç 30 gün içinde
+                sonuçlandırıyoruz.</p>
+
+                <p style="margin-top:40px;color:#8a7d6b;font-size:0.85rem;">Son güncelleme: ${guncelleme}</p>
+            ` : `
+                <p><strong>Data controller:</strong> Chandelist Lighting Factory<br>
+                Çobançeşme Mah. Mithatpaşa Cad. Söğütlü Sok. No:2/1, Bahçelievler / İstanbul, Türkiye<br>
+                Email: <a href="mailto:info@chandelist.com">info@chandelist.com</a> &nbsp;·&nbsp; Phone: <a href="tel:+905326681094">+90 532 668 10 94</a></p>
+
+                <h3>What we collect</h3>
+                <p>When you fill in the contact form on this site or submit the enquiry form in one of our social media ads,
+                we collect the name, phone number, email address, company or project name where given, and whatever you write
+                about your requirement. We also keep basic visit statistics (which pages are viewed, device and browser type)
+                to understand how the site is used.</p>
+
+                <h3>Why we collect it</h3>
+                <p>We use this information only to assess your enquiry, give you pricing and lead-time information, call you
+                back with a quotation, and run the order process if you place one. Visit statistics are used to improve the
+                site and our advertising.</p>
+
+                <h3>Who we share it with</h3>
+                <p>We do not sell your information and we do not pass it to third parties for marketing. Only the service
+                providers we rely on (site hosting, database, email and advertising platforms) can technically access this
+                data. Disclosure to public authorities may occur where legally required.</p>
+
+                <h3>How long we keep it</h3>
+                <p>Enquiries are kept for a reasonable period after the request is concluded, then deleted once no longer
+                needed. Records that commercial or tax legislation requires us to retain are kept for the statutory period.</p>
+
+                <h3>Cookies and measurement</h3>
+                <p>This site uses Google Analytics and the Meta (Facebook) pixel to measure visitor behaviour. These tools
+                may place cookies in your browser. You can refuse or delete cookies in your browser settings; some parts of
+                the site may then not work as expected.</p>
+
+                <h3>Your rights</h3>
+                <p>Under Turkish Personal Data Protection Law no. 6698 you have the right to learn whether your personal data
+                is processed, to request information about it, to learn the purpose of processing, to request correction of
+                incomplete or inaccurate data, to request erasure or destruction where the conditions are met, and to claim
+                compensation for damage arising from unlawful processing.</p>
+
+                <p>To exercise these rights or to ask us to delete your information, write to
+                <a href="mailto:info@chandelist.com">info@chandelist.com</a>. We respond within 30 days at the latest.</p>
+
+                <p style="margin-top:40px;color:#8a7d6b;font-size:0.85rem;">Last updated: ${guncelleme}</p>
+            `;
+
+            return `
+                <section class="py-80" style="margin-top:150px;">
+                    <div class="container" style="max-width:820px;">
+                        <div class="breadcrumb">
+                            <a href="/">${t().logo}</a> / <span>${t().privacy}</span>
+                        </div>
+                        <h1 style="font-size:2.2rem;font-weight:300;letter-spacing:1px;margin:0 0 30px;">${t().privacy}</h1>
+                        <div class="privacy-body" style="line-height:1.9;color:#3a332b;">
+                            ${body}
+                        </div>
+                    </div>
+                </section>
+            `;
+        }
+
+        async function render() {
+            const path = window.location.pathname || '/';
+            currentPage = path;
+            trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
+            if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; window._workshopGallery = s.workshop_gallery || []; window._workshopVideo = s.workshop_video || ''; } catch(e){ window._pageBanners = {}; } }
+            if (!window._koleksiyonlar) { await koleksiyonlariYukle(); }
+
+            const app = document.getElementById('app');
+            // Show loading state
+            app.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Jost,sans-serif;letter-spacing:2px;font-size:0.9rem;color:#8a7d6b;">CHANDELIST</div>';
+
+            let content = '';
+
+            try {
+                if (path === '/') {
+                    content = await renderHomePage();
+                } else if (path === '/lighting') {
+                    content = await renderLightingPage();
+                } else if (path === '/lighting/chandelier') {
+                    content = await renderChandelierPage();
+                } else if (path.startsWith('/lighting/chandelier/')) {
+                    const style = path.split('/')[3];
+                    content = await renderChandelierStylePage(style);
+                } else if (path.startsWith('/lighting/')) {
+                    const subcategory = path.split('/')[2];
+                    content = await renderLightingSubcategoryPage(subcategory);
+                } else if (path === '/decorative') {
+                    history.replaceState(null, '', '/homedecor');
+                    content = await renderHomeDecorPage();
+                } else if (path === '/homedecor') {
+                    content = await renderHomeDecorPage();
+                } else if (path.startsWith('/homedecor/')) {
+                    content = await renderHomeDecorSubcategoryPage(path.split('/')[2]);
+                } else if (path.startsWith('/products/')) {
+                    const productId = path.split('/')[2].split('-')[0];
+                    content = await renderProductDetailPage(productId);
+                } else if (path.startsWith('/search')) {
+                    const params = new URLSearchParams(path.includes('?') ? path.split('?')[1] : '');
+                    const q = params.get('q') || '';
+                    content = await renderSearchPage(q);
+                } else if (path === '/about') {
+                    content = renderAboutPage();
+                } else if (path === '/custom') {
+                    content = renderCustomLightingPage();
+                } else if (path === '/workshop') {
+                    content = renderWorkshopPage();
+                } else if (path === '/contact') {
+                    content = renderContactPage();
+                } else if (path === '/privacy') {
+                    content = renderPrivacyPage();
+                } else if (path === '/admin') {
+                    content = await renderAdminPanel();
+                } else {
+                    content = '<section><div class="container"><h2>404 - Page not found</h2></div></section>';
+                }
+            } catch (err) {
+                console.error('Error rendering page:', err);
+                content = '<section><div class="container"><h2>Error loading page. Please try again.</h2></div></section>';
+            }
+
+            app.innerHTML = renderHeader() + content + renderFooter();
+
+            // Attach event listeners
+            attachEventListeners();
+
+            // Init hero slideshow if on home page
+            if (path === '/') {
+                setTimeout(initHeroSlideshow, 100);
+                setTimeout(initShopLookCarousel, 150);
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+
+            // Reklam platformlarina sayfa gorunumu bildir
+            try { document.documentElement.setAttribute('lang', currentLanguage); } catch (e) {}
+            trackPageView(path);
+        }
+
+        async function attachEventListeners() {
+            // Language toggle
+            document.getElementById('lang-tr')?.addEventListener('click', () => setLanguage('tr'));
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+
+            // Mobile menu toggle
+            document.getElementById('menuToggle')?.addEventListener('click', () => {
+                const nav = document.getElementById('mainNav');
+                nav.classList.toggle('mobile-menu-open');
+            });
+
+            // Close mobile menu on link click
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('mainNav')?.classList.remove('mobile-menu-open');
+                });
+            });
+
+            // Admin navigation
+            document.querySelectorAll('.admin-nav').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.admin-nav').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    const section = link.dataset.section;
+                    document.querySelectorAll('.admin-section').forEach(s => s.style.display = 'none');
+                    document.getElementById(`${section}-section`).style.display = 'block';
+                    // Sıralama sekmesi açılınca avizeyi otomatik yükle
+                    if (section === 'sorting') loadSortGrid('chandelier');
+                    if (section === 'workshop') loadWorkshop();
+                    if (section === 'pagebanners') loadPageBanners();
+                    // Ziyaretçiler sekmesi açılınca verileri yükle
+                    if (section === 'visitors') loadVisitors(1);
+                    if (section === 'aichat' && !document.getElementById('aiChatBox').childElementCount) aiReset();
+                });
+            });
+
+            // Product Slider
+            const sliderTrack = document.getElementById('sliderTrack');
+            if (sliderTrack) {
+                const cards = sliderTrack.querySelectorAll('.card');
+                const dotsWrap = document.getElementById('sliderDots');
+                const prevBtn = document.getElementById('sliderPrev');
+                const nextBtn = document.getElementById('sliderNext');
+                let perView = window.innerWidth <= 600 ? 1 : window.innerWidth <= 900 ? 2 : 3;
+                let current = 0;
+                const total = Math.ceil(cards.length / perView);
+
+                // Dots oluştur
+                if (dotsWrap) {
+                    for (let i = 0; i < total; i++) {
+                        const dot = document.createElement('button');
+                        dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+                        dot.addEventListener('click', () => goTo(i));
+                        dotsWrap.appendChild(dot);
+                    }
+                }
+
+                function goTo(idx) {
+                    current = Math.max(0, Math.min(idx, total - 1));
+                    const cardWidth = cards[0].offsetWidth + 24;
+                    sliderTrack.style.transform = `translateX(-${current * perView * cardWidth}px)`;
+                    document.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+                    if (prevBtn) prevBtn.disabled = current === 0;
+                    if (nextBtn) nextBtn.disabled = current >= total - 1;
+                }
+
+                if (prevBtn) { prevBtn.disabled = true; prevBtn.addEventListener('click', () => goTo(current - 1)); }
+                if (nextBtn) { nextBtn.addEventListener('click', () => goTo(current + 1)); if (total <= 1) nextBtn.disabled = true; }
+
+                // Touch/swipe desteği
+                let touchStartX = 0;
+                sliderTrack.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive: true});
+                sliderTrack.addEventListener('touchend', e => {
+                    const diff = touchStartX - e.changedTouches[0].clientX;
+                    if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+                }, {passive: true});
+            }
+
+            // Product gallery click handlers
+            if (currentPage.startsWith('/products/')) {
+                const thumbnails = document.querySelectorAll('.thumbnail');
+                const productId = currentPage.split('/')[2].split('-')[0];
+                const product = (await getProducts()).find(p => p.id === parseInt(productId));
+                const allMedia = [
+                    ...(product?.images || []).filter(img => img && img.trim()).map(img => ({ type: 'image', url: img })),
+                    ...(product?.videos || []).filter(vid => vid && vid.trim()).map(vid => ({ type: 'video', url: vid }))
+                ];
+                let currentMediaIdx = 0;
+
+                const wrapper = document.getElementById('mainDisplayWrapper');
+
+                function showMedia(idx) {
+                    if (!wrapper || allMedia.length === 0) return;
+                    idx = Math.max(0, Math.min(idx, allMedia.length - 1));
+                    currentMediaIdx = idx;
+                    const media = allMedia[idx];
+
+                    // Update image/video (keep arrow buttons)
+                    const prevBtn = document.getElementById('galleryPrev');
+                    const nextBtn = document.getElementById('galleryNext');
+
+                    if (media.type === 'video') {
+                        const existing = wrapper.querySelector('video#mainDisplay,img#mainDisplay');
+                        if (existing) existing.remove();
+                        const vid = document.createElement('video');
+                        vid.className = 'main-display'; vid.id = 'mainDisplay';
+                        vid.controls = true; vid.autoplay = true; vid.muted = true; vid.loop = true;
+                        vid.setAttribute('playsinline',''); vid.setAttribute('webkit-playsinline','');
+                        const src = document.createElement('source');
+                        src.src = media.url; src.type = 'video/mp4';
+                        vid.appendChild(src);
+                        wrapper.insertBefore(vid, prevBtn || null);
+                    } else {
+                        const existingImg = wrapper.querySelector('img#mainDisplay');
+                        const existingVid = wrapper.querySelector('video#mainDisplay');
+                        if (existingImg) {
+                            existingImg.src = media.url;
+                        } else {
+                            if (existingVid) existingVid.remove();
+                            const img = document.createElement('img');
+                            img.className = 'main-display'; img.id = 'mainDisplay';
+                            img.src = media.url; img.alt = 'Product image';
+                            img.loading = 'lazy'; img.width = 600; img.height = 600;
+                            wrapper.insertBefore(img, prevBtn || null);
+                        }
+                    }
+
+                    // Update thumbnails
+                    thumbnails.forEach((t, i) => t.classList.toggle('active', i === idx));
+
+                    // Update arrow states
+                    if (prevBtn) prevBtn.disabled = (idx === 0);
+                    if (nextBtn) nextBtn.disabled = (idx === allMedia.length - 1);
+                }
+
+                // Thumbnail click handlers
+                thumbnails.forEach((thumb, idx) => {
+                    thumb.addEventListener('click', () => showMedia(idx));
+                    thumb.addEventListener('keypress', (e) => { if (e.key === 'Enter') showMedia(idx); });
+                });
+
+                // Arrow click handlers
+                const prevBtn = document.getElementById('galleryPrev');
+                const nextBtn = document.getElementById('galleryNext');
+                if (prevBtn) { prevBtn.disabled = true; prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showMedia(currentMediaIdx - 1); }); }
+                if (nextBtn) { if (allMedia.length <= 1) nextBtn.disabled = true; nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showMedia(currentMediaIdx + 1); }); }
+
+                // Lightbox
+                function openLightbox(startIdx) {
+                    document.getElementById('lightbox')?.remove();
+                    window._lbMedia = allMedia;
+                    window._lbIdx = startIdx;
+
+                    function lbRender() {
+                        const lb = document.getElementById('lightbox');
+                        if (!lb) return;
+                        const m = window._lbMedia[window._lbIdx];
+                        const total = window._lbMedia.length;
+                        const mediaHTML = m.type === 'video'
+                            ? `<video class="lightbox-image" controls autoplay muted><source src="${m.url}" type="video/mp4"></video>`
+                            : `<img class="lightbox-image" src="${m.url}" alt="">`;
+                        lb.querySelector('.lightbox-content').innerHTML = mediaHTML;
+                        lb.querySelector('.lb-prev').disabled = window._lbIdx === 0;
+                        lb.querySelector('.lb-next').disabled = window._lbIdx === total - 1;
+                        lb.querySelector('.lightbox-counter').textContent = total > 1 ? `${window._lbIdx + 1} / ${total}` : '';
+                    }
+
+                    const total = allMedia.length;
+                    const lb = document.createElement('div');
+                    lb.className = 'lightbox-overlay'; lb.id = 'lightbox';
+                    lb.innerHTML = `
+                        <div class="lightbox-content"></div>
+                        <button class="lightbox-close" title="Kapat">&times;</button>
+                        <button class="lightbox-nav lb-prev">&#8249;</button>
+                        <button class="lightbox-nav lb-next">&#8250;</button>
+                        <div class="lightbox-counter"></div>
+                    `;
+                    document.body.appendChild(lb);
+                    lbRender();
+
+                    lb.querySelector('.lightbox-close').onclick = () => lb.remove();
+                    lb.onclick = (e) => { if (e.target === lb) lb.remove(); };
+                    lb.querySelector('.lb-prev').onclick = (e) => { e.stopPropagation(); window._lbIdx = Math.max(0, window._lbIdx-1); lbRender(); };
+                    lb.querySelector('.lb-next').onclick = (e) => { e.stopPropagation(); window._lbIdx = Math.min(window._lbMedia.length-1, window._lbIdx+1); lbRender(); };
+
+                    function lbKey(e) {
+                        if (e.key === 'Escape') { lb.remove(); document.removeEventListener('keydown', lbKey); }
+                        if (e.key === 'ArrowLeft') { window._lbIdx = Math.max(0, window._lbIdx-1); lbRender(); }
+                        if (e.key === 'ArrowRight') { window._lbIdx = Math.min(window._lbMedia.length-1, window._lbIdx+1); lbRender(); }
+                    }
+                    document.addEventListener('keydown', lbKey);
+                    lb.addEventListener('remove', () => document.removeEventListener('keydown', lbKey));
+                }
+
+                wrapper?.addEventListener('click', (e) => {
+                    if (e.target.closest('.gallery-nav-btn')) return;
+                    openLightbox(currentMediaIdx);
+                });
+            }
+
+            // Ask for price button
+            document.getElementById('askPriceBtn')?.addEventListener('click', async () => {
+                await showPriceModal();
+            });
+
+            // Initialize variant state on product detail page
+            if (currentPage.startsWith('/products/')) {
+                _selectedColor = null;
+                _selectedSize = null;
+                const firstSwatch = document.querySelector('.color-swatch');
+                if (firstSwatch) { _selectedColor = firstSwatch.dataset.hex; }
+                const firstSize = document.querySelector('.size-btn');
+                if (firstSize) { _selectedSize = firstSize.dataset.size; }
+                _updateVariantPrice();
+            }
+
+            // Ozel uretim teklif formu
+            document.getElementById('quoteSubmit')?.addEventListener('click', submitQuoteForm);
+
+            // Contact form handlers
+            document.getElementById('sendEmail')?.addEventListener('click', async () => {
+                const name = document.getElementById('contactName')?.value;
+                const email = document.getElementById('contactEmail')?.value;
+                const phone = document.getElementById('contactPhone')?.value;
+                const message = document.getElementById('contactMessage')?.value;
+                const btn = document.getElementById('sendEmail');
+
+                if (!name || !email || !message) {
+                    alert(currentLanguage === 'tr' ? 'Lütfen ad, e-posta ve mesaj alanlarını doldurun.' : 'Please fill in name, email and message.');
+                    return;
+                }
+                const originalText = btn.textContent;
+                btn.disabled = true;
+                btn.textContent = currentLanguage === 'tr' ? 'Gönderiliyor...' : 'Sending...';
+                try {
+                    const res = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            access_key: 'a26d7e8c-2a99-4af0-b3ce-64470ec2d6ef',
+                            subject: 'Chandelist - Yeni İletişim Mesajı',
+                            from_name: name,
+                            name: name,
+                            email: email,
+                            phone: phone || '-',
+                            message: message
+                        })
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        trackLead('contact_form');
+                        alert(currentLanguage === 'tr' ? 'Mesajınız gönderildi. Teşekkür ederiz!' : 'Your message has been sent. Thank you!');
+                        document.getElementById('contactName').value = '';
+                        document.getElementById('contactEmail').value = '';
+                        document.getElementById('contactPhone').value = '';
+                        document.getElementById('contactMessage').value = '';
+                    } else {
+                        alert(currentLanguage === 'tr' ? 'Gönderilemedi, lütfen tekrar deneyin veya WhatsApp ile yazın.' : 'Could not send, please try again or use WhatsApp.');
+                    }
+                } catch (e) {
+                    alert(currentLanguage === 'tr' ? 'Bir hata oluştu, lütfen WhatsApp ile yazın.' : 'An error occurred, please use WhatsApp.');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }
+            });
+
+            document.getElementById('sendWhatsApp')?.addEventListener('click', () => {
+                const name = document.getElementById('contactName')?.value;
+                const email = document.getElementById('contactEmail')?.value;
+                const phone = document.getElementById('contactPhone')?.value;
+                const message = document.getElementById('contactMessage')?.value;
+
+                if (name && message) {
+                    trackLead('whatsapp');
+                    const text = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`);
+                    const whatsappLink = `https://wa.me/905326681094?text=${text}`;
+                    window.open(whatsappLink, '_blank');
+                }
+            });
+
+            // Scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0, rootMargin: '0px 0px 100px 0px' });
+
+            document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+
+            // Fallback: ensure all scroll-fade elements become visible after 1.2s
+            setTimeout(() => {
+                document.querySelectorAll('.scroll-fade').forEach(el => el.classList.add('visible'));
+            }, 1200);
+
+            // Header scroll effect with throttling
+            let scrollTicking = false;
+            window.addEventListener('scroll', () => {
+                if (!scrollTicking) {
+                    window.requestAnimationFrame(() => {
+                        const header = document.getElementById('header');
+                        if (window.scrollY > 50) {
+                            header?.classList.add('scrolled');
+                        } else {
+                            header?.classList.remove('scrolled');
+                        }
+
+                        // Back to top button
+                        const backToTop = document.getElementById('backToTop');
+                        if (window.scrollY > 300) {
+                            backToTop?.classList.add('visible');
+                        } else {
+                            backToTop?.classList.remove('visible');
+                        }
+                        scrollTicking = false;
+                    });
+                    scrollTicking = true;
+                }
+            }, { passive: true });
+
+            // Back to top click
+            document.getElementById('backToTop')?.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            document.getElementById('backToTop')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+
+        async function showPriceModal() {
+            const productId = currentPage.split('/')[2].split('-')[0];
+            const product = (await getProducts()).find(p => p.id === parseInt(productId));
+            const modal = `
+                <div class="modal-overlay" id="priceModal" onclick="closeModal(event)">
+                    <div class="modal" onclick="event.stopPropagation()">
+                        <button class="modal-close" onclick="closeModal()">&times;</button>
+                        <h2>${t().askForPrice}</h2>
+                        <form id="priceForm">
+                            <div class="form-group">
+                                <label>${t().productName}</label>
+                                <input type="text" value="${product.name[currentLanguage]}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>${t().yourName}</label>
+                                <input type="text" id="priceFormName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>${t().yourEmail}</label>
+                                <input type="email" id="priceFormEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>${t().yourPhone}</label>
+                                <input type="tel" id="priceFormPhone">
+                            </div>
+                            <div class="form-group">
+                                <label>${currentLanguage === 'tr' ? 'Mesajınız / Sorunuz' : 'Your Message / Question'}</label>
+                                <textarea id="priceFormMessage" rows="3" placeholder="${currentLanguage === 'tr' ? 'Fiyat, adet, ölçü veya merak ettiğiniz her şeyi yazabilirsiniz...' : 'Ask about price, quantity, size or anything else...'}" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; font-family:inherit; resize:vertical;"></textarea>
+                            </div>
+                            <div class="modal-buttons">
+                                <button type="button" class="btn" onclick="closeModal()">${t().cancel}</button>
+                                <button type="button" class="btn btn-primary" onclick="(async () => { await sendPriceInquiry(); })()">${t().sendMessage}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            document.getElementById('app').insertAdjacentHTML('beforeend', modal);
+        }
+
+        async function sendPriceInquiry() {
+            const productId = currentPage.split('/')[2].split('-')[0];
+            const product = (await getProducts()).find(p => p.id === parseInt(productId));
+            const name = document.getElementById('priceFormName').value;
+            const email = document.getElementById('priceFormEmail').value;
+            const phone = document.getElementById('priceFormPhone').value;
+            const message = document.getElementById('priceFormMessage').value;
+
+            if (name && email) {
+                const productUrlFull = 'https://chandelist.com' + productUrl(product);
+                let waMsg = `🛍 Ürün: ${product.name[currentLanguage]}\n`;
+                waMsg += `🔗 ${productUrlFull}\n\n`;
+                waMsg += `👤 İsim: ${name}\n`;
+                waMsg += `📧 E-posta: ${email}\n`;
+                if (phone) waMsg += `📞 Telefon: ${phone}\n`;
+                if (message) waMsg += `\n💬 Mesaj: ${message}`;
+                const text = encodeURIComponent(waMsg);
+                window.open(`https://wa.me/905326681094?text=${text}`, '_blank');
+                closeModal();
+            }
+        }
+
+        // ============= SORTING UI =============
+        let _sortable = null;
+        let _sortProducts = [];
+
+        async function loadSortGrid(subcat) {
+            // Tab aktif
+            document.querySelectorAll('.sort-cat-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.cat === subcat);
+            });
+            const grid = document.getElementById('sortGrid');
+            if (!grid) return;
+            grid.innerHTML = '<p style="color:#aaa;font-size:0.85rem;grid-column:1/-1;text-align:center;padding:40px 0;">Yükleniyor...</p>';
+
+            const all = await getProducts();
+            if (subcat === 'decorative' || subcat === 'homedecor') {
+                _sortProducts = all.filter(p => p.category === subcat);
+            } else {
+                _sortProducts = all.filter(p => parseSubcat(p.subcategory).includes(subcat));
+            }
+            _sortProducts.sort((a, b) => (a.sort_order || 999) - (b.sort_order || 999));
+
+            grid.innerHTML = _sortProducts.map(p => `
+                <div class="sort-item" data-id="${p.id}">
+                    <button type="button" class="sort-feature-btn ${p.isFeatured ? 'featured' : ''}" data-id="${p.id}"
+                            onclick="toggleFeatured(event, ${p.id})"
+                            title="${p.isFeatured ? 'Öne çıkarıldı (kaldırmak için tıkla)' : 'Öne çıkar'}">
+                        ${p.isFeatured ? '★' : '☆'}
+                    </button>
+                    <img src="${p.images && p.images[0] ? p.images[0] : ''}" alt="${p.sku}" loading="lazy"
+                         onerror="this.style.background='#f0ece6';this.removeAttribute('src')">
+                    <div class="sort-code">${getProductCode(p)}</div>
+                </div>
+            `).join('');
+
+            // SortableJS yükle (CDN)
+            if (!window.Sortable) {
+                await new Promise(res => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js';
+                    s.onload = res; document.head.appendChild(s);
+                });
+            }
+            if (_sortable) _sortable.destroy();
+            _sortable = new Sortable(grid, {
+                animation: 180, ghostClass: 'sortable-ghost', chosenClass: 'sortable-chosen'
+            });
+        }
+
+        async function toggleFeatured(event, productId) {
+            event.stopPropagation();
+            event.preventDefault();
+            const btn = event.currentTarget;
+            const willFeature = !btn.classList.contains('featured');
+            btn.disabled = true;
+            try {
+                const r = await fetch(`${SB_URL}/products?id=eq.${productId}`, {
+                    method: 'PATCH',
+                    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + sbAccessToken(), 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+                    body: JSON.stringify({ is_featured: willFeature })
+                });
+                if (r.ok) {
+                    btn.classList.toggle('featured', willFeature);
+                    btn.textContent = willFeature ? '★' : '☆';
+                    btn.title = willFeature ? 'Öne çıkarıldı (kaldırmak için tıkla)' : 'Öne çıkar';
+                    // Onbellegi temizle ki ana sayfa guncel gorsun
+                    if (typeof _productsCache !== 'undefined') _productsCache = null;
+                } else {
+                    alert('İşaretlenemedi. Giriş yapmış olduğunuzdan emin olun.');
+                }
+            } catch (e) {
+                alert('Hata: ' + e.message);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function saveSortOrder() {
+            const grid = document.getElementById('sortGrid');
+            const msg = document.getElementById('sortSaveMsg');
+            if (!grid) return;
+            const items = grid.querySelectorAll('.sort-item');
+            const updates = Array.from(items).map((el, i) => ({ id: parseInt(el.dataset.id), sort_order: i + 1 }));
+
+            msg.style.display = 'inline';
+            msg.style.color = '#8a7d6b';
+            msg.textContent = 'Kaydediliyor...';
+
+            let ok = true;
+            for (const u of updates) {
+                const r = await fetch(`${SB_URL}/products?id=eq.${u.id}`, {
+                    method: 'PATCH',
+                    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+                    body: JSON.stringify({ sort_order: u.sort_order })
+                });
+                if (!r.ok) { ok = false; break; }
+            }
+
+            msg.style.color = ok ? '#27ae60' : '#e74c3c';
+            msg.textContent = ok ? '✓ Kaydedildi!' : '✗ Hata oluştu';
+            setTimeout(() => { msg.style.display = 'none'; }, 3000);
+
+            // Cache'i temizle ki yeni sıra yüklensin
+            window._productsCache = null;
+        }
+
+        // ============= INITIALIZATION =============
+        initializeLanguage().then(() => {
+            initializeLocalStorage();
+            window.addEventListener('popstate', render);
+            render();
+        });

@@ -2243,6 +2243,45 @@
             color: #fff;
             border-color: #000;
         }
+
+        /* ===== Olcu secici (urun adinin hemen altinda) ===== */
+        .size-section { margin: 18px 0 26px; }
+        .size-head {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 1px;
+            color: #6b6257;
+            margin-bottom: 10px;
+        }
+        .size-head strong { color: #2b2b2b; font-weight: 500; letter-spacing: .5px; }
+        .size-options { display: flex; flex-wrap: wrap; gap: 8px; }
+        .size-section .size-btn {
+            padding: 10px 16px;
+            border: 1px solid #d8d2c8;
+            background: #fff;
+            font-size: 0.8rem;
+            letter-spacing: .5px;
+            text-transform: none;
+            color: #2b2b2b;
+            border-radius: 2px;
+        }
+        .size-section .size-btn.active {
+            border-color: #8d6f2e;
+            color: #8d6f2e;
+            background: #fff;
+            box-shadow: inset 0 0 0 1px #8d6f2e;
+        }
+        .size-section .size-btn:hover { border-color: #8d6f2e; background: #fff; color: #8d6f2e; }
+        .size-note {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            line-height: 1.6;
+            color: #8a8176;
+            max-width: 48ch;
+        }
+        @media (max-width: 640px) {
+            .size-section .size-btn { padding: 9px 13px; font-size: 0.76rem; }
+        }
         .variant-price {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.5rem;

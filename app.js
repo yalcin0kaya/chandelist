@@ -1020,6 +1020,49 @@
             render();
         }
 
+        // ===== Olcu secici: dimensions alanindaki "·" ile ayrilmis boylari dugme yapar =====
+        function _isSizePart(x) {
+            const t = (x || '').trim();
+            if (!t) return false;
+            if (!/\d/.test(t)) return false;
+            if (!/cm|mm/i.test(t)) return false;
+            if (/\b(kg|gr)\b/i.test(t)) return false;
+            if (/ağız|agiz|katman|kalınlık|kalinlik|levha|alüminyum|aluminyum|yükseklik|yukseklik|taban|tabla|opening|tier|thick|sheet|height|base/i.test(t)) return false;
+            return /[×x]/i.test(t);
+        }
+        function productSizes(product) {
+            const d = (product && product.dimensions) ? String(product.dimensions) : '';
+            if (d.indexOf('·') === -1) return [];
+            const parts = d.split('·').map(x => x.trim()).filter(Boolean);
+            if (parts.length < 2) return [];
+            return parts.every(_isSizePart) ? parts : [];
+        }
+        function renderSizePicker(product) {
+            const sizes = productSizes(product);
+            const tr = currentLanguage === 'tr';
+            if (sizes.length > 1) {
+                return '<div class="size-section" id="sizeSection">'
+                    + '<div class="size-head">' + (tr ? 'Ölçü' : 'Size') + ': <strong id="selectedSizeName">' + sizes[0] + '</strong></div>'
+                    + '<div class="size-options">'
+                    + sizes.map((sz, i) => '<button type="button" class="size-btn' + (i === 0 ? ' active' : '') + '" onclick="selectProductSize(this)">' + sz + '</button>').join('')
+                    + '</div>'
+                    + '<div class="size-note">' + (tr
+                        ? 'Tüm ölçüler aynı modeldir. Sipariş verirken ölçüyü belirtmeniz yeterlidir; özel ölçü de üretilir.'
+                        : 'All sizes are the same model. Simply state the size when ordering; made to measure is also available.') + '</div>'
+                    + '</div>';
+            }
+            const d = (product && product.dimensions) ? String(product.dimensions).trim() : '';
+            if (!d || d.charAt(0) === '{') return '';
+            return '<div class="size-section"><div class="size-head">' + (tr ? 'Ölçü' : 'Size') + ': <strong>' + d + '</strong></div></div>';
+        }
+        function selectProductSize(btn) {
+            const sec = document.getElementById('sizeSection');
+            if (!sec) return;
+            sec.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('active', b === btn));
+            const lbl = document.getElementById('selectedSizeName');
+            if (lbl) lbl.textContent = btn.textContent.trim();
+        }
+
         function togglePdAcc(btn) {
             const item = btn.closest('.pd-acc-item');
             if (item) item.classList.toggle('open');
@@ -2082,6 +2125,8 @@
 
                             <div class="product-info">
                                 <h1>${product.name && product.name[currentLanguage] || ''}</h1>
+
+                                ${renderSizePicker(product)}
 
                                 ${(() => {
                                     const variants = product.variants && product.variants.length > 0 ? product.variants : [];

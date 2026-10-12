@@ -2457,7 +2457,7 @@
         }
 
         // ============= CONTACT PAGE =============
-        function renderCustomLightingPage() {
+        async function renderCustomLightingPage() {
             const isTr = currentLanguage === 'tr';
             updateSEO(
                 isTr
@@ -2473,6 +2473,9 @@
                     : 'custom lighting manufacturer, hospitality lighting, hotel chandeliers, restaurant lighting, contract lighting, bespoke chandelier manufacturer turkey',
                 '/custom'
             );
+
+            const ozelUrunler = (await getProducts()).filter(p => parseSubcat(p.subcategory).includes('custom'));
+            const ozelUrunlerHTML = ozelUrunler.map(p => renderProductCard(p)).join('');
 
             const steps = [
                 { n: '01', t: isTr ? 'Brief & Konsept' : 'Brief & Concept', d: isTr ? 'İhtiyacınızı, mekanı ve tarzı dinliyoruz. Referans görseller ve ölçülerle başlıyoruz.' : 'We listen to your needs, space and style. We begin with reference images and dimensions.' },
@@ -2538,6 +2541,20 @@
                                         <p style="line-height:1.7; font-size:0.92rem; color:#666;">${s.d}</p>
                                     </div>
                                 `).join('')}
+                            </div>
+                        </div>
+
+                        <div id="ozelUretimGaleri" style="margin-bottom:70px;">
+                            <h2 style="font-size:1.6rem; margin-bottom:10px; text-align:center; letter-spacing:2px;">
+                                ${isTr ? 'ÖZEL ÜRETİM AVİZELER' : 'CUSTOM-MADE CHANDELIERS'}
+                            </h2>
+                            <p style="text-align:center; color:#666; max-width:640px; margin:0 auto 30px; line-height:1.8;">
+                                ${isTr
+                                    ? 'Aşağıdaki modeller büyük ölçülü, proje tipi avizelerdir. Her biri mekânınızın ölçüsüne, renk ve duy sayısına göre yeniden üretilir.'
+                                    : 'The models below are large-scale, project-type chandeliers. Each one is remade to your space — dimensions, finish and number of lamp holders.'}
+                            </p>
+                            <div class="grid grid-4">
+                                ${ozelUrunlerHTML || `<p style="grid-column:1/-1; text-align:center; color:#999;">${isTr ? 'Yakında.' : 'Coming soon.'}</p>`}
                             </div>
                         </div>
 
@@ -5713,7 +5730,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                 } else if (path === '/about') {
                     content = renderAboutPage();
                 } else if (path === '/custom') {
-                    content = renderCustomLightingPage();
+                    content = await renderCustomLightingPage();
                 } else if (path === '/workshop') {
                     content = renderWorkshopPage();
                 } else if (path === '/contact') {

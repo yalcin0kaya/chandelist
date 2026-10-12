@@ -1354,9 +1354,7 @@
                                 <div class="dropdown-menu">
                                     <a href="/homedecor/side_table">${t().sideTable}</a>
                                     <a href="/homedecor/tray">${t().tray}</a>
-                                    <a href="/homedecor/mirror">${t().mirror}</a>
                                     <a href="/homedecor/candleholder">${t().candleholder}</a>
-                                    <a href="/homedecor/vase">${t().vase}</a>
                                     <a href="/homedecor/planter">${t().planter}</a>
                                 </div>
                             </div>
@@ -1888,7 +1886,7 @@
 
 
         // ============= EV DEKORASYONU (HOME DECOR) =============
-        const HOMEDECOR_SUBCATS = ['side_table', 'tray', 'mirror', 'candleholder', 'vase', 'planter'];
+        const HOMEDECOR_SUBCATS = ['side_table', 'tray', 'candleholder', 'planter'];
 
         function homeDecorSubcatName(key) {
             return ({

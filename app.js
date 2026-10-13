@@ -516,9 +516,7 @@
             { key: 'homedecor',   label: 'Ev Dekorasyonu (Ana Kategori)' },
             { key: 'side_table',  label: 'Yan Sehpalar' },
             { key: 'tray',        label: 'Tepsiler' },
-            { key: 'mirror',      label: 'Aynalar' },
             { key: 'candleholder',label: 'Mumluk & Şamdan' },
-            { key: 'vase',        label: 'Vazo & Obje' },
             { key: 'planter',     label: 'Saksılar' },
         ];
 
@@ -3122,7 +3120,7 @@
                             <h2>🖼 Sayfa Banner'ları</h2>
                             <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:8px;">
                                 Kategori sayfalarının üst görsellerini buradan yönetin. Değişiklik <strong>her iki sitede de</strong> (Chandelist + Osmanlı) geçerli olur.<br>
-                                <strong>Masaüstü: 1400×600 (yatay) · Mobil: 800×1000 (dikey/kare)</strong> · JPG/PNG/WEBP<br>
+                                <strong>Masaüstü: 2560×1440 (16:9 yatay) · Mobil: 1200×2400 (1:2 dikey) · Kart: 1000×1000 (kare)</strong> · JPG/PNG/WEBP<br>
                                 <span style="color:#999;">Mobil görsel yüklemezseniz masaüstü görseli mobilde de kullanılır (ortadan kırpılabilir).</span>
                             </p>
                             <div id="pb-list"></div>
@@ -5337,9 +5335,9 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const slot = (pg, val, type) => {
                 const url = (val && typeof val === 'object') ? (val[type]||'') : (type==='desktop' ? (val||'') : '');
                 const labels = {
-                    desktop: '🖥 Masaüstü Banner (yatay, 1400×600)',
-                    mobile: '📱 Mobil Banner (dikey, 800×1000)',
-                    card: '🔲 Kategori Kartı (kare, 1×1, 600×600)'
+                    desktop: '🖥 Masaüstü Banner (yatay 16:9, 2560×1440)',
+                    mobile: '📱 Mobil Banner (dikey 1:2, 1200×2400)',
+                    card: '🔲 Kategori Kartı (kare 1:1, 1000×1000)'
                 };
                 return `
                     <div style="flex:1;min-width:200px;">

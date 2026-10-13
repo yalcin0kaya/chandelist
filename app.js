@@ -2241,9 +2241,37 @@
             `;
         }
 
+        // Elle secim yoksa otomatik benzer urun bul: once ayni seri (SKU oneki),
+        // sonra ayni alt kategori, sonra ayni kategori/stil.
+        function autoRelated(product, allProducts) {
+            const subs = Array.isArray(product.subcategory) ? product.subcategory : [];
+            const fam = String(product.sku || '').split('-')[0].trim().toUpperCase();
+            const score = (p) => {
+                if (p.id === product.id) return -1;
+                let s = 0;
+                const pf = String(p.sku || '').split('-')[0].trim().toUpperCase();
+                if (fam && pf && fam === pf) s += 100;
+                const ps = Array.isArray(p.subcategory) ? p.subcategory : [];
+                s += ps.filter(x => subs.includes(x)).length * 10;
+                if (p.category && p.category === product.category) s += 3;
+                if (product.style && p.style === product.style) s += 2;
+                if ((p.images || []).length) s += 1;
+                return s;
+            };
+            return allProducts
+                .map(p => ({ p, s: score(p) }))
+                .filter(x => x.s > 0)
+                .sort((a, b) => b.s - a.s || (a.p.id - b.p.id))
+                .slice(0, 5)
+                .map(x => x.p);
+        }
+
         async function renderRelatedProducts(product, allProducts) {
-            if (!product.relatedProducts || product.relatedProducts.length === 0) return '';
-            const related = allProducts.filter(p => product.relatedProducts.includes(p.id));
+            let related = [];
+            if (product.relatedProducts && product.relatedProducts.length) {
+                related = allProducts.filter(p => product.relatedProducts.includes(p.id));
+            }
+            if (related.length === 0) related = autoRelated(product, allProducts);
             if (related.length === 0) return '';
             return `
                 <section class="related-products-section">

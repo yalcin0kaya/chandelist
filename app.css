@@ -1328,6 +1328,19 @@
         }
         .related-product-item.selected .rel-check { display: flex; }
         /* Related products section on product page */
+        /* Benzer urunler: kategori sayfasi gibi kucuk kartlar */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 24px;
+        }
+        .related-products-section .card-image { aspect-ratio: 1 / 1; }
+        .related-products-section .card-content { padding: 10px 2px 0; }
+        .related-products-section .card-content h3 { font-size: 0.85rem; }
+        @media (max-width: 768px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        }
+
         .related-products-section { padding: 60px 0; border-top: 1px solid #eee; }
         .related-products-section h2 { font-size: 1.5rem; margin-bottom: 30px; font-family: 'Cormorant Garamond', serif; }
 

@@ -742,7 +742,6 @@
             { k: '/homedecor/side_table',             ad: 'Yan Sehpa',                  sub: 'side_table' },
             { k: '/homedecor/tray',                   ad: 'Tepsi',                      sub: 'tray' },
             { k: '/homedecor/candleholder',           ad: 'Mumluk',                     sub: 'candleholder' },
-            { k: '/homedecor/mirror',                 ad: 'Ayna',                       sub: 'mirror' },
             { k: '/homedecor/planter',                ad: 'Saksı',                      sub: 'planter' }
         ];
 
@@ -1408,8 +1407,8 @@
                                         <a href="/lighting/table_lamp">${t().tableLamp}</a>
                                         <a href="/lighting/floor_lamp">${t().floorLamp}</a>
                                         <a href="/lighting/outdoor">${t().outdoor}</a>
-                                        <a href="/lighting/lantern" class="lantern-link">${t().lantern}</a>
-                                        <a href="/lighting/pendant" class="lantern-link">${t().pendant}</a>
+                                        <a href="/lighting/lantern">${t().lantern}</a>
+                                        <a href="/lighting/pendant">${t().pendant}</a>
                                     </div>
                                 </div>
                             </div>
@@ -3077,7 +3076,6 @@
                                     <button class="prod-cat-btn" data-cat="outdoor" onclick="setProductCat(this,'outdoor')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Dış Mekan</button>
                                     <button class="prod-cat-btn" data-cat="side_table" onclick="setProductCat(this,'side_table')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Yan Sehpalar</button>
                                     <button class="prod-cat-btn" data-cat="tray" onclick="setProductCat(this,'tray')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Tepsiler</button>
-                                    <button class="prod-cat-btn" data-cat="mirror" onclick="setProductCat(this,'mirror')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Aynalar</button>
                                     <button class="prod-cat-btn" data-cat="candleholder" onclick="setProductCat(this,'candleholder')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Mumluklar</button>
                                     <button class="prod-cat-btn" data-cat="vase" onclick="setProductCat(this,'vase')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Vazolar</button>
                                     <button class="prod-cat-btn" data-cat="lantern" onclick="setProductCat(this,'lantern')" style="padding:6px 14px;border:1px solid #c9b99a;border-radius:20px;background:#fff;color:#5a4a3a;font-size:0.82rem;cursor:pointer;">Fener Avize</button>
@@ -3426,7 +3424,6 @@
                 { value: 'pendant', label: 'Tekli Sarkıt Aydınlatma' },
                 { value: 'side_table', label: 'Yan Sehpa' },
                 { value: 'tray', label: 'Tepsi' },
-                { value: 'mirror', label: 'Ayna' },
                 { value: 'candleholder', label: 'Mumluk & Şamdan' },
                 { value: 'vase', label: 'Vazo & Obje' },
                 { value: 'planter', label: 'Saksı' },

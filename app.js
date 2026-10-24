@@ -1915,16 +1915,16 @@
         async function renderDecorativePage() {
             updateSEO(
                 currentLanguage === 'tr'
-                    ? 'Dekoratif Eşya — Pirinç Ayna, Tepsi, Mumluk ve Fener'
-                    : 'Decorative Objects — Brass Mirrors, Trays, Candleholders & Lanterns',
+                    ? 'Dekoratif Eşya — Pirinç Tepsi, Saksı, Mumluk ve Fener'
+                    : 'Decorative Objects — Brass Trays, Planters, Candleholders & Lanterns',
                 currentLanguage === 'tr'
-                    ? 'El yapımı pirinç dekoratif ürünler: duvar aynası, tepsi, mumluk, şamdan ve fener. Eskitme pirinç yüzey, İstanbul atölyemizde üretim.'
-                    : 'Handmade brass decorative objects: wall mirrors, trays, candleholders and lanterns. Antique brass finish, made in our Istanbul workshop.',
+                    ? 'El yapımı pirinç dekoratif ürünler: tepsi, saksı, mumluk, şamdan ve fener. Eskitme pirinç yüzey, İstanbul atölyemizde üretim.'
+                    : 'Handmade brass decorative objects: trays, planters, candleholders and lanterns. Antique brass finish, made in our Istanbul workshop.',
                 'https://res.cloudinary.com/dcvkzpvmy/image/upload/c_fill,w_1200,h_630,g_auto,q_auto,f_jpg/v1780262891/igmiw2cssp62qyzd4vfp.jpg',
                 null,
                 currentLanguage === 'tr'
-                    ? 'pirinç ayna, pirinç tepsi, mumluk, şamdan, dekoratif fener, pirinç dekoratif ürünler'
-                    : 'brass mirror, brass tray, candle holder, decorative lantern, moroccan decor',
+                    ? 'pirinç tepsi, pirinç saksı, mumluk, şamdan, dekoratif fener, pirinç dekoratif ürünler'
+                    : 'brass tray, brass planter, candle holder, decorative lantern, moroccan decor',
                 '/decorative'
             );
 
@@ -1969,16 +1969,16 @@
         async function renderHomeDecorPage() {
             updateSEO(
                 currentLanguage === 'tr'
-                    ? 'Ev Dekorasyonu — Yan Sehpa, Tepsi, Ayna, Mumluk ve Vazo'
-                    : 'Home Decor — Side Tables, Trays, Mirrors, Candleholders & Vases',
+                    ? 'Ev Dekorasyonu — Yan Sehpa, Tepsi, Saksı, Mumluk ve Vazo'
+                    : 'Home Decor — Side Tables, Trays, Planters, Candleholders & Vases',
                 currentLanguage === 'tr'
-                    ? 'El yapımı ev dekorasyon ürünleri: yan sehpa, tepsi, duvar aynası, mumluk ve vazo. Pirinç ve metal üzerine İstanbul atölyemizde üretim.'
-                    : 'Handmade home decor: side tables, trays, wall mirrors, candleholders and vases. Brass and metal, made in our Istanbul workshop.',
+                    ? 'El yapımı ev dekorasyon ürünleri: yan sehpa, tepsi, saksı, mumluk ve vazo. Pirinç ve metal üzerine İstanbul atölyemizde üretim.'
+                    : 'Handmade home decor: side tables, trays, planters, candleholders and vases. Brass and metal, made in our Istanbul workshop.',
                 '',
                 null,
                 currentLanguage === 'tr'
-                    ? 'ev dekorasyonu, yan sehpa, dekoratif sehpa, pirinç tepsi, duvar aynası, mumluk, şamdan, vazo, ev aksesuarı'
-                    : 'home decor, side table, decorative tray, wall mirror, candleholder, vase, home accessories',
+                    ? 'ev dekorasyonu, yan sehpa, dekoratif sehpa, pirinç tepsi, saksı, mumluk, şamdan, vazo, ev aksesuarı'
+                    : 'home decor, side table, decorative tray, planter, candleholder, vase, home accessories',
                 '/homedecor'
             );
 

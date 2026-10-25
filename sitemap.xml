@@ -121,6 +121,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://chandelist.com/koleksiyon/inci-dizi</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://chandelist.com/koleksiyon/orbit</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
@@ -1273,7 +1279,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/products/332-elara-single-pendant</loc>
+    <loc>https://chandelist.com/products/332-beaded-stem-pendant</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1327,7 +1333,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/products/341-elara-patterned-glass-single-pendant</loc>
+    <loc>https://chandelist.com/products/341-beaded-stem-patterned-glass-pendant</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1357,13 +1363,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/products/346-elara-linear-project-chandelier</loc>
+    <loc>https://chandelist.com/products/346-beaded-stem-linear-project-chandelier</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/products/347-elara-lobby-cascade-chandelier</loc>
+    <loc>https://chandelist.com/products/347-beaded-stem-lobby-cascade</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1411,7 +1417,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/products/92-modern-pendant-light-antique-brass-glass-single-ceiling-lamp</loc>
+    <loc>https://chandelist.com/products/92-elara-single-pendant</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -1478,6 +1484,12 @@
   </url>
   <url>
     <loc>https://chandelist.com/en/koleksiyon/elara</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://chandelist.com/en/koleksiyon/inci-dizi</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -2635,7 +2647,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/en/products/332-elara-single-pendant</loc>
+    <loc>https://chandelist.com/en/products/332-beaded-stem-pendant</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2689,7 +2701,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/en/products/341-elara-patterned-glass-single-pendant</loc>
+    <loc>https://chandelist.com/en/products/341-beaded-stem-patterned-glass-pendant</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2719,13 +2731,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/en/products/346-elara-linear-project-chandelier</loc>
+    <loc>https://chandelist.com/en/products/346-beaded-stem-linear-project-chandelier</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/en/products/347-elara-lobby-cascade-chandelier</loc>
+    <loc>https://chandelist.com/en/products/347-beaded-stem-lobby-cascade</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -2773,7 +2785,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chandelist.com/en/products/92-modern-pendant-light-antique-brass-glass-single-ceiling-lamp</loc>
+    <loc>https://chandelist.com/en/products/92-elara-single-pendant</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

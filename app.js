@@ -726,6 +726,39 @@
             try { const p = JSON.parse(val); return Array.isArray(p) ? p : [val]; } catch { return [val]; }
         }
 
+        // ---- Urun koleksiyonlari ----
+        function _kolYukle(s) {
+            let o = s && s.urun_koleksiyonlari;
+            if (typeof o === 'string') { try { o = JSON.parse(o); } catch (e) { o = []; } }
+            window._urunKoleksiyonlari = Array.isArray(o) ? o : [];
+        }
+        function koleksiyonlar() { return window._urunKoleksiyonlari || []; }
+        function koleksiyonBul(key) { return koleksiyonlar().filter(k => k.key === key)[0] || null; }
+        function kolAd(k) {
+            if (!k) return '';
+            return (k.ad && k.ad[currentLanguage]) || (k.ad && k.ad.tr) || k.key;
+        }
+        function kolAciklama(k) {
+            if (!k) return '';
+            return (k.aciklama && k.aciklama[currentLanguage]) || (k.aciklama && k.aciklama.tr) || '';
+        }
+        function urunKoleksiyonu(p) {
+            const id = p && (p.id || p._dbId);
+            if (!id) return null;
+            return koleksiyonlar().filter(k => (k.urunler || []).indexOf(id) !== -1)[0] || null;
+        }
+        // Kategori sayfalari: koleksiyona ait olup vitrinde olmayan urunleri gizler
+        function kolFiltre(list) {
+            const kols = koleksiyonlar();
+            if (!kols.length) return list;
+            const gizli = {};
+            kols.forEach(k => {
+                const vit = k.vitrin || [];
+                (k.urunler || []).forEach(id => { if (vit.indexOf(id) === -1) gizli[id] = true; });
+            });
+            return list.filter(p => !gizli[p.id]);
+        }
+
         // ---- Sayfa bazli siralama ----
         const SIRA_SAYFALAR = [
             { k: '/lighting/chandelier/modern',       ad: 'Modern Avize',               sub: 'chandelier',   stil: 'modern' },
@@ -752,7 +785,8 @@
         }
 
         // Kaydedilmis sayfa sirasini uygular; listede olmayan urunler sona, eski sort_order'a gore
-        function siraUygula(list, sayfa) {
+        function siraUygula(list, sayfa, hepsi) {
+            if (!hepsi) list = kolFiltre(list);
             const d = (window._pageOrders || {})[sayfa];
             if (!d || !d.length) return list;
             const pos = {};
@@ -1398,6 +1432,8 @@
                                         <a href="/lighting/table_lamp">${t().tableLamp}</a>
                                         <a href="/lighting/floor_lamp">${t().floorLamp}</a>
                                         <a href="/lighting/outdoor">${t().outdoor}</a>
+                                        <a href="/koleksiyon" style="margin-top:6px;border-top:1px solid #efe9e0;padding-top:8px;">${currentLanguage === 'tr' ? 'Koleksiyonlar' : 'Collections'}</a>
+                                        ${koleksiyonlar().map(k => `<a href="/koleksiyon/${k.key}" style="padding-left:14px;font-size:.84rem;">${kolAd(k)}</a>`).join('')}
                                     </div>
                                     <div class="dropdown-col">
                                         <div class="dropdown-col-title">${t().colTraditional}</div>
@@ -2070,6 +2106,189 @@
         }
 
         // ============= PRODUCT DETAIL PAGE =============
+        // ===== KOLEKSIYON SAYFALARI =====
+        async function renderKoleksiyonListesi() {
+            const tr = currentLanguage === 'tr';
+            const kols = koleksiyonlar();
+            updateSEO(
+                tr ? 'Koleksiyonlar' : 'Collections',
+                tr ? 'El yapimi pirinc aydinlatma koleksiyonlari. Her koleksiyon tek bir tasarim dilinin farkli konfigurasyonlarindan olusur.'
+                   : 'Handmade brass lighting collections. Each collection gathers the configurations of a single design language.',
+                '', null,
+                tr ? 'aydinlatma koleksiyonu, pirinc avize koleksiyonu, tasarim serisi'
+                   : 'lighting collection, brass chandelier collection, design series',
+                '/koleksiyon'
+            );
+            const kartlar = kols.map(k => `
+                <a href="/koleksiyon/${k.key}" class="collection-card" style="text-decoration:none;color:inherit;display:block;">
+                    <div class="card-image" style="aspect-ratio:4/3;overflow:hidden;background:#f3efe9;">
+                        ${k.kapak ? `<img src="${clImg(k.kapak, 900)}" alt="${kolAd(k)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;">` : ''}
+                    </div>
+                    <div style="padding:14px 2px 0;">
+                        <h3 style="font-size:1rem;letter-spacing:1px;margin:0 0 6px;">${kolAd(k)}</h3>
+                        <p style="font-size:.84rem;color:#8a7d6b;margin:0;">${kolAciklama(k)}</p>
+                    </div>
+                </a>`).join('');
+            return `
+                <section style="padding:120px 5% 80px;max-width:1400px;margin:0 auto;">
+                    <div style="text-align:center;margin-bottom:46px;">
+                        <h1 style="font-size:1.9rem;letter-spacing:3px;font-weight:300;margin:0 0 10px;">${tr ? 'KOLEKSIYONLAR' : 'COLLECTIONS'}</h1>
+                        <p style="color:#8a7d6b;font-size:.9rem;max-width:620px;margin:0 auto;">${tr
+                            ? 'Her koleksiyon tek bir baslik tasarimindan dogar; sarkit, avize, tavan armaturu ve aplik olarak cogalir.'
+                            : 'Each collection grows from a single head design, repeated as pendants, chandeliers, flush mounts and sconces.'}</p>
+                    </div>
+                    ${kols.length ? `<div class="collections-grid">${kartlar}</div>`
+                        : `<p style="text-align:center;color:#999;padding:60px 0;">${tr ? 'Henuz koleksiyon eklenmemis.' : 'No collections yet.'}</p>`}
+                </section>`;
+        }
+
+        async function renderKoleksiyonSayfasi(key) {
+            const tr = currentLanguage === 'tr';
+            const k = koleksiyonBul(key);
+            if (!k) return await renderKoleksiyonListesi();
+            const ad = kolAd(k), ack = kolAciklama(k);
+            updateSEO(
+                ad,
+                ack || (tr ? ad + ' - el yapimi pirinc aydinlatma koleksiyonu, Istanbul atolyemizde uretim.'
+                           : ad + ' - handmade brass lighting collection, made in our Istanbul workshop.'),
+                k.kapak || '', null,
+                (k.anahtar && k.anahtar[currentLanguage]) || '',
+                '/koleksiyon/' + k.key
+            );
+            const all = await getProducts();
+            const idler = k.urunler || [];
+            const urunler = idler.map(id => all.filter(p => p.id === id)[0]).filter(Boolean);
+            const kartlar = urunler.length
+                ? urunler.map(p => renderProductCard(p)).join('')
+                : `<p style="color:#999;grid-column:1/-1;text-align:center;padding:60px 0;">${tr ? 'Bu koleksiyonda henuz urun yok.' : 'No products in this collection yet.'}</p>`;
+            return `
+                <section class="hero" style="margin-top:80px;height:46vh;min-height:300px;position:relative;overflow:hidden;">
+                    ${k.kapak ? `<img src="${clImg(k.kapak, 1800)}" alt="${ad}" style="width:100%;height:100%;object-fit:cover;">` : '<div style="width:100%;height:100%;background:#2b2621;"></div>'}
+                    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(0,0,0,.28);color:#fff;padding:0 6%;">
+                        <h1 style="font-size:2.1rem;letter-spacing:4px;font-weight:300;margin:0 0 12px;">${ad.toLocaleUpperCase(tr ? 'tr' : 'en')}</h1>
+                        ${ack ? `<p style="max-width:640px;font-size:.95rem;line-height:1.7;margin:0;">${ack}</p>` : ''}
+                    </div>
+                </section>
+                <section style="padding:60px 5% 90px;max-width:1400px;margin:0 auto;">
+                    <div style="margin-bottom:26px;font-size:.8rem;letter-spacing:1.5px;color:#8a7d6b;">
+                        <a href="/koleksiyon" style="color:#8a7d6b;text-decoration:none;">${tr ? 'KOLEKSIYONLAR' : 'COLLECTIONS'}</a> &nbsp;/&nbsp; ${ad.toLocaleUpperCase(tr ? 'tr' : 'en')}
+                        &nbsp;&nbsp;<span style="color:#b9ad9b;">${urunler.length} ${tr ? 'model' : 'models'}</span>
+                    </div>
+                    <div class="products-grid">${kartlar}</div>
+                </section>`;
+        }
+
+        // ===== ADMIN: URUN KOLEKSIYONLARI =====
+        async function loadUrunKol() {
+            try { _kolYukle(await getSiteSettings()); } catch (e) {}
+            window._kolUrunListesi = await getProducts();
+            kolEkraniCiz();
+        }
+        function kolTaslak() {
+            return { key: 'koleksiyon-' + Date.now(), ad: { tr: 'Yeni Koleksiyon', en: 'New Collection' },
+                     aciklama: { tr: '', en: '' }, kapak: '', urunler: [], vitrin: [] };
+        }
+        function kolYeni() {
+            window._urunKoleksiyonlari = koleksiyonlar().concat([kolTaslak()]);
+            kolEkraniCiz();
+        }
+        function kolSil(i) {
+            if (!confirm('Bu koleksiyon silinsin mi? (urunler silinmez)')) return;
+            const a = koleksiyonlar().slice(); a.splice(i, 1);
+            window._urunKoleksiyonlari = a;
+            kolKaydetHepsi();
+        }
+        function kolAlanDegis(i, alan, dil, deger) {
+            const a = koleksiyonlar();
+            if (!a[i]) return;
+            if (dil) { a[i][alan] = a[i][alan] || {}; a[i][alan][dil] = deger; }
+            else { a[i][alan] = deger; }
+        }
+        function kolUrunDegis(i, id, tip, acik) {
+            const a = koleksiyonlar();
+            if (!a[i]) return;
+            const dizi = tip === 'vitrin' ? (a[i].vitrin = a[i].vitrin || []) : (a[i].urunler = a[i].urunler || []);
+            const p = dizi.indexOf(id);
+            if (acik && p === -1) dizi.push(id);
+            if (!acik && p !== -1) dizi.splice(p, 1);
+            if (tip === 'urun' && acik) { /* koleksiyona eklendi */ }
+            if (tip === 'urun' && !acik) {
+                const v = a[i].vitrin || []; const q = v.indexOf(id); if (q !== -1) v.splice(q, 1);
+            }
+            if (tip === 'vitrin' && acik) {
+                const u = a[i].urunler = a[i].urunler || []; if (u.indexOf(id) === -1) u.push(id);
+            }
+            kolEkraniCiz(document.getElementById('kolArama') ? document.getElementById('kolArama').value : '');
+        }
+        async function kolKaydetHepsi() {
+            const msg = document.getElementById('kolMsg');
+            if (msg) { msg.style.color = '#8a7d6b'; msg.textContent = 'Kaydediliyor...'; }
+            let ok = true;
+            try { await saveSiteSetting('urun_koleksiyonlari', koleksiyonlar()); } catch (e) { ok = false; }
+            if (msg) { msg.style.color = ok ? '#27ae60' : '#e74c3c'; msg.textContent = ok ? '\u2713 Kaydedildi' : '\u2717 Hata'; setTimeout(() => { msg.textContent = ''; }, 3000); }
+            window._productsCache = null;
+            kolEkraniCiz(document.getElementById('kolArama') ? document.getElementById('kolArama').value : '');
+        }
+        function kolEkraniCiz(arama) {
+            const kaps = document.getElementById('urunKolWrap');
+            if (!kaps) return;
+            const kols = koleksiyonlar();
+            const urunler = window._kolUrunListesi || [];
+            const q = (arama || '').toLocaleLowerCase('tr');
+            const sec = window._kolAktif || 0;
+            const inp = 'width:100%;padding:8px 10px;border:1px solid #e0d8cc;border-radius:4px;font-size:.88rem;margin-bottom:10px;font-family:inherit;';
+            kaps.innerHTML = `
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+                    ${kols.map((k, i) => `<button class="sort-cat-btn${i === sec ? ' active' : ''}" onclick="window._kolAktif=${i};kolEkraniCiz(document.getElementById('kolArama')?document.getElementById('kolArama').value:'')">${(k.ad && k.ad.tr) || k.key}</button>`).join('')}
+                    <button class="sort-cat-btn" onclick="kolYeni()">+ Yeni</button>
+                </div>
+                ${kols.length === 0 ? '<p style="color:#999;">Henuz koleksiyon yok. "+ Yeni" ile olusturun.</p>' : (() => {
+                    const k = kols[sec]; if (!k) return '';
+                    const uset = k.urunler || [], vset = k.vitrin || [];
+                    const liste = urunler.filter(p => !q
+                        || ((p.name_tr || '').toLocaleLowerCase('tr').indexOf(q) !== -1)
+                        || ((p.sku || '').toLowerCase().indexOf(q.toLowerCase()) !== -1));
+                    const satir = liste.map(p => {
+                        const ic = uset.indexOf(p.id) !== -1, vt = vset.indexOf(p.id) !== -1;
+                        return `<div style="display:flex;align-items:center;gap:12px;padding:7px 8px;border-bottom:1px solid #f0ece5;${ic ? 'background:#fbf8f3;' : ''}">
+                            <img src="${clImg((p.images || [])[0] || '', 120)}" style="width:42px;height:42px;object-fit:cover;border-radius:3px;background:#eee;" loading="lazy">
+                            <span style="flex:1;font-size:.85rem;line-height:1.3;">${p.name_tr || ''}<br><small style="color:#aaa;">${p.sku || ''} &middot; #${p.id}</small></span>
+                            <label style="font-size:.78rem;display:flex;align-items:center;gap:5px;white-space:nowrap;"><input type="checkbox" ${ic ? 'checked' : ''} onchange="kolUrunDegis(${sec},${p.id},'urun',this.checked)"> koleksiyonda</label>
+                            <label style="font-size:.78rem;display:flex;align-items:center;gap:5px;white-space:nowrap;color:${vt ? '#8a7d6b' : '#bbb'};"><input type="checkbox" ${vt ? 'checked' : ''} onchange="kolUrunDegis(${sec},${p.id},'vitrin',this.checked)"> kategoride de goster</label>
+                        </div>`;
+                    }).join('');
+                    return `
+                    <div style="display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start;">
+                        <div>
+                            <label style="font-size:.78rem;color:#8a7d6b;">Ad (TR)</label>
+                            <input style="${inp}" value="${(k.ad && k.ad.tr) || ''}" onchange="kolAlanDegis(${sec},'ad','tr',this.value)">
+                            <label style="font-size:.78rem;color:#8a7d6b;">Ad (EN)</label>
+                            <input style="${inp}" value="${(k.ad && k.ad.en) || ''}" onchange="kolAlanDegis(${sec},'ad','en',this.value)">
+                            <label style="font-size:.78rem;color:#8a7d6b;">Adres anahtari (/koleksiyon/...)</label>
+                            <input style="${inp}" value="${k.key || ''}" onchange="kolAlanDegis(${sec},'key','',this.value)">
+                            <label style="font-size:.78rem;color:#8a7d6b;">Kapak gorseli (URL)</label>
+                            <input style="${inp}" value="${k.kapak || ''}" onchange="kolAlanDegis(${sec},'kapak','',this.value)">
+                            ${k.kapak ? `<img src="${clImg(k.kapak, 400)}" style="width:100%;border-radius:4px;margin-bottom:10px;">` : ''}
+                            <label style="font-size:.78rem;color:#8a7d6b;">Aciklama (TR)</label>
+                            <textarea style="${inp}height:70px;" onchange="kolAlanDegis(${sec},'aciklama','tr',this.value)">${(k.aciklama && k.aciklama.tr) || ''}</textarea>
+                            <label style="font-size:.78rem;color:#8a7d6b;">Aciklama (EN)</label>
+                            <textarea style="${inp}height:70px;" onchange="kolAlanDegis(${sec},'aciklama','en',this.value)">${(k.aciklama && k.aciklama.en) || ''}</textarea>
+                            <button class="btn-primary" onclick="kolKaydetHepsi()">Kaydet</button>
+                            <span id="kolMsg" style="margin-left:10px;font-size:.82rem;"></span>
+                            <div style="margin-top:14px;"><a href="#" onclick="event.preventDefault();kolSil(${sec})" style="color:#c0392b;font-size:.8rem;">Bu koleksiyonu sil</a></div>
+                        </div>
+                        <div>
+                            <input id="kolArama" placeholder="Urun ara (ad veya SKU)" style="${inp}" value="${arama || ''}" oninput="kolEkraniCiz(this.value)">
+                            <p style="font-size:.78rem;color:#8a7d6b;margin:0 0 8px;">
+                                <strong>koleksiyonda</strong>: urun bu koleksiyonun sayfasinda gorunur.<br>
+                                <strong>kategoride de goster</strong>: ayrica Avizeler / Tavan Armaturleri gibi kendi kategori sayfasinda da gorunur. Isaretlenmezse urun sadece koleksiyon sayfasindadir.
+                            </p>
+                            <div style="max-height:560px;overflow:auto;border:1px solid #e8e0d5;border-radius:5px;">${satir || '<p style="padding:20px;color:#999;">Sonuc yok.</p>'}</div>
+                        </div>
+                    </div>`;
+                })()}`;
+        }
+
         async function renderProductDetailPage(productId) {
             const products = await getProducts();
             const product = products.find(p => p.id === parseInt(productId));
@@ -2190,6 +2409,10 @@
 
                             <div class="product-info">
                                 <h1>${product.name && product.name[currentLanguage] || ''}</h1>
+                                ${(() => {
+                                    const _k = urunKoleksiyonu(product);
+                                    return _k ? `<a href="/koleksiyon/${_k.key}" style="display:inline-block;margin:-4px 0 16px;font-size:.76rem;letter-spacing:1.6px;text-transform:uppercase;color:#8a7d6b;text-decoration:none;border-bottom:1px solid #ddd4c6;padding-bottom:3px;">${kolAd(_k)} &rarr;</a>` : '';
+                                })()}
 
                                 ${renderSizePicker(product)}
 
@@ -3033,6 +3256,7 @@
                             <a href="#" class="admin-nav" data-section="banners">${t().banners}</a>
                             <a href="#" class="admin-nav" data-section="shoplook">🛍 Shop the Look</a>
                             <a href="#" class="admin-nav" data-section="collections">Koleksiyonlar</a>
+                            <a href="#" class="admin-nav" data-section="urunkol">✦ Ürün Koleksiyonları</a>
                             <a href="#" class="admin-nav" data-section="sorting">⇅ Sıralama</a>
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
                             <a href="#" class="admin-nav" data-section="workshop">🔨 Atölye Görselleri</a>
@@ -3126,6 +3350,15 @@
                             </div>
                         </div>
 
+                        <div id="urunkol-section" class="admin-section" style="display: none;">
+                            <h2>Urun Koleksiyonlari</h2>
+                            <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:22px;">
+                                Orbit, Elara gibi serileri buradan olusturursunuz. Koleksiyona aldiginiz urun
+                                <strong>/koleksiyon/&lt;anahtar&gt;</strong> sayfasinda listelenir ve urun sayfasinda koleksiyon baglantisi cikar.<br>
+                                Onerilen kapak gorseli: 1800 &times; 1000 px.
+                            </p>
+                            <div id="urunKolWrap"></div>
+                        </div>
                         <div id="collections-section" class="admin-section" style="display: none;">
                             <h2>Avize Koleksiyonları</h2>
                             <p style="color:#8a7d6b; font-size:0.9rem; margin-bottom:30px;">
@@ -5776,7 +6009,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
             const path = stripLangPrefix(window.location.pathname || '/');
             currentPage = path;
             trackVisit(); // ziyaretçi takibi (arka planda, beklemez)
-            if (!window._pageBanners) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; _siraYukle(s); window._workshopGallery = s.workshop_gallery || []; window._workshopVideo = s.workshop_video || ''; } catch(e){ window._pageBanners = {}; } }
+            if (!window._pageBanners || !window._urunKoleksiyonlari) { try { const s = await getSiteSettings(); window._pageBanners = s.page_banners || {}; _siraYukle(s); _kolYukle(s); window._workshopGallery = s.workshop_gallery || []; window._workshopVideo = s.workshop_video || ''; } catch(e){ window._pageBanners = {}; } }
             if (!window._koleksiyonlar) { await koleksiyonlariYukle(); }
 
             const app = document.getElementById('app');
@@ -5800,6 +6033,10 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                 } else if (path.startsWith('/lighting/')) {
                     const subcategory = path.split('/')[2];
                     content = await renderLightingSubcategoryPage(subcategory);
+                } else if (path === '/koleksiyon') {
+                    content = await renderKoleksiyonListesi();
+                } else if (path.startsWith('/koleksiyon/')) {
+                    content = await renderKoleksiyonSayfasi(path.split('/')[2]);
                 } else if (path === '/decorative') {
                     history.replaceState(null, '', '/homedecor');
                     content = await renderHomeDecorPage();
@@ -5894,6 +6131,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     document.getElementById(`${section}-section`).style.display = 'block';
                     // Sıralama sekmesi açılınca avizeyi otomatik yükle
                     if (section === 'sorting') loadSortGrid(SIRA_SAYFALAR[0].k);
+            if (section === 'urunkol') loadUrunKol();
                     if (section === 'workshop') loadWorkshop();
                     if (section === 'pagebanners') loadPageBanners();
                     // Ziyaretçiler sekmesi açılınca verileri yükle
@@ -6280,7 +6518,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
 
             try { _siraYukle(await getSiteSettings()); } catch (e) {}
             const all = await getProducts();
-            _sortProducts = siraUygula(siraFiltre(all, s), sayfa);
+            _sortProducts = siraUygula(siraFiltre(all, s), sayfa, true);
             if (!((window._pageOrders || {})[sayfa] || []).length) {
                 _sortProducts.sort((a, b) => (a.sort_order || 999) - (b.sort_order || 999));
             }

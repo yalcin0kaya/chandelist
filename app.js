@@ -1351,7 +1351,18 @@
             }
 
             // Update canonical URL
-            const canonicalUrl = 'https://chandelist.com' + (canonicalPath || (typeof window !== 'undefined' && window.location ? window.location.pathname : '') || '/');
+            const _cp = canonicalPath || (typeof window !== 'undefined' && window.location ? window.location.pathname : '') || '/';
+            const _bare = _cp.replace(/^\/en(?=\/|$)/, '') || '/';
+            const _isEn = (typeof currentLanguage !== 'undefined' && currentLanguage === 'en') || /^\/en(\/|$)/.test(_cp);
+            // TR icerik -> osmanliaydinlatma.com, EN icerik -> chandelist.com/en (ana sayfalar kendi alan adinda kalir)
+            const canonicalUrl = _bare === '/' ? ('https://chandelist.com' + (_isEn ? '/en/' : '/')) : (_isEn ? 'https://chandelist.com/en' + _bare : 'https://osmanliaydinlatma.com' + _bare);
+            if (_bare !== '/') {
+                document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(el => el.remove());
+                [['tr', 'https://osmanliaydinlatma.com' + _bare], ['en', 'https://chandelist.com/en' + _bare], ['x-default', 'https://chandelist.com/en' + _bare]].forEach(([hl, href]) => {
+                    const l = document.createElement('link'); l.rel = 'alternate'; l.hreflang = hl; l.href = href; document.head.appendChild(l);
+                });
+            }
+            if (productSchema && productSchema.offers && !productSchema.offers.price) delete productSchema.offers;
             let canonicalTag = document.querySelector('link[rel="canonical"]');
             if (!canonicalTag) {
                 canonicalTag = document.createElement('link');

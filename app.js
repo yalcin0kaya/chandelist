@@ -710,6 +710,133 @@
             }
         }
 
+
+        // ============= TEKNIK DOSYALAR (Supabase Storage: tech-files, sadece uyeler) =============
+        const SB_STORAGE_URL = 'https://sqvwgghdksxmstmucxdm.supabase.co/storage/v1';
+        function techFileRow(f) {
+            const safe = JSON.stringify(f).replace(/&/g, '&amp;').replace(/'/g, '&#39;');
+            return `<div class="tech-file-row" data-file='${safe}' style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px dashed #e3ddd2;font-size:.9rem;">
+                <strong style="min-width:120px;">${f.label || 'File'}</strong><span style="flex:1;color:#555;">${f.name || f.path}</span>
+                <button type="button" onclick="this.closest('.tech-file-row').remove()" style="border:none;background:none;color:#a8491c;cursor:pointer;">Sil</button></div>`;
+        }
+        async function uploadTechFile(productId) {
+            const inp = document.getElementById('techFileInput'); const st = document.getElementById('techFileStatus');
+            const file = inp && inp.files && inp.files[0];
+            if (!file) { st.textContent = 'Önce dosya seçin'; return; }
+            if (!productId) { st.textContent = 'Önce ürünü kaydedin, sonra dosya yükleyin'; return; }
+            const token = await sbEnsureToken(); if (!token) { st.textContent = 'Oturum yok, tekrar giriş yapın'; return; }
+            const clean = file.name.normalize('NFKD').replace(/[^\w.\-]+/g, '_');
+            const path = productId + '/' + Date.now() + '_' + clean;
+            st.textContent = 'Yükleniyor…';
+            try {
+                const r = await fetch(SB_STORAGE_URL + '/object/tech-files/' + path, {
+                    method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'true' }, body: file });
+                if (!r.ok) { st.textContent = 'Hata: ' + r.status; return; }
+                const f = { label: document.getElementById('techFileLabel').value, name: file.name, path, size: file.size };
+                document.getElementById('techFilesList').insertAdjacentHTML('beforeend', techFileRow(f));
+                inp.value = ''; st.textContent = '✓ Yüklendi — kaydetmeyi unutmayın';
+            } catch (e) { st.textContent = 'Hata: ' + e.message; }
+        }
+        async function techFileSignedUrl(path) {
+            const token = await sbEnsureToken(); if (!token) return null;
+            const r = await fetch(SB_STORAGE_URL + '/object/sign/tech-files/' + path, {
+                method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify({ expiresIn: 600 }) });
+            if (!r.ok) return null; const d = await r.json();
+            return d.signedURL ? 'https://sqvwgghdksxmstmucxdm.supabase.co/storage/v1' + d.signedURL : null;
+        }
+        async function quoteFileUrl(path) {
+            const token = await sbEnsureToken(); if (!token) return null;
+            const r = await fetch(SB_STORAGE_URL + '/object/sign/quote-files/' + path, {
+                method: 'POST', headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify({ expiresIn: 600 }) });
+            if (!r.ok) return null; const d = await r.json();
+            return d.signedURL ? 'https://sqvwgghdksxmstmucxdm.supabase.co/storage/v1' + d.signedURL : null;
+        }
+
+
+        // ============= TRADE BASVURULARI + SIPARISLER (chandelist) =============
+        const TRADE_ST = { pending: 'Onay bekliyor', approved: 'Onaylı', rejected: 'Reddedildi', none: 'Başvurmadı' };
+        async function loadTrade() {
+            const box = document.getElementById('tradeList'); if (!box) return; box.innerHTML = 'Yükleniyor…';
+            const token = await sbEnsureToken();
+            const r = await fetch(SB_URL + '/customers?select=*&order=applied_at.desc.nullslast,created_at.desc', { headers: sbHeaders(token) });
+            const rows = r.ok ? await r.json() : [];
+            if (!r.ok) { box.innerHTML = '<p style="color:#a8491c;">Tablo henüz kurulmamış (customers). SQL adımını tamamlayın.</p>'; return; }
+            const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+            const pend = rows.filter(x => x.trade_status === 'pending').length;
+            box.innerHTML = `<p style="margin-bottom:12px;color:#8a7d6b;">${rows.length} üye · <b>${pend}</b> trade başvurusu onay bekliyor</p>` + rows.map(c => `
+                <div style="border:1px solid #e3ddd2;padding:14px 16px;margin-bottom:10px;background:${c.trade_status==='pending'?'#fbf6ec':'#fff'};">
+                    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;"><strong>${esc(c.name)} · ${esc(c.company || '')}</strong><span>${TRADE_ST[c.trade_status||'none']}</span></div>
+                    <div style="font-size:.88rem;margin:6px 0;">${esc(c.email)} · ${esc(c.phone)} · ${esc(c.profession)} · ${esc(c.state)}</div>
+                    <div style="font-size:.88rem;">Web: ${c.website ? `<a href="${esc(c.website)}" target="_blank" rel="noopener">${esc(c.website)}</a>` : '-'} · Resale: ${esc(c.resale_cert_no || '-')} · Lisans/Üyelik: ${esc(c.license_no || '-')}</div>
+                    ${(c.docs||[]).map(d => `<a href="#" onclick="openQuoteFile('${String(d.path).replace(/'/g,'')}');return false;" style="font-size:.85rem;margin-right:10px;">📎 ${esc(d.name)}</a>`).join('')}
+                    ${c.notes ? `<div style="font-size:.88rem;color:#555;margin-top:6px;">${esc(c.notes)}</div>` : ''}
+                    ${c.trade_status === 'pending' || c.trade_status === 'rejected' ? `<div style="margin-top:10px;display:flex;gap:8px;"><button type="button" class="btn-secondary" onclick="setTrade('${c.id}','approved')">✓ Onayla</button><button type="button" class="btn-secondary" onclick="setTrade('${c.id}','rejected')">Reddet</button></div>` : ''}
+                    ${c.trade_status === 'approved' ? `<div style="margin-top:10px;"><button type="button" class="btn-secondary" onclick="setTrade('${c.id}','none')">Trade yetkisini kaldır</button></div>` : ''}
+                </div>`).join('');
+        }
+        async function setTrade(id, st) {
+            const res = await sbFetch('/customers?id=eq.' + id, { method: 'PATCH', body: JSON.stringify({ trade_status: st, reviewed_at: new Date().toISOString() }) });
+            showToast(res ? '✓ Güncellendi' : 'Güncellenemedi', res ? 'success' : 'error'); loadTrade();
+        }
+        const ORDER_ST = { pending_payment: 'Ödeme bekliyor', paid: 'Ödendi', in_production: 'Üretimde', shipped: 'Kargoda', delivered: 'Teslim edildi', cancelled: 'İptal' };
+        async function loadOrders() {
+            const box = document.getElementById('ordersList'); if (!box) return; box.innerHTML = 'Yükleniyor…';
+            const token = await sbEnsureToken();
+            const r = await fetch(SB_URL + '/orders?select=*&order=created_at.desc', { headers: sbHeaders(token) });
+            if (!r.ok) { box.innerHTML = '<p style="color:#a8491c;">Tablo henüz kurulmamış (orders). SQL adımını tamamlayın.</p>'; return; }
+            const rows = await r.json(); const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+            if (!rows.length) { box.innerHTML = '<p style="color:#8a7d6b;">Henüz sipariş yok.</p>'; return; }
+            box.innerHTML = rows.map(o => `
+                <div style="border:1px solid #e3ddd2;padding:14px 16px;margin-bottom:10px;background:#fff;">
+                    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;"><strong>#${o.id} · ${esc(o.name)} · $${Number(o.total||0).toLocaleString('en-US')}</strong><span style="color:#8a7d6b;font-size:.85rem;">${new Date(o.created_at).toLocaleString('tr-TR')}</span></div>
+                    <div style="font-size:.88rem;margin:6px 0;">${esc(o.email)} · ${esc(o.phone)} · ${esc([o.address?.line1,o.address?.line2,o.address?.city,o.address?.state,o.address?.zip].filter(Boolean).join(', '))}</div>
+                    <div style="font-size:.88rem;">${(o.items||[]).map(i => `${esc(i.name)} × ${i.qty} — $${i.unit}`).join('<br>')}${o.discount_pct ? `<br><i>Trade indirimi %${o.discount_pct}</i>` : ''}</div>
+                    ${o.notes ? `<div style="font-size:.88rem;color:#555;margin-top:6px;">Not: ${esc(o.notes)}</div>` : ''}
+                    <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;"><select id="os_${o.id}" style="width:auto;">${Object.entries(ORDER_ST).map(([k,v]) => `<option value="${k}" ${o.status===k?'selected':''}>${v}</option>`).join('')}</select>
+                    <button type="button" class="btn-secondary" onclick="saveOrder(${o.id})">Kaydet</button>
+                    <a href="mailto:${esc(o.email)}?subject=${encodeURIComponent('Your Chandelist order #' + o.id)}" style="font-size:.85rem;">E-posta yaz (ödeme linki)</a></div>
+                </div>`).join('');
+        }
+        async function saveOrder(id) {
+            const res = await sbFetch('/orders?id=eq.' + id, { method: 'PATCH', body: JSON.stringify({ status: document.getElementById('os_' + id).value }) });
+            showToast(res ? '✓ Kaydedildi' : 'Kaydedilemedi', res ? 'success' : 'error');
+        }
+
+        // ============= TEKLIF TALEPLERI (quote_requests) =============
+        const QUOTE_STATUS = { new: 'Yeni', quoted: 'Teklif verildi', won: 'Kazanıldı', lost: 'Kaybedildi' };
+        async function loadQuotes() {
+            const box = document.getElementById('quotesList'); if (!box) return;
+            box.innerHTML = 'Yükleniyor…';
+            const token = await sbEnsureToken();
+            const r = await fetch(SB_URL + '/quote_requests?select=*&order=created_at.desc', { headers: sbHeaders(token) });
+            const rows = r.ok ? await r.json() : [];
+            if (!rows.length) { box.innerHTML = '<p style="color:#8a7d6b;">Henüz teklif talebi yok.</p>'; return; }
+            const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+            box.innerHTML = rows.map(q => `
+                <div class="quote-card" style="border:1px solid #e3ddd2;padding:16px 18px;margin-bottom:12px;background:#fff;">
+                    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+                        <strong>#${q.id} · ${esc(q.name)} <span style="font-weight:400;color:#8a7d6b;">(${esc(q.site || '')} · ${esc(q.country || '')})</span></strong>
+                        <span style="color:#8a7d6b;font-size:.85rem;">${new Date(q.created_at).toLocaleString('tr-TR')}</span>
+                    </div>
+                    <div style="font-size:.9rem;margin:6px 0;">${esc(q.email)} · ${esc(q.phone)} · ${esc(q.project_type)} · Adet: ${esc(q.quantity)} · Ölçü: ${esc(q.dimensions)} · Yüzey: ${esc(q.finish)} · Termin: ${esc(q.deadline)}</div>
+                    <div style="white-space:pre-wrap;font-size:.92rem;color:#333;margin:8px 0;">${esc(q.message)}</div>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;margin:8px 0;">${(q.files || []).map(f => `<a href="#" onclick="openQuoteFile('${String(f.path).replace(/'/g,'')}');return false;" style="font-size:.85rem;">📎 ${esc(f.name)}</a>`).join('')}</div>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <select id="qs_${q.id}" style="width:auto;">${Object.entries(QUOTE_STATUS).map(([k,v]) => `<option value="${k}" ${q.status===k?'selected':''}>${v}</option>`).join('')}</select>
+                        <input id="qa_${q.id}" type="number" placeholder="Teklif $" value="${q.quote_amount ?? ''}" style="width:120px;">
+                        <input id="qn_${q.id}" type="text" placeholder="Not" value="${esc(q.admin_note || '')}" style="flex:1;min-width:160px;">
+                        <button type="button" class="btn-secondary" onclick="saveQuote(${q.id})">Kaydet</button>
+                        <a href="mailto:${esc(q.email)}?subject=${encodeURIComponent('Your custom lighting quote — Chandelist')}" style="font-size:.85rem;">E-posta yaz</a>
+                    </div>
+                </div>`).join('');
+        }
+        async function openQuoteFile(path) { const u = await quoteFileUrl(path); if (u) window.open(u, '_blank'); else showToast('Dosya açılamadı', 'error'); }
+        async function saveQuote(id) {
+            const body = { status: document.getElementById('qs_' + id).value, quote_amount: document.getElementById('qa_' + id).value || null, admin_note: document.getElementById('qn_' + id).value };
+            const res = await sbFetch('/quote_requests?id=eq.' + id, { method: 'PATCH', body: JSON.stringify(body) });
+            showToast(res ? '✓ Kaydedildi' : 'Kaydedilemedi', res ? 'success' : 'error');
+        }
+
         // Extra fields stored in localStorage when Supabase column doesn't exist yet
         function getProductExtras() {
             try { return JSON.parse(localStorage.getItem('productExtras') || '{}'); } catch { return {}; }
@@ -889,6 +1016,9 @@
                     metaTitle: { tr: p.meta_title_tr || '', en: p.meta_title_en || '' },
                     metaDescription: { tr: p.meta_description_tr || '', en: p.meta_description_en || '' },
                     keywords: { tr: p.keywords_tr || '', en: p.keywords_en || '' },
+                    usVisible: p.us_visible === true,
+                    priceUsd: (p.price_usd === null || p.price_usd === undefined) ? '' : p.price_usd,
+                    techFiles: Array.isArray(p.tech_files) ? p.tech_files : [],
                 };
             });
         }
@@ -938,6 +1068,9 @@
                 sku: product.sku || '',
                 variants: JSON.stringify(product.variants || []),
                 related_products: JSON.stringify(product.relatedProducts || []),
+                us_visible: product.usVisible === true,
+                price_usd: (product.priceUsd === '' || product.priceUsd === null || product.priceUsd === undefined) ? null : Number(product.priceUsd),
+                tech_files: Array.isArray(product.techFiles) ? product.techFiles : [],
             };
 
             const existingId = product._dbId || product.id;
@@ -3272,6 +3405,9 @@
                             <a href="#" class="admin-nav" data-section="import">Excel Import</a>
                             <a href="#" class="admin-nav" data-section="workshop">🔨 Atölye Görselleri</a>
                             <a href="#" class="admin-nav" data-section="pagebanners">🖼 Sayfa Banner'ları</a>
+                            <a href="#" class="admin-nav" data-section="orders">🇺🇸 Siparişler</a>
+                            <a href="#" class="admin-nav" data-section="trade">🇺🇸 Trade Üyeler</a>
+                            <a href="#" class="admin-nav" data-section="quotes">✉ Teklif Talepleri</a>
                             <a href="#" class="admin-nav" data-section="visitors">📊 Ziyaretçiler</a>
                             <a href="#" class="admin-nav" data-section="aichat">🤖 AI Asistan</a>
                             <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
@@ -3456,6 +3592,9 @@
                             <div id="pb-list"></div>
                         </div>
 
+                        <div id="orders-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:16px;">Siparişler (chandelist.com)</h2><div id="ordersList"></div></div>
+                        <div id="trade-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:16px;">Üyeler &amp; Trade Başvuruları</h2><div id="tradeList"></div></div>
+                        <div id="quotes-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:16px;">Teklif Talepleri</h2><div id="quotesList"></div></div>
                         <div id="visitors-section" class="admin-section" style="display: none;">
                             <h2>📊 Ziyaretçiler</h2>
                             <div style="display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;">
@@ -3712,6 +3851,7 @@
                                 <button type="button" class="admin-tab-btn" data-tab="en-tab">EN</button>
                                 <button type="button" class="admin-tab-btn" data-tab="general-tab">General</button>
                                 <button type="button" class="admin-tab-btn" data-tab="variants-tab">Varyantlar</button>
+                                <button type="button" class="admin-tab-btn" data-tab="us-tab">🇺🇸 Amerika</button>
                             </div>
 
                             <!-- TR Tab -->
@@ -3908,6 +4048,35 @@
                                                 <span class="rel-check">✓</span>
                                             </label>
                                         `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- US TAB (Chandelist) -->
+                            <div id="us-tab" class="admin-tab-panel">
+                                <p style="color:#8a7d6b;font-size:0.85rem;margin-bottom:18px;">Bu alanlar sadece chandelist.com (Amerika) içindir. Osmanlı Aydınlatma bunları göstermez.</p>
+                                <div class="form-group">
+                                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:600;">
+                                        <input type="checkbox" id="formUsVisible" ${product && product.usVisible ? 'checked' : ''} style="width:18px;height:18px;">
+                                        Amerika'da göster (chandelist.com)
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Liste fiyatı (USD)</label>
+                                    <input type="number" id="formPriceUsd" min="0" step="1" value="${product && product.priceUsd !== '' && product.priceUsd !== undefined ? product.priceUsd : ''}" placeholder="Örn: 1180">
+                                    <small style="color:#8a7d6b;">Trade (mimar) fiyatı bundan otomatik hesaplanır: %20 / %25 / %30.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Teknik dosyalar (sadece üyeler indirebilir)</label>
+                                    <div id="techFilesList">${(product && product.techFiles ? product.techFiles : []).map((f, i) => techFileRow(f)).join('')}</div>
+                                    <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap;">
+                                        <select id="techFileLabel" style="width:auto;">
+                                            <option>Spec Sheet</option><option>CAD (DWG)</option><option>3D Model</option><option>Installation Guide</option><option>Other</option>
+                                        </select>
+                                        <input type="file" id="techFileInput" accept=".pdf,.dwg,.dxf,.skp,.step,.stp,.obj,.zip,.rvt,.3dm,.jpg,.png" style="width:auto;">
+                                        <button type="button" class="btn-secondary" onclick="uploadTechFile(${product ? product.id : 'null'})" style="padding:8px 14px;">Yükle</button>
+                                        <span id="techFileStatus" style="font-size:.85rem;color:#8a7d6b;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -4453,6 +4622,9 @@ JSON formatında yanıt ver (başka hiçbir şey yazma):
                 videos: videos,
                 relatedProducts: relatedProducts,
                 variants: variants,
+                usVisible: !!document.getElementById('formUsVisible')?.checked,
+                priceUsd: (document.getElementById('formPriceUsd')?.value || '').trim(),
+                techFiles: Array.from(document.querySelectorAll('#techFilesList .tech-file-row')).map(r => { try { return JSON.parse(r.dataset.file); } catch (e) { return null; } }).filter(Boolean),
             };
 
             // Show saving state on button
@@ -6147,6 +6319,9 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     if (section === 'pagebanners') loadPageBanners();
                     // Ziyaretçiler sekmesi açılınca verileri yükle
                     if (section === 'visitors') loadVisitors(1);
+                    if (section === 'quotes') loadQuotes();
+                    if (section === 'trade') loadTrade();
+                    if (section === 'orders') loadOrders();
                     if (section === 'aichat' && !document.getElementById('aiChatBox').childElementCount) aiReset();
                 });
             });

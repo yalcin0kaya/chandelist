@@ -128,6 +128,7 @@ function playFilm(v) {
 }
 // ---------- pages ----------
 function bindCraftVideo() { const box = document.querySelector('#craftvid .vbox'); if (!box || box.dataset.on) return; const go = () => { if (box.dataset.on) return; box.dataset.on = 1; const id = box.dataset.yt; box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&playsinline=1&start=8&disablekb=1" title="Chandelist workshop" allow="autoplay; encrypted-media" tabindex="-1"></iframe>`; }; if ('IntersectionObserver' in window) { const io = new IntersectionObserver(e => { if (e[0].isIntersecting) { go(); io.disconnect(); } }, { rootMargin: '200px' }); io.observe(box); } else go(); }
+const HERO_VIDEO = { d: 'v1780169682/sirevideo1920x800_bci73v', m: 'v1780170796/sitevideo750x1000_mc0dzg' };
 async function pageHome() {
   setTimeout(bindCraftVideo, 50);
   const all = await catalog(); const rank = p => { const o = ['chandelier', 'pendant', 'lantern', 'sconce', 'flush_mount']; const i = o.findIndex(s => p.subs.includes(s)); return i < 0 ? 9 : i; };
@@ -139,12 +140,12 @@ async function pageHome() {
   const herImg = pick(308, 3)[1] || (pool.find(p => p.style === 'traditional') || {}).images?.[0];   const catTiles = Object.entries(CATS.lighting.subs).slice(0, 5).map(([k, v]) => { const p = all.find(x => x.subs.includes(k) && x.images.length); return `<a class="cat" href="/lighting/${k}"><div class="ill">${p ? `<img src="${img(p.images[0], 500)}" alt="${esc(v)}" loading="lazy">` : ''}</div><h3>${v}</h3><p>${all.filter(x => x.subs.includes(k)).length} designs</p></a>`; }).join('');
   seo('Chandelist — Handmade Brass Lighting, Made to Order', 'Hand-spun brass and copper chandeliers, pendants, sconces and lanterns, made to order. Shipping and duties included across the US.', '/');
   return `
-  <section class="hero2">${heroImg ? `<img src="${img(heroImg, 2000)}" alt="${heroP2 ? esc(heroP2.name) : 'Chandelist brass lighting'}">` : ''}<div class="veil"></div>
+  <section class="hero2">${(() => { const m = matchMedia('(max-width:820px)').matches; const V = m ? HERO_VIDEO.m : HERO_VIDEO.d; const base = 'https://res.cloudinary.com/dcvkzpvmy/video/upload/'; return `<video autoplay muted loop playsinline preload="auto" poster="${base}so_0,${m ? 'w_800' : 'w_1600'},q_auto,f_jpg/${V}.jpg" aria-hidden="true"><source src="${base}du_24,q_auto:eco,${m ? 'w_720' : 'w_1600'},vc_h264,ac_none/${V}.mp4" type="video/mp4"></video>`; })()}<div class="veil"></div>
     <div class="wrap hero2-in"><div class="eyebrow">Hand-spun brass &amp; copper · Since 1984</div>
     <h1>Light, <em>made for</em><br>your room.</h1>
     <p>Chandeliers, pendants and lanterns made by hand, to order. Shipping and US duties included.</p>
     <div class="cta"><a href="/lighting" class="btn btn-light">Shop Lighting</a><a href="/custom" class="btn btn-ghost">Commission a Piece</a></div></div>
-    ${heroP2 ? `<a class="hero-tag" href="${pUrl(heroP2)}">Shown<b>${esc(heroP2.name)}</b></a>` : ''}</section>
+</section>
   <section class="styles"><a class="style-tile" href="/lighting?style=modern">${modImg ? `<img src="${img(modImg, 1200)}" alt="Modern brass lighting" loading="lazy">` : ''}<div><div class="eyebrow">Collection</div><h2>Modern</h2><p>Clean lines, spun brass, opal glass. ${all.filter(p => p.cat === 'lighting' && /modern|both/.test(p.style)).length} designs</p><span class="link-u">Shop Modern</span></div></a>
     <a class="style-tile" href="/lighting?style=heritage">${herImg ? `<img src="${img(herImg, 1200)}" alt="Ottoman and Moroccan brass lanterns" loading="lazy">` : ''}<div><div class="eyebrow">Collection</div><h2>Heritage</h2><p>Ottoman, Moroccan &amp; rustic. Hand-pierced brass. ${all.filter(p => p.cat === 'lighting' && /traditional|both/.test(p.style)).length} designs</p><span class="link-u">Shop Heritage</span></div></a></section>
   <section class="craftvid" id="craftvid"><div class="vbox" data-yt="DhGPEr-byqk"></div><div class="veil"></div><div class="wrap craftvid-in"><div class="eyebrow">Inside our workshop</div><h2>Cut, spun, pierced<br><em>and welded by hand.</em></h2><p>Every Chandelist piece is made in our own Istanbul workshop, by the same family of metalsmiths, since 1984.</p><a class="btn btn-ghost" href="/films">Watch our films</a></div></section>

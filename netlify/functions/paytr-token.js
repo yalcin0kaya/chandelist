@@ -4,7 +4,8 @@ const { sb, userFromToken, hmac, json, TIERS } = require('../lib/paytr');
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
   const { PAYTR_MERCHANT_ID: MID, PAYTR_MERCHANT_KEY: MKEY, PAYTR_MERCHANT_SALT: MSALT, SUPABASE_SERVICE_KEY } = process.env;
-  if (!MID || !MKEY || !MSALT || !SUPABASE_SERVICE_KEY) return json(503, { error: 'payments_not_configured' });
+  const missing = ['PAYTR_MERCHANT_ID', 'PAYTR_MERCHANT_KEY', 'PAYTR_MERCHANT_SALT', 'SUPABASE_SERVICE_KEY'].filter(k => !(process.env[k] || '').trim());
+  if (missing.length) { console.error('payments_not_configured, missing:', missing.join(',')); return json(503, { error: 'payments_not_configured', missing }); }
   let body; try { body = JSON.parse(event.body || '{}'); } catch (e) { return json(400, { error: 'Bad request' }); }
   const c = body.customer || {}; const items = Array.isArray(body.items) ? body.items : [];
   if (!items.length || !c.email || !c.name || !c.phone || !c.line1 || !c.city || !c.state || !c.zip) return json(400, { error: 'Missing details' });

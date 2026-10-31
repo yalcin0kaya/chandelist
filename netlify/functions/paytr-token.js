@@ -47,9 +47,19 @@ exports.handler = async (event) => {
 
     // 4) PayTR token
     const userIp = event.headers['x-nf-client-connection-ip'] || (event.headers['x-forwarded-for'] || '').split(',')[0].trim() || '127.0.0.1';
-    const basket = Buffer.from(JSON.stringify(lines.map(l => [l.name.slice(0, 100), (l.unit).toFixed(2), l.qty]))).toString('base64');
-    const amount = String(Math.round(total * 100));
-    const noInst = '1', maxInst = '0', currency = 'USD', testMode = process.env.PAYTR_TEST_MODE === '1' ? '1' : '0';
+    // Currency: USD by default; PAYTR_CURRENCY=TL charges the TL equivalent (TCMB USD selling rate) until the USD account is opened
+    let currency = (process.env.PAYTR_CURRENCY || 'USD').toUpperCase() === 'TL' ? 'TL' : 'USD';
+    let chargeTotal = total, fx = null;
+    if (currency === 'TL') {
+      const xml = await (await fetch('https://www.tcmb.gov.tr/kurlar/today.xml')).text();
+      const m = xml.match(/CurrencyCode="USD"[\s\S]*?<ForexSelling>([\d.]+)<\/ForexSelling>/);
+      fx = m ? parseFloat(m[1]) : NaN; if (!fx) throw new Error('FX rate unavailable');
+      chargeTotal = Math.ceil(total * fx * 100) / 100;
+      await sb('/rest/v1/orders?id=eq.' + order.id, { method: 'PATCH', body: JSON.stringify({ notes: (body.notes || '') + ' [Charged in TL: ' + chargeTotal + ' TL @ ' + fx + ']' }) });
+    }
+    const amount = String(Math.round(chargeTotal * 100));
+    const basket = Buffer.from(JSON.stringify(lines.map(l => [l.name.slice(0, 100), (fx ? l.unit * fx : l.unit).toFixed(2), l.qty]))).toString('base64');
+    const noInst = '1', maxInst = '0', testMode = process.env.PAYTR_TEST_MODE === '1' ? '1' : '0';
     const paytrToken = hmac(MID + userIp + oid + c.email + amount + basket + noInst + maxInst + currency + testMode + MSALT);
     const site = 'https://chandelist.com';
     const form = new URLSearchParams({ merchant_id: MID, user_ip: userIp, merchant_oid: oid, email: c.email, payment_amount: amount, paytr_token: paytrToken,
@@ -59,7 +69,7 @@ exports.handler = async (event) => {
     const r = await fetch('https://www.paytr.com/odeme/api/get-token', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: form.toString() });
     const d = await r.json();
     if (d.status !== 'success') { await sb('/rest/v1/orders?id=eq.' + order.id, { method: 'PATCH', body: JSON.stringify({ status: 'payment_failed', notes: (body.notes || '') + ' [PayTR: ' + d.reason + ']' }) }); return json(502, { error: 'Payment service: ' + d.reason }); }
-    return json(200, { token: d.token, orderId: order.id, total });
+    return json(200, { token: d.token, orderId: order.id, total, currency, charge: chargeTotal });
   } catch (e) {
     console.error(e); return json(500, { error: 'Could not start payment' });
   }

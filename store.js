@@ -323,7 +323,7 @@ async function pageCheckout() {
       const res = await r.json().catch(() => ({}));
       if (r.ok && res.token) {
         track('AddPaymentInfo', { value: res.total, currency: 'USD' });
-        $('#app').innerHTML = `<div class="wrap" style="max-width:760px;padding:60px 0 120px"><div class="eyebrow">Secure payment</div><h1 class="serif" style="font-size:44px;margin:10px 0 8px">Pay ${usd(res.total)}</h1><p style="color:var(--muted);margin-bottom:24px">Order #${res.orderId} · Card payment in US dollars, processed securely. Duties included.</p><iframe src="https://www.paytr.com/odeme/guvenli/${encodeURIComponent(res.token)}" id="paytriframe" frameborder="0" scrolling="no" style="width:100%;min-height:620px;border:0"></iframe></div>`;
+        $('#app').innerHTML = `<div class="wrap" style="max-width:760px;padding:60px 0 120px"><div class="eyebrow">Secure payment</div><h1 class="serif" style="font-size:44px;margin:10px 0 8px">Pay ${usd(res.total)}</h1><p style="color:var(--muted);margin-bottom:24px">Order #${res.orderId} · ${res.currency === 'TL' ? 'Your card is charged the equivalent ₺' + Number(res.charge).toLocaleString('en-US') + ' (Turkish lira) at today\'s rate; your bank converts it to USD.' : 'Card payment in US dollars, processed securely.'} Duties included.</p><iframe src="https://www.paytr.com/odeme/guvenli/${encodeURIComponent(res.token)}" id="paytriframe" frameborder="0" scrolling="no" style="width:100%;min-height:620px;border:0"></iframe></div>`;
         const sc = document.createElement('script'); sc.src = 'https://www.paytr.com/js/iframeResizer.min.js'; sc.onload = () => { try { iFrameResize({}, '#paytriframe'); } catch (x) {} }; document.body.appendChild(sc);
         window.scrollTo(0, 0); return;
       }

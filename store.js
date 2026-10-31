@@ -9,9 +9,9 @@ const FREE_SHIP = 2500;
 const TIERS = [ { min: 25000, pct: 30 }, { min: 10000, pct: 25 }, { min: 0, pct: 20 } ]; // trade, by last-12-month spend
 const CATS = {
   lighting: { label: 'Lighting', subs: { chandelier: 'Chandeliers', pendant: 'Pendants', sconce: 'Sconces', flush_mount: 'Flush Mounts', lantern: 'Lanterns', table_lamp: 'Table Lamps', floor_lamp: 'Floor Lamps', outdoor: 'Outdoor', custom: 'Bespoke' } },
-  homedecor: { label: 'Home', subs: { side_table: 'Side Tables', tray: 'Trays', candleholder: 'Candleholders', planter: 'Planters' } }
+  homedecor: { label: 'Home Décor', subs: { side_table: 'Side Tables', tray: 'Trays', candleholder: 'Candleholders', planter: 'Planters' } }
 };
-const LEAD = { chandelier: [6, 8], lantern: [5, 7], custom: [8, 12] }; // weeks; default [4, 6]
+const LEAD = { chandelier: [3, 4], lantern: [3, 4], custom: [4, 6] }; // weeks until ship; default [2, 3]
 
 // ---------- tiny helpers ----------
 const $ = s => document.querySelector(s);
@@ -64,7 +64,7 @@ async function catalog() {
   let rows = [];
   try { rows = await api(q, {}, false) || []; } catch (e) { console.error(e); }
   PRODUCTS = rows.filter(p => p.category !== 'arsiv').map(p => ({
-    id: p.id, name: p.name_en || ('Piece ' + p.id), desc: p.description_en || '', cat: p.category, subs: parseSubs(p.subcategory),
+    id: p.id, name: (p.name_en || ('Piece ' + p.id)).replace(/[\s–—-]+$/, ''), desc: p.description_en || '', cat: p.category, subs: parseSubs(p.subcategory),
     materials: /[çğışöüÇĞİŞÖÜ]/.test(p.materials || '') ? '' : (p.materials || ''), dims: p.dimensions || '',
     images: Array.isArray(p.images) ? p.images.filter(Boolean) : [], price: p.price_usd != null ? +p.price_usd : null,
     live: p.us_visible === true, files: Array.isArray(p.tech_files) ? p.tech_files : [],
@@ -73,7 +73,7 @@ async function catalog() {
   return PRODUCTS;
 }
 const pUrl = p => '/products/' + p.id + '-' + slug(p.name);
-function lead(p) { const k = p.subs.find(s => LEAD[s]); return LEAD[k] || [4, 6]; }
+function lead(p) { const k = p.subs.find(s => LEAD[s]); return LEAD[k] || [2, 3]; }
 function shipWindow(weeks) { const f = w => { const d = new Date(); d.setDate(d.getDate() + w * 7); return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }; return f(weeks[0]) + ' – ' + f(weeks[1]); }
 function cmToIn(text) { return String(text || '').replace(/(\d+(?:[.,]\d+)?)\s*(?:x|×)\s*(\d+(?:[.,]\d+)?)(?:\s*(?:x|×)\s*(\d+(?:[.,]\d+)?))?\s*cm/gi, (m) => { const nums = m.match(/\d+(?:[.,]\d+)?/g).map(n => Math.round(parseFloat(n.replace(',', '.')) / 2.54)); return nums.join('" × ') + '" (' + m + ')'; }).replace(/Ø\s*(\d+(?:[.,]\d+)?)\s*cm/gi, (m, n) => 'Ø ' + Math.round(parseFloat(n.replace(',', '.')) / 2.54) + '" (' + m + ')'); }
 function dimsText(d) { if (!d) return ''; if (d.trim().startsWith('{')) { try { const o = JSON.parse(d); const parts = []; const f = (k, v) => v && parts.push(k + ' ' + Math.round(parseFloat(String(v).replace(',', '.')) / 2.54) + '" (' + v + ' cm)'); f('H', o.h); f('Ø', o.dia); f('W', o.w); f('D', o.d); return parts.join(' · '); } catch (e) {} } return cmToIn(d); }
@@ -86,8 +86,9 @@ function priceHTML(p, big) {
 function unitPrice(p) { const pct = tradePct(); return p.price == null ? null : Math.round(p.price * (1 - pct / 100)); }
 
 // ---------- SEO ----------
+function clip(t, n) { t = String(t || '').replace(/\s+/g, ' ').trim(); if (t.length <= n) return t.replace(/[\s–—\-,:;|]+$/, ''); t = t.slice(0, n); t = t.slice(0, t.lastIndexOf(' ')); return t.replace(/[\s–—\-,:;|]+$/, '') + '…'; }
 function seo(title, desc, path, extra) {
-  document.title = title; const set = (sel, attr, val) => { let el = document.head.querySelector(sel); if (!el) { el = document.createElement(sel.startsWith('link') ? 'link' : 'meta'); const m = sel.match(/\[(\w+(?::\w+)?)="([^"]+)"\]/); el.setAttribute(m[1], m[2]); document.head.appendChild(el); } el.setAttribute(attr, val); };
+  desc = clip(desc, 158); document.title = title; const set = (sel, attr, val) => { let el = document.head.querySelector(sel); if (!el) { el = document.createElement(sel.startsWith('link') ? 'link' : 'meta'); const m = sel.match(/\[(\w+(?::\w+)?)="([^"]+)"\]/); el.setAttribute(m[1], m[2]); document.head.appendChild(el); } el.setAttribute(attr, val); };
   set('meta[name="description"]', 'content', desc); set('link[rel="canonical"]', 'href', 'https://chandelist.com' + path);
   set('meta[property="og:title"]', 'content', title); set('meta[property="og:description"]', 'content', desc); set('meta[property="og:url"]', 'content', 'https://chandelist.com' + path);
   document.querySelectorAll('script[data-ld]').forEach(s => s.remove());
@@ -122,7 +123,7 @@ async function pageHome() {
   <section class="blk"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">Shop by Form</div><h2>Five forms, <em>endlessly</em> made to measure.</h2></div><a href="/lighting" class="link-u">View all</a></div><div class="cats">${catTiles}</div></div></section>
   <section class="blk" style="padding-top:0"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">The Collection</div><h2>Pieces our clients return to.</h2></div><a href="/lighting" class="link-u">Shop all lighting</a></div>${grid(feat)}</div></section>
   <section class="blk process"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">Made to Order</div><h2>Why your light takes <em>weeks</em>, not days.</h2></div><p style="max-width:380px;color:#b9b2a3;font-weight:300">We don't keep stock. When you order, solid brass is cut, spun and hand-finished in the size and finish you chose.</p></div>
-    <div class="steps"><div class="step"><div class="wk">Day 1</div><h3>Your order</h3><p>We confirm finish, size and drop length, and send a written timeline.</p></div><div class="step"><div class="wk">Weeks 1–2</div><h3>Spun &amp; formed</h3><p>Brass is hand-spun on the lathe, cut, soldered and shaped.</p></div><div class="step"><div class="wk">Weeks 2–3</div><h3>Hand finished</h3><p>Each patina is applied and rubbed back by hand.</p></div><div class="step"><div class="wk">Week 4</div><h3>Wired &amp; tested</h3><p>Wired for North American 120V, burned-in and inspected.</p></div><div class="step"><div class="wk">Weeks 4–6</div><h3>Delivered</h3><p>Crated, insured and delivered, duties already paid.</p></div></div></div></section>
+    <div class="steps"><div class="step"><div class="wk">Day 1</div><h3>Your order</h3><p>We confirm finish, size and drop length, and send a written timeline.</p></div><div class="step"><div class="wk">Week 1</div><h3>Spun &amp; formed</h3><p>Brass is hand-spun on the lathe, cut, soldered and shaped.</p></div><div class="step"><div class="wk">Week 2</div><h3>Hand finished</h3><p>Each patina is applied and rubbed back by hand.</p></div><div class="step"><div class="wk">Weeks 2–3</div><h3>Wired &amp; tested</h3><p>Wired for North American 120V, burned-in and inspected.</p></div><div class="step"><div class="wk">+3–7 days</div><h3>Delivered</h3><p>Shipped insured with tracking, duties already paid. Arrives 3–7 business days after it ships.</p></div></div></div></section>
   <section class="blk"><div class="wrap trade-band"><div><div class="eyebrow">For Designers &amp; Architects</div><h2 style="margin:18px 0 24px">The Trade Program.</h2><p style="font-size:17px;color:var(--ink2);font-weight:300;max-width:520px;margin-bottom:34px">Trade pricing that grows with your projects, custom sizes and finishes, spec sheets and CAD for every piece.</p><a href="/trade" class="btn btn-dark">Apply for a Trade Account</a></div>
     <ul class="perks"><li>Trade pricing <b>20–30% off</b></li><li>Custom dimensions <b>Any size</b></li><li>Spec sheets &amp; CAD <b>Every piece</b></li><li>Project quotes <b>Within 2 days</b></li></ul></div></section>`;
 }
@@ -147,7 +148,7 @@ async function pageProduct(id) {
   const w = lead(p); const path = pUrl(p);
   const ld = { '@context': 'https://schema.org', '@type': 'Product', name: p.name, image: p.images.slice(0, 4), description: (p.desc || '').slice(0, 300), brand: { '@type': 'Brand', name: 'Chandelist' }, sku: 'CH-' + p.id };
   if (p.price != null) ld.offers = { '@type': 'Offer', priceCurrency: 'USD', price: p.price, availability: 'https://schema.org/PreOrder', url: 'https://chandelist.com' + path };
-  seo(p.metaTitle ? p.metaTitle.replace(/osmanl[ıi] ayd[ıi]nlatma|chandelist/ig, 'Chandelist') : p.name + ' | Chandelist', (p.metaDesc || p.desc || p.name).slice(0, 158), path, ld);
+  seo(p.name + ' | Chandelist', (p.desc || p.metaDesc || p.name), path, ld);
   if (location.pathname !== path) history.replaceState(null, '', path);
   track('ViewContent', { content_ids: [String(p.id)], content_type: 'product', value: p.price || 0, currency: 'USD' });
   const thumbs = p.images.slice(0, 8).map((u, i) => `<div class="${i ? '' : 'on'}" data-i="${i}"><img src="${img(u, 200)}" alt="" loading="lazy"></div>`).join('');
@@ -165,7 +166,7 @@ async function pageProduct(id) {
     <div class="leadbox"><div class="dot"></div><div><p><b>Made to order · Ships in ${w[0]}–${w[1]} weeks</b></p><small>Estimated to ship ${shipWindow(w)}. Your exact date is confirmed in writing within one business day.</small></div></div>
     <div class="acc">
       <details open><summary>Details</summary><div class="body">${esc(p.desc).replace(/\n+/g, '<br><br>')}</div></details>
-      <details><summary>Specifications</summary><div class="body"><table>${[['Dimensions', dimsText(p.dims)], ['Materials', p.materials], ['Electrical', 'Wired for 120V North America, UL-recognized components on request'], ['Mounting', 'Hardwired; canopy and hardware included'], ['Made', 'By hand, to order']].filter(r => r[1]).map(r => `<tr><td>${r[0]}</td><td>${esc(r[1])}</td></tr>`).join('')}</table></div></details>
+      <details><summary>Specifications</summary><div class="body"><table>${[['Dimensions', dimsText(p.dims)], ['Materials', p.materials], ['Electrical', 'Wired for 120V North America. Installation by a licensed electrician is recommended.'], ['Mounting', 'Hardwired; canopy and hardware included'], ['Made', 'By hand, to order']].filter(r => r[1]).map(r => `<tr><td>${r[0]}</td><td>${esc(r[1])}</td></tr>`).join('')}</table></div></details>
       <details><summary>Spec Sheets &amp; CAD</summary><div class="body">${files}</div></details>
       <details><summary>Delivery, Duties &amp; Returns</summary><div class="body">Prices include shipping and US import duties — nothing more to pay at checkout or on delivery. Every order ships fully insured with tracking. Larger pieces are quoted with freight for your address. Made-to-order pieces are final sale; anything damaged in transit is repaired or remade at no cost.</div></details>
       <details><summary>Custom Size or Finish</summary><div class="body">Need a different size, drop length or finish? <a class="link-u" href="/custom?ref=${p.id}">Request a custom quote</a> — our studio replies within two business days.</div></details>
@@ -355,7 +356,7 @@ function pageFaq() {
   seo('Help — Lead Times, Shipping, Duties & Returns | Chandelist', 'Answers about made-to-order lead times, US delivery, duties, returns and warranty.', '/faq');
   const q = (a, b) => `<details><summary>${a}</summary><div class="body">${b}</div></details>`;
   return `<div class="wrap"><div class="page-hd" style="text-align:center;border:none"><div class="eyebrow">Help</div><h1>Questions, answered.</h1></div><div class="faq acc">
-  <h3>Orders &amp; Lead Times</h3>${q('Why is everything made to order?', 'Because we would rather make your light than store someone else\'s. Making to order lets you choose finish, size and drop length.')}${q('How long will my order take?', 'Most pieces ship in 4–6 weeks; chandeliers and large lanterns in 6–8 weeks. Every product page shows an estimated ship window, confirmed in writing within one business day.')}${q('How do I pay?', 'After you place your order we confirm your ship date and email a secure card payment link. Production starts once payment is complete.')}
+  <h3>Orders &amp; Lead Times</h3>${q('Why is everything made to order?', 'Because we would rather make your light than store someone else\'s. Making to order lets you choose finish, size and drop length.')}${q('How long will my order take?', 'Most pieces ship in 2–3 weeks; chandeliers and large lanterns in 3–4 weeks. Delivery takes another 3–7 business days after shipping. Every product page shows the estimated ship window, confirmed in writing within one business day.')}${q('How do I pay?', 'You pay by card at checkout, in US dollars, through a secure payment page. The price you see already includes shipping and US duties. Large pieces and custom work are quoted first; you pay once you approve the quote.')}
   <h3>Shipping &amp; Duties</h3>${q('Where do you ship?', 'All 50 states. Shipping is included in our prices; every order ships insured with tracking. Large chandeliers are quoted with air or sea freight to your address.')}${q('Will I pay import duties?', 'No. Our prices include shipping, US import duties and fees — nothing is collected at your door.')}${q('What if something arrives damaged?', 'Note it on the delivery receipt, send a photo within 48 hours, and we repair or remake it at no cost.')}
   <h3>Returns &amp; Warranty</h3>${q('Can I return a made-to-order piece?', 'Made-to-order pieces are final sale. Orders can be changed or cancelled free of charge within 48 hours of payment.')}${q('Is there a warranty?', 'Five years on workmanship and electrical components. Natural patina development is part of the finish, not a defect.')}
   <h3>Electrical</h3>${q('Are fixtures compatible with US wiring?', 'Yes — wired for North American 120V with standard E26/E12 sockets, dimmable with a compatible LED bulb and dimmer. Installation by a licensed electrician is recommended.')}</div></div>`;

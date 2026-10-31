@@ -105,8 +105,10 @@ function grid(list) { return list.length ? `<div class="grid">${list.map(card).j
 
 // ---------- pages ----------
 async function pageHome() {
-  const all = await catalog(); const feat = all.filter(p => p.price != null).slice(0, 6); const heroP = all.find(p => p.images.length) || null;
-  const catTiles = Object.entries(CATS.lighting.subs).slice(0, 5).map(([k, v]) => { const p = all.find(x => x.subs.includes(k) && x.images.length); return `<a class="cat" href="/lighting/${k}"><div class="ill">${p ? `<img src="${img(p.images[0], 500)}" alt="${esc(v)}" loading="lazy">` : ''}</div><h3>${v}</h3><p>${all.filter(x => x.subs.includes(k)).length} designs</p></a>`; }).join('');
+  const all = await catalog(); const rank = p => { const o = ['chandelier', 'pendant', 'lantern', 'sconce', 'flush_mount']; const i = o.findIndex(s => p.subs.includes(s)); return i < 0 ? 9 : i; };
+  const pool = all.filter(p => p.images.length && p.cat === 'lighting'); const priced = pool.filter(p => p.price != null);
+  const feat = (priced.length >= 3 ? priced : pool).slice().sort((a, b) => rank(a) - rank(b)).filter((p, i, arr) => arr.findIndex(x => rank(x) === rank(p)) > i - 2).slice(0, 6);
+  const heroP = pool.find(p => p.subs.includes('chandelier')) || pool[0] || null;   const catTiles = Object.entries(CATS.lighting.subs).slice(0, 5).map(([k, v]) => { const p = all.find(x => x.subs.includes(k) && x.images.length); return `<a class="cat" href="/lighting/${k}"><div class="ill">${p ? `<img src="${img(p.images[0], 500)}" alt="${esc(v)}" loading="lazy">` : ''}</div><h3>${v}</h3><p>${all.filter(x => x.subs.includes(k)).length} designs</p></a>`; }).join('');
   seo('Chandelist — Handmade Brass Lighting, Made to Order', 'Hand-spun brass and copper chandeliers, pendants, sconces and lanterns, made to order. Duties included, white-glove delivery across the US.', '/');
   return `
   <section class="hero"><div class="hero-l"><div>

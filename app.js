@@ -1036,6 +1036,21 @@
             }));
         }
 
+        async function saveUsFields(id, product) {
+            if (!id) return;
+            const body = {
+                us_visible: product.usVisible === true,
+                price_usd: (product.priceUsd === '' || product.priceUsd === null || product.priceUsd === undefined) ? null : Number(product.priceUsd),
+                tech_files: Array.isArray(product.techFiles) ? product.techFiles : [],
+            };
+            const res = await sbFetch('/products?id=eq.' + id, { method: 'PATCH', body: JSON.stringify(body) });
+            if (!res || (Array.isArray(res) && res.length === 0)) {
+                showToast('⚠ Amerika bilgileri kaydedilemedi — yetki yok. Çıkış yapıp tekrar giriş yapın.', 'error');
+                return false;
+            }
+            return true;
+        }
+
         async function saveProductToDB(product) {
             const subcatVal = Array.isArray(product.subcategory)
                 ? JSON.stringify(product.subcategory)
@@ -1068,9 +1083,6 @@
                 sku: product.sku || '',
                 variants: JSON.stringify(product.variants || []),
                 related_products: JSON.stringify(product.relatedProducts || []),
-                us_visible: product.usVisible === true,
-                price_usd: (product.priceUsd === '' || product.priceUsd === null || product.priceUsd === undefined) ? null : Number(product.priceUsd),
-                tech_files: Array.isArray(product.techFiles) ? product.techFiles : [],
             };
 
             const existingId = product._dbId || product.id;
@@ -1117,6 +1129,7 @@
                 }
                 if (res && res[0]) {
                     savedId = res[0].id;
+                    await saveUsFields(savedId, product);
                     setProductExtras(savedId, {
                         style: product.style || null,
                         price: product.price || '',
@@ -1128,6 +1141,7 @@
                 // Both attempts failed
                 return false;
             }
+            await saveUsFields(existingId, product);
             return true;
         }
 

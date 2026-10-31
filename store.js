@@ -109,7 +109,7 @@ async function pageHome() {
   const pool = all.filter(p => p.images.length && p.cat === 'lighting'); const priced = pool.filter(p => p.price != null);
   const feat = (priced.length >= 3 ? priced : pool).slice().sort((a, b) => rank(a) - rank(b)).filter((p, i, arr) => arr.findIndex(x => rank(x) === rank(p)) > i - 2).slice(0, 6);
   const heroP = pool.find(p => p.subs.includes('chandelier')) || pool[0] || null;   const catTiles = Object.entries(CATS.lighting.subs).slice(0, 5).map(([k, v]) => { const p = all.find(x => x.subs.includes(k) && x.images.length); return `<a class="cat" href="/lighting/${k}"><div class="ill">${p ? `<img src="${img(p.images[0], 500)}" alt="${esc(v)}" loading="lazy">` : ''}</div><h3>${v}</h3><p>${all.filter(x => x.subs.includes(k)).length} designs</p></a>`; }).join('');
-  seo('Chandelist — Handmade Brass Lighting, Made to Order', 'Hand-spun brass and copper chandeliers, pendants, sconces and lanterns, made to order. Duties included, white-glove delivery across the US.', '/');
+  seo('Chandelist — Handmade Brass Lighting, Made to Order', 'Hand-spun brass and copper chandeliers, pendants, sconces and lanterns, made to order. Shipping and duties included across the US.', '/');
   return `
   <section class="hero"><div class="hero-l"><div>
     <div class="eyebrow">Hand-spun brass &amp; copper · Est. 1984</div>
@@ -167,7 +167,7 @@ async function pageProduct(id) {
       <details open><summary>Details</summary><div class="body">${esc(p.desc).replace(/\n+/g, '<br><br>')}</div></details>
       <details><summary>Specifications</summary><div class="body"><table>${[['Dimensions', dimsText(p.dims)], ['Materials', p.materials], ['Electrical', 'Wired for 120V North America, UL-recognized components on request'], ['Mounting', 'Hardwired; canopy and hardware included'], ['Made', 'By hand, to order']].filter(r => r[1]).map(r => `<tr><td>${r[0]}</td><td>${esc(r[1])}</td></tr>`).join('')}</table></div></details>
       <details><summary>Spec Sheets &amp; CAD</summary><div class="body">${files}</div></details>
-      <details><summary>Delivery, Duties &amp; Returns</summary><div class="body">Prices include US import duties — nothing to pay on delivery. Orders over $2,500 ship with complimentary white-glove delivery; smaller orders ship fully insured with signature required. Made-to-order pieces are final sale; anything damaged in transit is repaired or remade at no cost.</div></details>
+      <details><summary>Delivery, Duties &amp; Returns</summary><div class="body">Prices include shipping and US import duties — nothing more to pay at checkout or on delivery. Every order ships fully insured with tracking. Larger pieces are quoted with freight for your address. Made-to-order pieces are final sale; anything damaged in transit is repaired or remade at no cost.</div></details>
       <details><summary>Custom Size or Finish</summary><div class="body">Need a different size, drop length or finish? <a class="link-u" href="/custom?ref=${p.id}">Request a custom quote</a> — our studio replies within two business days.</div></details>
     </div></div></div>
   <div class="sec-head" style="margin-bottom:40px"><div><div class="eyebrow">Pairs Well With</div><h2 style="font-size:44px">Complete the room.</h2></div></div>
@@ -183,24 +183,20 @@ async function pageProduct(id) {
 
 function pageCustom() {
   const ref = new URLSearchParams(location.search).get('ref');
-  seo('Custom Lighting — Commission a Piece | Chandelist', 'Send us your drawing, photo or idea. Our studio makes custom brass chandeliers, pendants and sconces to your dimensions. Quote within two business days.', '/custom');
+  const rp = ref && PRODUCTS ? PRODUCTS.find(p => String(p.id) === String(ref)) : null;
+  seo('Custom Lighting — Request a Quote | Chandelist', 'Send us a photo, drawing or idea. We make custom brass chandeliers, pendants and sconces to your size and reply with a price within two business days.', '/custom');
   setTimeout(bindQuoteForm, 0);
-  return `<div class="wrap formpage"><div><div class="eyebrow">Custom Design</div><h1>If you can sketch it, <em>we can make it.</em></h1>
-    <p class="lede">Upload your drawing, a photo or a reference, tell us the size and finish, and our studio returns a scaled drawing and a fixed price within two business days.</p>
-    <ol class="numlist"><li><b>Send your design</b><span>Drawings (PDF, DWG), photos or sketches — whatever you have.</span></li><li><b>Proposal &amp; price</b><span>A scaled drawing, finish options and a fixed quote, duties included.</span></li><li><b>Approval</b><span>A 50% deposit starts production. Progress photos throughout.</span></li><li><b>Delivery</b><span>Typically 8–12 weeks from approval, crated and insured.</span></li></ol></div>
-  <div><form class="fgrid" id="quoteForm">
-    <div class="f"><label>Full name</label><input name="name" required></div>
-    <div class="f"><label>Email</label><input name="email" type="email" required></div>
-    <div class="f"><label>Phone</label><input name="phone" type="tel"></div>
-    <div class="f"><label>State / Country</label><input name="country" value="United States"></div>
-    <div class="f"><label>Project type</label><select name="project_type"><option>Residential</option><option>Hospitality</option><option>Restaurant / Retail</option><option>Commercial</option><option>Other</option></select></div>
-    <div class="f"><label>Quantity</label><input name="quantity" value="1"></div>
-    <div class="f"><label>Approx. dimensions</label><input name="dimensions" placeholder='e.g. 36" W × 30" H'></div>
-    <div class="f"><label>Finish</label><select name="finish"><option>Natural Brass</option><option>Aged Brass</option><option>Antique Copper</option><option>Blackened Brass</option><option>Not sure yet</option></select></div>
-    <div class="f full"><label>Needed by</label><input name="deadline" placeholder="Month / year"></div>
-    <div class="f full"><label>Describe the piece</label><textarea name="message" required>${ref ? 'Reference: product #' + esc(ref) + '\n' : ''}</textarea></div>
-    <div class="f full"><label>Your design files</label><div class="drop" id="drop">Drop files here or click to upload — PDF, DWG, JPG, PNG (max 25 MB each)<input type="file" id="qfiles" multiple accept=".pdf,.dwg,.dxf,.skp,.jpg,.jpeg,.png,.heic,.zip" style="display:none"></div><div class="flist" id="flist"></div></div>
-    <div class="f full"><button class="btn btn-dark" type="submit" style="justify-content:center">Request a Quote</button><div class="msg" id="qmsg"></div></div>
+  const refBox = rp ? `<div style="display:flex;gap:16px;align-items:center;border:1px solid var(--line);padding:12px;margin-bottom:26px;background:#f8f4ec">${rp.images[0] ? `<img src="${img(rp.images[0], 160)}" alt="" style="width:72px;height:72px;object-fit:cover">` : ''}<div><div class="eyebrow">Quote for</div><div class="serif" style="font-size:20px">${esc(rp.name)}</div></div></div>` : '';
+  return `<div class="wrap formpage"><div><div class="eyebrow">${rp ? 'Request a Quote' : 'Custom Design'}</div><h1>${rp ? 'Get a price <em>for this piece.</em>' : 'Have a design? <em>We\'ll make it.</em>'}</h1>
+    <p class="lede">${rp ? 'Large pieces are priced with freight for your exact quantity and delivery address — by air or by sea. We reply with a delivered price within two business days.' : 'Send a photo, a drawing or just describe the light you want. We reply with a price within two business days.'}</p></div>
+  <div>${refBox}<form class="fgrid" id="quoteForm">
+    <input type="hidden" name="ref" value="${esc(ref || '')}">
+    <div class="f"><label>Your name</label><input name="name" required autocomplete="name"></div>
+    <div class="f"><label>Email</label><input name="email" type="email" required autocomplete="email"></div>
+    ${rp ? `<div class="f"><label>Quantity</label><input name="qty" type="number" min="1" value="1" required></div><div class="f"><label>Delivery to (ZIP / city)</label><input name="dest" placeholder="e.g. 10024 New York" required></div><div class="f full"><label>Shipping preference</label><select name="shipping"><option>Fastest (air freight)</option><option>Most economical (sea freight, +3–5 weeks)</option><option>Not sure — advise me</option></select></div>` : ''}
+    <div class="f full"><label>${rp ? 'Size, finish or questions (optional)' : 'What would you like us to make?'}</label><textarea name="message" ${rp ? '' : 'required'} placeholder="${rp ? 'e.g. 2 pieces, 36&quot; wide, for a 10 ft ceiling' : 'e.g. a brass pendant like the photo, about 24&quot; wide'}"></textarea></div>
+    <div class="f full"><label>Photo or drawing (optional)</label><div class="drop" id="drop">Click to add files — photo, PDF or DWG<input type="file" id="qfiles" multiple accept=".pdf,.dwg,.dxf,.skp,.jpg,.jpeg,.png,.heic,.zip" style="display:none"></div><div class="flist" id="flist"></div></div>
+    <div class="f full"><button class="btn btn-dark" type="submit" style="justify-content:center">Send Request</button><div class="msg" id="qmsg"></div></div>
   </form></div></div>`;
 }
 function bindQuoteForm() {
@@ -220,10 +216,10 @@ function bindQuoteForm() {
         const r = await fetch(SB + '/storage/v1/object/quote-files/' + path, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': f.type || 'application/octet-stream' }, body: f });
         if (!r.ok) throw new Error('Upload failed for ' + f.name); up.push({ name: f.name, path, size: f.size });
       }
-      const d = Object.fromEntries(new FormData(form).entries()); d.site = 'chandelist'; d.files = up;
+      const d = Object.fromEntries(new FormData(form).entries()); if (d.ref) { const rp = (PRODUCTS || []).find(p => String(p.id) === String(d.ref)); d.message = 'Product #' + d.ref + (rp ? ' — ' + rp.name : '') + '\nQuantity: ' + (d.qty || 1) + '\nDeliver to: ' + (d.dest || '-') + '\nShipping: ' + (d.shipping || '-') + '\n' + (d.message || ''); } delete d.ref; delete d.qty; delete d.dest; delete d.shipping; d.site = 'chandelist'; d.files = up;
       await api('/rest/v1/quote_requests', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify(d) }, false);
       track('Lead', { content_name: 'custom_quote' });
-      form.innerHTML = '<div class="formok" style="display:block"><h3>Thank you.</h3><p>Your design has reached our studio. Expect a drawing and a fixed quote within two business days.</p></div>';
+      form.innerHTML = '<div class="formok" style="display:block"><h3>Thank you.</h3><p>We have received your request and will reply by email within two business days.</p></div>';
     } catch (err) { msg.className = 'msg err'; msg.textContent = 'Something went wrong: ' + err.message; btn.disabled = false; }
   };
 }
@@ -343,7 +339,7 @@ async function pageCheckout() {
     <div class="f full"><label>Order notes (drop length, delivery window…)</label><textarea name="notes"></textarea></div>
     <div class="f full"><button class="btn btn-dark" style="justify-content:center">Continue to Payment — ${usd(total)}</button><p style="font-size:13px;color:var(--muted);margin-top:10px">Next: secure card payment in US dollars. Your ship date is confirmed in writing within one business day.</p><div class="msg" id="comsg"></div></div></form></div>
     <div class="sumbox"><h3 class="serif" style="font-size:26px;margin-bottom:14px">Order summary</h3>${lines.map(x => `<div class="sumrow"><span>${esc(x.p.name)} × ${x.i.q}</span><span>${usd(unitPrice(x.p) * x.i.q)}</span></div>`).join('')}
-    ${pct ? `<div class="sumrow"><span>Trade pricing (${pct}%)</span><span>−${usd(list - total)}</span></div>` : ''}<div class="sumrow"><span>Duties &amp; import fees</span><span>Included</span></div><div class="sumrow"><span>Delivery</span><span>${total >= FREE_SHIP ? 'White-glove, complimentary' : 'Quoted with your ship date'}</span></div><div class="sumrow tot"><span>Total</span><span>${usd(total)}</span></div></div></div></div>`;
+    ${pct ? `<div class="sumrow"><span>Trade pricing (${pct}%)</span><span>−${usd(list - total)}</span></div>` : ''}<div class="sumrow"><span>Duties &amp; import fees</span><span>Included</span></div><div class="sumrow"><span>Shipping</span><span>Included</span></div><div class="sumrow tot"><span>Total</span><span>${usd(total)}</span></div></div></div></div>`;
 }
 
 function pageAbout() {
@@ -360,7 +356,7 @@ function pageFaq() {
   const q = (a, b) => `<details><summary>${a}</summary><div class="body">${b}</div></details>`;
   return `<div class="wrap"><div class="page-hd" style="text-align:center;border:none"><div class="eyebrow">Help</div><h1>Questions, answered.</h1></div><div class="faq acc">
   <h3>Orders &amp; Lead Times</h3>${q('Why is everything made to order?', 'Because we would rather make your light than store someone else\'s. Making to order lets you choose finish, size and drop length.')}${q('How long will my order take?', 'Most pieces ship in 4–6 weeks; chandeliers and large lanterns in 6–8 weeks. Every product page shows an estimated ship window, confirmed in writing within one business day.')}${q('How do I pay?', 'After you place your order we confirm your ship date and email a secure card payment link. Production starts once payment is complete.')}
-  <h3>Shipping &amp; Duties</h3>${q('Where do you ship?', 'All 50 states. Orders over $2,500 receive complimentary white-glove delivery; smaller orders ship insured with signature required.')}${q('Will I pay import duties?', 'No. Our prices include US import duties and fees — nothing is collected at your door.')}${q('What if something arrives damaged?', 'Note it on the delivery receipt, send a photo within 48 hours, and we repair or remake it at no cost.')}
+  <h3>Shipping &amp; Duties</h3>${q('Where do you ship?', 'All 50 states. Shipping is included in our prices; every order ships insured with tracking. Large chandeliers are quoted with air or sea freight to your address.')}${q('Will I pay import duties?', 'No. Our prices include shipping, US import duties and fees — nothing is collected at your door.')}${q('What if something arrives damaged?', 'Note it on the delivery receipt, send a photo within 48 hours, and we repair or remake it at no cost.')}
   <h3>Returns &amp; Warranty</h3>${q('Can I return a made-to-order piece?', 'Made-to-order pieces are final sale. Orders can be changed or cancelled free of charge within 48 hours of payment.')}${q('Is there a warranty?', 'Five years on workmanship and electrical components. Natural patina development is part of the finish, not a defect.')}
   <h3>Electrical</h3>${q('Are fixtures compatible with US wiring?', 'Yes — wired for North American 120V with standard E26/E12 sockets, dimmable with a compatible LED bulb and dimmer. Installation by a licensed electrician is recommended.')}</div></div>`;
 }
@@ -368,7 +364,7 @@ function pageLegal(kind) {
   const t = kind === 'privacy' ? 'Privacy Policy' : 'Terms of Sale';
   seo(t + ' | Chandelist', t, '/' + kind);
   const body = kind === 'privacy' ? 'We collect the information you give us (name, email, phone, address, files you upload) to answer quotes and fulfil orders. Card details are handled by our payment provider and never stored by us. We use analytics and advertising cookies to understand site use. Email info@chandelist.com to access or delete your data.'
-    : 'All pieces are made to order. Prices are in US dollars and include import duties. Lead times are estimates confirmed in writing after ordering. Made-to-order items are final sale except for damage in transit or manufacturing defects, covered by a five-year warranty on workmanship and electrical components.';
+    : 'All pieces are made to order. Prices are in US dollars and include shipping and import duties. Lead times are estimates confirmed in writing after ordering. Made-to-order items are final sale except for damage in transit or manufacturing defects, covered by a five-year warranty on workmanship and electrical components.';
   const seller = kind === 'terms' ? `<h3 class="serif" style="font-size:24px;margin:40px 0 10px">Seller information</h3><p style="font-size:14px;color:var(--ink2)">Chandelist is a brand of Art Bakırcılık San. ve Tic. A.Ş., Çobançeşme Mah. Mithatpaşa Cad. Söğütlü Sok. No:2/1, Bahçelievler, Istanbul, Türkiye. Customer service: info@chandelist.com</p>` : '';
   return `<div class="wrap acct-page" style="max-width:760px"><h1>${t}</h1><p class="lede">${body}</p>${seller}</div>`;
 }
@@ -383,13 +379,13 @@ async function renderCart() {
   if (!$('#drawer').classList.contains('on')) return;
   const all = await catalog(); const lines = c.map(i => ({ i, p: all.find(p => p.id === i.id) })).filter(x => x.p && x.p.price != null);
   const sub = lines.reduce((a, x) => a + unitPrice(x.p) * x.i.q, 0); const left = Math.max(0, FREE_SHIP - sub);
-  $('#meter').innerHTML = (left ? `You're <b>${usd(left)}</b> away from complimentary white-glove delivery.` : '<b>Complimentary white-glove delivery</b> is included.') + `<div class="bar"><i style="width:${Math.min(100, sub / FREE_SHIP * 100)}%"></i></div>`;
+  $('#meter').innerHTML = '<b>Shipping &amp; US duties included</b> — fully insured, with tracking.';
   if (!lines.length) { $('#items').innerHTML = '<div class="empty"><div class="serif">Your bag is empty.</div>Every piece is made for you.<br><br><a href="/lighting" class="btn btn-dark">Shop Lighting</a></div>'; $('#df').style.display = 'none'; return; }
   $('#df').style.display = 'block';
   $('#items').innerHTML = lines.map((x, n) => `<div class="it"><div class="th">${x.p.images[0] ? `<img src="${img(x.p.images[0], 200)}" alt="" style="width:100%;height:100%;object-fit:cover">` : ''}</div><div><h4>${esc(x.p.name)}</h4><small style="color:var(--brass2)">Ships in ${lead(x.p).join('–')} weeks</small><div class="q"><button data-n="${n}" data-d="-1">−</button>${x.i.q}<button data-n="${n}" data-d="1">+</button></div><button class="rm" data-rm="${x.p.id}">Remove</button></div><div>${usd(unitPrice(x.p) * x.i.q)}</div></div>`).join('');
   $('#items').querySelectorAll('[data-d]').forEach(b => b.onclick = () => { const x = lines[+b.dataset.n]; const cc = getCart(); const it = cc.find(i => i.id === x.p.id); it.q += +b.dataset.d; saveCart(cc.filter(i => i.q > 0)); });
   $('#items').querySelectorAll('[data-rm]').forEach(b => b.onclick = () => saveCart(getCart().filter(i => i.id !== +b.dataset.rm)));
-  $('#df').innerHTML = `<div class="row"><span>Subtotal</span><span>${usd(sub)}</span></div><div class="row"><span>Duties</span><span>Included</span></div><div class="row tot"><span>Total</span><span>${usd(sub)}</span></div><div class="note">Made to order — ships in about ${Math.max(...lines.map(x => lead(x.p)[1]))} weeks. Sales tax, if any, confirmed with your ship date.</div><a class="btn btn-dark" href="/checkout" style="width:100%;justify-content:center">Checkout →</a>`;
+  $('#df').innerHTML = `<div class="row"><span>Subtotal</span><span>${usd(sub)}</span></div><div class="row"><span>Shipping &amp; duties</span><span>Included</span></div><div class="row tot"><span>Total</span><span>${usd(sub)}</span></div><div class="note">Made to order — ships in about ${Math.max(...lines.map(x => lead(x.p)[1]))} weeks. Sales tax, if any, confirmed with your ship date.</div><a class="btn btn-dark" href="/checkout" style="width:100%;justify-content:center">Checkout →</a>`;
 }
 function openCart() { $('#drawer').classList.add('on'); $('#scrim').classList.add('on'); renderCart(); }
 function closeCart() { $('#drawer').classList.remove('on'); $('#scrim').classList.remove('on'); }
@@ -406,7 +402,7 @@ async function render() {
     if (!seg.length) html = await pageHome();
     else if (CATS[seg[0]]) html = (seg[1] && !CATS[seg[0]].subs[seg[1]]) ? page404() : await pageList(seg[0], seg[1]);
     else if (seg[0] === 'products' && seg[1]) { html = await pageProduct(parseInt(seg[1], 10)); if (!html) { location.replace('https://osmanliaydinlatma.com/en' + location.pathname); return; } }
-    else if (seg[0] === 'custom' || seg[0] === 'contact') html = pageCustom();
+    else if (seg[0] === 'custom' || seg[0] === 'contact') { await catalog(); html = pageCustom(); }
     else if (seg[0] === 'trade') html = await pageTrade();
     else if (seg[0] === 'account') html = await pageAccount();
     else if (seg[0] === 'checkout' && seg[1] === 'success') { saveCart([]); track('Purchase', { currency: 'USD' }); seo('Thank you | Chandelist', 'Order confirmed', '/checkout/success'); html = `<div class="wrap acct-page" style="max-width:640px"><div class="eyebrow">Payment received</div><h1>Thank you.</h1><p class="lede">Your order is confirmed and goes into production now. You'll receive your ship date in writing within one business day, and photos of your piece before it leaves the workshop.</p><a class="btn btn-line" href="/lighting">Continue Shopping</a></div>`; }

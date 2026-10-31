@@ -366,3 +366,4 @@ select{font:inherit;font-size:13px;background:none;border:1px solid var(--line);
 em{font-style:normal;color:var(--brass2)}
 .process em,.hero h1 em{color:#c9a15a}
 h1,h2,h3,.serif{letter-spacing:0}
+.seo-pre{padding:40px 0}.seo-pre ul.grid{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px}.seo-pre img{max-width:100%;height:auto}.seo-pre h1{font-family:var(--serif);font-size:44px;margin:12px 0}

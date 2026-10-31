@@ -1,1 +1,29 @@
-/* /index.html 200
+# admin (legacy panel)
+/admin  /admin.html  200
+/admin/*  /admin.html  200
+
+# international English catalogue lives on osmanliaydinlatma.com
+/en  https://osmanliaydinlatma.com/en/  301!
+/en/*  https://osmanliaydinlatma.com/en/:splat  301!
+/koleksiyon  https://osmanliaydinlatma.com/en/koleksiyon  301!
+/koleksiyon/*  https://osmanliaydinlatma.com/en/koleksiyon/:splat  301!
+
+# old Chandelist product pages not sold in the US -> same product on Osmanli (EN)
+
+# storefront routes (override legacy static files)
+/lighting  /index.html  200!
+/lighting/*  /index.html  200!
+/homedecor  /index.html  200!
+/homedecor/*  /index.html  200!
+/about  /index.html  200!
+/workshop  /index.html  200!
+/custom  /index.html  200!
+/contact  /index.html  200!
+/privacy  /index.html  200!
+/trade  /index.html  200!
+/faq  /index.html  200!
+/account  /index.html  200!
+/checkout  /index.html  200!
+/terms  /index.html  200!
+/products/*  /index.html  200!
+/*  /index.html  200

@@ -778,7 +778,7 @@
             const res = await sbFetch('/customers?id=eq.' + id, { method: 'PATCH', body: JSON.stringify({ trade_status: st, reviewed_at: new Date().toISOString() }) });
             showToast(res ? '✓ Güncellendi' : 'Güncellenemedi', res ? 'success' : 'error'); loadTrade();
         }
-        const ORDER_ST = { pending_payment: 'Ödeme bekliyor', paid: 'Ödendi', in_production: 'Üretimde', shipped: 'Kargoda', delivered: 'Teslim edildi', cancelled: 'İptal' };
+        const ORDER_ST = { pending_payment: 'Ödeme bekliyor', payment_failed: 'Ödeme başarısız', paid: 'Ödendi', in_production: 'Üretimde', shipped: 'Kargoda', delivered: 'Teslim edildi', cancelled: 'İptal' };
         async function loadOrders() {
             const box = document.getElementById('ordersList'); if (!box) return; box.innerHTML = 'Yükleniyor…';
             const token = await sbEnsureToken();

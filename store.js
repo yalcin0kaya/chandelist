@@ -59,12 +59,12 @@ function parseSubs(v) { try { const a = typeof v === 'string' ? JSON.parse(v) : 
 async function catalog() {
   if (PRODUCTS) return PRODUCTS;
   const preview = adminPreview();
-  const cols = 'id,name_en,description_en,category,subcategory,materials,dimensions,images,price_usd,us_visible,tech_files,sort_order,meta_title_en,meta_description_en';
+  const cols = 'id,name_en,description_en,category,subcategory,style,materials,dimensions,images,price_usd,us_visible,tech_files,sort_order,meta_title_en,meta_description_en';
   const q = '/rest/v1/products?select=' + cols + (preview ? '' : '&us_visible=eq.true') + '&order=sort_order.asc.nullslast,id.desc';
   let rows = [];
   try { rows = await api(q, {}, false) || []; } catch (e) { console.error(e); }
   PRODUCTS = rows.filter(p => p.category !== 'arsiv').map(p => ({
-    id: p.id, name: (p.name_en || ('Piece ' + p.id)).replace(/[\s–—-]+$/, ''), desc: p.description_en || '', cat: p.category, subs: parseSubs(p.subcategory),
+    id: p.id, name: (p.name_en || ('Piece ' + p.id)).replace(/[\s–—-]+$/, ''), desc: p.description_en || '', cat: p.category, subs: parseSubs(p.subcategory), style: p.style || '',
     materials: /[çğışöüÇĞİŞÖÜ]/.test(p.materials || '') ? '' : (p.materials || ''), dims: p.dimensions || '',
     images: Array.isArray(p.images) ? p.images.filter(Boolean) : [], price: p.price_usd != null ? +p.price_usd : null,
     live: p.us_visible === true, files: Array.isArray(p.tech_files) ? p.tech_files : [],
@@ -109,36 +109,45 @@ async function pageHome() {
   const all = await catalog(); const rank = p => { const o = ['chandelier', 'pendant', 'lantern', 'sconce', 'flush_mount']; const i = o.findIndex(s => p.subs.includes(s)); return i < 0 ? 9 : i; };
   const pool = all.filter(p => p.images.length && p.cat === 'lighting'); const priced = pool.filter(p => p.price != null);
   const feat = (priced.length >= 3 ? priced : pool).slice().sort((a, b) => rank(a) - rank(b)).filter((p, i, arr) => arr.findIndex(x => rank(x) === rank(p)) > i - 2).slice(0, 6);
-  const heroP = pool.find(p => p.subs.includes('chandelier')) || pool[0] || null;   const catTiles = Object.entries(CATS.lighting.subs).slice(0, 5).map(([k, v]) => { const p = all.find(x => x.subs.includes(k) && x.images.length); return `<a class="cat" href="/lighting/${k}"><div class="ill">${p ? `<img src="${img(p.images[0], 500)}" alt="${esc(v)}" loading="lazy">` : ''}</div><h3>${v}</h3><p>${all.filter(x => x.subs.includes(k)).length} designs</p></a>`; }).join('');
+  const pick = (id, i) => { const p = all.find(x => x.id === id); return p && p.images[i] ? [p, p.images[i]] : [null, null]; };
+  let [heroP2, heroImg] = pick(349, 0); if (!heroImg) { heroP2 = pool.find(p => p.subs.includes('chandelier')) || pool[0] || null; heroImg = heroP2 && heroP2.images[0]; }
+  const modImg = pick(143, 1)[1] || (pool.find(p => p.style === 'modern') || {}).images?.[0];
+  const herImg = pick(308, 3)[1] || (pool.find(p => p.style === 'traditional') || {}).images?.[0];   const catTiles = Object.entries(CATS.lighting.subs).slice(0, 5).map(([k, v]) => { const p = all.find(x => x.subs.includes(k) && x.images.length); return `<a class="cat" href="/lighting/${k}"><div class="ill">${p ? `<img src="${img(p.images[0], 500)}" alt="${esc(v)}" loading="lazy">` : ''}</div><h3>${v}</h3><p>${all.filter(x => x.subs.includes(k)).length} designs</p></a>`; }).join('');
   seo('Chandelist — Handmade Brass Lighting, Made to Order', 'Hand-spun brass and copper chandeliers, pendants, sconces and lanterns, made to order. Shipping and duties included across the US.', '/');
   return `
-  <section class="hero"><div class="hero-l"><div>
-    <div class="eyebrow">Hand-spun brass &amp; copper · Est. 1984</div>
-    <h1><span>Light,</span><span><em>made for</em></span><span>your room.</span></h1>
-    <p class="lead">Chandeliers, pendants, sconces and lanterns — formed, finished and wired by hand, one order at a time. Nothing sits in a warehouse. Everything is made for you.</p>
-    <div class="cta"><a href="/lighting" class="btn btn-dark">Shop Lighting →</a><a href="/custom" class="btn btn-line">Commission a Piece</a></div></div>
-    <div class="hero-meta"><div><b>40+</b>years at the bench</div><div><b>Duties</b>included in every price</div><div><b>4–8</b>weeks, made to order</div></div></div>
-    <div class="hero-r">${heroP ? `<img src="${img(heroP.images[0], 1400)}" alt="${esc(heroP.name)}"><div class="shade"></div><a class="hero-tag" href="${pUrl(heroP)}">Featured<b>${esc(heroP.name)}</b></a>` : ''}</div></section>
+  <section class="hero2">${heroImg ? `<img src="${img(heroImg, 2000)}" alt="${heroP2 ? esc(heroP2.name) : 'Chandelist brass lighting'}">` : ''}<div class="veil"></div>
+    <div class="wrap hero2-in"><div class="eyebrow">Hand-spun brass &amp; copper · Since 1984</div>
+    <h1>Light, <em>made for</em><br>your room.</h1>
+    <p>Chandeliers, pendants and lanterns made by hand, to order. Shipping and US duties included.</p>
+    <div class="cta"><a href="/lighting" class="btn btn-light">Shop Lighting</a><a href="/custom" class="btn btn-ghost">Commission a Piece</a></div></div>
+    ${heroP2 ? `<a class="hero-tag" href="${pUrl(heroP2)}">Shown<b>${esc(heroP2.name)}</b></a>` : ''}</section>
+  <section class="styles"><a class="style-tile" href="/lighting?style=modern">${modImg ? `<img src="${img(modImg, 1200)}" alt="Modern brass lighting" loading="lazy">` : ''}<div><div class="eyebrow">Collection</div><h2>Modern</h2><p>Clean lines, spun brass, opal glass. ${all.filter(p => p.cat === 'lighting' && /modern|both/.test(p.style)).length} designs</p><span class="link-u">Shop Modern</span></div></a>
+    <a class="style-tile" href="/lighting?style=heritage">${herImg ? `<img src="${img(herImg, 1200)}" alt="Ottoman and Moroccan brass lanterns" loading="lazy">` : ''}<div><div class="eyebrow">Collection</div><h2>Heritage</h2><p>Ottoman, Moroccan &amp; rustic. Hand-pierced brass. ${all.filter(p => p.cat === 'lighting' && /traditional|both/.test(p.style)).length} designs</p><span class="link-u">Shop Heritage</span></div></a></section>
   <div class="marq"><div>${Array(2).fill(['Hand-spun brass', 'Made to order', 'Living finishes', 'Wired for 120V', 'Duties included', 'Since 1984', 'Custom sizes', 'Made by hand'].map(t => `<span>${t}</span>`).join('')).join('')}</div></div>
   <section class="blk"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">Shop by Form</div><h2>Five forms, <em>endlessly</em> made to measure.</h2></div><a href="/lighting" class="link-u">View all</a></div><div class="cats">${catTiles}</div></div></section>
   <section class="blk" style="padding-top:0"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">The Collection</div><h2>Pieces our clients return to.</h2></div><a href="/lighting" class="link-u">Shop all lighting</a></div>${grid(feat)}</div></section>
   <section class="blk process"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">Made to Order</div><h2>Why your light takes <em>weeks</em>, not days.</h2></div><p style="max-width:380px;color:#b9b2a3;font-weight:300">We don't keep stock. When you order, solid brass is cut, spun and hand-finished in the size and finish you chose.</p></div>
     <div class="steps"><div class="step"><div class="wk">Day 1</div><h3>Your order</h3><p>We confirm finish, size and drop length, and send a written timeline.</p></div><div class="step"><div class="wk">Week 1</div><h3>Spun &amp; formed</h3><p>Brass is hand-spun on the lathe, cut, soldered and shaped.</p></div><div class="step"><div class="wk">Week 2</div><h3>Hand finished</h3><p>Each patina is applied and rubbed back by hand.</p></div><div class="step"><div class="wk">Weeks 2–3</div><h3>Wired &amp; tested</h3><p>Wired for North American 120V, burned-in and inspected.</p></div><div class="step"><div class="wk">+3–7 days</div><h3>Delivered</h3><p>Shipped insured with tracking, duties already paid. Arrives 3–7 business days after it ships.</p></div></div></div></section>
-  <section class="blk"><div class="wrap trade-band"><div><div class="eyebrow">For Designers &amp; Architects</div><h2 style="margin:18px 0 24px">The Trade Program.</h2><p style="font-size:17px;color:var(--ink2);font-weight:300;max-width:520px;margin-bottom:34px">Trade pricing that grows with your projects, custom sizes and finishes, spec sheets and CAD for every piece.</p><a href="/trade" class="btn btn-dark">Apply for a Trade Account</a></div>
-    <ul class="perks"><li>Trade pricing <b>20–30% off</b></li><li>Custom dimensions <b>Any size</b></li><li>Spec sheets &amp; CAD <b>Every piece</b></li><li>Project quotes <b>Within 2 days</b></li></ul></div></section>`;
+  <section class="blk"><div class="wrap trade-band"><div><div class="eyebrow">For Designers &amp; Architects</div><h2 style="margin:18px 0 24px">The Trade Program.</h2><p style="font-size:17px;color:var(--ink2);font-weight:300;max-width:520px;margin-bottom:34px">Trade pricing that grows with your projects, custom sizes and finishes, and spec sheets for your projects.</p><a href="/trade" class="btn btn-dark">Apply for a Trade Account</a></div>
+    <ul class="perks"><li>Trade pricing <b>20–30% off</b></li><li>Custom dimensions <b>Any size</b></li><li>Spec sheets <b>On request</b></li><li>Project quotes <b>Within 2 days</b></li></ul></div></section>`;
 }
 
 async function pageList(cat, sub) {
-  const all = await catalog(); const C = CATS[cat]; if (!C) return page404();
-  let list = all.filter(p => p.cat === cat && (!sub || p.subs.includes(sub)));
-  const title = sub ? (C.subs[sub] || sub) : C.label;
+  const all = await catalog(); const C = cat === 'search' ? { label: 'Search', subs: {} } : CATS[cat]; if (!C) return page404();
+  const qs = new URLSearchParams(location.search); const style = qs.get('style') || ''; const q = (qs.get('q') || '').trim().toLowerCase();
+  let list = all.filter(p => (cat === 'search' || p.cat === cat) && (!sub || p.subs.includes(sub)));
+  if (style === 'modern') list = list.filter(p => /modern|both/.test(p.style)); else if (style === 'heritage') list = list.filter(p => /traditional|both/.test(p.style));
+  if (q) list = list.filter(p => (p.name + ' ' + p.subs.join(' ') + ' ' + p.desc).toLowerCase().includes(q));
+  const setQ = (k, v) => { const u = new URLSearchParams(location.search); v ? u.set(k, v) : u.delete(k); const t = u.toString(); return location.pathname + (t ? '?' + t : ''); };
+  const title = cat === 'search' ? (q ? 'Results for “' + (qs.get('q') || '') + '”' : 'Search') : (style ? (style === 'modern' ? 'Modern ' : 'Heritage ') : '') + (sub ? (C.subs[sub] || sub) : C.label);
   seo(title + ' — Handmade Brass ' + (cat === 'lighting' ? 'Lighting' : 'Decor') + ' | Chandelist', 'Handmade ' + title.toLowerCase() + ' in solid brass and copper, made to order. Duties included.', '/' + cat + (sub ? '/' + sub : ''));
-  const chips = `<a class="chip ${!sub ? 'on' : ''}" href="/${cat}">All</a>` + Object.entries(C.subs).filter(([k]) => all.some(p => p.cat === cat && p.subs.includes(k))).map(([k, v]) => `<a class="chip ${sub === k ? 'on' : ''}" href="/${cat}/${k}">${v}</a>`).join('');
-  const sort = new URLSearchParams(location.search).get('sort');
+  const chips = `<a class="chip ${!sub ? 'on' : ''}" href="/${cat}">All</a>` + Object.entries(C.subs).filter(([k]) => all.some(p => p.cat === cat && p.subs.includes(k))).map(([k, v]) => `<a class="chip ${sub === k ? 'on' : ''}" href="/${cat}/${k}${style ? '?style=' + style : ''}">${v}</a>`).join('');
+  const styleChips = cat === 'lighting' ? `<div class="chips stylechips"><a class="chip ${!style ? 'on' : ''}" href="${setQ('style', '')}">All styles</a><a class="chip ${style === 'modern' ? 'on' : ''}" href="${setQ('style', 'modern')}">Modern</a><a class="chip ${style === 'heritage' ? 'on' : ''}" href="${setQ('style', 'heritage')}">Heritage</a></div>` : '';
+  const sort = qs.get('sort');
   if (sort === 'lo') list = list.slice().sort((a, b) => (a.price ?? 1e9) - (b.price ?? 1e9));
   if (sort === 'hi') list = list.slice().sort((a, b) => (b.price ?? -1) - (a.price ?? -1));
-  return `<div class="wrap"><div class="page-hd"><div class="eyebrow">${C.label}</div><h1>${esc(title)}</h1><p>Every piece is made to order in our workshop. Estimated ship dates are shown on each product and confirmed in writing when you order.</p></div>
-  <div class="filters"><div class="chips">${chips}</div><select onchange="location.search=this.value?'?sort='+this.value:''"><option value="">Featured</option><option value="lo" ${sort === 'lo' ? 'selected' : ''}>Price: Low to High</option><option value="hi" ${sort === 'hi' ? 'selected' : ''}>Price: High to Low</option></select></div>
+  return `<div class="wrap"><div class="page-hd"><div class="eyebrow">${C.label}</div><h1>${esc(title)}</h1><p>${style === 'heritage' ? 'Ottoman, Moroccan and rustic designs — hand-pierced and hand-finished brass. ' : style === 'modern' ? 'Clean-lined brass lighting, spun and finished by hand. ' : ''}Every piece is made to order in our workshop. ${list.length} designs.</p></div>
+  <div class="filters"><div>${cat === 'search' ? '' : `<div class="chips">${chips}</div>`}${styleChips}</div><div class="fright"><form class="srch" onsubmit="event.preventDefault();location.href='/search?q='+encodeURIComponent(this.q.value)"><input name="q" type="search" placeholder="Search" value="${esc(qs.get('q') || '')}" aria-label="Search the catalog"></form><select onchange="(u=>{this.value?u.set('sort',this.value):u.delete('sort');location.search=u.toString()})(new URLSearchParams(location.search))"><option value="">Featured</option><option value="lo" ${sort === 'lo' ? 'selected' : ''}>Price: Low to High</option><option value="hi" ${sort === 'hi' ? 'selected' : ''}>Price: High to Low</option></select></div></div>
   <div style="padding-bottom:120px">${grid(list)}</div></div>`;
 }
 
@@ -401,6 +410,7 @@ async function render() {
   let html;
   try {
     if (!seg.length) html = await pageHome();
+    else if (seg[0] === 'search') html = await pageList('search');
     else if (CATS[seg[0]]) html = (seg[1] && !CATS[seg[0]].subs[seg[1]]) ? page404() : await pageList(seg[0], seg[1]);
     else if (seg[0] === 'products' && seg[1]) { html = await pageProduct(parseInt(seg[1], 10)); if (!html) { location.replace('https://osmanliaydinlatma.com/en' + location.pathname); return; } }
     else if (seg[0] === 'custom' || seg[0] === 'contact') { await catalog(); html = pageCustom(); }

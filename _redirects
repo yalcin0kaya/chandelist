@@ -249,6 +249,7 @@
 /about  /p/about.html  200!
 /custom  /p/custom.html  200!
 /trade  /p/trade.html  200!
+/films  /p/films.html  200!
 /faq  /p/faq.html  200!
 
 # storefront routes (override legacy static files)

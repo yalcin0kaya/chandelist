@@ -802,6 +802,60 @@
             showToast(res ? '✓ Kaydedildi' : 'Kaydedilemedi', res ? 'success' : 'error');
         }
 
+        // ============= VIDEO GALERİ (site_settings: video_gallery) =============
+        let VG = [];
+        const vgEsc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+        function vgYt(u) { const m = String(u || '').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : null; }
+        function vgThumb(v) { if (v.type === 'youtube') return 'https://img.youtube.com/vi/' + v.src + '/hqdefault.jpg'; return v.src.replace('/video/upload/', '/video/upload/so_2,w_480,c_fill,h_270/').replace(/\.\w+$/, '.jpg'); }
+        async function loadVideoGallery() {
+            const box = document.getElementById('vgList'); if (!box) return; box.innerHTML = 'Yükleniyor…';
+            _siteSettingsCache = null; const st = await getSiteSettings(); VG = Array.isArray(st.video_gallery) ? st.video_gallery : [];
+            renderVG();
+        }
+        function renderVG() {
+            const box = document.getElementById('vgList');
+            if (!VG.length) { box.innerHTML = '<p style="color:#8a7d6b;">Henüz video yok.</p>'; return; }
+            box.innerHTML = VG.map((v, i) => `<div style="display:flex;gap:14px;align-items:center;border:1px solid #e3ddd2;background:#fff;padding:10px;margin-bottom:8px;">
+                <img src="${vgThumb(v)}" style="width:160px;height:90px;object-fit:cover;background:#222;">
+                <div style="flex:1;display:grid;gap:6px;">
+                  <input value="${vgEsc(v.title)}" placeholder="Başlık (İngilizce)" onchange="VG[${i}].title=this.value">
+                  <input value="${vgEsc(v.caption || '')}" placeholder="Kısa açıklama (İngilizce, isteğe bağlı)" onchange="VG[${i}].caption=this.value">
+                  <div style="display:flex;gap:8px;align-items:center;font-size:.85rem;color:#8a7d6b;">
+                    <select onchange="VG[${i}].group=this.value" style="width:auto;">${['Workshop','Collections','Projects','Behind the scenes'].map(g => `<option ${v.group===g?'selected':''}>${g}</option>`).join('')}</select>
+                    <input value="${vgEsc(v.product_id || '')}" placeholder="Ürün ID (isteğe bağlı)" style="width:160px;" onchange="VG[${i}].product_id=this.value.trim()">
+                    <span>${v.type === 'youtube' ? 'YouTube' : 'Video dosyası'}</span>
+                  </div>
+                </div>
+                <div style="display:grid;gap:4px;">
+                  <button type="button" class="btn-secondary" onclick="vgMove(${i},-1)">↑</button>
+                  <button type="button" class="btn-secondary" onclick="vgMove(${i},1)">↓</button>
+                  <button type="button" class="btn-secondary" style="color:#c0392b" onclick="if(confirm('Silinsin mi?')){VG.splice(${i},1);renderVG();}">Sil</button>
+                </div></div>`).join('');
+        }
+        function vgMove(i, d) { const j = i + d; if (j < 0 || j >= VG.length) return; [VG[i], VG[j]] = [VG[j], VG[i]]; renderVG(); }
+        async function vgSave() { try { await saveSiteSetting('video_gallery', VG); showToast('✓ Video galeri kaydedildi', 'success'); } catch (e) { showToast('Kaydedilemedi: ' + e.message, 'error'); } }
+        function vgAddYoutube() {
+            const inp = document.getElementById('vgYtUrl'); const id = vgYt(inp.value);
+            if (!id) { showToast('Geçerli bir YouTube linki girin', 'error'); return; }
+            VG.unshift({ type: 'youtube', src: id, title: document.getElementById('vgTitle').value || 'Chandelist', caption: '', group: 'Workshop' });
+            inp.value = ''; renderVG(); showToast('Eklendi — Kaydet\'e basmayı unutmayın', 'success');
+        }
+        async function vgUpload(file) {
+            if (!file) return; const st = document.getElementById('vgStatus');
+            const CH = 20 * 1024 * 1024, uid = 'vg' + Date.now(); let res = null;
+            try {
+                for (let start = 0; start < file.size; start += CH) {
+                    const end = Math.min(start + CH, file.size);
+                    const fd = new FormData(); fd.append('file', file.slice(start, end)); fd.append('upload_preset', CLOUDINARY_PRESET); fd.append('folder', 'chandelist-films');
+                    const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/video/upload`, { method: 'POST', body: fd, headers: { 'X-Unique-Upload-Id': uid, 'Content-Range': `bytes ${start}-${end - 1}/${file.size}` } });
+                    res = await r.json(); if (!r.ok || res.error) throw new Error((res.error && res.error.message) || r.status);
+                    st.textContent = 'Yükleniyor… %' + Math.round(end / file.size * 100);
+                }
+                VG.unshift({ type: 'mp4', src: res.secure_url, title: document.getElementById('vgTitle').value || file.name.replace(/\.\w+$/, ''), caption: '', group: 'Workshop' });
+                st.textContent = '✓ Yüklendi — Kaydet\'e basın'; renderVG();
+            } catch (e) { st.textContent = 'Hata: ' + e.message; }
+        }
+
         // ============= TEKLIF TALEPLERI (quote_requests) =============
         const QUOTE_STATUS = { new: 'Yeni', quoted: 'Teklif verildi', won: 'Kazanıldı', lost: 'Kaybedildi' };
         async function loadQuotes() {
@@ -3422,6 +3476,7 @@
                             <a href="#" class="admin-nav" data-section="orders">🇺🇸 Siparişler</a>
                             <a href="#" class="admin-nav" data-section="trade">🇺🇸 Trade Üyeler</a>
                             <a href="#" class="admin-nav" data-section="quotes">✉ Teklif Talepleri</a>
+                            <a href="#" class="admin-nav" data-section="videogallery">🎬 Video Galeri</a>
                             <a href="#" class="admin-nav" data-section="visitors">📊 Ziyaretçiler</a>
                             <a href="#" class="admin-nav" data-section="aichat">🤖 AI Asistan</a>
                             <a href="#" class="admin-nav" data-section="settings">⚙ Ayarlar</a>
@@ -3608,6 +3663,13 @@
 
                         <div id="orders-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:16px;">Siparişler (chandelist.com)</h2><div id="ordersList"></div></div>
                         <div id="trade-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:16px;">Üyeler &amp; Trade Başvuruları</h2><div id="tradeList"></div></div>
+                        <div id="videogallery-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:6px;">Video Galeri</h2><p style="color:#8a7d6b;margin-bottom:16px;">chandelist.com/films sayfasında görünür. YouTube linki ekleyin ya da video dosyası yükleyin, sonra <b>Kaydet</b>.</p>
+                            <div style="background:#fff;border:1px solid #e3ddd2;padding:14px;margin-bottom:16px;display:grid;gap:10px;">
+                              <input id="vgTitle" placeholder="Başlık (İngilizce) — örn. Hand-piercing a brass lantern">
+                              <div style="display:flex;gap:8px;"><input id="vgYtUrl" placeholder="YouTube linki" style="flex:1;"><button type="button" class="btn-secondary" onclick="vgAddYoutube()">YouTube ekle</button></div>
+                              <div style="display:flex;gap:8px;align-items:center;"><label class="btn-secondary" style="cursor:pointer;">Video dosyası yükle<input type="file" accept="video/*" style="display:none" onchange="vgUpload(this.files[0])"></label><span id="vgStatus" style="font-size:.9rem;color:#8a7d6b;"></span></div>
+                            </div>
+                            <div id="vgList"></div><button type="button" class="btn-primary" style="margin-top:12px;" onclick="vgSave()">Kaydet</button></div>
                         <div id="quotes-section" class="admin-section" style="display: none;"><h2 style="margin-bottom:16px;">Teklif Talepleri</h2><div id="quotesList"></div></div>
                         <div id="visitors-section" class="admin-section" style="display: none;">
                             <h2>📊 Ziyaretçiler</h2>
@@ -6334,6 +6396,7 @@ Sadece aşağıdaki JSON'ı üret, başka hiçbir şey yazma:
                     // Ziyaretçiler sekmesi açılınca verileri yükle
                     if (section === 'visitors') loadVisitors(1);
                     if (section === 'quotes') loadQuotes();
+                    if (section === 'videogallery') loadVideoGallery();
                     if (section === 'trade') loadTrade();
                     if (section === 'orders') loadOrders();
                     if (section === 'aichat' && !document.getElementById('aiChatBox').childElementCount) aiReset();

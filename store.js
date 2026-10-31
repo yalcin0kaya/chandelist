@@ -104,8 +104,32 @@ function card(p) {
 }
 function grid(list) { return list.length ? `<div class="grid">${list.map(card).join('')}</div>` : `<div class="empty-state"><h3>The collection is being prepared.</h3><p>New pieces are added every week. <a class="link-u" href="/custom">Commission a piece</a></p></div>`; }
 
+
+// ---------- films (video gallery) ----------
+let FILMS = null;
+async function films() { if (FILMS) return FILMS; try { const r = await api('/rest/v1/site_settings?select=value&key=eq.video_gallery', {}, false); FILMS = (r && r[0] && Array.isArray(r[0].value)) ? r[0].value : []; } catch (e) { FILMS = []; } return FILMS; }
+const filmThumb = v => v.type === 'youtube' ? `https://img.youtube.com/vi/${v.src}/hqdefault.jpg` : v.src.replace('/video/upload/', '/video/upload/so_2,w_800,h_450,c_fill,q_auto/').replace(/\.\w+$/, '.jpg');
+async function pageFilms() {
+  const list = await films(); const all = await catalog();
+  seo('Films — Inside the Chandelist Workshop | Chandelist', 'Watch our brass lighting being cut, spun, pierced, welded and finished by hand in our workshop — and see the finished pieces in place.', '/films');
+  const groups = [...new Set(list.map(v => v.group || 'Workshop'))];
+  setTimeout(() => document.querySelectorAll('[data-film]').forEach(el => el.onclick = e => { e.preventDefault(); playFilm(list[+el.dataset.film]); }), 0);
+  const card = (v, i) => { const p = v.product_id ? all.find(x => String(x.id) === String(v.product_id)) : null; return `<div class="film"><a href="#" data-film="${i}" class="fthumb"><img src="${filmThumb(v)}" alt="${esc(v.title || 'Chandelist film')}" loading="lazy"><span class="play">▶</span></a><h3>${esc(v.title || '')}</h3>${v.caption ? `<p>${esc(v.caption)}</p>` : ''}${p ? `<a class="link-u" href="${pUrl(p)}">Shop ${esc(p.name)}</a>` : ''}</div>`; };
+  return `<div class="wrap"><div class="page-hd"><div class="eyebrow">Films</div><h1>Made by hand, <em>on film.</em></h1><p>No stock footage — every film here shows our own pieces, made in our own workshop.</p></div>
+  ${list.length ? groups.map(g => `<section class="films-g"><h2 class="eyebrow" style="margin-bottom:22px">${esc(g)}</h2><div class="films">${list.map((v, i) => (v.group || 'Workshop') === g ? card(v, i) : '').join('')}</div></section>`).join('') : '<div class="empty-state"><h3>New films are on their way.</h3></div>'}
+  <div style="height:120px"></div></div>`;
+}
+function playFilm(v) {
+  const box = document.createElement('div'); box.className = 'filmbox';
+  box.innerHTML = `<button aria-label="Close">×</button><div class="fb-in">${v.type === 'youtube' ? `<iframe src="https://www.youtube-nocookie.com/embed/${v.src}?autoplay=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>` : `<video src="${v.src.replace('/video/upload/', '/video/upload/q_auto,vc_auto/')}" controls autoplay playsinline></video>`}</div>`;
+  const close = () => { box.remove(); document.removeEventListener('keydown', k); }; const k = e => { if (e.key === 'Escape') close(); };
+  box.onclick = e => { if (e.target === box || e.target.tagName === 'BUTTON') close(); }; document.addEventListener('keydown', k); document.body.appendChild(box);
+  track('ViewContent', { content_name: 'film: ' + (v.title || '') });
+}
 // ---------- pages ----------
+function bindCraftVideo() { const box = document.querySelector('#craftvid .vbox'); if (!box || box.dataset.on) return; const go = () => { if (box.dataset.on) return; box.dataset.on = 1; const id = box.dataset.yt; box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&rel=0&modestbranding=1&playsinline=1&start=8&disablekb=1" title="Chandelist workshop" allow="autoplay; encrypted-media" tabindex="-1"></iframe>`; }; if ('IntersectionObserver' in window) { const io = new IntersectionObserver(e => { if (e[0].isIntersecting) { go(); io.disconnect(); } }, { rootMargin: '200px' }); io.observe(box); } else go(); }
 async function pageHome() {
+  setTimeout(bindCraftVideo, 50);
   const all = await catalog(); const rank = p => { const o = ['chandelier', 'pendant', 'lantern', 'sconce', 'flush_mount']; const i = o.findIndex(s => p.subs.includes(s)); return i < 0 ? 9 : i; };
   const pool = all.filter(p => p.images.length && p.cat === 'lighting'); const priced = pool.filter(p => p.price != null);
   const feat = (priced.length >= 3 ? priced : pool).slice().sort((a, b) => rank(a) - rank(b)).filter((p, i, arr) => arr.findIndex(x => rank(x) === rank(p)) > i - 2).slice(0, 6);
@@ -123,6 +147,7 @@ async function pageHome() {
     ${heroP2 ? `<a class="hero-tag" href="${pUrl(heroP2)}">Shown<b>${esc(heroP2.name)}</b></a>` : ''}</section>
   <section class="styles"><a class="style-tile" href="/lighting?style=modern">${modImg ? `<img src="${img(modImg, 1200)}" alt="Modern brass lighting" loading="lazy">` : ''}<div><div class="eyebrow">Collection</div><h2>Modern</h2><p>Clean lines, spun brass, opal glass. ${all.filter(p => p.cat === 'lighting' && /modern|both/.test(p.style)).length} designs</p><span class="link-u">Shop Modern</span></div></a>
     <a class="style-tile" href="/lighting?style=heritage">${herImg ? `<img src="${img(herImg, 1200)}" alt="Ottoman and Moroccan brass lanterns" loading="lazy">` : ''}<div><div class="eyebrow">Collection</div><h2>Heritage</h2><p>Ottoman, Moroccan &amp; rustic. Hand-pierced brass. ${all.filter(p => p.cat === 'lighting' && /traditional|both/.test(p.style)).length} designs</p><span class="link-u">Shop Heritage</span></div></a></section>
+  <section class="craftvid" id="craftvid"><div class="vbox" data-yt="DhGPEr-byqk"></div><div class="veil"></div><div class="wrap craftvid-in"><div class="eyebrow">Inside our workshop</div><h2>Cut, spun, pierced<br><em>and welded by hand.</em></h2><p>Every Chandelist piece is made in our own Istanbul workshop, by the same family of metalsmiths, since 1984.</p><a class="btn btn-ghost" href="/films">Watch our films</a></div></section>
   <div class="marq"><div>${Array(2).fill(['Hand-spun brass', 'Made to order', 'Living finishes', 'Wired for 120V', 'Duties included', 'Since 1984', 'Custom sizes', 'Made by hand'].map(t => `<span>${t}</span>`).join('')).join('')}</div></div>
   <section class="blk"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">Shop by Form</div><h2>Five forms, <em>endlessly</em> made to measure.</h2></div><a href="/lighting" class="link-u">View all</a></div><div class="cats">${catTiles}</div></div></section>
   <section class="blk" style="padding-top:0"><div class="wrap"><div class="sec-head"><div><div class="eyebrow">The Collection</div><h2>Pieces our clients return to.</h2></div><a href="/lighting" class="link-u">Shop all lighting</a></div>${grid(feat)}</div></section>
@@ -355,9 +380,10 @@ async function pageCheckout() {
 function pageAbout() {
   seo('Our Craft — Four Decades at the Bench | Chandelist', 'A family of metalsmiths spinning, hammering and finishing brass and copper lighting by hand since 1984.', '/about');
   return `<div class="wrap"><div class="about-hero"><div><div class="eyebrow">Our Craft</div><h1 style="margin-top:16px">Four decades <em>at the bench.</em></h1></div><div>
-  <p>Chandelist is the work of a family of metalsmiths who have been spinning, hammering and finishing brass and copper in Istanbul since 1984.</p>
+  <p>Chandelist is the work of a family of metalsmiths who have been spinning, hammering and finishing brass and copper in our own workshop in Istanbul since 1984. Everything you see on this site is designed and made there, then shipped to you in the US.</p>
   <p>We still work the old way: sheet metal on the lathe, solder by hand, patina applied with a brush and rubbed back with a cloth. It is slower. It is also the only way we know to make a light that feels like it was always meant to hang in your room.</p>
   <p>Every piece is made to order — you choose the size, the finish and the drop, and we make exactly that, wired for North America and delivered with duties paid.</p></div></div>
+  <section class="blk" style="padding-bottom:0"><div class="eyebrow" style="margin-bottom:18px">How a Chandelist piece is made</div><div class="vframe"><iframe src="https://www.youtube-nocookie.com/embed/DhGPEr-byqk?rel=0&modestbranding=1" title="How a Chandelist chandelier is made" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></section>
   <section class="blk"><p class="bigquote">“A light is the one object in a room you <em>look at</em> and <em>look by.</em> It deserves to be made slowly.”</p></section>
   <div class="stats" style="margin-top:0;margin-bottom:120px"><div><b>1984</b><span>Our workshop opens</span></div><div><b>40+</b><span>Years of hand-spun brass</span></div><div><b>100%</b><span>Made to order</span></div><div><b>1</b><span>Craftsman follows each piece</span></div></div></div>`;
 }
@@ -405,12 +431,13 @@ function go(path) { history.pushState(null, '', path); render(); }
 async function render() {
   const path = location.pathname.replace(/\/+$/, '') || '/'; const seg = path.split('/').filter(Boolean);
   closeCart(); $('#mnav').classList.remove('on');
-  if (session()) { if (!ME) await loadMe(); $('#acctLink').textContent = 'My Account'; } else { ME = null; $('#acctLink').textContent = 'Log In | Create Account'; }
+  if (session()) { if (!ME) await loadMe(); $('#acctLink').textContent = 'My Account'; } else { ME = null; $('#acctLink').textContent = 'Sign In'; }
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('on', a.dataset.nav === seg[0]));
   let html;
   try {
     if (!seg.length) html = await pageHome();
     else if (seg[0] === 'search') html = await pageList('search');
+    else if (seg[0] === 'films') html = await pageFilms();
     else if (CATS[seg[0]]) html = (seg[1] && !CATS[seg[0]].subs[seg[1]]) ? page404() : await pageList(seg[0], seg[1]);
     else if (seg[0] === 'products' && seg[1]) { html = await pageProduct(parseInt(seg[1], 10)); if (!html) { location.replace('https://osmanliaydinlatma.com/en' + location.pathname); return; } }
     else if (seg[0] === 'custom' || seg[0] === 'contact') { await catalog(); html = pageCustom(); }
